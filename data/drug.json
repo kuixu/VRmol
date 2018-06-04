@@ -1,0 +1,15 @@
+{
+    "code": 1,
+    "data": [
+        {
+            "id": "77",
+            "uniprotac": "P62258",
+            "bindingdb": "",
+            "chembl": "CHEMBL3329082;",
+            "swisslipids": "",
+            "guidetopharmacology": "",
+            "drugbank": "DB04464;DB00945;DB05404;"
+        }
+    ],
+    "message": "success"
+}
