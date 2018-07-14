@@ -14,7 +14,7 @@ if(ServerType ===1){
     SERVERURL= "http://localhost";
 }
 PDB = {
-	initChainNumThreshold:2,
+	initChainNumThreshold:2,//小于等于2使用SSE显示，大于2的使用PDB.line显示
     structureSizeLevel:0,
 	pptShow:false,
 	panelShow:1,
