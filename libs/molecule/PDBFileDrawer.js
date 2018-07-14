@@ -390,6 +390,8 @@ PDB.drawer = {
         // var material = new THREE.MeshPhongMaterial( { color: color} );
 		
 		var materials = [new THREE.MeshPhongMaterial({ color:color })];
+		
+		materials.side = THREE.FrontSide;
         //Create a mesh
         var mesh = new THREE.Mesh( geometry, materials );
         var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
@@ -560,6 +562,8 @@ PDB.drawer = {
 		//geometry.computeFaceNormals();
 		// geometry.computeVertexNormals();
         var material = new THREE.MeshPhongMaterial( { color: color, wireframe: false} );
+		material.side = THREE.FrontSide;
+		material.overdraw  = true;
         var mesh = new THREE.Mesh( geometry, material );
         var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
         mesh.name=atom.id;
@@ -600,6 +604,7 @@ PDB.drawer = {
 		// geometry.computeVertexNormals();
         //var material = new THREE.MeshLambertMaterial( { color: color, wireframe: false } );
         var material    = new THREE.MeshPhongMaterial( { color: color, wireframe: false} );
+		material.overdraw  = true;
         var mesh        = new THREE.Mesh( geometry, material );
         var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
         mesh.name=atom.id;

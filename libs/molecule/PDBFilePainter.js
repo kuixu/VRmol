@@ -3052,8 +3052,11 @@ PDB.painter = {
         if(type===PDB.config.surfaceMode){
             PDB.painter.showSurface(1,w3m.mol[PDB.pdbId].atom.main.length,true);
         }else{		
-    		var residueData = w3m.mol[PDB.pdbId].residueData;
-    		for(var chain in residueData){
+    		var residueData = w3m.mol[PDB.pdbId].residueData;			
+    		var chainNum = 0;
+			for(var chain in residueData){
+				
+				// console.log(chainNum);
 				var chainType = w3m.mol[PDB.pdbId].chain[chain];
 				if(chainType==w3m.CHAIN_NA&&type>=PDB.TUBE&&type!=PDB.HIDE){
 					for(var resid in residueData[chain]){
@@ -3061,13 +3064,29 @@ PDB.painter = {
 						PDB.painter.showDNABond(chain, resid,true);
 					}
 					continue;
-				}			
-				for(var resid in residueData[chain]){
-					PDB.painter.showResidue(chain, resid, type, true);
 				}
+				chainNum++;
+				if(chainNum<=PDB.initChainNumThreshold){
+					//添加链标签
+					
+					PDB.tool.initChainNameFlag(chain,true,chainNum);
+					for(var resid in residueData[chain]){
+						PDB.painter.showResidue(chain, resid, type, true);
+					}					
+				}else{
+					//添加链标签
+					PDB.tool.initChainNameFlag(chain,false,chainNum);
+					for(var resid in residueData[chain]){
+						PDB.painter.showResidue(chain, resid, PDB.LINE, true);
+					}
+				}
+				
 				
     			
     		}
+			//为链标签绑定改变initChainNumThreshold的事件
+			PDB.tool.bindAllChainEvent(type,chainNum);
+			
         }
 	},
 	showFragmentsResidues : function(){

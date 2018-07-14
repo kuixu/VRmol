@@ -206,3 +206,12 @@ button:active {
     opacity: 0;
     filter: alpha(opacity=0);
 }
+.chainSelected{
+	background: #412ba5;
+    border: 1px solid #1712b1;
+    border-radius: 5px;
+}
+.chainBtn{	
+	float:left;
+	margin-left:3px;
+}

@@ -3,7 +3,7 @@
  */
 //生成全局变量
 var PDB ;
-var ServerType = 0;
+var ServerType = 3;
 
 var SERVERURL = "http://localhost:8080/molecule_vr";
 if(ServerType ===1){
@@ -14,6 +14,7 @@ if(ServerType ===1){
     SERVERURL= "http://localhost";
 }
 PDB = {
+	initChainNumThreshold:1,
     structureSizeLevel:0,
 	pptShow:false,
 	panelShow:1,
@@ -55,7 +56,7 @@ PDB = {
     currentUrl: "data/aaa.pdb",
     remoteUrl: [SERVERURL + '/data/', 'http://files.rcsb.org/view/', 'http://www.rcsb.org/pdb/files/' ],
     drugPDBUrl: [ 'http://vr.zhanglab.net/data/drugbank/',SERVERURL + '/data/','https://www.drugbank.ca/structures/small_molecule_drugs/DB04464.pdb'],
-    pdbId:"1MBD",
+    pdbId:"trim",
     molecules : {
         "aaa": "aaa.pdb",
         "bbb": "bbb.pdb",

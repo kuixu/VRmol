@@ -839,6 +839,53 @@ PDB.tool = {
         maxSlice.innerHTML=PDB.EMMAP.MAX_SLICE;
         var currSlice = document.getElementById("currSlice");
         currSlice.innerHTML= PDB.EMMAP.MIN_SLICE;
-    }
+    },
+	initChainNameFlag:function(chainName,isNomal,chainNum){
+		// console.log(chainNum);
+		$("#chainNumThreshold").append("<button class=\"labelPDB chainBtn"+(isNomal?" chainSelected":"")+"\" name=\"chainName\" id=\"chain_"+chainName+"\">"+chainNum+":"+chainName+"</button>&nbsp;"); 
+		
+	},
+	bindAllChainEvent:function(type,allChainNum){
+		$(".chainBtn").bind('click',function(e){
+			var chainInfo = $("#"+e.target.id).html().split(":");			
+			var chainNum = Number(chainInfo[0]);
+			var chainName = chainInfo[1];
+			if(chainNum>PDB.initChainNumThreshold){
+				for(var i = 0;i<chainNum;i++){
+					if($($(".chainBtn")[i]).hasClass('chainSelected')){					
+						continue;						
+					}else{
+						//重新画未正常初始化的链					
+						// console.log("重新画"+);
+						var chain_ = $(".chainBtn")[i].id;
+						var chain = chain_.split("_")[1];
+						PDB.render.clearGroupIndex(chain_);
+						for(var resid in w3m.mol[PDB.pdbId].residueData[chain]){					
+							PDB.painter.showResidue(chain, resid, type, true);
+						}
+						$($(".chainBtn")[i]).addClass('chainSelected');					
+					}				
+				}
+			}else if(chainNum<PDB.initChainNumThreshold){
+				for(var i = PDB.initChainNumThreshold-1;i>chainNum-1;i--){
+					if($($(".chainBtn")[i]).hasClass('chainSelected')){							
+						//重新画未正常初始化的链					
+						// console.log("重新画"+);
+						var chain_ = $(".chainBtn")[i].id;
+						var chain = chain_.split("_")[1];
+						PDB.render.clearGroupIndex(chain_);
+						for(var resid in w3m.mol[PDB.pdbId].residueData[chain]){					
+							PDB.painter.showResidue(chain, resid, PDB.LINE, true);
+						}
+						$($(".chainBtn")[i]).removeClass('chainSelected');	
+					}else{
+						continue;				
+					}				
+				}
+			}
+			
+			PDB.initChainNumThreshold = chainNum;
+		})
+	}
 
 }
