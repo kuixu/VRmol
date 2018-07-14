@@ -14,7 +14,7 @@ if(ServerType ===1){
     SERVERURL= "http://localhost";
 }
 PDB = {
-	initChainNumThreshold:1,
+	initChainNumThreshold:2,
     structureSizeLevel:0,
 	pptShow:false,
 	panelShow:1,
