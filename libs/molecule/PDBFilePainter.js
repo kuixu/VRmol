@@ -341,7 +341,8 @@ PDB.painter = {
         var message = showAtom.chainname.toUpperCase() +"."
             + showAtom.resname.substring(0,1).toUpperCase()+ showAtom.resname.substring(1) + "."+ showAtom.resid
             +"."+showAtom.name.substring(0,1).toUpperCase()+showAtom.name.substring(1);
-        PDB.drawer.drawText(PDB.GROUP_INFO,pos,
+        var pos1 =  PDB.tool.getAtomInfoPosition(showAtom.pos_centered,camera.position);
+        PDB.drawer.drawText(PDB.GROUP_INFO,pos1,
             message,"",showAtom.color,180);
     },
     showAtomInfoPos : function (showAtom, position) {
@@ -419,32 +420,35 @@ PDB.painter = {
         }
     },
     showResidueInfo : function (showAtom) {
-        var pos = new THREE.Vector3();
-        pos.x = showAtom.pos_centered.x + 0.5;
-        pos.y = showAtom.pos_centered.y + 0.5;
-        pos.z = showAtom.pos_centered.z - 0.5;
+        // var pos = new THREE.Vector3();
+        // pos.x = showAtom.pos_centered.x + 0.5;
+        // pos.y = showAtom.pos_centered.y + 0.5;
+        // pos.z = showAtom.pos_centered.z - 0.5;
         var message = showAtom.chainname.toUpperCase() +"."
             + showAtom.resname.substring(0,1).toUpperCase()+ showAtom.resname.substring(1) + "."+ showAtom.resid;
-        PDB.drawer.drawText(PDB.GROUP_INFO,pos,
+        var pos1 =  PDB.tool.getAtomInfoPosition(showAtom.pos_curr,camera.position);
+        PDB.drawer.drawText(PDB.GROUP_INFO,pos1,
             message,"",showAtom.color,180);
     },
     showResidueInfoPos : function (showAtom, position) {
-        var pos = new THREE.Vector3();
-        pos.x = position.x + 0.5;
-        pos.y = position.y + 0.5;
-        pos.z = position.z - 0.5;
+        // var pos = new THREE.Vector3();
+        // pos.x = position.x + 0.5;
+        // pos.y = position.y + 0.5;
+        // pos.z = position.z - 0.5;
         var message = showAtom.chainname.toUpperCase() +"."
             + showAtom.resname.substring(0,1).toUpperCase()+ showAtom.resname.substring(1) + "."+ showAtom.resid;
-        PDB.drawer.drawText(PDB.GROUP_INFO,pos,
+        var pos1 =  PDB.tool.getAtomInfoPosition(position,camera.position);
+        PDB.drawer.drawText(PDB.GROUP_INFO,pos1,
             message,"",showAtom.color,180);
     },
     showChainInfo : function (showAtom) {
-        var pos = new THREE.Vector3();
-        pos.x = showAtom.pos_centered.x + 0.5;
-        pos.y = showAtom.pos_centered.y + 0.5;
-        pos.z = showAtom.pos_centered.z - 0.5;
+        // var pos = new THREE.Vector3();
+        // pos.x = showAtom.pos_centered.x + 0.5;
+        // pos.y = showAtom.pos_centered.y + 0.5;
+        // pos.z = showAtom.pos_centered.z - 0.5;
         var message = showAtom.chainname.toUpperCase();
-        PDB.drawer.drawText(PDB.GROUP_INFO,pos,
+        var pos1 =  PDB.tool.getAtomInfoPosition(showAtom.pos_centered,camera.position);
+        PDB.drawer.drawText(PDB.GROUP_INFO,pos1,
             message,"",showAtom.color,180);
     },
     showLine : function(){
