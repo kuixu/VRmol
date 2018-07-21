@@ -40,7 +40,7 @@ PDB = {
 	fragmentMode:"Flat",
     isShowWater: false,
 	ROTATION_START_FLAG: false,
-    ROTATION_DIRECTION:1, //0 left 1 right	
+    ROTATION_DIRECTION:1, //0 left 1 right
 	PLANE:{a:0,b:0,c:0,d:0},
     TravelScale:6,
     currentType: 1,
@@ -56,7 +56,7 @@ PDB = {
     currentUrl: "data/aaa.pdb",
     remoteUrl: [SERVERURL + '/data/', 'http://files.rcsb.org/view/', 'http://www.rcsb.org/pdb/files/' ],
     drugPDBUrl: [ 'http://vr.zhanglab.net/data/drugbank/',SERVERURL + '/data/','https://www.drugbank.ca/structures/small_molecule_drugs/DB04464.pdb'],
-    pdbId:"trim",
+    pdbId:"1mbs",
     molecules : {
         "aaa": "aaa.pdb",
         "bbb": "bbb.pdb",
@@ -86,30 +86,30 @@ PDB = {
     TUBE : 7,  RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11,
     RIBBON_RAILWAY:12, CARTOON_SSE:13, SURFACE:14,
     HET:50, HET_LINE:51, HET_SPHERE:52, HET_STICK:53, HET_BALL_ROD:54,HET_WATER:55,HET_IRON:56,
-    
+
 	CHANGESTYLE:0,// 0-->无选中模式(default),1-->fragment,2-->chain,3-->sseType,4-->residueType,5--> travel+three（ranx add 7 selected style）3-->residue
 	DRAWSTYLE_DEFAULT:0,DRAWSTYLE_FRAGMENT:1,DRAWSTYLE_CHAIN:2,DRAWSTYLE_SSETYPE:3,DRAWSTYLE_RESIDUETYPE:4,DRAWSTYLE_TRAVELTHREE:5,
 
 
 
     // selection
-    SELECTION_MODEL:100, SELECTION_MAIN_HET:101,SELECTION_MAIN:102, SELECTION_HET:103, 
-    SELECTION_CHAIN:104, SELECTION_RESIDUE:105, SELECTION_ATOM:106, SELECTION_OBJECT:107, 
+    SELECTION_MODEL:100, SELECTION_MAIN_HET:101,SELECTION_MAIN:102, SELECTION_HET:103,
+    SELECTION_CHAIN:104, SELECTION_RESIDUE:105, SELECTION_ATOM:106, SELECTION_OBJECT:107,
     SELECTION_MENU:108,SELECTION_DRUG:109,
 
     //fragment mode
     FRAGMENT_MODE_TUBE:"Tube",FRAGMENT_MODE_RECTANGLE:"Rectangle",FRAGMENT_MODE_ELLIPSE:"Ellipse",FRAGMENT_MODE_STRIP:"Strip",FRAGMENT_MODE_RAILWAY:"Railway",
     FRAGMENT_MODE_FLAT:"Flat",
-    
+
     // Label
     LABEL_TYPE:701,
-    LABEL_ID: 700, LABEL_NAME : 701, //LABEL_AREA_NONE : 700,    
-    LABEL_AREA_ATOM : 701,  LABEL_AREA_BACKBONE : 702, 
+    LABEL_ID: 700, LABEL_NAME : 701, //LABEL_AREA_NONE : 700,
+    LABEL_AREA_ATOM : 701,  LABEL_AREA_BACKBONE : 702,
     LABEL_AREA_RESIDUE : 703, LABEL_AREA_CHAIN : 704, LABEL_AREA_MOL : 705,
 
     LABEL_ATOM_NAME : 711, LABEL_ATOM_ID : 712, LABEL_ATOM_NAME_AND_ID : 713,
     LABEL_ELEMENT : 721, LABEL_ELEMENT_AND_ID : 722,
-    LABEL_RESIDUE_NAME : 731, LABEL_RESIDUE_ID : 732, LABEL_RESIDUE_NAME_AND_ID : 733, 
+    LABEL_RESIDUE_NAME : 731, LABEL_RESIDUE_ID : 732, LABEL_RESIDUE_NAME_AND_ID : 733,
     LABEL_CHAIN_ID : 741, LABEL_CHAIN_AND_RESIDUE : 742, LABEL_CHAIN_AND_RESIDUE_ID : 743, LABEL_MIX : 744,
     LABEL_OCCUPANCY : 751, LABEL_B_FACTOR : 752, LABEL_VDW_RADIUS : 753,
     TRIGGER_EVENT_DRAG:1,TRIGGER_EVENT_DISTANCE:2,TRIGGER_EVENT_ANGLE:3,TRIGGER_EVENT_ATOM:4,TRIGGER_EVENT_FRAGMENT:5,
@@ -119,7 +119,7 @@ PDB = {
 		flat_height:0.001,flat_width:1,strip_radius:0.2,strip_ex:9,tubesegment:15,defaultColor:0xa345,
 		railway_radius:0.1,railway_gui:9,tube_radius:0.2,startSegmentSurfaceID:0,
         endSegmentSurfaceID:0
-		
+
 	},
     EMMAP_CONFIG:{
         MIN_THRESHOLD:0,MAX_THRESHOLD:100,CURR_THRESHOLD:100,FIRST_EMMAP_ID:"",CURRENT_EMMAP_ID:"",MIN_SLICE:0,MAX_SLICE:100,CURR_SLICE:0,
@@ -186,4 +186,3 @@ PDB.config = {
 	panelClose:0,
 	openSurface:1
 }
-

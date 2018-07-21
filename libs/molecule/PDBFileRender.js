@@ -56,11 +56,11 @@ function onAxisChanged(event){
 
 function onMenuUp(event){
     //var controller = event.target;
-    
+
 }
 
 function onMenuDown(event){
-    // if the travel mode, press menu button to exit the 
+    // if the travel mode, press menu button to exit the
     // travel mode and return to three mode;
     if(PDB.TravelMode){
         PDB.render.changeToVrMode(PDB.MODE_VR,false);
@@ -72,7 +72,7 @@ function onMenuDown(event){
         }else{
             PDB.isShowMenu=false;
             PDB.render.hideMenu();
-        } 
+        }
     }
   PDB.render.clearGroupIndex(PDB.GROUP_INFO);
 }
@@ -126,7 +126,7 @@ function dealwithMenu(object) {
     }else{
         return;
     }
-    
+
     switch(groupindex){
         case PDB.GROUP_MENU:
             if(!PDB.isShowMenu){
@@ -420,7 +420,7 @@ function onTriggerDown( event ) {
                 if(object.userData.presentAtom !== undefined){
                     //PDB.painter.showResidueInfo(object.userData.presentAtom);
                     PDB.painter.showResidueInfoPos(object.userData.presentAtom, pos);
-                    
+
                     if(PDB.trigger === PDB.TRIGGER_EVENT_FRAGMENT){
                         PDB.fragmentArray.push(object);
                     }
@@ -483,7 +483,7 @@ function onTriggerUp( event ) {
             break;
 
     }
-    
+
 
     //
     var controller = event.target;
@@ -496,7 +496,7 @@ function onTriggerUp( event ) {
 
     switch (PDB.trigger){
         case PDB.GROUP_MENU_DRAG:
-            
+
             break;
         case PDB.TRIGGER_EVENT_DISTANCE:
             if(PDB.distanceArray.length === 2){
@@ -559,13 +559,13 @@ function onTriggerUp( event ) {
             break;
 
         case PDB.TRIGGER_EVENT_LABEL:
-            
+
             break;
 
 
     }
 
-    
+
 }
 function objectTrans(controller, object){
     if(object!=undefined && (object.material!=undefined || object.type==="Group")){
@@ -580,7 +580,7 @@ function objectTrans(controller, object){
     }
 }
 function objectDeTrans(controller, object){
-        
+
     if(object!=undefined && (object.material!=undefined || object.type==="Group")){
         object.matrix.premultiply( controller.matrixWorld );
         object.matrix.decompose( object.position, object.quaternion, object.scale );
@@ -717,7 +717,7 @@ function getIntersections( controller ) {
                         }
                     }
                 }
-                break;        
+                break;
             case PDB.SELECTION_OBJECT:
                 for(var i in PDB.GROUP_STRUCTURE_INDEX){
                     var group= PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]];
@@ -833,7 +833,7 @@ PDB.render = {
         }else{
             controls = new THREE.OrbitControls( camera, renderer.domElement );
         }
-       
+
 
         // window.addEventListener( 'resize',  this.onWindowResize, false );
     },
@@ -1055,9 +1055,9 @@ PDB.render = {
 
         cameraEye = new THREE.Mesh( new THREE.SphereGeometry( 5 ), new THREE.MeshBasicMaterial( { color: 0xdddddd } ) );
         //PDB.parent.add( cameraEye );
-        
+
         if (PDB.TravelGeometry!="") {
-            
+
 
             var time = Date.now();
             var looptime = 200 * 1000;
@@ -1157,7 +1157,7 @@ PDB.render = {
             cleanIntersected();
             intersectObjects( controller1 );
             // intersectObjects( controller2 );
-           
+
             if (PDB.TravelMode === true && PDB.TravelGeometry!=="") {
                 var time = Date.now();
                 var looptime = 200 * 1000;
@@ -1215,7 +1215,7 @@ PDB.render = {
 
                 //renderer.render( scene, splineCamera );
                 camera =splineCamera;
-                
+
                 //
                 //camera.position.copy(pos);
                 renderer.render( scene, camera );
@@ -1469,12 +1469,12 @@ PDB.render = {
             PDB.render.render();
             requestAnimationFrame( PDB.render.animate );
         }
-    }, 
+    },
     onWindowResize : function(){
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize( window.innerWidth, window.innerHeight );
-        
+
         // zwd
         // if (PDB.VRMode) {
         //     vrEffect.setSize( window.innerWidth, window.innerHeight );
@@ -1546,39 +1546,45 @@ PDB.render = {
         pivot.add(PDB.GROUP[PDB.GROUP_MENU_DRAG]);
         pivot.add(PDB.GROUP[PDB.GROUP_MENU_FRAGMENT]);
         pivot.add(PDB.GROUP[PDB.GROUP_INPUT]);
-        // position the object on the pivot, so that it appears 5 meters 
+        // position the object on the pivot, so that it appears 5 meters
         // in front of the user.
 
-        var yaxis = new THREE.Vector3(0, 1, 0);
-        var zaxis = new THREE.Vector3(0, 0, 1);
-        var direction = zaxis.clone();
+        //var yaxis = new THREE.Vector3(0, 1, 0);
+        //var zaxis = new THREE.Vector3(0, 0, 1);
+        //var direction = zaxis.clone();
         // Apply the camera's quaternion onto the unit vector of one of the axes
         // of our desired rotation plane (the z axis of the xz plane, in this case).
-        q = camera.quaternion;
-        q._x = 0;
-        q._y = -0.688808022939613;
-        q._z = 0;
-        q._w = 0.7249437961207901;
+        //q = camera.quaternion;
+        //q._x = 0;
+        //q._y = -0.688808022939613;
+        //q._z = 0;
+        //q._w = 0.7249437961207901;
 
-        direction.applyQuaternion(q);
+        //direction.applyQuaternion(q);
         // Project the direction vector onto the y axis to get the y component
         // of the direction.
-        var ycomponent = yaxis.clone().multiplyScalar(direction.dot(yaxis));
+        //var ycomponent = yaxis.clone().multiplyScalar(direction.dot(yaxis));
         // Subtract the y component from the direction vector so that we are
         // left with the x and z components.
-        direction.sub(ycomponent);
+        //direction.sub(ycomponent);
         // Normalize the direction into a unit vector again.
-        direction.normalize();
+        //direction.normalize();
         // Set the pivot's quaternion to the rotation required to get from the z axis
         // to the xz component of the camera's direction.
-        pivot.quaternion.setFromUnitVectors(zaxis, direction);
+        //pivot.quaternion.setFromUnitVectors(zaxis, direction);
         // Finally, set the pivot's position as well, so that it follows the camera.
         //pivot.position.copy(camera.position);
 
         // pivot.position.copy(new THREE.Vector3(1.1703407,0.04052925,-0.4720295))
-        pivot.position.copy(new THREE.Vector3(4.1703407,-0.24052925,-0.4720295));
+        //pivot.position.copy(new THREE.Vector3(4.1703407,-0.24052925,-0.4720295));
+        var pos = camera.position
+        var vec = camera.getWorldDirection()
+        //var newp= new THREE.Vector3(pos.x+vec.x*10, pos.y+vec.y*10, pos.z+vec.z*10)
+        var newp= new THREE.Vector3(vec.x*2-3,  vec.y*2,  vec.z*2-3)
+        pivot.position.copy(newp)
+        console.log(vec)
         showMenu=true;
-        
+
 
 
         PDB.render.hideStructure();
@@ -1597,7 +1603,7 @@ PDB.render = {
 		for(var i = 0;i<PDB.GROUP_STRUCTURE_INDEX.length;i++){
 			this.clearGroupIndex(PDB.GROUP_STRUCTURE_INDEX[i]);
 		}
-       
+
         PDB.parent="";
     },
     clearMain : function(){
@@ -1645,7 +1651,7 @@ PDB.render = {
             case 1:
                 PDB.render.clearGroupIndex(PDB.GROUP_HET);
                 break;
-            case 2:  
+            case 2:
                 for(var i in PDB.GROUP_STRUCTURE_INDEX){
                     PDB.render.clearGroupIndex(PDB.GROUP_STRUCTURE_INDEX[i]);
                 }
