@@ -17,9 +17,6 @@ PDB.controller = {
         }else{
             PDB.render.init();
         }
-        if(PDB.mode==PDB.MODE_TRAVEL){
-            PDB.render.changeToTrackMode();
-        }
     },
     createMenu : function(){
         var scope = this;
@@ -1223,7 +1220,7 @@ PDB.controller = {
                 PDB.render.animate();
                 PDB.isAnimate=true;
             }
-            if( PDB.TravelMode){
+            if( PDB.TravelMode===true && PDB.mode === PDB.MODE_TRAVEL_THREE){
                 // PDB.render.changeToThreeMode(PDB.MODE_THREE,false);
                 // PDB.render.changeToThreeMode(PDB.MODE_TRAVEL_THREE,true);
 				PDB.CHANGESTYLE = 6;
