@@ -448,7 +448,9 @@ PDB.drawer = {
         mesh.name=atom.id;		
 		// var group = "chain_"+atom.chainname;
         mesh.userData = {group:group,presentAtom:atom, reptype:"tube"};		
+
 		if ((PDB.mode === PDB.MODE_TRAVEL_THREE ||PDB.mode === PDB.MODE_TRAVEL_VR )&& PDB.TravelGeometry===""){
+
 			 var wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.3, wireframe: false, transparent: true } );
 			if ( PDB.GROUP[PDB.GROUP_TRAVEL]  !== undefined ) {
 				PDB.parent.remove( PDB.GROUP[PDB.GROUP_TRAVEL]  );
