@@ -115,7 +115,7 @@ PDB.painter = {
                     ["Mutation",              PDB.MENU_TYPE_MUTATION],
                     ["Rotation",              PDB.MENU_TYPE_ROTATION],
                     ["Bond",              PDB.MENU_TYPE_HBOND],
-                    ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
+                    // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
                     ["Density Map",              PDB.MENU_TYPE_DENSITYMAP],
                     ["Drug Design",              PDB.MENU_TYPE_DRUG]
                 ];
@@ -190,15 +190,17 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_COLOR:
                 var colorMenu =[
-                    ["By Element",          601],
-                    ["By Residue",          602],
-                    ["By Second Stru.",     603 ],
-                    ["By Chain",            604 ],
-                    ["By Representat.",     605 ],
-                    ["By B-Factor",         606 ],
-                    ["By Spectrum",         607 ],
-                    ["By ChainSpectrum",    608 ],
-                    ["By Hydrophobicity",   609 ]
+                    ["Element",          601],
+                    ["Residue",          602],
+                    ["Second Stru.",     603 ],
+                    ["Chain",            604 ],
+                    ["Representat.",     605 ],
+                    ["B-Factor",         606 ],
+                    ["Spectrum",         607 ],
+                    ["ChainSpectrum",    608 ],
+                    ["Hydrophobicity",   609 ],
+					["Conservation",   "Conservation" ],
+					
                 ];
                 for(var i = 0; i< colorMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_COLOR,new THREE.Vector3(x, y-i*0.2, z),  colorMenu[i][0], colorMenu[i][1], color, 135);
@@ -309,14 +311,14 @@ PDB.painter = {
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DENSITYMAP, new THREE.Vector3(x, y-i*0.2, z),  dmMenu[i][0], dmMenu[i][1], color, 135);
                 }
                 break;
-            case PDB.MENU_TYPE_CONSERVATION:
-                var conMenu =[
-                    ["Load Conservation Score",               1 ]
-                ];
-                for(var i = 0; i<conMenu.length;i++){
-                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_CONSERVATION, new THREE.Vector3(x, y-i*0.2, z),  conMenu[i][0], conMenu[i][1], color, 135);
-                }
-                break;
+            // case PDB.MENU_TYPE_CONSERVATION:
+                // var conMenu =[
+                    // ["Load Conservation Score",               1 ]
+                // ];
+                // for(var i = 0; i<conMenu.length;i++){
+                    // PDB.drawer.drawTextKB(PDB.GROUP_MENU_CONSERVATION, new THREE.Vector3(x, y-i*0.2, z),  conMenu[i][0], conMenu[i][1], color, 135);
+                // }
+                // break;
             case PDB.MENU_TYPE_HBOND:
                 var bondMenu =[
                     ["Hide Bond",               PDB.BOND_TYPE_NONE ],
@@ -953,10 +955,13 @@ PDB.painter = {
 		var resobj		= residueData[chainId][resid];
 		var path 		= resobj.path;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		if(residueData[chainId][Number(resid)-1]==undefined){			
+		if(residueData[chainId][Number(resid)-1]==undefined){		
 			
 			var groupindex = "chain_"+atom.chainname;
-			PDB.drawer.drawSphere(groupindex,residueData[chainId][resid].path[0], sel?atom.color:color, radius, atom);
+			if(residueData[chainId][resid].path.length>0){
+				PDB.drawer.drawSphere(groupindex,residueData[chainId][resid].path[0], sel?atom.color:color, radius, atom);
+			}
+			
 		}	
 			
 		var color 		= new THREE.Color('#CCC');
@@ -966,8 +971,11 @@ PDB.painter = {
 		}		
         
 		var groupindex = "chain_"+atom.chainname;
-		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, path.length-1,[resobj.caid]);
-		if(residueData[chainId][Number(resid)+1]==undefined){			
+		if(path.length>0){
+			PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, path.length-1,[resobj.caid]);
+		}
+		
+		if(residueData[chainId][Number(resid)+1]==undefined&&(path.length-1)>0){			
 			//var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chainId][resid].laid);
 			var groupindex = "chain_"+atom.chainname;
 			
@@ -3058,6 +3066,8 @@ PDB.painter = {
         }else{		
     		var residueData = w3m.mol[PDB.pdbId].residueData;			
     		var chainNum = 0;
+			//清除链标签
+			PDB.tool.clearChainNameFlag();
 			for(var chain in residueData){
 				
 				// console.log(chainNum);

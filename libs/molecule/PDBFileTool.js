@@ -158,7 +158,7 @@ PDB.tool = {
             chainname:chainName, resid: residueID, pos: pos,
             pos_centered:pos_centered, bfactor:b_factor,coe:coe,
             type:atomType, radius :radius,color: color};
-			
+
         return atomObj;
     },
     equalAtom:function (atom1,atom2) {
@@ -174,11 +174,16 @@ PDB.tool = {
         return color;
     },
     getColorByIndex : function(molid,id,structure){
-		var rId = w3m.mol[molid].color[structure][id];		
-        var C_color = w3m.rgb[rId][0],
+		var rId = w3m.mol[molid].color[structure][id];
+		if(rId){
+			var C_color = w3m.rgb[rId][0],
             N_color = w3m.rgb[rId][1],
             O_color = w3m.rgb[rId][2];
-         return new THREE.Color(C_color,N_color, O_color);  
+			return new THREE.Color(C_color,N_color, O_color);
+		}else{
+			return new THREE.Color("#ccc");
+		}
+        
     },
 	getColorByColorIndex : function(colorIndex){
         var X_color = w3m.rgb[colorIndex];
@@ -190,7 +195,7 @@ PDB.tool = {
         //if(materialsId[colorId]==undefined){
         var tc = PDB.tool.getColorByIndex(id,'main');
         return new THREE.MeshPhongMaterial({ color:tc });
-                      
+
         //}
     },
     writeTextFile : function(afilename, output)
@@ -247,7 +252,7 @@ PDB.tool = {
 					atom = atoms[atomId];
 					break;
 				}
-			}					
+			}
 		}
 		return atom;
 	},
@@ -262,17 +267,20 @@ PDB.tool = {
 				// if(atoms[atomId][5] == residueId){
 				if(pre_residueId!=-1){
 					if(residueId==pre_residueId&&pre_residueId!=p_residueId){
-						atom = atoms[atomId-1];				
+						atom = atoms[atomId-1];
 						break;
 					}
 				}
 				pre_residueId = atoms[atomId][5];
 				// }
 			}
-			
-						
+
+
 		}
 		return atom;
+	},
+	getResidueIdByCAAtom(caAtom){
+		
 	},
     getCAAtomByLastAtomId : function(atomId){//α炭原子ID
         var atoms = w3m.mol[PDB.pdbId].atom.main;
@@ -354,15 +362,15 @@ PDB.tool = {
 		if(preAtom!=undefined&&nextAtom!=undefined){
 			var pre = preAtom[6];
 			var next = nextAtom[6];
-			return new THREE.Vector3((pre[0]+next[0])/2+offset.x,(pre[1]+next[1])/2+offset.y,(pre[2]+next[2])/2+offset.z); 
+			return new THREE.Vector3((pre[0]+next[0])/2+offset.x,(pre[1]+next[1])/2+offset.y,(pre[2]+next[2])/2+offset.z);
 		}else return undefined;
-        
+
     },
     getColorForPercentage: function(pct) {
         var percentColors = [
         { pct: 0.0, color: { r: 0xff, g: 0x00, b: 0 } },
         { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
-        { pct: 1.0, color: { r: 0x00, g: 0xff, b: 0 } } 
+        { pct: 1.0, color: { r: 0x00, g: 0xff, b: 0 } }
         ];
         for (var i = 1; i < percentColors.length - 1; i++) {
             if (pct < percentColors[i].pct) {
@@ -394,7 +402,7 @@ PDB.tool = {
                 obj.material.emissive.r = value;
             }else if(obj.material.length!==undefined&&obj.material.length>=0 &&obj.material[0].emissive!=undefined){
                 obj.material[0].emissive.r = value;
-            } 
+            }
         }
     },
     colorIntersectObjectBlue : function (obj,value) {
@@ -407,7 +415,7 @@ PDB.tool = {
                 obj.material.emissive.b = value;
             }else if(obj.material.length!==undefined&&obj.material.length>=0 &&obj.material[0].emissive!=undefined){
                 obj.material[0].emissive.b = value;
-            } 
+            }
         }
     },
     colorIntersectObjectRed0 : function (obj,value) {
@@ -839,51 +847,54 @@ PDB.tool = {
         maxSlice.innerHTML=PDB.EMMAP.MAX_SLICE;
         var currSlice = document.getElementById("currSlice");
         currSlice.innerHTML= PDB.EMMAP.MIN_SLICE;
-    },
+  },
 	initChainNameFlag:function(chainName,isNomal,chainNum){
 		// console.log(chainNum);
-		$("#chainNumThreshold").append("<button class=\"labelPDB chainBtn"+(isNomal?" chainSelected":"")+"\" name=\"chainName\" id=\"chain_"+chainName+"\">"+chainNum+":"+chainName+"</button>&nbsp;"); 
-		
+		$("#chainNumThreshold").append("<button class=\"labelPDB chainBtn"+(isNomal?" chainSelected":"")+"\" name=\"chainName\" id=\"chain_"+chainName+"\">"+chainNum+":"+chainName+"</button>&nbsp;");
+
+	},
+	clearChainNameFlag:function(){
+		$("#chainNumThreshold").html("");
 	},
 	bindAllChainEvent:function(type,allChainNum){
 		$(".chainBtn").bind('click',function(e){
-			var chainInfo = $("#"+e.target.id).html().split(":");			
+			var chainInfo = $("#"+e.target.id).html().split(":");
 			var chainNum = Number(chainInfo[0]);
 			var chainName = chainInfo[1];
 			if(chainNum>PDB.initChainNumThreshold){
 				for(var i = 0;i<chainNum;i++){
-					if($($(".chainBtn")[i]).hasClass('chainSelected')){					
-						continue;						
+					if($($(".chainBtn")[i]).hasClass('chainSelected')){
+						continue;
 					}else{
-						//重新画未正常初始化的链					
+						//重新画未正常初始化的链
 						// console.log("重新画"+);
 						var chain_ = $(".chainBtn")[i].id;
 						var chain = chain_.split("_")[1];
 						PDB.render.clearGroupIndex(chain_);
-						for(var resid in w3m.mol[PDB.pdbId].residueData[chain]){					
+						for(var resid in w3m.mol[PDB.pdbId].residueData[chain]){
 							PDB.painter.showResidue(chain, resid, type, true);
 						}
-						$($(".chainBtn")[i]).addClass('chainSelected');					
-					}				
+						$($(".chainBtn")[i]).addClass('chainSelected');
+					}
 				}
 			}else if(chainNum<PDB.initChainNumThreshold){
 				for(var i = PDB.initChainNumThreshold-1;i>chainNum-1;i--){
-					if($($(".chainBtn")[i]).hasClass('chainSelected')){							
-						//重新画未正常初始化的链					
+					if($($(".chainBtn")[i]).hasClass('chainSelected')){
+						//重新画未正常初始化的链
 						// console.log("重新画"+);
 						var chain_ = $(".chainBtn")[i].id;
 						var chain = chain_.split("_")[1];
 						PDB.render.clearGroupIndex(chain_);
-						for(var resid in w3m.mol[PDB.pdbId].residueData[chain]){					
+						for(var resid in w3m.mol[PDB.pdbId].residueData[chain]){
 							PDB.painter.showResidue(chain, resid, PDB.LINE, true);
 						}
-						$($(".chainBtn")[i]).removeClass('chainSelected');	
+						$($(".chainBtn")[i]).removeClass('chainSelected');
 					}else{
-						continue;				
-					}				
+						continue;
+					}
 				}
 			}
-			
+
 			PDB.initChainNumThreshold = chainNum;
 		})
 	}

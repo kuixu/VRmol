@@ -12,6 +12,7 @@ if(ServerType ===1){
     SERVERURL= "http://vr.zhanglab.net";
 }else if(ServerType ===3){
     SERVERURL= "http://localhost";
+    SERVERURL= "http://192.168.1.101";
 }
 PDB = {
 	initChainNumThreshold:2,//小于等于2使用SSE显示，大于2的使用PDB.line显示
@@ -24,6 +25,7 @@ PDB = {
     isShowMenu:false,
     distanceArray:[],
     fragmentList:{},
+	fragmentArray:[],
     isShowKeyboard:false,
     selection_mode:105,
     selection_mode_pre:105,

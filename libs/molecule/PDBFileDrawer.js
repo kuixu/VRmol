@@ -448,7 +448,7 @@ PDB.drawer = {
         mesh.name=atom.id;		
 		// var group = "chain_"+atom.chainname;
         mesh.userData = {group:group,presentAtom:atom, reptype:"tube"};		
-		if ((PDB.mode === PDB.MODE_TRAVEL_THREE )&& PDB.TravelGeometry===""){
+		if ((PDB.mode === PDB.MODE_TRAVEL_THREE ||PDB.mode === PDB.MODE_TRAVEL_VR )&& PDB.TravelGeometry===""){
 			 var wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.3, wireframe: false, transparent: true } );
 			if ( PDB.GROUP[PDB.GROUP_TRAVEL]  !== undefined ) {
 				PDB.parent.remove( PDB.GROUP[PDB.GROUP_TRAVEL]  );
@@ -463,7 +463,7 @@ PDB.drawer = {
 			PDB.GROUP[PDB.GROUP_TRAVEL].scale.set( scale, scale, scale);
 			PDB.render.render();
 		}		
-		// PDB.GROUP[group].add( mesh );
+		// PDB.GROUP[PDB.GROUP_TRAVEL].add( mesh );
 	},
     drawFlat : function (group, paths, color, radius,angleObj,steps,ids){
 		var pathSpline         = new THREE.CatmullRomCurve3(paths);

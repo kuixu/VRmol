@@ -109,7 +109,7 @@ if ( location.search ) {
 }
 
 PDB.controller.init();
-
+PDB.CHANGESTYLE = PDB.DRAWSTYLE_FRAGMENT;
 PDB.controller.requestRemote(PDB.pdbId);
 
 PDB.controller.switchColorBymode("607");

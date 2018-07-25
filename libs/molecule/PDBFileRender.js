@@ -154,7 +154,9 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_TRAVEL:
             onMenuDown();
+			PDB.CHANGESTYLE = 6;
             PDB.render.changeToVrMode(PDB.MODE_TRAVEL_VR,true);
+            PDB.painter.showResidueByThreeTravel();
             break;
         case PDB.GROUP_MENU_EX_HET:
             var type = object.userData.reptype;
@@ -171,8 +173,22 @@ function dealwithMenu(object) {
             onMenuDown();
             break;
         case PDB.GROUP_MENU_COLOR:
-            PDB.controller.switchColorBymode(object.userData.reptype);
-            onMenuDown();
+			if(object.userData.reptype=='Conservation'){
+				var chain = "A";
+				var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+				PDB.tool.ajax.get(url,function (text) {
+					PDB.controller.clear(4,undefined);
+					PDB.painter.showConservation(text);
+					PDB.render.clearMain();
+					PDB.controller.drawGeometry(PDB.config.mainMode);
+					onMenuDown();
+				});
+			}else{
+				PDB.controller.switchColorBymode(object.userData.reptype);
+				onMenuDown();
+			}
+            
+            
             break;
         case PDB.GROUP_MENU_MEASURE:
             PDB.controller.switchMeasureByMode(object.userData.reptype);
@@ -422,6 +438,7 @@ function onTriggerDown( event ) {
                     PDB.painter.showResidueInfoPos(object.userData.presentAtom, pos);
 
                     if(PDB.trigger === PDB.TRIGGER_EVENT_FRAGMENT){
+						console.log(object);
                         PDB.fragmentArray.push(object);
                     }
                 }
@@ -1022,7 +1039,22 @@ PDB.render = {
 
     changeToVrMode:function (mode,travelMode) {
         if(PDB.mode !== mode){
-            var scope = this;
+            
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			var scope = this;
             PDB.mode = mode;
             PDB.TravelMode = travelMode;
             scope.clearStructure();
@@ -1033,7 +1065,9 @@ PDB.render = {
 
             if(PDB.TravelMode === true){
                 // PDB.controller.refreshGeometryByMode(PDB.TUBE);
+					
                     scope.openTrackMode();
+					
             }else{
                 PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
                 PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
@@ -1043,22 +1077,24 @@ PDB.render = {
         }
     },
     openTrackMode:function () {
+		
         PDB.parent = new THREE.Object3D();
         scene.add( PDB.parent );
-
+		
         splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
         PDB.parent.add( splineCamera );
+		
         var light = new THREE.PointLight( 0xffffff,  1, 0);
         light.position.copy( splineCamera.position );
         //camera.add( light );
         splineCamera.add( light );
-
+		
         cameraEye = new THREE.Mesh( new THREE.SphereGeometry( 5 ), new THREE.MeshBasicMaterial( { color: 0xdddddd } ) );
         //PDB.parent.add( cameraEye );
-
+		// console.log(PDB.TravelGeometry);
         if (PDB.TravelGeometry!="") {
 
-
+			
             var time = Date.now();
             var looptime = 200 * 1000;
             var t = ( time % looptime ) / looptime;
@@ -1159,6 +1195,7 @@ PDB.render = {
             // intersectObjects( controller2 );
 
             if (PDB.TravelMode === true && PDB.TravelGeometry!=="") {
+				
                 var time = Date.now();
                 var looptime = 200 * 1000;
                 var t = ( time % looptime ) / looptime;

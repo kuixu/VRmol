@@ -64,6 +64,7 @@ PDB.controller = {
 
         vrWithTravel.addEventListener( 'click', function(e) {
             PDB.render.changeToVrMode(PDB.MODE_TRAVEL_VR,true);
+            PDB.painter.showResidueByThreeTravel();
         } );
 
         //upload button
@@ -155,19 +156,19 @@ PDB.controller = {
             scope.drawGeometry(PDB.config.hetMode);
         } );
 		//drugSurface
-		
+
 		var drugSurface = document.getElementById("drugSurface");
 		drugSurface.addEventListener('click',function (e) {
-			
+
 			if(e.target.checked){
 				PDB.painter.showDrugSurface(PDB.config.selectedDrug);
-				// 
+				//
 			}else{
 				PDB.render.clearGroupIndex(PDB.GROUP_SURFACE_HET);
 			}
 		});
-		
-		
+
+
         var loadDensityMap = document.getElementById("loadDensityMap");
         loadDensityMap.addEventListener('click',function () {
             var url = SERVERURL+"/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
@@ -177,7 +178,7 @@ PDB.controller = {
             PDB.tool.ajax.get(url,function (text) {
                 //PDB.render.clear(2);
 				//生成Material 数组
-				PDB.MATERIALLIST = [];				
+				PDB.MATERIALLIST = [];
 				if(PDB.MATERIALLIST.length==0){
 					for(var i = 1000;i<1100;i++){
 						var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(w3m.rgb[i][0],w3m.rgb[i][1],w3m.rgb[i][2]), wireframe: false, side: THREE.DoubleSide} );
@@ -428,7 +429,7 @@ PDB.controller = {
         var b_export_scene = document.getElementById("b_export_scene");
         b_export_scene.addEventListener( 'click', function() {
             PDB.render.exportToObj();
-            
+
 
             // worker.addEventListener('message', function(e) {
             //    console.log(e.data);
@@ -508,12 +509,12 @@ PDB.controller = {
 		var segmentholder = document.getElementById("segmentholder");
 		var segmentPanel = document.getElementById("segmentPanel");
 		var b_show_segmenpanel = document.getElementById("b_show_segmenpanel");
-		
+
 		b_show_segmenpanel.addEventListener( 'click', function() {
 			segmentholder.style.display = "block";
 			segmentPanel.style.display = "block";
 		} );
-		
+
 		closer.addEventListener( 'click', function() {
 			segmentholder.style.display = "none";
 			segmentPanel.style.display = "none";
@@ -791,19 +792,26 @@ PDB.controller = {
         PDB.fragmentMode = mode;
     },
     fragmentPainter : function(startId,endId,selectedMode){
+		var reptype = 0;
         var selectRadius = 0;
 		if(selectedMode ==="Rectangle"){
             selectRadius = 0;
+			reptype = PDB.RIBBON_RECTANGLE;
         }else if(selectedMode ==="Tube"){
             selectRadius = PDB.CONFIG.tube_radius;
+			reptype = PDB.TUBE;
         }else if(selectedMode ==="Ellipse"){
             selectRadius = PDB.CONFIG.ellipse_radius;
+			reptype = PDB.RIBBON_ELLIPSE;
         }else if(selectedMode=="Strip"){
             selectRadius = PDB.CONFIG.strip_radius;
+			reptype = PDB.RIBBON_STRIP;
         }else if(selectedMode=="Railway"){
             selectRadius = PDB.CONFIG.railway_radius;
+			reptype = PDB.RIBBON_RAILWAY;
         }else if(selectedMode=="Flat"){
             selectRadius = 0;
+			reptype = PDB.RIBBON_FLAT;
         }else if(selectedMode=="Surface"){
             selectRadius = 0;
         }
@@ -814,43 +822,62 @@ PDB.controller = {
             PDB.painter.showSurface(PDB.CONFIG.startSegmentSurfaceID,PDB.CONFIG.endSegmentSurfaceID,true);
         }else{
             PDB.render.clear(0);
-            PDB.CONFIG.startSegmentID = startId;
-            PDB.CONFIG.endSegmentID = endId;
-            PDB.painter.showSegmentByStartEnd(PDB.CONFIG.startSegmentID,PDB.CONFIG.endSegmentID,selectedMode,selectRadius);
+            // PDB.CONFIG.startSegmentID = startId;
+            // PDB.CONFIG.endSegmentID = endId;
+            // PDB.painter.showSegmentByStartEnd(PDB.CONFIG.startSegmentID,PDB.CONFIG.endSegmentID,selectedMode,selectRadius);
+			
+			//新模式,每个residue设置属性：------fragment
+			
+			var startAtom = PDB.tool.getMainAtom(PDB.pdbId,startId);
+			var endAtom = PDB.tool.getMainAtom(PDB.pdbId,endId);
+			if(startAtom.chainname==endAtom.chainname){
+				var obj = {
+					start 	 : w3m.mol[PDB.pdbId].residueData[startAtom.chainname][startAtom.resid],
+					end		 : w3m.mol[PDB.pdbId].residueData[startAtom.chainname][endAtom.resid],
+					issel	 : true,
+					reptype  : reptype
+				};
+				PDB.fragmentList = {
+					0:obj
+				};
+				PDB.painter.showFragmentsResidues();
+			}
+			
+			
         }
     },
 
 	segmentSelectBindEvent : function(startPointDom,endPointDom){
-		var scope = this; 
+		var scope = this;
 		var atomIDs = Object.keys(w3m.mol[PDB.pdbId].atom.main);
 		var defaultStartAtom = w3m.mol[PDB.pdbId].atom.main[atomIDs[0]];
 		//PDB.CONFIG.startSegmentID = defaultStartAtom[1];
-		
+
 		var defaultEndAtom = w3m.mol[PDB.pdbId].atom.main[atomIDs[atomIDs.length-1]];
 		//PDB.CONFIG.endSegmentID = defaultEndAtom[1];
-		
+
 		var segmentholder = document.getElementById("segmentholder");
-		var segmentPanel = document.getElementById("segmentPanel");	
+		var segmentPanel = document.getElementById("segmentPanel");
 			startPointDom.addEventListener( 'change', function(e) {
 			var residueID = startPointDom.value;
-			var chainName = document.getElementById("chainIDSelect").value;			
+			var chainName = document.getElementById("chainIDSelect").value;
 			var atom = PDB.tool.getFirstAtomByResidueId(residueID,chainName);
 			//PDB.CONFIG.startSegmentID = atom[1];
 		} );
 		endPointDom.addEventListener( 'change', function(e) {
 			var residueID = endPointDom.value;
 			var chainName = document.getElementById("chainIDSelect").value;
-			var atom = PDB.tool.getLastAtomByResidueId(residueID,chainName);			
-			//PDB.CONFIG.endSegmentID = atom[1];			
+			var atom = PDB.tool.getLastAtomByResidueId(residueID,chainName);
+			//PDB.CONFIG.endSegmentID = atom[1];
 		} );
-		
-		var b_addSelected = document.getElementById("addSelected");	
-		var b_Confirm_fregment = document.getElementById("Confirm_fregment");	
-		
+
+		var b_addSelected = document.getElementById("addSelected");
+		var b_Confirm_fregment = document.getElementById("Confirm_fregment");
+
 		//所有的redio
 		var r_selectedStyle = document.getElementsByName("selectedStyle");
-		
-		
+
+
 		b_addSelected.addEventListener( 'click', function(e) {
 			var style = 0;
 			for(var i =0;i<r_selectedStyle.length;i++){
@@ -863,19 +890,19 @@ PDB.controller = {
 			var s_startPoint = document.getElementById("startPoint");
 			var s_endPoint = document.getElementById("endPoint");
 			var s_selectedMode = document.getElementById("selectedMode");
-			
-			
+
+
 			var s_sseTypeSelect = document.getElementById("sseTypeSelect");
 			var s_residueTypeSelect = document.getElementById("residueTypeSelect");
-			
+
 			var residueType = w3m.mol[PDB.pdbId].residueTypeList[Number(s_residueTypeSelect.value)];
-			
-			
+
+
 			//在选中氨基酸模式下 startPoint 为选中的氨基酸
 			scope.addSelectedPanel(style,s_chainIDSelect.value,s_startPoint.value,s_endPoint.value,s_selectedMode.value,s_sseTypeSelect.value,residueType);
 			scope.initSelectedPanel(style);
-			
-			
+
+
 		});
 		for(var i = 0;i<r_selectedStyle.length;i++){
 			r_selectedStyle[i].addEventListener( 'click', function(e) {
@@ -883,19 +910,19 @@ PDB.controller = {
 					for(var i in w3m.mol[PDB.pdbId].residueData[j]){
 						w3m.mol[PDB.pdbId].residueData[j][i].issel = false;
 					}
-				}				
+				}
 				document.getElementById("seletedPanel").innerHTML = '';
 				//scope.initSelectedPanel(i+1);
 			});
-		}		
-		
+		}
+
 		b_Confirm_fregment.addEventListener( 'click', function(e) {
 			segmentholder.style.display = "none";
 			segmentPanel.style.display = "none";
 			PDB.render.clear(0);
 			scope.drawGeometry(PDB.config.mainMode);
 		});
-		
+
 	},
 	addSelectedPanel : function(changeStyle,chainId,startReId,endReId,reptype,sseType,residueType){
 		var p_seletedPanel = document.getElementById("seletedPanel");
@@ -918,7 +945,7 @@ PDB.controller = {
 					}else{
 						PDB.fragmentList[Number(keys[keys.length-1])+1] = obj;
 					}
-					
+
 				}
 				break;
 			case PDB.DRAWSTYLE_CHAIN ://chain
@@ -931,7 +958,7 @@ PDB.controller = {
 					// // w3m.mol[PDB.pdbId].residueData[chainId][i].issel = false;
 				// // }
 				// w3m.mol[PDB.pdbId].residueData[chainId][startReId].issel = true;
-				
+
 				// break;
 			case PDB.DRAWSTYLE_SSETYPE :
 				sseType = Number(sseType);
@@ -945,10 +972,10 @@ PDB.controller = {
 							w3m.mol[PDB.pdbId].residueData[c][r].issel = true;
 						}
 					}
-				}				
+				}
 				break;
 			case PDB.DRAWSTYLE_RESIDUETYPE :
-				
+
 				for(var c in  w3m.mol[PDB.pdbId].residueData){
 					var chainList =  w3m.mol[PDB.pdbId].residueData[c];
 					for(var r in chainList){
@@ -959,28 +986,30 @@ PDB.controller = {
 						}
 					}
 				}
-				
+
 				break;
 		}
 	},
 	initSelectedPanel : function(changeStyle){
+		
 		PDB.CHANGESTYLE = changeStyle;
 		var p_seletedPanel = document.getElementById("seletedPanel");
 		p_seletedPanel.innerHTML = '';
+		// PDB.fragmentList = {};
 		var html = "";
 		switch(changeStyle){
 			//case 0:break;
 			case PDB.DRAWSTYLE_FRAGMENT ://fragment
 				var fragmentList = PDB.fragmentList;
-				for(fkey in fragmentList){					
+				for(fkey in fragmentList){
 					var start = fragmentList[fkey].start;
-					var end = fragmentList[fkey].end;					
+					var end = fragmentList[fkey].end;
 					html =  html+"<span id=\""+"f_"+fkey+"\" class=\"fragment\" attr=\"\">"+start.chain+"."+start.name+start.id+"~"+end.chain+"."+end.name+end.id+"<span class=\"fragmentdel\">X</span>&nbsp;</span>";
 				}
 				break;
 			case PDB.DRAWSTYLE_CHAIN ://chain
 				var temp = w3m.mol[PDB.pdbId].residueData;
-				
+
 				for(var chainid in temp){
 					var lastrid = Object.keys(temp[chainid]);
 					lastrid = lastrid[lastrid.length-1];
@@ -998,7 +1027,7 @@ PDB.controller = {
 				break;//residue
 			// case 3:
 				// var temp = w3m.mol[PDB.pdbId].residueData;
-				// for(var chainid in temp){					
+				// for(var chainid in temp){
 					// for(var i in temp[chainid]){
 						// if(temp[chainid][i].issel){
 							// html =  html+"<span id=\""+"ch_"+chainid+"_re_"+i+"\" class=\"fragment\" attr=\"\">"+chainid+"."+temp[chainid][i].name+temp[chainid][i].id+"<span class=\"fragmentdel\">X</span>&nbsp;</span>";
@@ -1025,14 +1054,14 @@ PDB.controller = {
 								obj[sse] = 1;
 							}
 						}
-						
+
 					}
 				}
 				for(var i in obj){
 					if(obj[i]==1){
 						html =  html+"<span id=\""+"sse_"+i+"\" class=\"fragment\" attr=\"\">"+str[i]+"<span class=\"fragmentdel\">X</span>&nbsp;</span>";
-					}					
-				}				
+					}
+				}
 				break;
 			case PDB.DRAWSTYLE_RESIDUETYPE :
 				var obj = {};
@@ -1042,7 +1071,7 @@ PDB.controller = {
 				for(var c in  w3m.mol[PDB.pdbId].residueData){
 					var chainList =  w3m.mol[PDB.pdbId].residueData[c];
 					for(var r in chainList){
-						var residueObj = chainList[r];						
+						var residueObj = chainList[r];
 						if(obj[residueObj.name]!=1){
 							if(residueObj.issel){
 								obj[residueObj.name] = 1;
@@ -1053,18 +1082,18 @@ PDB.controller = {
 				for(var i in obj){
 					if(obj[i]==1){
 						html =  html+"<span id=\""+"res_"+i+"\" class=\"fragment\" attr=\"\">"+i+"<span class=\"fragmentdel\">X</span>&nbsp;</span>";
-					}					
-				}	
+					}
+				}
 				break;
 		}
 		p_seletedPanel.innerHTML = html;
-		
+
 		this.bindSelectedAndDeleteSpan();
-		
+
 	},
-	
+
 	bindSelectedAndDeleteSpan : function(){
-		var scope = this; 
+		var scope = this;
 		var fragmentSpan = document.getElementsByClassName("fragment");
 		fragmentSpan.blink;
 		for(var i=0;i<fragmentSpan.length;i++){
@@ -1082,7 +1111,7 @@ PDB.controller = {
 					}
 				}
 			});
-			
+
 		}
 		var fragmentdelSpan = document.getElementsByClassName("fragmentdel");
 		for(var i=0;i<fragmentdelSpan.length;i++){
@@ -1092,11 +1121,11 @@ PDB.controller = {
 				if(str.length==0)return;
 				if(str.length==2&&str[0]=='f'){
 					delete PDB.fragmentList[str[1]];
-					scope.initSelectedPanel(PDB.DRAWSTYLE_SSETYPE);
+					scope.initSelectedPanel(PDB.DRAWSTYLE_FRAGMENT);
 				}else if(str.length==2&&str[0]=='ch'){
 					for(var i in w3m.mol[PDB.pdbId].residueData[str[1]]){
 						w3m.mol[PDB.pdbId].residueData[str[1]][i].issel = false;
-					}					
+					}
 					scope.initSelectedPanel(PDB.DRAWSTYLE_CHAIN);
 				}
 				// else if(str.length==4){
@@ -1114,7 +1143,7 @@ PDB.controller = {
 								w3m.mol[PDB.pdbId].residueData[c][r].issel = false;
 							}
 						}
-					}	
+					}
 					scope.initSelectedPanel(PDB.DRAWSTYLE_SSETYPE);
 				}else if(str.length==2&&str[0]=='res'){
 					var residueType = str[1];
@@ -1142,10 +1171,10 @@ PDB.controller = {
 			newOption.value = i;
 			residueTypeSelect.appendChild(newOption);
 		}
-		var startPoint = document.getElementById("startPoint");	
+		var startPoint = document.getElementById("startPoint");
 		startPoint.innerHTML = "";
-		var endPoint = document.getElementById("endPoint");	
-		endPoint.innerHTML = "";		
+		var endPoint = document.getElementById("endPoint");
+		endPoint.innerHTML = "";
 		var tempAllResidue = {};
 		var atoms = w3m.mol[PDB.pdbId].atom.main;
 		var selectedResidue = -1;
@@ -1162,7 +1191,7 @@ PDB.controller = {
 			var atomType = atom[9];
 			if(tempAllResidue[residueID]==undefined&&chain==chainName){
 				selectedResidue++;
-				tempAllResidue[residueID] = chainName;				
+				tempAllResidue[residueID] = chainName;
 				var newOption = document.createElement("option");
 				newOption.innerHTML = residueID+":"+residueName;
 				newOption.value = residueID;
@@ -1170,7 +1199,7 @@ PDB.controller = {
 					newOption.selected = 'selected';
 				}
 				startPoint.appendChild(newOption);
-				
+
 				newOption = document.createElement("option");
 				newOption.innerHTML = residueID+":"+residueName;
 				newOption.value = residueID;
@@ -1178,27 +1207,27 @@ PDB.controller = {
 					newOption.selected = 'selected';
 				}
 				endPoint.appendChild(newOption);
-			}		
+			}
 		}
 		this.segmentSelectBindEvent(startPoint,endPoint);
 	},
 	initFragmentSelect : function(){
 		var scope = this;
-		var chainIDSelect = document.getElementById("chainIDSelect");	
+		var chainIDSelect = document.getElementById("chainIDSelect");
 		var chainarray = Object.keys(w3m.mol[PDB.pdbId].chain);
 		chainIDSelect.innerHTML = "";
-		for(var i in chainarray){			
+		for(var i in chainarray){
 			var newOption = document.createElement("option");
 			newOption.innerHTML = chainarray[i];
 			newOption.value = chainarray[i];
-			chainIDSelect.appendChild(newOption);			
+			chainIDSelect.appendChild(newOption);
 		}
 		chainIDSelect.addEventListener( 'change', function(e) {
 			var chainName = chainIDSelect.value;
-			scope.initSartAndSelect(chainName);		
+			scope.initSartAndSelect(chainName);
 		} );
 		this.initSartAndSelect(chainarray[0]);
-		
+
 	},
     requestRemote : function(name){
         console.log("controller.requestRemote:"+name);
@@ -1206,17 +1235,17 @@ PDB.controller = {
         var scope = this;
         var input = document.getElementById("search_text");
         input.value = name;
-        
+
         PDB.pdbId = name.toLowerCase();
         scope.clear(2,-1);
         PDB.loader.clear();
         //PDB.currentType = -1;
         PDB.loader.load(name,function () {
-            //PDB.painter.generateGroupPosition();			
+            //PDB.painter.generateGroupPosition();
             scope.drawGeometry(PDB.config.mainMode);
             scope.drawGeometry(PDB.config.hetMode);
 			if(PDB.isShowSurface==PDB.config.openSurface){
-				scope.drawGeometry(PDB.config.surfaceMode);				
+				scope.drawGeometry(PDB.config.surfaceMode);
 			}
 			scope.initFragmentSelect();
             if(!PDB.isAnimate){
@@ -1235,7 +1264,7 @@ PDB.controller = {
 
     },
     clear:function(mode, w3mtype){
-        PDB.render.clear(mode); //0: main, 1: het, 2:all        
+        PDB.render.clear(mode); //0: main, 1: het, 2:all
     },
     getLoadType: function(type){
         var loadType = w3m.LINE;
@@ -1264,26 +1293,26 @@ PDB.controller = {
     },
     drawGeometry : function(type){
 		if(w3m.mol[PDB.pdbId]==undefined) return;
-		var scope = this;        
-        console.log("sta: "+type+": "+new Date());        
-       if(type>=PDB.HET){			
-			PDB.painter.showHet(PDB.pdbId);    
+		var scope = this;
+        console.log("sta: "+type+": "+new Date());
+       if(type>=PDB.HET){
+			PDB.painter.showHet(PDB.pdbId);
 		}else{
 			if(PDB.CHANGESTYLE!=1&&PDB.CHANGESTYLE!=0&&PDB.CHANGESTYLE!=6){
 				//进入根据氨基酸（issel）是否选中来判断颜色
-				PDB.painter.showAllResiduesBySelect();            
-			}else if(PDB.CHANGESTYLE==1){//有fragment的时候 
-				PDB.painter.showFragmentsResidues();            
+				PDB.painter.showAllResiduesBySelect();
+			}else if(PDB.CHANGESTYLE==1){//有fragment的时候
+				PDB.painter.showFragmentsResidues();
 
 			}else if(PDB.CHANGESTYLE==0){			 //无任何模式下
-				PDB.painter.showAllResidues(type);           
+				PDB.painter.showAllResidues(type);
 			}
 		}
         console.log("end: "+type+": "+new Date());
-        
+
     },
     refreshGeometryByMode : function(type){
-        console.log("controller.refreshGeometryByMode");		
+        console.log("controller.refreshGeometryByMode");
 		PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
         //默认都显示
         var loadType = this.getLoadType(type);
