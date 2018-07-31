@@ -201,7 +201,7 @@ function dealwithMenu(object) {
             if(type !== 0){
                 PDB.controller.switchDragByMode(object.userData.reptype);
             }else {
-                PDB.tool.backToInitialPositon();
+                //PDB.tool.backToInitialPositon();
             }
             onMenuDown();
             break;

@@ -480,6 +480,7 @@ PDB.controller = {
         // var dragModel    = document.getElementById( "dragModel" );
         // var dragMainHet  = document.getElementById( "dragMainHet" );
         // var dragMain     = document.getElementById( "dragMain" );
+		var dragReset      = document.getElementById( "dragReset" );
         var dragHet      = document.getElementById( "dragHet" );
         var dragChain    = document.getElementById( "dragChain" );
 
@@ -492,11 +493,14 @@ PDB.controller = {
         // dragMain.addEventListener( 'click', function() {
         //     PDB.selection_mode = PDB.SELECTION_MAIN;
         // } );
+		dragReset.addEventListener( 'click', function() {
+            PDB.tool.backToInitialPositon();
+        } );
         dragHet.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_HET;
+			PDB.controller.switchDragByMode(PDB.SELECTION_HET);
         } );
         dragChain.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_CHAIN;
+			PDB.controller.switchDragByMode(PDB.SELECTION_CHAIN);
         } );
 
 
