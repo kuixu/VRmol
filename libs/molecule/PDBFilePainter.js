@@ -30,6 +30,10 @@ PDB.painter = {
             else z+=PDB.ZOOM_STEP;
             PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = z;
         }
+		//重新测距
+		// console.log("near");
+		PDB.painter.repeatPainter();
+		// PDB.painter.repeatPainter();
     },
     far:function(){
         for(var i in PDB.GROUP_STRUCTURE_INDEX){
@@ -38,6 +42,9 @@ PDB.painter = {
             else z-=PDB.ZOOM_STEP;
             PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = z;
         }
+		// console.log("far");
+		//重新测距
+		PDB.painter.repeatPainter();
     },
     showInput : function(text){
         if(text=="<--"){
@@ -3061,15 +3068,22 @@ PDB.painter = {
         // }   
 	},
 	showAllResidues : function(type){
+				
+		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;		
+		// console.log(showLengthThreshold);
         if(type===PDB.config.surfaceMode){
             PDB.painter.showSurface(1,w3m.mol[PDB.pdbId].atom.main.length,true);
         }else{		
     		var residueData = w3m.mol[PDB.pdbId].residueData;			
     		var chainNum = 0;
+			
 			//清除链标签
 			PDB.tool.clearChainNameFlag();
+			
 			for(var chain in residueData){
-				
+				if(PDB.residueGroupObject[chain]==undefined){
+					PDB.residueGroupObject[chain] = {};
+				}
 				// console.log(chainNum);
 				var chainType = w3m.mol[PDB.pdbId].chain[chain];
 				if(chainType==w3m.CHAIN_NA&&type>=PDB.TUBE&&type!=PDB.HIDE){
@@ -3078,28 +3092,93 @@ PDB.painter = {
 						PDB.painter.showDNABond(chain, resid,true);
 					}
 					continue;
-				}
+				}				
 				chainNum++;
+				// console.log(chainNum);
 				if(chainNum<=PDB.initChainNumThreshold){
 					//添加链标签
-					
 					PDB.tool.initChainNameFlag(chain,true,chainNum);
 					for(var resid in residueData[chain]){
-						PDB.painter.showResidue(chain, resid, type, true);
+						var caid =  residueData[chain][resid].caid;
+						var pos = PDB.tool.getMainAtom(PDB.pdbId,caid).pos_centered;
+						var offset = camera.position;
+						var length = Math.sqrt(Math.pow(offset.x-pos.x,2)+Math.pow(offset.y-pos.y,2)+Math.pow(offset.z-pos.z,2));
+						// console.log(length);
+						PDB.painter.showResidue(chain, resid, type, true);	
+						if(length<showLengthThreshold){							
+							PDB.residueGroupObject[chain][resid] = PDB.residueGroup_show;							
+						}else{
+							PDB.residueGroupObject[chain][resid] = PDB.residueGroup_hide;
+							PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = false;
+						}
 					}					
 				}else{
 					//添加链标签
 					PDB.tool.initChainNameFlag(chain,false,chainNum);
 					for(var resid in residueData[chain]){
+						var caid =  residueData[chain][resid].caid;
+						var pos = PDB.tool.getMainAtom(PDB.pdbId,caid).pos_centered;
+						var offset = camera.position;
+						var length = Math.sqrt(Math.pow(offset.x-pos.x,2)+Math.pow(offset.y-pos.y,2)+Math.pow(offset.z-pos.z,2));
 						PDB.painter.showResidue(chain, resid, PDB.LINE, true);
+						
+						if(length<showLengthThreshold){							
+							PDB.residueGroupObject[chain][resid] = PDB.residueGroup_show;													
+						}else{
+							PDB.residueGroupObject[chain][resid] = PDB.residueGroup_hide;
+							PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = false;
+						}
+						
 					}
-				}
-				
-				
+				}				
     			
     		}
 			//为链标签绑定改变initChainNumThreshold的事件
 			PDB.tool.bindAllChainEvent(type,chainNum);
+			
+			
+			
+			
+			//显示offset
+			// var alpha = 0.5,
+            // beta  = 0.5,
+            // gamma = 0.5;
+			// var bumpScale = 1;
+			// var specularShininess = Math.pow( 2, alpha * 10 );
+			// var specularColor = new THREE.Color( beta * 0.2, beta * 0.2, beta * 0.2 );
+			// //specularColor = color;
+			// var diffuseColor = new THREE.Color().setHSL( alpha, 0.5, gamma * 0.5 ).multiplyScalar( 1 - beta * 0.2 );
+			// diffuseColor = new THREE.Color("#CCC");
+
+			// var material = new THREE.MeshPhongMaterial( {
+				// //map: imgTexture,
+				// //bumpMap: imgTexture,
+				// bumpScale: bumpScale,
+				// color: diffuseColor,
+				// specular: specularColor,
+				// reflectivity: beta,
+				// shininess: specularShininess,
+				// shading: THREE.SmoothShading,
+				// //envMap: alphaIndex % 2 === 0 ? null : reflectionCube
+			// } );
+			// var geometry = new THREE.SphereBufferGeometry( 0.8, PDB.CONFIG.sphere_width, PDB.CONFIG.sphere_height );
+			// //var sphereGeometry = new THREE.SphereGeometry( radius, 16, 16 );
+			// //var sphereGeometry = new THREE.IcosahedronBufferGeometry(radius, 2 );
+			// var mesh = new THREE.Mesh( geometry, material );
+			// mesh.position.copy(camera.position);
+			// PDB.GROUP["chain_a"].add( mesh );
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
         }
 	},
@@ -3238,6 +3317,155 @@ PDB.painter = {
         }));
         PDB.GROUP[PDB.GROUP_SURFACE_HET].add( mesh );
         PDB.GROUP[PDB.GROUP_SURFACE_HET].visible = true;
-	}
+	},
+	repeatPainter:function(){
+		var residueData = w3m.mol[PDB.pdbId].residueData;
+		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;
+		
+		var offset = PDB.mode==PDB.MODE_VR?camera.position:PDB.GeoCenterOffset;
+		// for(var chain in residueData){
+			// var groupindex = "chain_"+chain;	
+			// for(var i in PDB.GROUP[groupindex].children){
+				
+				// var pos = PDB.GROUP[groupindex].children[i];
+				// var length = Math.sqrt(Math.pow(offset.x-pos.x,2)+Math.pow(offset.y-pos.y,2)+Math.pow(offset.z-pos.z,2));
+				
+				// if(residueData[chain][resid].caid==PDB.GROUP[groupindex].children[i].name){
+					// PDB.GROUP[groupindex].children[i].visible = false;
+					// PDB.residueGroupObject[chain][resid] = PDB.residueGroup_hide;
+					// break;
+				// }
+			// }
+		// }
+		
+		
+		
+		
+		
+		var chainNum = 0;		
+		for(var chain in residueData){
+			if(PDB.residueGroupObject[chain]==undefined){
+				PDB.residueGroupObject[chain] = {};
+			}			
+			chainNum++;
+			// console.log(chainNum);
+			if(chainNum<=PDB.initChainNumThreshold){
+				
+				for(var resid in residueData[chain]){
+					
+					
+					// getMainAtom
+					var caid =  residueData[chain][resid].caid;
+					var pos = PDB.tool.getMainAtom(PDB.pdbId,caid).pos_centered;
+					// var offset = camera.position;
+					var length = Math.sqrt(Math.pow(offset.x-pos.x,2)+Math.pow(offset.y-pos.y,2)+Math.pow(offset.z-pos.z,2));
+					if(resid==15){
+						
+						console.log(length);
+					}
+					
+					if(length<showLengthThreshold){							
+						if(PDB.residueGroupObject[chain][resid]==undefined||PDB.residueGroupObject[chain][resid]==PDB.residueGroup_undefined){
+							PDB.painter.showResidue(chain, resid, PDB.config.mainMode, true);	
+							PDB.residueGroupObject[chain][resid] = PDB.residueGroup_show;
+						}else if(PDB.residueGroupObject[chain][resid]==PDB.residueGroup_hide){
+							// var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chain][resid].caid);
+							var groupindex = "chain_"+chain;	
+							for(var i in PDB.GROUP[groupindex].children){
+								if(residueData[chain][resid].caid==PDB.GROUP[groupindex].children[i].name){
+									PDB.GROUP[groupindex].children[i].visible = true;
+									PDB.residueGroupObject[chain][resid] = PDB.residueGroup_show;
+									break;
+								}
+							}
+						}
+						
+					}else{
+						if(PDB.residueGroupObject[chain][resid]==PDB.residueGroup_show){
+							// var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chain][resid].caid);
+							var groupindex = "chain_"+chain;	
+							for(var i in PDB.GROUP[groupindex].children){
+								if(residueData[chain][resid].caid==PDB.GROUP[groupindex].children[i].name){
+									PDB.GROUP[groupindex].children[i].visible = false;
+									PDB.residueGroupObject[chain][resid] = PDB.residueGroup_hide;
+									break;
+								}
+							}
+						}
+					}
+					
+				}					
+			}else{
+				
+				for(var resid in residueData[chain]){
+					var caid =  residueData[chain][resid].caid;
+					var pos = PDB.tool.getMainAtom(PDB.pdbId,caid).pos_centered;
+					var offset = camera.position;
+					var length = Math.sqrt(Math.pow(offset.x-pos.x,2)+Math.pow(offset.y-pos.y,2)+Math.pow(offset.z-pos.z,2));
+					if(length<showLengthThreshold){							
+						if(PDB.residueGroupObject[chain][resid]==undefined||PDB.residueGroupObject[chain][resid]==PDB.residueGroup_undefined){
+							PDB.painter.showResidue(chain, resid, PDB.LINE, true);	
+							PDB.residueGroupObject[chain][resid] = PDB.residueGroup_show;
+						}else if(PDB.residueGroupObject[chain][resid]==PDB.residueGroup_hide){
+							// var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chain][resid].caid);
+							var groupindex = "chain_"+chain;	
+							for(var i in PDB.GROUP[groupindex].children){
+								if(residueData[chain][resid].caid==PDB.GROUP[groupindex].children[i].name){
+									PDB.GROUP[groupindex].children[i].visible = true;
+									PDB.residueGroupObject[chain][resid] = PDB.residueGroup_show;
+									break;
+								}
+							}
+						}														
+					}else{
+						if(PDB.residueGroupObject[chain][resid]==PDB.residueGroup_show){
+							// var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chain][resid].caid);
+							var groupindex = "chain_"+chain;	
+							for(var i in PDB.GROUP[groupindex].children){
+								if(residueData[chain][resid].caid==PDB.GROUP[groupindex].children[i].name){
+									PDB.GROUP[groupindex].children[i].visible = false;
+									PDB.residueGroupObject[chain][resid] = PDB.residueGroup_hide;
+									break;
+								}
+							}
+						}
+					}
+					
+				}
+			}				
+    			
+    	}
+		
+			//显示offset
+			// var alpha = 0.5,
+            // beta  = 0.5,
+            // gamma = 0.5;
+			// var bumpScale = 1;
+			// var specularShininess = Math.pow( 2, alpha * 10 );
+			// var specularColor = new THREE.Color( beta * 0.2, beta * 0.2, beta * 0.2 );
+			// //specularColor = color;
+			// var diffuseColor = new THREE.Color().setHSL( alpha, 0.5, gamma * 0.5 ).multiplyScalar( 1 - beta * 0.2 );
+			// diffuseColor = new THREE.Color("#CCC");
+
+			// var material = new THREE.MeshPhongMaterial( {
+				// //map: imgTexture,
+				// //bumpMap: imgTexture,
+				// bumpScale: bumpScale,
+				// color: diffuseColor,
+				// specular: specularColor,
+				// reflectivity: beta,
+				// shininess: specularShininess,
+				// shading: THREE.SmoothShading,
+				// //envMap: alphaIndex % 2 === 0 ? null : reflectionCube
+			// } );
+			// var geometry = new THREE.SphereBufferGeometry( 0.8, PDB.CONFIG.sphere_width, PDB.CONFIG.sphere_height );
+			// //var sphereGeometry = new THREE.SphereGeometry( radius, 16, 16 );
+			// //var sphereGeometry = new THREE.IcosahedronBufferGeometry(radius, 2 );
+			// var mesh = new THREE.Mesh( geometry, material );
+			// mesh.position.copy(camera.position);
+			// PDB.GROUP["chain_a"].add( mesh );
+			
+			
+	},
 	
 };

@@ -80,12 +80,14 @@ function onMenuDown(event){
 
 
 function onThumbpadUp(event){
+	// console.log('onThumbpadUp');
     var pad = event.target;
     window.clearInterval(id);
     PDB.ROTATION_START_FLAG = false;
 }
 
 function onThumbpadDown(event){
+	// console.log('onThumbpadDown');
     var controller = event.target;
     if((ThumbpadAxes[1]<=-0.5 &&  ThumbpadAxes[0] >= -0.5 && ThumbpadAxes[0] <= 0) ||
         (ThumbpadAxes[1]<=-0.5 &&  ThumbpadAxes[0] <= 0.5 && ThumbpadAxes[0] >= 0)){
@@ -187,8 +189,8 @@ function dealwithMenu(object) {
 				PDB.controller.switchColorBymode(object.userData.reptype);
 				onMenuDown();
 			}
-            
-            
+
+
             break;
         case PDB.GROUP_MENU_MEASURE:
             PDB.controller.switchMeasureByMode(object.userData.reptype);
@@ -807,7 +809,7 @@ PDB.render = {
         container = document.createElement( 'div' );
         document.body.appendChild( container );
         camera = new THREE.PerspectiveCamera( 10, window.innerWidth / window.innerHeight, 0.1, 50000 );
-        camera.position.set( 0, 0, 300 );
+        camera.position.set( PDB.cameraPosition.x, PDB.cameraPosition.y, PDB.cameraPosition.z );
         scene.background = new THREE.Color( 0x000000 );
         scene.add( camera );
         document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -894,6 +896,13 @@ PDB.render = {
         tempMatrix = new THREE.Matrix4();
         // controllers
         controller1 = new THREE.ViveController( 0 );
+        for (var i=0;i<4;i++){
+            controller1 = new THREE.ViveController( i );
+            if(controller1.visible){
+               break;
+            }
+        }
+
         controller1.standingMatrix = renderer.vr.getStandingMatrix();
         controller1.addEventListener( 'triggerdown', onTriggerDown );
         controller1.addEventListener( 'triggerup', onTriggerUp );
@@ -1039,21 +1048,8 @@ PDB.render = {
 
     changeToVrMode:function (mode,travelMode) {
         if(PDB.mode !== mode){
-            
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
 			var scope = this;
             PDB.mode = mode;
             PDB.TravelMode = travelMode;
@@ -1065,9 +1061,9 @@ PDB.render = {
 
             if(PDB.TravelMode === true){
                 // PDB.controller.refreshGeometryByMode(PDB.TUBE);
-					
+
                     scope.openTrackMode();
-					
+
             }else{
                 PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
                 PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
@@ -1077,24 +1073,24 @@ PDB.render = {
         }
     },
     openTrackMode:function () {
-		
+
         PDB.parent = new THREE.Object3D();
         scene.add( PDB.parent );
-		
+
         splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
         PDB.parent.add( splineCamera );
-		
+
         var light = new THREE.PointLight( 0xffffff,  1, 0);
         light.position.copy( splineCamera.position );
         //camera.add( light );
         splineCamera.add( light );
-		
+
         cameraEye = new THREE.Mesh( new THREE.SphereGeometry( 5 ), new THREE.MeshBasicMaterial( { color: 0xdddddd } ) );
         //PDB.parent.add( cameraEye );
 		// console.log(PDB.TravelGeometry);
         if (PDB.TravelGeometry!="") {
 
-			
+
             var time = Date.now();
             var looptime = 200 * 1000;
             var t = ( time % looptime ) / looptime;
@@ -1195,7 +1191,7 @@ PDB.render = {
             // intersectObjects( controller2 );
 
             if (PDB.TravelMode === true && PDB.TravelGeometry!=="") {
-				
+
                 var time = Date.now();
                 var looptime = 200 * 1000;
                 var t = ( time % looptime ) / looptime;
@@ -1496,6 +1492,15 @@ PDB.render = {
         }
     },
     animate : function(){
+
+		// if(PDB.mode === PDB.MODE_VR||PDB.mode === PDB.MODE_THREE){
+			// if((PDB.cameraPosition.x!=camera.position.x||PDB.cameraPosition.y!=camera.position.y||PDB.cameraPosition.y!=camera.position.y)){
+
+			// }
+			// console.log(PDB.GeoCenterOffset);
+			// console.log(camera.position);
+		// }
+
         if(PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR){
             //zdw vr mode
             vrControls.update();
@@ -1659,6 +1664,15 @@ PDB.render = {
         }
     },
     clearGroupIndex:function(groupIndex){
+		//清空链上residue缓存信息
+		if(typeof(groupIndex)=='string'){
+			var c = groupIndex.split("_");
+			if(c.length>1&&c[0]=='chain'){
+				delete PDB.residueGroupObject[c[1]];
+				PDB.residueGroupObject[c[1]] = {};
+			}
+		}
+
         if(PDB.GROUP[groupIndex] != undefined && PDB.GROUP[groupIndex].children.length > 0){
             var children = PDB.GROUP[groupIndex].children;
             for (var i = 0;i<children.length;i++){
@@ -1670,8 +1684,8 @@ PDB.render = {
                     if(meshObj.material && meshObj.material.dispose){
                         meshObj.material.dispose();
                     }
-                    meshObj = undefined;
                     delete(meshObj);
+					meshObj = undefined;
                 }
             }
             PDB.GROUP[groupIndex].children = [];
@@ -1785,4 +1799,5 @@ PDB.render = {
 
         PDB.tool.writeTextFile(f, result);
     }
+
 };

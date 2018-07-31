@@ -167,30 +167,30 @@ PDB.loader = {
             PDB.structureSizeLevel=3;
         }
 
-        switch(PDB.structureSizeLevel){
-            case 0:
-                break;
-            case 1:
-                PDB.CONFIG.sphere_width=20;
-                PDB.CONFIG.sphere_height=16;
-                PDB.CONFIG.stick_radius =15;
-                // PDB.config.mainMode = PDB.LINE;
-                // w3m.config.rep_mode_main = PDB.config.mainMode;
-                break;
-            case 2:
-                PDB.CONFIG.sphere_width=12;
-                PDB.CONFIG.sphere_height=8;
-                PDB.CONFIG.stick_radius =10;
-                // PDB.config.mainMode = PDB.LINE;
-                // w3m.config.rep_mode_main = PDB.config.mainMode;
-                break;
-            case 3:
-                PDB.CONFIG.sphere_width=8;
-                PDB.CONFIG.sphere_height=4;
-                PDB.CONFIG.stick_radius =6;
-                PDB.config.mainMode = PDB.LINE;
-                w3m.config.rep_mode_main = PDB.config.mainMode;
-                break;
-        }
+        // switch(PDB.structureSizeLevel){
+            // case 0:
+                // break;
+            // case 1:
+                // PDB.CONFIG.sphere_width=20;
+                // PDB.CONFIG.sphere_height=16;
+                // PDB.CONFIG.stick_radius =15;
+                // // PDB.config.mainMode = PDB.LINE;
+                // // w3m.config.rep_mode_main = PDB.config.mainMode;
+                // break;
+            // case 2:
+                // PDB.CONFIG.sphere_width=12;
+                // PDB.CONFIG.sphere_height=8;
+                // PDB.CONFIG.stick_radius =10;
+                // // PDB.config.mainMode = PDB.LINE;
+                // // w3m.config.rep_mode_main = PDB.config.mainMode;
+                // break;
+            // case 3:
+                // PDB.CONFIG.sphere_width=8;
+                // PDB.CONFIG.sphere_height=4;
+                // PDB.CONFIG.stick_radius =6;
+                // // PDB.config.mainMode = PDB.LINE;
+                // // w3m.config.rep_mode_main = PDB.config.mainMode;
+                // break;
+        // }
     }
 }

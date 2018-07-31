@@ -279,9 +279,7 @@ PDB.tool = {
 		}
 		return atom;
 	},
-	getResidueIdByCAAtom(caAtom){
-		
-	},
+	
     getCAAtomByLastAtomId : function(atomId){//α炭原子ID
         var atoms = w3m.mol[PDB.pdbId].atom.main;
         var atom = atoms[atomId];
