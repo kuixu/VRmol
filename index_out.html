@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>molecule webvr</title>
+  <title>iNano - Molecule Virtual Reality </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/index.css" type="text/css" />
@@ -15,32 +15,29 @@
 <script type="text/javascript" src="js/webvr-polyfill/webvr-polyfill.min.js"></script>
 <script type="text/javascript" src="js/webvr-ui/webvr-ui.min.js"></script>
 -->
-<!-- Our Design-->
-<script type="text/javascript" src="libs/molecule/inanowebvr.min.js"></script>
-
 <!--three.js-->
 
 <script type="text/javascript" src="js/controls/TrackballControls.js"></script>
 <script type="text/javascript" src="js/renderers/CSS2DRenderer.js"></script>
-<!-- vr js -->
+<!-- vr 相关js引入 -->
 <script type="text/javascript" src="js/controls/VRControls.js"></script>
 <script type="text/javascript" src="js/effects/VREffect.js"></script>
 <script type="text/javascript" src="js/vr/WebVR.js"></script>
 <script type="text/javascript" src="js/vr/ViveController.js"></script>
 <script type="text/javascript" src="js/loaders/OBJLoader.js"></script>
-<!-- tube -->
+<!-- tube相关引用 -->
 <script type="text/javascript" src="js/CurveExtras.js"></script>
 <script type="text/javascript" src="js/controls/OrbitControls.js"></script>
 <!-- where curves formulas are defined -->
 <script type="text/javascript" src="js/libs/stats.min.js"></script>
 <script type="text/javascript" src="js/libs/dat.gui.min.js"></script>
 <!-- import by convex-->
-<script type="text/javascript" src="js/controls/OrbitControls.js"></script>
-<script type="text/javascript" src="js/QuickHull.js"></script>
-<script type="text/javascript" src="js/geometries/ConvexGeometry.js"></script>
-<script type="text/javascript" src="js/Detector.js"></script>
+<script src="js/controls/OrbitControls.js"></script>
+<script src="js/QuickHull.js"></script>
+<script src="js/geometries/ConvexGeometry.js"></script>
+<script src="js/Detector.js"></script>
 <!-- import from three for surface-->
-<script type="text/javascript" src="js/MarchingCubes.js"></script>
+<script src="js/MarchingCubes.js"></script>
 <!--import EmMapParser-->
 <script type="text/javascript" src="libs/emmap/gunzip.min.js"></script>
 <script type="text/javascript" src="libs/emmap/chroma.min.js"></script>
@@ -49,9 +46,40 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
+<!---------------------------xukui 0903 01:12------------------------------>
+<script type="x-shader/x-vertex" id="vertexshader">
+    uniform float delta;
+    attribute float opacity;
+    attribute vec3 customColor;
+    varying float vOpacity;
+    varying vec3 vCustomColor;
+    varying vec3 vUv;
+    void main()
+    {
+        vUv = position;
+        vOpacity = opacity;
+        vCustomColor = customColor;
+        vec3 p = position;
+        vec4 modelViewPosition = modelViewMatrix * vec4(p, 1.0);
+        gl_Position = projectionMatrix * modelViewPosition;
+    }
+</script>
 
+<script type="x-shader/x-fragment" id="fragmentshader">
+    uniform float delta;
+    varying float vOpacity;
+    varying vec3 vUv;
+    varying vec3 vCustomColor;
+    void main() {
+        float r = vCustomColor.r;
+        float g = vCustomColor.g;
+        float b = vCustomColor.b;
+        vec3 rgb = vec3(r, g, b);
+        gl_FragColor = vec4(rgb,vOpacity );
+    }
+</script>
 <div id="container"></div>
-<div id="info" class="panel"><a href="#" target="_blank"></a>iNano-WebVR</div>
+<div id="info" class="panel"><strong>iNano</strong> by <a href="http://www.zhanglab.net" target="_blank">ZhangLab</a></div>
 <div id="searchDiv" class="panel">
     <input type="text" name="search_text" class="search_text" id="search_text" placeholder="INPUT PDB ID" onkeydown="PDB.controller.onKeyDown(event)"/>
     <input type="button" class="search_button" id="search_button" value="Search">
@@ -146,6 +174,7 @@
 	<input class="updateColor" name="colorMode" id="updatecolor_BySpectrum" type="radio"  title="By Residue" color_mode="607"/>  <label class="label" for="updatecolor_BySpectrum">By Spectrum</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByChainSpectrum" type="radio"  title="By Residue" color_mode="608"/>  <label class="label" for="updatecolor_ByChainSpectrum">By Chain Spectrum</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByHydrophobicity" type="radio"  title="By Residue" color_mode="609"/>  <label class="label" for="updatecolor_ByHydrophobicity">By Hydrophobicity</label>   <BR/>
+	<button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>
   </span>
   <BR/>
 
@@ -162,6 +191,7 @@
     <!--<input class="labelPDB" name="mode" id="dragModel" checked="checked"  type="radio" title="All the models" />  <label class="label" for="dragModel"> All the models</label>   <BR/>
     <input class="labelPDB" name="mode" id="dragMainHet"    type="radio" title="Main and Het"/>   <label class="label" for="dragMainHet"> Main and Het</label>    <BR/>
     <input class="labelPDB" name="mode" id="dragMain" type="radio" title="Only Main"/><label class="label" for="dragMain"> Only Main </label> <BR/>-->
+	<input class="labelPDB" name="mode" id="dragReset"   type="radio" title="Reset"/>  <label class="label" for="reset"> Reset </label>   <BR/>
     <input class="labelPDB" name="mode" id="dragHet"   type="radio" title="Drag Ligand"/>  <label class="label" for="dragHet"> Drag Ligand </label>   <BR/>
     <input class="labelPDB" name="mode" id="dragChain"   type="radio" title="Drag Chain"/>  <label class="label" for="dragChain"> Drag Chain</label>   <BR/>
   </span>
@@ -211,11 +241,11 @@
   
   <BR/>
 
-  <LABEL onclick="switchMenu('conservation')">Conservation</LABEL><BR/>
+  <!--<LABEL onclick="switchMenu('conservation')">Conservation</LABEL><BR/>
   <span class="submenu" id="conservation">
     <button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>
   </span>
-  <BR/>
+  <BR/>-->
 
   <LABEL onclick="switchMenu('drugDesign')">Drug Design</LABEL><BR/>
   <span class="submenu" id="drugDesign">
@@ -231,8 +261,17 @@
     <button class="labelPDB" name="b_export_scene" id="b_export_scene" value="Export">Export</button>
   </span>
   <BR/>
-  <LABEL id="progmsg">progress</LABEL><BR/>
+  <LABEL onclick="switchMenu('chainNumThreshold')">ChainNumThreshold</LABEL><BR/>
+  <span class="submenu" id="chainNumThreshold">
+    <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>-->
+  </span>
+  <BR/>
+  <LABEL id="progmsg">Progress</LABEL><BR/>
     <progress id="progress" value="0"></progress>
+    <BR/>
+  <LABEL onclick="switchMenu('contact')" id="contact">Contact Us</LABEL><BR/>
+    <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
+   
     <BR/>
 
 
@@ -354,7 +393,8 @@
 		<button id="Confirm_fregment" style="width: 68px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 30px;">Confirm</button>
 	</div>
 </div>
-<script type="text/javascript" src="libs/molecule/index.js"></script>
+<!-- Our Design-->
+<script type="text/javascript" src="libs/molecule/inano.min.js"></script>
 <script type="text/javascript">
     <!-- menu -->
     if (document.getElementById){ //DynamicDrive.com change
