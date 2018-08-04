@@ -3,7 +3,7 @@
  */
 //生成全局变量
 var PDB ;
-var ServerType = 3;
+var ServerType = 2;
 
 var SERVERURL = "http://localhost:8080/molecule_vr";
 if(ServerType ===1){
