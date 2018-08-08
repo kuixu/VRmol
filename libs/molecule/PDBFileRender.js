@@ -400,8 +400,18 @@ function dealwithMenu(object) {
             break;
     }
 }
-
+function onSelectStart( event ) {
+	console.log("onSelectStart");
+	onTriggerDown( event );
+	
+}
+function onSelectEnd( event ) {
+	console.log("onSelectEnd");
+    onTriggerUp( event );
+	
+}
 function onTriggerDown( event ) {
+	console.log("onTriggerDown");
     var controller = event.target;
     var intersections = getIntersections( controller );
     if ( intersections.length <= 0 ) {
@@ -479,6 +489,7 @@ function onTriggerDown( event ) {
 
 }
 function onTriggerUp( event ) {
+	console.log("onTriggerUp");
     switch (PDB.selection_mode){
         case PDB.SELECTION_MODEL:
             break;
@@ -758,6 +769,8 @@ function getIntersections( controller ) {
 }
 
 function intersectObjects( controller ) {
+	if ( controller.userData.selected !== undefined ) return;
+	
     var line = controller.getObjectByName( 'line' );
     var intersections = getIntersections( controller );
     if ( intersections!=undefined &&intersections.length > 0 ) {
@@ -856,7 +869,7 @@ PDB.render = {
 
         // window.addEventListener( 'resize',  this.onWindowResize, false );
     },
-    initVR:function(){
+    initVR0:function(){
         // Scene
         scene = new THREE.Scene();
         scene.background = new THREE.Color( 0x808080 );
@@ -956,6 +969,252 @@ PDB.render = {
                 document.getElementById('player').play();
             }
         } );
+    },
+	initVR:function(){
+        // Scene
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color( 0x808080 );
+        scene.add( new THREE.HemisphereLight( 0x808080, 0x606060 ) );
+        // Camera
+        camera = new THREE.PerspectiveCamera( 10, window.innerWidth / window.innerHeight, 0.1, 50000 );
+		//camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 50 );
+        scene.add( camera );
+        // Group
+        for (var i = 0; i < PDB.GROUP_COUNT; i++) {
+            PDB.GROUP[i]= new THREE.Group();
+            PDB.GROUP[i].userData["group"] = i;
+            scene.add(PDB.GROUP[i]);
+        }
+
+
+
+        this.addLightsByType(lightType);
+
+
+
+        container = document.createElement( 'div' );
+        document.body.appendChild( container );
+
+        renderer = new THREE.WebGLRenderer( { antialias: true } );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.shadowMap.enabled = true;
+        renderer.gammaInput = true;
+        renderer.gammaOutput = true;
+        container.appendChild( renderer.domElement );
+        renderer.vr.enabled = true;
+        //renderer.vr.standing = true;
+        //vr
+		document.body.appendChild( WEBVR.createButton( renderer ) );
+		// controllers
+		// function onSelectStart() {
+			// this.userData.isSelecting = true;
+		// }
+		// function onSelectEnd() {
+			// this.userData.isSelecting = false;
+		// }
+		
+		// vive
+        // vrControls = new THREE.VRControls( camera );
+        //vrEffect = new THREE.VREffect( renderer );
+        // vive controllers
+        //tempMatrix = new THREE.Matrix4();
+        // controllers
+        // controller1 = new THREE.ViveController( 0 );
+        // for (var i=0;i<4;i++){
+            // controller1 = new THREE.ViveController( i );
+            // if(controller1.visible){
+               // break;
+            // }
+        // }
+
+        // controller1.standingMatrix = renderer.vr.getStandingMatrix();
+        // controller1.addEventListener( 'triggerdown', onTriggerDown );
+        // controller1.addEventListener( 'triggerup', onTriggerUp );
+        // controller1.addEventListener( 'menuup', onMenuUp );
+        // controller1.addEventListener( 'menudown', onMenuDown );
+        // controller1.addEventListener( 'thumbpadup', onThumbpadUp );
+        // controller1.addEventListener( 'thumbpaddown', onThumbpadDown );
+        // controller1.addEventListener( 'axischanged', onAxisChanged );
+        // scene.add( controller1 );
+
+        // controller2 = new THREE.ViveController( 1 );
+        // controller2.standingMatrix = renderer.vr.getStandingMatrix();
+        // controller2.addEventListener( 'triggerdown', onTriggerDown );
+        // controller2.addEventListener( 'triggerup', onTriggerUp );
+        // controller2.addEventListener( 'menuup', onMenuUp );
+        // controller2.addEventListener( 'menudown', onMenuDown );
+        // controller2.addEventListener( 'thumbpadup', onThumbpadUp );
+        // controller2.addEventListener( 'thumbpaddown', onThumbpadDown );
+        // controller2.addEventListener( 'axischanged', onAxisChanged );
+        // scene.add( controller2 );
+		
+		// var loader = new THREE.OBJLoader();
+        // loader.setPath( 'models/obj/vive-controller/' );
+        // loader.load( 'vr_controller_vive_1_5.obj', function ( object ) {
+            // var loader = new THREE.TextureLoader();
+            // loader.setPath( 'models/obj/vive-controller/' );
+            // var controller = object.children[ 0 ];
+            // controller.material.map = loader.load( 'onepointfive_texture.png' );
+            // controller.material.specularMap = loader.load( 'onepointfive_spec.png' );
+            // controller1.add( object.clone() );
+            // controller2.add( object.clone() );
+        // } );
+		
+		// var geometry = new THREE.Geometry();
+        // geometry.vertices.push( new THREE.Vector3( 0, 0,  0 ) );
+        // geometry.vertices.push( new THREE.Vector3( 0, 0, -1 ) );
+
+        // var line = new THREE.Line( geometry );
+        // line.name = 'line';
+        // line.scale.z = 5;
+
+        // controller1.add( line.clone() );
+        // controller2.add( line.clone() );
+
+        //raycaster = new THREE.Raycaster();
+
+        // WEBVR.getVRDisplay( function ( display ) {
+            // renderer.vr.setDevice( display );
+            // document.body.appendChild( WEBVR.getButton( display, renderer.domElement ) );
+            // if(PDB.pdbId=="4pyp"){
+                // document.getElementById('player').play();
+            // }
+        // } );
+		
+		// Microsoft
+		
+		//controller1 = renderer.vr.getController( 0 );
+		//controller1.addEventListener( 'selectstart', onSelectStart );
+		//controller1.addEventListener( 'selectend', onSelectEnd );
+		//vrControls = new THREE.VRControls( camera );
+        //vrEffect = new THREE.VREffect( renderer );
+		//vive
+		//controller1 = new THREE.ViveController( 0 );
+		// general
+		//(controller)=>{}
+		//window.addEventListener( 'vr controller connected', (controller1)=> {
+		//thumbstick 
+		//thumbpad
+		//menu
+		//trigger
+		//grip
+		window.addEventListener( 'vr controller connected', function( event ){
+			controller1 = event.detail;
+			console.log("style:"+controller1.style+" "+controller1.gamepad.hand);
+			console.log(controller1);
+			//controller1 = new THREE.VRController( 0 );
+			controller1.standingMatrix = renderer.vr.getStandingMatrix();
+			controller1.addEventListener('thumbstick touch began', function (event) {
+				onThumbpadDown(event);
+            })
+			controller1.addEventListener('thumbstick touch end', function (event) {
+				onThumbpadUp(event);
+            })
+			controller1.addEventListener('thumbpad touch began', function (event) {
+				onThumbpadDown(event);
+            })
+			controller1.addEventListener('thumbpad touch end', function (event) {
+				onThumbpadUp(event);
+            })
+			controller1.addEventListener( 'primary press began', function( event ){
+                onTriggerDown(event);
+			})
+			controller1.addEventListener( 'primary press ended', function( event ){
+                onTriggerUp(event);
+			})
+			controller1.addEventListener( 'menu press began', function( event ){
+                onMenuDown(event);
+			})
+			controller1.addEventListener( 'menu press ended', function( event ){
+                onMenuUp(event);
+			})
+			controller1.addEventListener( 'thumbstick axes changed', function( event ){
+                onAxisChanged(event);
+			})
+			controller1.addEventListener( 'thumbpad axes changed', function( event ){
+                onAxisChanged(event);
+			})
+			controller1.addEventListener( 'primary axes changed', function( event ){
+                onAxisChanged(event);
+			})
+			
+			//controller1.addEventListener( 'triggerdown', onTriggerDown );
+			//controller1.addEventListener( 'triggerup', onTriggerUp );
+			//controller1.addEventListener( 'menuup', onMenuUp );
+			//controller1.addEventListener( 'menudown', onMenuDown );
+			//controller1.addEventListener( 'thumbpadup', onThumbpadUp );
+			//controller1.addEventListener( 'thumbpaddown', onThumbpadDown );
+			//controller1.addEventListener( 'axischanged', onAxisChanged );
+			scene.add( controller1 );
+			var loader = new THREE.OBJLoader();
+			loader.setPath( 'models/obj/vive-controller/' );
+			loader.load( 'vr_controller_vive_1_5.obj', function ( object ) {
+				var loader = new THREE.TextureLoader();
+				loader.setPath( 'models/obj/vive-controller/' );
+				var controller = object.children[ 0 ];
+				controller.material.map = loader.load( 'onepointfive_texture.png' );
+				controller.material.specularMap = loader.load( 'onepointfive_spec.png' );
+				controller1.add( object.clone() );
+				//controller2.add( object.clone() );
+			} );
+			
+			
+
+			
+			// helpers
+			var geometry = new THREE.BufferGeometry();
+			geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( [ 0, 0, 0, 0, 0, - 1 ], 3 ) );
+			geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( [ 0.5, 0.5, 0.5, 0, 0, 0 ], 3 ) );
+			var material = new THREE.LineBasicMaterial( { vertexColors: true, linewidth: 2, blending: THREE.AdditiveBlending } );
+			var line = new THREE.Line( geometry, material );
+			line.name = 'line';
+			line.scale.z = 5;
+			controller1.add( line.clone() );
+			//controller2.add( line.clone() );
+		});
+		
+		// controller2 = renderer.vr.getController( 1 );
+		// controller2.addEventListener( 'selectstart', onSelectStart );
+		// controller2.addEventListener( 'selectend', onSelectEnd );
+		//vive
+		//controller2 = new THREE.ViveController( 1 );
+		// general
+		// controller2 = new THREE.VRController( 1 );
+		// controller2.standingMatrix = renderer.vr.getStandingMatrix();
+		// controller2.addEventListener( 'triggerdown', onTriggerDown );
+        // controller2.addEventListener( 'triggerup', onTriggerUp );
+        // controller2.addEventListener( 'menuup', onMenuUp );
+        // controller2.addEventListener( 'menudown', onMenuDown );
+        // controller2.addEventListener( 'thumbpadup', onThumbpadUp );
+        // controller2.addEventListener( 'thumbpaddown', onThumbpadDown );
+        // controller2.addEventListener( 'axischanged', onAxisChanged );
+		// scene.add( controller2 );
+
+        
+		
+		raycaster = new THREE.Raycaster();
+		//
+		window.addEventListener( 'resize', onWindowResize, false );
+		function onWindowResize() {
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+		}
+		
+		// window.addEventListener('gamepadconnected', function(e) {
+		  // info.textContent = 'Gamepad ' + e.gamepad.index + ' connected.';
+		  // if(!initialRun) {
+			  // setTimeout(removeGamepads, 1000);
+		  // }
+		// });
+
+		// window.addEventListener('gamepaddisconnected', function(e) {
+		  // info.textContent = 'Gamepad ' + e.gamepad.index + ' disconnected.';
+		  // setTimeout(removeGamepads, 1000);
+		// });
+
+        
     },
     changeToThreeMode:function (mode,travelMode) {
 		var scope = this;
@@ -1181,14 +1440,27 @@ PDB.render = {
             particleLight.add( pointLight );
         }
     },
+	// handleController :function ( controller ) {
+		// if ( controller.userData.isSelecting ) {
+			// var object = room.children[ 0 ];
+			// room.remove( object );
+			// object.position.copy( controller.position );
+			// object.userData.velocity.x = ( Math.random() - 0.5 ) * 0.02;
+			// object.userData.velocity.y = ( Math.random() - 0.5 ) * 0.02;
+			// object.userData.velocity.z = ( Math.random() * 0.02 - 0.1 );
+			// object.userData.velocity.applyQuaternion( controller.quaternion );
+			// room.add( object );
+		// }
+	// }
     render : function(){
         if (PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR){
-            controller1.update();
-            // controller2.update();
-            vrControls.update();
+            //if(controller1!=undefined){controller1.update();}
+            //controller2.update();
+			THREE.VRController.update();
+            //vrControls.update();
             cleanIntersected();
-            intersectObjects( controller1 );
-            // intersectObjects( controller2 );
+            if(controller1!=undefined){intersectObjects( controller1 );}
+            //intersectObjects( THREE.VRController.prototype );
 
             if (PDB.TravelMode === true && PDB.TravelGeometry!=="") {
 
@@ -1251,13 +1523,15 @@ PDB.render = {
 
                 //
                 //camera.position.copy(pos);
-                renderer.render( scene, camera );
+                //renderer.render( scene, camera );
 
                 //vrEffect.render( scene, camera );
-            }else{
-                vrEffect.render( scene, camera );
             }
-            camera.updateProjectionMatrix();
+			// else{
+                // vrEffect.render( scene, camera );
+            // }
+            //camera.updateProjectionMatrix();
+			renderer.render( scene, camera );
 
         }else if(PDB.mode === PDB.MODE_THREE || PDB.MODE_TRAVEL_THREE){
             if (PDB.TravelMode === true && PDB.TravelGeometry!="") {
@@ -1503,9 +1777,11 @@ PDB.render = {
 
         if(PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR){
             //zdw vr mode
-            vrControls.update();
-            PDB.render.render();
-            vrEffect.requestAnimationFrame( PDB.render.animate );
+			// 86 mode
+            //vrControls.update();
+            //PDB.render.render();
+            //vrEffect.requestAnimationFrame( PDB.render.animate );
+			renderer.setAnimationLoop( PDB.render.render );
         }else if(PDB.mode === PDB.MODE_THREE || PDB.MODE_TRAVEL_THREE){
             //zdw three mode
             PDB.render.render();

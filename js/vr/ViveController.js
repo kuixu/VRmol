@@ -26,8 +26,9 @@ THREE.ViveController = function ( id ) {
 		for ( var i = 0, j = 0; i < 4; i ++ ) {
 
 			var gamepad = gamepads[ i ];
+			console.log("gamepad"+gamepad.id);
 
-			if ( gamepad && ( gamepad.id === 'OpenVR Gamepad' || gamepad.id === 'Oculus Touch (Left)' || gamepad.id === 'Oculus Touch (Right)' ) ) {
+			if ( gamepad && ( gamepad.id === 'OpenVR Gamepad' || gamepad.id === 'Oculus Touch (Left)'|| gamepad.id === 'Spatial Controller (Spatial Interaction Source) ' || gamepad.id === 'Oculus Touch (Right)' ) ) {
 
 				if ( j === id ) return gamepad;
 

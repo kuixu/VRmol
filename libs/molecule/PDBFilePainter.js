@@ -3359,10 +3359,10 @@ PDB.painter = {
 					var pos = PDB.tool.getMainAtom(PDB.pdbId,caid).pos_centered;
 					// var offset = camera.position;
 					var length = Math.sqrt(Math.pow(offset.x-pos.x,2)+Math.pow(offset.y-pos.y,2)+Math.pow(offset.z-pos.z,2));
-					if(resid==15){
+					// if(resid==15){
 						
-						console.log(length);
-					}
+						// console.log(length);
+					// }
 					
 					if(length<showLengthThreshold){							
 						if(PDB.residueGroupObject[chain][resid]==undefined||PDB.residueGroupObject[chain][resid]==PDB.residueGroup_undefined){
