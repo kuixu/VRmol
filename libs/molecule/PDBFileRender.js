@@ -3,8 +3,9 @@
  */
  var container;
 var camera, scene , renderer;
+var statsVR;
 var splineCamera, parent ,group;
-var cameraEye, pivot;
+var cameraEye, menu_panel;
 var binormal = new THREE.Vector3();
 var normal = new THREE.Vector3();
 var scale = 4;
@@ -78,32 +79,53 @@ function onMenuDown(event){
 }
 
 
-
+var action=0 ;
 function onThumbpadUp(event){
-	// console.log('onThumbpadUp');
+	//console.log('onThumbpadUp');
     var pad = event.target;
+	
     window.clearInterval(id);
     PDB.ROTATION_START_FLAG = false;
+	
 }
 
 function onThumbpadDown(event){
-	// console.log('onThumbpadDown');
+	//console.log('onThumbpadDown');
     var controller = event.target;
-    if((ThumbpadAxes[1]<=-0.5 &&  ThumbpadAxes[0] >= -0.5 && ThumbpadAxes[0] <= 0) ||
-        (ThumbpadAxes[1]<=-0.5 &&  ThumbpadAxes[0] <= 0.5 && ThumbpadAxes[0] >= 0)){
-        id =self.setInterval("PDB.painter.near()",20)
-    }else if((ThumbpadAxes[1]>= 0.5 &&  ThumbpadAxes[0] >= -0.5 && ThumbpadAxes[0] <= 0) ||
-        (ThumbpadAxes[1] >= 0.5 &&  ThumbpadAxes[0] <= 0.5 && ThumbpadAxes[0] >= 0)){
-        id =self.setInterval("PDB.painter.far()",20)
-    }else if((ThumbpadAxes[0]<=-0.5 &&  ThumbpadAxes[1] >= -0.5 && ThumbpadAxes[1] <= 0) ||
-        (ThumbpadAxes[0]<=-0.5 &&  ThumbpadAxes[1] <= 0.5 && ThumbpadAxes[1] >= 0)){
-        PDB.ROTATION_DIRECTION = 0;
-        PDB.ROTATION_START_FLAG= true;
-    }else if((ThumbpadAxes[0]>= 0.5 &&  ThumbpadAxes[1] >= -0.5 && ThumbpadAxes[1] <= 0) ||
-        (ThumbpadAxes[0]>= 0.5 &&  ThumbpadAxes[1] <= 0.5 && ThumbpadAxes[1] >= 0)){
-        PDB.ROTATION_DIRECTION = 1;
-        PDB.ROTATION_START_FLAG= true;
+	x=ThumbpadAxes[0];
+	y=ThumbpadAxes[1];
+    if((y<=-0.5 &&  x >= -0.5 && x <= 0) ||(y<=-0.5 &&  x <= 0.5 && x >= 0)){
+		action=1;
+    }else if((y>= 0.5 &&  x >= -0.5 &&x <= 0) ||(y >= 0.5 && x <= 0.5 && x >= 0)){
+		action=2;
+    }else if((x<=-0.5 && y >= -0.5 && y <= 0) || (x<=-0.5 && y <= 0.5 && y >= 0)){
+		action=3;
+    }else if((x>= 0.5 && y >= -0.5 && y <= 0) || (x>= 0.5 && y <= 0.5 && y >= 0)){
+		action=4;
     }
+	
+	switch (action){
+		case 0:
+			
+			break;
+		case 1:
+			id =self.setInterval("PDB.painter.near()",20);
+			break;
+		case 2:
+		    id =self.setInterval("PDB.painter.far()",20);
+			break;
+		case 3:
+			PDB.ROTATION_DIRECTION = 0;
+            PDB.ROTATION_START_FLAG= true;
+			break;
+		case 4:
+		    PDB.ROTATION_DIRECTION = 1;
+            PDB.ROTATION_START_FLAG= true;
+		    break;
+	}
+	// action=0;
+	// window.clearInterval(id);
+    // PDB.ROTATION_START_FLAG = false;
 }
 
 function dealwithMenu(object) {
@@ -400,18 +422,9 @@ function dealwithMenu(object) {
             break;
     }
 }
-function onSelectStart( event ) {
-	console.log("onSelectStart");
-	onTriggerDown( event );
-	
-}
-function onSelectEnd( event ) {
-	console.log("onSelectEnd");
-    onTriggerUp( event );
-	
-}
+
 function onTriggerDown( event ) {
-	console.log("onTriggerDown");
+	//console.log("onTriggerDown");
     var controller = event.target;
     var intersections = getIntersections( controller );
     if ( intersections.length <= 0 ) {
@@ -489,7 +502,7 @@ function onTriggerDown( event ) {
 
 }
 function onTriggerUp( event ) {
-	console.log("onTriggerUp");
+	//console.log("onTriggerUp");
     switch (PDB.selection_mode){
         case PDB.SELECTION_MODEL:
             break;
@@ -979,6 +992,8 @@ PDB.render = {
         camera = new THREE.PerspectiveCamera( 10, window.innerWidth / window.innerHeight, 0.1, 50000 );
 		//camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 50 );
         scene.add( camera );
+		//stats
+		statsVR = new StatsVR(scene, camera);
         // Group
         for (var i = 0; i < PDB.GROUP_COUNT; i++) {
             PDB.GROUP[i]= new THREE.Group();
@@ -986,11 +1001,7 @@ PDB.render = {
             scene.add(PDB.GROUP[i]);
         }
 
-
-
         this.addLightsByType(lightType);
-
-
 
         container = document.createElement( 'div' );
         document.body.appendChild( container );
@@ -1007,81 +1018,6 @@ PDB.render = {
         //vr
 		document.body.appendChild( WEBVR.createButton( renderer ) );
 		// controllers
-		// function onSelectStart() {
-			// this.userData.isSelecting = true;
-		// }
-		// function onSelectEnd() {
-			// this.userData.isSelecting = false;
-		// }
-		
-		// vive
-        // vrControls = new THREE.VRControls( camera );
-        //vrEffect = new THREE.VREffect( renderer );
-        // vive controllers
-        //tempMatrix = new THREE.Matrix4();
-        // controllers
-        // controller1 = new THREE.ViveController( 0 );
-        // for (var i=0;i<4;i++){
-            // controller1 = new THREE.ViveController( i );
-            // if(controller1.visible){
-               // break;
-            // }
-        // }
-
-        // controller1.standingMatrix = renderer.vr.getStandingMatrix();
-        // controller1.addEventListener( 'triggerdown', onTriggerDown );
-        // controller1.addEventListener( 'triggerup', onTriggerUp );
-        // controller1.addEventListener( 'menuup', onMenuUp );
-        // controller1.addEventListener( 'menudown', onMenuDown );
-        // controller1.addEventListener( 'thumbpadup', onThumbpadUp );
-        // controller1.addEventListener( 'thumbpaddown', onThumbpadDown );
-        // controller1.addEventListener( 'axischanged', onAxisChanged );
-        // scene.add( controller1 );
-
-        // controller2 = new THREE.ViveController( 1 );
-        // controller2.standingMatrix = renderer.vr.getStandingMatrix();
-        // controller2.addEventListener( 'triggerdown', onTriggerDown );
-        // controller2.addEventListener( 'triggerup', onTriggerUp );
-        // controller2.addEventListener( 'menuup', onMenuUp );
-        // controller2.addEventListener( 'menudown', onMenuDown );
-        // controller2.addEventListener( 'thumbpadup', onThumbpadUp );
-        // controller2.addEventListener( 'thumbpaddown', onThumbpadDown );
-        // controller2.addEventListener( 'axischanged', onAxisChanged );
-        // scene.add( controller2 );
-		
-		// var loader = new THREE.OBJLoader();
-        // loader.setPath( 'models/obj/vive-controller/' );
-        // loader.load( 'vr_controller_vive_1_5.obj', function ( object ) {
-            // var loader = new THREE.TextureLoader();
-            // loader.setPath( 'models/obj/vive-controller/' );
-            // var controller = object.children[ 0 ];
-            // controller.material.map = loader.load( 'onepointfive_texture.png' );
-            // controller.material.specularMap = loader.load( 'onepointfive_spec.png' );
-            // controller1.add( object.clone() );
-            // controller2.add( object.clone() );
-        // } );
-		
-		// var geometry = new THREE.Geometry();
-        // geometry.vertices.push( new THREE.Vector3( 0, 0,  0 ) );
-        // geometry.vertices.push( new THREE.Vector3( 0, 0, -1 ) );
-
-        // var line = new THREE.Line( geometry );
-        // line.name = 'line';
-        // line.scale.z = 5;
-
-        // controller1.add( line.clone() );
-        // controller2.add( line.clone() );
-
-        //raycaster = new THREE.Raycaster();
-
-        // WEBVR.getVRDisplay( function ( display ) {
-            // renderer.vr.setDevice( display );
-            // document.body.appendChild( WEBVR.getButton( display, renderer.domElement ) );
-            // if(PDB.pdbId=="4pyp"){
-                // document.getElementById('player').play();
-            // }
-        // } );
-		
 		// Microsoft
 		
 		//controller1 = renderer.vr.getController( 0 );
@@ -1089,11 +1025,10 @@ PDB.render = {
 		//controller1.addEventListener( 'selectend', onSelectEnd );
 		//vrControls = new THREE.VRControls( camera );
         //vrEffect = new THREE.VREffect( renderer );
+		
 		//vive
 		//controller1 = new THREE.ViveController( 0 );
 		// general
-		//(controller)=>{}
-		//window.addEventListener( 'vr controller connected', (controller1)=> {
 		//thumbstick 
 		//thumbpad
 		//menu
@@ -1106,31 +1041,49 @@ PDB.render = {
 			//controller1 = new THREE.VRController( 0 );
 			controller1.standingMatrix = renderer.vr.getStandingMatrix();
 			controller1.addEventListener('thumbstick touch began', function (event) {
-				onThumbpadDown(event);
+				//console.log("thumbstick touch began");
+				//onThumbpadDown(event);
             })
-			controller1.addEventListener('thumbstick touch end', function (event) {
-				onThumbpadUp(event);
+			controller1.addEventListener('thumbstick touch ended', function (event) {
+				//console.log("thumbstick touch end");
+				//onThumbpadUp(event);
             })
 			controller1.addEventListener('thumbpad touch began', function (event) {
+				//console.log("thumbpad touch began");
+				//onThumbpadDown(event);
+            })
+			controller1.addEventListener('thumbpad touch ended', function (event) {
+				//console.log("thumbpad touch end");
+				//onThumbpadUp(event);
+            })
+			controller1.addEventListener('thumbpad press began', function (event) {
+				//console.log("thumbpad press began");
 				onThumbpadDown(event);
             })
-			controller1.addEventListener('thumbpad touch end', function (event) {
+			controller1.addEventListener('thumbpad press ended', function (event) {
+				//console.log("thumbpad press end");
 				onThumbpadUp(event);
             })
+			// Trigger (vive and microsoft ok)
 			controller1.addEventListener( 'primary press began', function( event ){
                 onTriggerDown(event);
 			})
+			// Trigger (vive and microsoft ok)
 			controller1.addEventListener( 'primary press ended', function( event ){
                 onTriggerUp(event);
 			})
+			// menu (vive and microsoft ok)
 			controller1.addEventListener( 'menu press began', function( event ){
                 onMenuDown(event);
 			})
+			// menu (vive and microsoft ok)
 			controller1.addEventListener( 'menu press ended', function( event ){
                 onMenuUp(event);
 			})
 			controller1.addEventListener( 'thumbstick axes changed', function( event ){
+				//console.log("thumbstick axes end");
                 onAxisChanged(event);
+				//onThumbpadDown(event)
 			})
 			controller1.addEventListener( 'thumbpad axes changed', function( event ){
                 onAxisChanged(event);
@@ -1138,23 +1091,27 @@ PDB.render = {
 			controller1.addEventListener( 'primary axes changed', function( event ){
                 onAxisChanged(event);
 			})
-			
-			//controller1.addEventListener( 'triggerdown', onTriggerDown );
-			//controller1.addEventListener( 'triggerup', onTriggerUp );
-			//controller1.addEventListener( 'menuup', onMenuUp );
-			//controller1.addEventListener( 'menudown', onMenuDown );
-			//controller1.addEventListener( 'thumbpadup', onThumbpadUp );
-			//controller1.addEventListener( 'thumbpaddown', onThumbpadDown );
-			//controller1.addEventListener( 'axischanged', onAxisChanged );
+		
 			scene.add( controller1 );
+			var objname = 'vr_controller_vive_1_5.obj';
+			var path = 'models/obj/vive-controller/' ;
+			if (controller1.style==="microsoft"){
+				objname = controller1.gamepad.hand+'.obj';
+			    path = 'models/obj/microsoft-controller/' ;
+			}
 			var loader = new THREE.OBJLoader();
-			loader.setPath( 'models/obj/vive-controller/' );
-			loader.load( 'vr_controller_vive_1_5.obj', function ( object ) {
+			loader.setPath( path );
+			
+			loader.load( objname, function ( object ) {
 				var loader = new THREE.TextureLoader();
-				loader.setPath( 'models/obj/vive-controller/' );
+				loader.setPath( path);
 				var controller = object.children[ 0 ];
-				controller.material.map = loader.load( 'onepointfive_texture.png' );
-				controller.material.specularMap = loader.load( 'onepointfive_spec.png' );
+				if (controller1.style==="microsoft"){
+					console.log("onepointfive_texture png")
+				}else{
+					controller.material.map = loader.load( 'onepointfive_texture.png' );
+					controller.material.specularMap = loader.load( 'onepointfive_spec.png' );
+				}
 				controller1.add( object.clone() );
 				//controller2.add( object.clone() );
 			} );
@@ -1458,6 +1415,15 @@ PDB.render = {
             //controller2.update();
 			THREE.VRController.update();
             //vrControls.update();
+			// statsVR.msStart();
+            // statsVR.update();
+			// statsVR.setCustom1("x:" + camera.position.x.toFixed(2));
+            // statsVR.setCustom2("y:" + camera.position.y.toFixed(2));
+            // statsVR.setCustom3("z:" + camera.position.z.toFixed(2));
+			if(menu_panel!=undefined){
+				menu_panel.lookAt( camera.position );
+			}
+
             cleanIntersected();
             if(controller1!=undefined){intersectObjects( controller1 );}
             //intersectObjects( THREE.VRController.prototype );
@@ -1532,6 +1498,7 @@ PDB.render = {
             // }
             //camera.updateProjectionMatrix();
 			renderer.render( scene, camera );
+			//statsVR.msEnd();
 
         }else if(PDB.mode === PDB.MODE_THREE || PDB.MODE_TRAVEL_THREE){
             if (PDB.TravelMode === true && PDB.TravelGeometry!="") {
@@ -1842,68 +1809,32 @@ PDB.render = {
     showMenu : function(){
         PDB.painter.showKeyboard();
         PDB.painter.showMenu(PDB.MENU_TYPE_FIRST);
-        pivot = new THREE.Object3D();
-        scene.add(pivot);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU]);
-        pivot.add(PDB.GROUP[PDB.GROUP_KEYBOARD]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_MAIN]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_LABEL]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_EX_HET]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_TRAVEL]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_SURFACE]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_MUTATION]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_ROTATION]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_DRUG]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_DENSITYMAP]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_CONSERVATION]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_HBOND]);
+        menu_panel = new THREE.Object3D();
+        scene.add(menu_panel);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_KEYBOARD]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_MAIN]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_LABEL]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_EX_HET]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_TRAVEL]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_SURFACE]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_MUTATION]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_ROTATION]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DRUG]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DENSITYMAP]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_CONSERVATION]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_HBOND]);
 
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_HET]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_COLOR]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_MEASURE]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_DRAG]);
-        pivot.add(PDB.GROUP[PDB.GROUP_MENU_FRAGMENT]);
-        pivot.add(PDB.GROUP[PDB.GROUP_INPUT]);
-        // position the object on the pivot, so that it appears 5 meters
-        // in front of the user.
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_HET]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_COLOR]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_MEASURE]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DRAG]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_FRAGMENT]);
+        menu_panel.add(PDB.GROUP[PDB.GROUP_INPUT]);
+       
+		menu_panel.position.set( 0, 0, -3 );
 
-        //var yaxis = new THREE.Vector3(0, 1, 0);
-        //var zaxis = new THREE.Vector3(0, 0, 1);
-        //var direction = zaxis.clone();
-        // Apply the camera's quaternion onto the unit vector of one of the axes
-        // of our desired rotation plane (the z axis of the xz plane, in this case).
-        //q = camera.quaternion;
-        //q._x = 0;
-        //q._y = -0.688808022939613;
-        //q._z = 0;
-        //q._w = 0.7249437961207901;
-
-        //direction.applyQuaternion(q);
-        // Project the direction vector onto the y axis to get the y component
-        // of the direction.
-        //var ycomponent = yaxis.clone().multiplyScalar(direction.dot(yaxis));
-        // Subtract the y component from the direction vector so that we are
-        // left with the x and z components.
-        //direction.sub(ycomponent);
-        // Normalize the direction into a unit vector again.
-        //direction.normalize();
-        // Set the pivot's quaternion to the rotation required to get from the z axis
-        // to the xz component of the camera's direction.
-        //pivot.quaternion.setFromUnitVectors(zaxis, direction);
-        // Finally, set the pivot's position as well, so that it follows the camera.
-        //pivot.position.copy(camera.position);
-
-        // pivot.position.copy(new THREE.Vector3(1.1703407,0.04052925,-0.4720295))
-        //pivot.position.copy(new THREE.Vector3(4.1703407,-0.24052925,-0.4720295));
-        var pos = camera.position
-        var vec = camera.getWorldDirection()
-        //var newp= new THREE.Vector3(pos.x+vec.x*10, pos.y+vec.y*10, pos.z+vec.z*10)
-        var newp= new THREE.Vector3(vec.x*2-3,  vec.y*2,  vec.z*2-3)
-        pivot.position.copy(newp)
-        console.log(vec)
         showMenu=true;
-
-
 
         PDB.render.hideStructure();
     },

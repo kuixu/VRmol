@@ -26,8 +26,9 @@ PDB.painter = {
     near:function(){
         for(var i in PDB.GROUP_STRUCTURE_INDEX){
             var z= PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z;
-            if(z>0)z-=PDB.ZOOM_STEP;
-            else z+=PDB.ZOOM_STEP;
+			z-=PDB.ZOOM_STEP;
+            //if(z>0)z-=PDB.ZOOM_STEP;
+            //else z+=PDB.ZOOM_STEP;
             PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = z;
         }
 		//重新测距
@@ -38,8 +39,9 @@ PDB.painter = {
     far:function(){
         for(var i in PDB.GROUP_STRUCTURE_INDEX){
             var z= PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z;
-            if(z>=0){z+=PDB.ZOOM_STEP;}
-            else z-=PDB.ZOOM_STEP;
+			z+=PDB.ZOOM_STEP;
+            //if(z>=0){z+=PDB.ZOOM_STEP;}
+            //else z-=PDB.ZOOM_STEP;
             PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = z;
         }
 		// console.log("far");
@@ -581,6 +583,8 @@ PDB.painter = {
 		}
     },
     showBackbone:function(){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
         var radius = 0.3;
         var  history ={};
 
@@ -591,7 +595,7 @@ PDB.painter = {
                 var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[i]);
                 var groupindex = "chain_"+atom.chainname;
                 // sphere
-                PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, radius, atom);
+                PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, radius, atom, addgroup, w);
                 // stick
                 if( i>0 ){
                     var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
@@ -603,6 +607,8 @@ PDB.painter = {
         }
     },
 	showBackboneByResdue:function(chainId,resid,sel){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
 		var color = new THREE.Color('#CCC');
 		var resobj 	= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var bbond = resobj.bbond;
@@ -616,7 +622,7 @@ PDB.painter = {
 			var atom = PDB.tool.getMainAtom(PDB.pdbId, bbond[i]);
 			var groupindex = "chain_"+atom.chainname;
 			// sphere
-			PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel?atom.color:color, radius, atom);
+			PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel?atom.color:color, radius, atom, addgroup, w);
 			// stick
 			if( i>0 ){
 				var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
@@ -628,6 +634,8 @@ PDB.painter = {
         
     },
 	showBackboneByStartEnd:function(startId,endId,isSelected){//
+	    var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
         var radius = 0.3;
         var  history ={};
         var startAtom ="";
@@ -642,7 +650,7 @@ PDB.painter = {
 					var groupindex = "chain_"+atom.chainname;
 
                     // sphere
-                    PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, radius, atom);
+                    PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, radius, atom, addgroup, w);
                     // stick
                     if( startAtom!=="" ){
                         var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
@@ -663,7 +671,7 @@ PDB.painter = {
 					var groupindex = "chain_"+atom.chainname;
 
                     // sphere
-                    PDB.drawer.drawSphere(groupindex, atom.pos_centered,  new THREE.Color('#CCC'), radius, atom);
+                    PDB.drawer.drawSphere(groupindex, atom.pos_centered,  new THREE.Color('#CCC'), radius, atom, addgroup, w);
                     // stick
                     if( startAtom!=="" ){
                         var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
@@ -697,16 +705,20 @@ PDB.painter = {
         }
     },
     showSphere : function(){
+		var addgroup;
+		var w = PDB.CONFIG.sphere_width;
         for(var i in w3m.mol){
             var main_obj = w3m.mol[i].atom.main;
             for ( var i_atom in main_obj) {
                 var atom = PDB.tool.getMainAtom(i, i_atom);
                 var groupindex = "chain_"+atom.chainname;
-                PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius, atom);
+                PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius, atom, addgroup, w);
             }
         }
     },
 	showSphereByResdue : function(chainId,resid,sel){
+		var addgroup;
+		var w = PDB.CONFIG.sphere_width;
 		var color = new THREE.Color('#CCC');
 		var resobj 	= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		
@@ -719,11 +731,13 @@ PDB.painter = {
                     continue;
                 }
                 var groupindex = "chain_"+atom.chainname;
-                PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel?atom.color:color, atom.radius, atom);
+                PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel?atom.color:color, atom.radius, atom, addgroup, w);
             }
         }
     },
-	showSphereByStartEnd : function(startId,endId,isSelected){//
+	showSphereByStartEnd : function(startId,endId,isSelected){
+	    var addgroup;
+		var w = PDB.CONFIG.sphere_width;
 		if(isSelected){
 			for(var i in w3m.mol){
 				var main_obj = w3m.mol[i].atom.main;
@@ -733,7 +747,7 @@ PDB.painter = {
 					var atom = PDB.tool.getMainAtom(i, i_atom);
 					var groupindex = "chain_"+atom.chainname;
 
-					PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius, atom);
+					PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius, atom, addgroup, w);
 				}
 			}
 		}else{
@@ -745,7 +759,7 @@ PDB.painter = {
 					var atom = PDB.tool.getMainAtom(i, i_atom);
 					var groupindex = "chain_"+atom.chainname;
 
-					PDB.drawer.drawSphere(groupindex, atom.pos_centered, new THREE.Color('#CCC'), atom.radius, atom);
+					PDB.drawer.drawSphere(groupindex, atom.pos_centered, new THREE.Color('#CCC'), atom.radius, atom, addgroup, w);
 				}
 			}
 		}
@@ -760,10 +774,10 @@ PDB.painter = {
             var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
             var groupindex = "chain_"+atom.chainname;
             if(history[startAtom.id]==undefined){
-                PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, radius, startAtom);
+                PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, radius, startAtom, addgroup, w);
                 history[startAtom.id]= 1;
             }else if(history[atom.id]==undefined){
-                PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, radius, atom);
+                PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, radius, atom, addgroup, w);
                 history[atom.id]= 1;
             }else{
                 //console.log("showSticks: duplicate stick...atom.id:"+ atom.id);
@@ -775,6 +789,8 @@ PDB.painter = {
         }
     },
 	showSticksByResdue : function(chainId,resid,sel){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
 		var color = new THREE.Color('#CCC');
 		var resobj 	= w3m.mol[PDB.pdbId].residueData[chainId][resid];		
 		var lines = resobj.lines;
@@ -791,11 +807,11 @@ PDB.painter = {
 			var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
 			var groupindex = "chain_"+atom.chainname;
 			if(history[startAtom.id]===undefined){
-				PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, sel?startAtom.color:color, radius, startAtom);
+				PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, sel?startAtom.color:color, radius, startAtom, addgroup, w);
 				history[startAtom.id]= 1;
 			}
 			if(history[atom.id]===undefined){
-				PDB.drawer.drawSphere(groupindex, atom.pos_centered,sel?atom.color:color, radius, atom);
+				PDB.drawer.drawSphere(groupindex, atom.pos_centered,sel?atom.color:color, radius, atom, addgroup, w);
 				history[atom.id]= 1;
 			}
 			var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
@@ -805,6 +821,8 @@ PDB.painter = {
 		}       
     },
 	showSticksByStartEnd : function(startId,endId,isSelected){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
 		if(isSelected){
 			var radius = 0.2;
 			var  history ={};
@@ -819,10 +837,10 @@ PDB.painter = {
 				var startAtom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
 				var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
 				if(history[startAtom.id]==undefined){
-					PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, radius, startAtom);
+					PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, radius, startAtom, addgroup, w);
 					history[startAtom.id]= 1;
 				}else if(history[atom.id]==undefined){
-					PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, radius, atom);
+					PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, radius, atom, addgroup, w);
 					history[atom.id]= 1;
 				}else{
 					//console.log("showSticks: duplicate stick...atom.id:"+ atom.id);
@@ -846,10 +864,10 @@ PDB.painter = {
 				var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
                 var groupindex = "chain_"+atom.chainname;
 				if(history[startAtom.id]==undefined){
-					PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, new THREE.Color('#CCC'), radius, startAtom);
+					PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, new THREE.Color('#CCC'), radius, startAtom, addgroup, w);
 					history[startAtom.id]= 1;
 				}else if(history[atom.id]==undefined){
-					PDB.drawer.drawSphere(groupindex, atom.pos_centered, new THREE.Color('#CCC'), radius, atom);
+					PDB.drawer.drawSphere(groupindex, atom.pos_centered, new THREE.Color('#CCC'), radius, atom, addgroup, w);
 					history[atom.id]= 1;
 				}else{
 					//console.log("showSticks: duplicate stick...atom.id:"+ atom.id);
@@ -865,17 +883,20 @@ PDB.painter = {
     showBallRod : function(){
         var radius = 0.1;
         var  history ={};
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
         for(var t=0;t<PDB.linkedAtomIdArray.length; t++){
             var ids = PDB.linkedAtomIdArray[t];
 
             var startAtom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
             var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
             var groupindex = "chain_"+atom.chainname;
+			
             if(history[startAtom.id]==undefined){
-                PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom);
+                PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom, addgroup, w);
                 history[startAtom.id]= 1;
             }else if(history[atom.id]==undefined){
-                PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius * 0.2, atom);
+                PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius * 0.2, atom, addgroup, w);
                 history[atom.id]= 1;
             }else{
                 //console.log("showHet_Stick: duplicate stick...atom.id:"+ atom.id);
@@ -886,6 +907,8 @@ PDB.painter = {
         }
     },
 	showBallRodByResdue : function(chainId,resid,sel){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
         var radius = 0.1;
 		var color = new THREE.Color('#CCC');
 		var resobj 	= w3m.mol[PDB.pdbId].residueData[chainId][resid];
@@ -897,11 +920,11 @@ PDB.painter = {
             var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
             var groupindex = "chain_"+atom.chainname;
             if(history[startAtom.id]==undefined){
-                PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, sel?startAtom.color:color, startAtom.radius * 0.2, startAtom);
+                PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, sel?startAtom.color:color, startAtom.radius * 0.2, startAtom, addgroup, w);
                 history[startAtom.id]= 1;
             }
 			if(history[atom.id]==undefined){
-                PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel?atom.color:color, atom.radius * 0.2, atom);
+                PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel?atom.color:color, atom.radius * 0.2, atom, addgroup, w);
                 history[atom.id]= 1;
             }
             var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
@@ -910,6 +933,8 @@ PDB.painter = {
         }
     },
 	showBallRodByStartEnd : function(startId,endId,isSelected){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
         var radius = 0.1;
         var  history ={};
 		if(isSelected){
@@ -921,11 +946,11 @@ PDB.painter = {
 				var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
                 var groupindex = "chain_"+atom.chainname;
                 if(history[startAtom.id]==undefined){
-                    PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom);
+                    PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom, addgroup, w);
                     history[startAtom.id]= 1;
                 }else if(history[atom.id]==undefined){
                     //console.log("showHet_Stick: duplicate stick...atom.id:"+ atom.id);
-                    PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius * 0.2, atom);
+                    PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius * 0.2, atom, addgroup, w);
 					history[atom.id]= 1;
                 }else{
                 }
@@ -942,11 +967,11 @@ PDB.painter = {
 				var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
                 var groupindex = "chain_"+atom.chainname;
                 if(history[startAtom.id]==undefined){
-                    PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, new THREE.Color('#CCC'), startAtom.radius * 0.2, startAtom);
+                    PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, new THREE.Color('#CCC'), startAtom.radius * 0.2, startAtom, addgroup, w);
                     history[startAtom.id]= 1;
                 }else if(history[atom.id]==undefined){
                     //console.log("showHet_Stick: duplicate stick...atom.id:"+ atom.id);
-                    PDB.drawer.drawSphere(groupindex, atom.pos_centered, new THREE.Color('#CCC'), atom.radius * 0.2, atom);
+                    PDB.drawer.drawSphere(groupindex, atom.pos_centered, new THREE.Color('#CCC'), atom.radius * 0.2, atom, addgroup, w);
 					history[atom.id]= 1;
                 }else{
                 }
@@ -957,6 +982,8 @@ PDB.painter = {
 		}
     },
     showTubeByResdue : function(chainId,resid,sel){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
 		var radius = PDB.CONFIG.tube_radius;
 		var residueData = w3m.mol[PDB.pdbId].residueData;
 		var resobj		= residueData[chainId][resid];
@@ -966,7 +993,7 @@ PDB.painter = {
 			
 			var groupindex = "chain_"+atom.chainname;
 			if(residueData[chainId][resid].path.length>0){
-				PDB.drawer.drawSphere(groupindex,residueData[chainId][resid].path[0], sel?atom.color:color, radius, atom);
+				PDB.drawer.drawSphere(groupindex,residueData[chainId][resid].path[0], sel?atom.color:color, radius, atom, addgroup, w);
 			}
 			
 		}	
@@ -986,7 +1013,7 @@ PDB.painter = {
 			//var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chainId][resid].laid);
 			var groupindex = "chain_"+atom.chainname;
 			
-			PDB.drawer.drawSphere(groupindex,path[path.length-1], sel?atom.color:color, radius, atom);
+			PDB.drawer.drawSphere(groupindex,path[path.length-1], sel?atom.color:color, radius, atom, addgroup, w);
 		}
 		
     },
@@ -1834,6 +1861,8 @@ PDB.painter = {
 
     },
 	showDNABond:function(chainId,resid,sel){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
 		var color = new THREE.Color('#CCC');
 		var resobj 	= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var bbond = resobj.dnaStick;		
@@ -1847,7 +1876,7 @@ PDB.painter = {
 			var midp = PDB.tool.midPoint(bbond[0][0].xyz, bbond[0][1].xyz);
 			PDB.drawer.drawStick("chain_"+startAtom.chainname, bbond[0][0].xyz, midp, sel?startAtom.color:color, radius,startAtom);
 			PDB.drawer.drawStick("chain_"+endAtom.chainname, midp,bbond[0][1].xyz,  sel?endAtom.color:color, radius,endAtom);
-			PDB.drawer.drawSphere("chain_"+endAtom.chainname, bbond[0][1].xyz, sel?endAtom.color:color, radius, endAtom);    
+			PDB.drawer.drawSphere("chain_"+endAtom.chainname, bbond[0][1].xyz, sel?endAtom.color:color, radius, endAtom, addgroup, w);    
 		}	
         
     },
@@ -2205,6 +2234,8 @@ PDB.painter = {
         PDB.GROUP[PDB.GROUP_SURFACE].visible = true;
     },
     showWater : function(){
+		var addgroup;
+		var w = PDB.CONFIG.water_sphere_w;
         if(PDB.isShowWater&&(PDB.GROUP[PDB.GROUP_WATER] === undefined||PDB.GROUP[PDB.GROUP_WATER].children.length==0)){
             var data_obj = [];
             for(var i in w3m.mol){
@@ -2212,7 +2243,7 @@ PDB.painter = {
                 for ( var i_atom in main_obj) {
                     var atom = PDB.tool.getHetAtom(i, i_atom);
                     if(atom.resname==="hoh"){
-                        PDB.drawer.drawSphere(PDB.GROUP_WATER, atom.pos_centered, atom.color, 0.1*atom.radius, atom);
+                        PDB.drawer.drawSphere(PDB.GROUP_WATER, atom.pos_centered, atom.color, 0.1*atom.radius, atom, addgroup, w);
                     }
                 }
             }           
@@ -2246,6 +2277,8 @@ PDB.painter = {
     },
 
     showHet_Sphere : function(molId){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
         this.showWater();
 		var group = PDB.GROUP_HET;
         if(w3m.mol[molId].drug){
@@ -2258,13 +2291,14 @@ PDB.painter = {
 				atom = PDB.tool.getMainAtom(molId, i_atom);
 			}
 			if(atom.resname!=="hoh"){
-				PDB.drawer.drawSphere(PDB.GROUP_HET, atom.pos_centered, atom.color, 0.9*atom.radius, atom);
+				PDB.drawer.drawSphere(PDB.GROUP_HET, atom.pos_centered, atom.color, 0.9*atom.radius, atom, addgroup, w);
 			}
 		}
         
     },
     showHet_Stick : function(molId){
-		
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
         this.showWater();
         var radius = 0.2;
         var  history ={};
@@ -2283,11 +2317,11 @@ PDB.painter = {
 					atom = PDB.tool.getMainAtom(molId, i);
 				}
 				if(history[startAtom.id]==undefined){
-					 PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, radius+0.001, startAtom);
+					 PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, radius+0.001, startAtom, addgroup, w);
 					 history[startAtom.id]= 1;
 				}
 				if(history[atom.id]==undefined){
-					PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, radius+0.001, atom);
+					PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, radius+0.001, atom, addgroup, w);
 					history[atom.id]= 1;
 				}else {
 					//console.log("showHet_Stick: duplicate stick...atom.id:"+ atom.id);
@@ -2300,6 +2334,8 @@ PDB.painter = {
         
     },
     showHet_Ball_Rod : function(molId){
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
         this.showWater();
         var radius = 0.1;
         var  history ={};
@@ -2319,10 +2355,10 @@ PDB.painter = {
 					atom = PDB.tool.getMainAtom(molId, i);
 				}
 				if(history[startAtom.id]==undefined){
-					PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom);
+					PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom, addgroup, w);
 					history[startAtom.id]= 1;
 				}else if(history[atom.id]==undefined){
-					PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, atom.radius * 0.2, atom);
+					PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, atom.radius * 0.2, atom, addgroup, w);
 					history[atom.id]= 1;
 				}else{
 					//console.log("showHet_Stick: duplicate stick...atom.id:"+ atom.id);

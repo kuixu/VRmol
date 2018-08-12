@@ -28655,7 +28655,8 @@
 
 				// TODO1 - have a .isClosed in spline?
 
-				splineTube = extrudePath.computeFrenetFrames( steps, false );
+				//splineTube = extrudePath.computeFrenetFrames( steps, false );
+				splineTube = options.frames !== undefined ? options.frames: extrudePath.computeFrenetFrames( steps, false );
 
 				// console.log(splineTube, 'splineTube', splineTube.normals.length, 'steps', steps, 'extrudePts', extrudePts.length);
 

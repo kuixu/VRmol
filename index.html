@@ -15,6 +15,20 @@
 <script type="text/javascript" src="js/webvr-polyfill/webvr-polyfill.min.js"></script>
 <script type="text/javascript" src="js/webvr-ui/webvr-ui.min.js"></script>
 -->
+<!-- Our Design-->
+<script type="text/javascript" src="libs/molecule/w3m.js"></script>
+<script type="text/javascript" src="libs/molecule/extension.js"></script>
+<script type="text/javascript" src="libs/molecule/static.js"></script>
+<script type="text/javascript" src="libs/molecule/math.js"></script>
+
+
+<script type="text/javascript" src="libs/molecule/PDBFileCore.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileLoader.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileRender.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileTool.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileDrawer.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFilePainter.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileController.js"></script>
 <!--three.js-->
 
 <script type="text/javascript" src="js/controls/TrackballControls.js"></script>
@@ -23,7 +37,9 @@
 <script type="text/javascript" src="js/controls/VRControls.js"></script>
 <script type="text/javascript" src="js/effects/VREffect.js"></script>
 <script type="text/javascript" src="js/vr/WebVR.js"></script>
+<script type="text/javascript" src="js/vr/statsvr.min.js"></script>
 <script type="text/javascript" src="js/vr/ViveController.js"></script>
+<script type="text/javascript" src="js/controllers/VRController.js"></script>
 <script type="text/javascript" src="js/loaders/OBJLoader.js"></script>
 <!-- tube相关引用 -->
 <script type="text/javascript" src="js/CurveExtras.js"></script>
@@ -46,38 +62,7 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
-<!---------------------------xukui 0903 01:12------------------------------>
-<script type="x-shader/x-vertex" id="vertexshader">
-    uniform float delta;
-    attribute float opacity;
-    attribute vec3 customColor;
-    varying float vOpacity;
-    varying vec3 vCustomColor;
-    varying vec3 vUv;
-    void main()
-    {
-        vUv = position;
-        vOpacity = opacity;
-        vCustomColor = customColor;
-        vec3 p = position;
-        vec4 modelViewPosition = modelViewMatrix * vec4(p, 1.0);
-        gl_Position = projectionMatrix * modelViewPosition;
-    }
-</script>
 
-<script type="x-shader/x-fragment" id="fragmentshader">
-    uniform float delta;
-    varying float vOpacity;
-    varying vec3 vUv;
-    varying vec3 vCustomColor;
-    void main() {
-        float r = vCustomColor.r;
-        float g = vCustomColor.g;
-        float b = vCustomColor.b;
-        vec3 rgb = vec3(r, g, b);
-        gl_FragColor = vec4(rgb,vOpacity );
-    }
-</script>
 <div id="container"></div>
 <div id="info" class="panel"><strong>iNano</strong> by <a href="http://www.zhanglab.net" target="_blank">ZhangLab</a></div>
 <div id="searchDiv" class="panel">
@@ -393,8 +378,7 @@
 		<button id="Confirm_fregment" style="width: 68px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 30px;">Confirm</button>
 	</div>
 </div>
-<!-- Our Design-->
-<script type="text/javascript" src="libs/molecule/inano.min.js"></script>
+<script type="text/javascript" src="libs/molecule/index.js"></script>
 <script type="text/javascript">
     <!-- menu -->
     if (document.getElementById){ //DynamicDrive.com change

@@ -215,7 +215,7 @@ PDB.drawer = {
         PDB.GROUP[group].add( points );
         console.log("map: added in scene!");
     },
-    drawSphere : function(group, point,color,radius,atom, addGroup){
+    drawSphere : function(group, point,color,radius,atom, addGroup, w){
         var addGroup = PDB.tool.getValue(addGroup,true);
         var alpha = 0.5,
             beta  = 0.5,
@@ -238,7 +238,10 @@ PDB.drawer = {
             shading: THREE.SmoothShading,
             //envMap: alphaIndex % 2 === 0 ? null : reflectionCube
         } );
-        var geometry = new THREE.SphereBufferGeometry( radius, PDB.CONFIG.sphere_width, PDB.CONFIG.sphere_height );
+		//PDB.CONFIG.sphere_width, PDB.CONFIG.sphere_height
+		
+		h=w;
+        var geometry = new THREE.SphereBufferGeometry( radius, w, h );
         //var sphereGeometry = new THREE.SphereGeometry( radius, 16, 16 );
         //var sphereGeometry = new THREE.IcosahedronBufferGeometry(radius, 2 );
         var mesh = new THREE.Mesh( geometry, material );
