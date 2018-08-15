@@ -1,16 +1,15 @@
 /**
  * Created by Kui XU on 2017/07/08.
  */
- var container;
-var camera, scene , renderer;
-var statsVR;
+var container;
+var camera, scene, renderer, statsVR;
 var splineCamera, parent ,group;
 var cameraEye, menu_panel;
 var binormal = new THREE.Vector3();
 var normal = new THREE.Vector3();
 var scale = 4;
 var controls, controller1, controller2,vrEffect, vrControls;
-// 添加three model 下的物体选中功能
+
 var raycasterFor3;
 var mouse = new THREE.Vector2(), INTERSECTED;
 var radius = 100, theta = 0;
@@ -44,25 +43,13 @@ var id = 0;
 function onAxisChanged(event){
     var controller = event.target;
     ThumbpadAxes = event.axes;
-    // console.log(axes[0]+", "+axes[1]);
-    // var direc = "center";
-    // if(axes[0]<-0.2)direc = "left";
-    // if(axes[0]> 0.2)direc = "right";
-    // if(axes[1]<-0.2)direc = "down";
-    // if(axes[1]> 0.2)direc = "up";
-    // switch(direc){
-    //     case "center": center();break;
-    // }
 }
 
 function onMenuUp(event){
     //var controller = event.target;
-
 }
 
 function onMenuDown(event){
-    // if the travel mode, press menu button to exit the
-    // travel mode and return to three mode;
     if(PDB.TravelMode){
         PDB.render.changeToVrMode(PDB.MODE_VR,false);
     }else{
@@ -81,16 +68,15 @@ function onMenuDown(event){
 
 var action=0 ;
 function onThumbpadUp(event){
-	//console.log('onThumbpadUp');
+    //console.log('onThumbpadUp');
     var pad = event.target;
-	
     window.clearInterval(id);
     PDB.ROTATION_START_FLAG = false;
 	
 }
 
 function onThumbpadDown(event){
-	//console.log('onThumbpadDown');
+    //console.log('onThumbpadDown');
     var controller = event.target;
 	x=ThumbpadAxes[0];
 	y=ThumbpadAxes[1];
@@ -106,7 +92,7 @@ function onThumbpadDown(event){
 	
 	switch (action){
 		case 0:
-			
+
 			break;
 		case 1:
 			id =self.setInterval("PDB.painter.near()",20);
@@ -116,16 +102,13 @@ function onThumbpadDown(event){
 			break;
 		case 3:
 			PDB.ROTATION_DIRECTION = 0;
-            PDB.ROTATION_START_FLAG= true;
+	    PDB.ROTATION_START_FLAG= true;
 			break;
 		case 4:
 		    PDB.ROTATION_DIRECTION = 1;
-            PDB.ROTATION_START_FLAG= true;
+	    PDB.ROTATION_START_FLAG= true;
 		    break;
 	}
-	// action=0;
-	// window.clearInterval(id);
-    // PDB.ROTATION_START_FLAG = false;
 }
 
 function dealwithMenu(object) {
@@ -773,12 +756,6 @@ function getIntersections( controller ) {
         }
     }
     return inters;
-    // } else{
-    //     tempMatrix.identity().extractRotation( controller.matrixWorld );
-    //     raycaster.ray.origin.setFromMatrixPosition( controller.matrixWorld );
-    //     raycaster.ray.direction.set( 0, 0, -1 ).applyMatrix4( tempMatrix );
-    //     return raycaster.intersectObjects( PDB.GROUP[PDB.GROUP_MAIN].children );
-    // }
 }
 
 function intersectObjects( controller ) {
@@ -794,7 +771,6 @@ function intersectObjects( controller ) {
             line.scale.z = intersection.distance;
         }
 
-        //var object = intersection.object;
         for(var i = 0 ; i< intersections.length ; i++) {
             var intersection = intersections[ i ];
             var object = intersection.object;
@@ -863,7 +839,6 @@ PDB.render = {
 
         if(controlsType==0){
             controls = new THREE.TrackballControls( camera, renderer.domElement );
-            //controls.rota
             controls.minDistance = 10;
             controls.maxDistance = 50000;
         }else if(controlsType==1){
@@ -897,11 +872,7 @@ PDB.render = {
             scene.add(PDB.GROUP[i]);
         }
 
-
-
         this.addLightsByType(lightType);
-
-
 
         container = document.createElement( 'div' );
         document.body.appendChild( container );
@@ -938,17 +909,6 @@ PDB.render = {
         controller1.addEventListener( 'thumbpaddown', onThumbpadDown );
         controller1.addEventListener( 'axischanged', onAxisChanged );
         scene.add( controller1 );
-
-        // controller2 = new THREE.ViveController( 1 );
-        // controller2.standingMatrix = renderer.vr.getStandingMatrix();
-        // controller2.addEventListener( 'triggerdown', onTriggerDown );
-        // controller2.addEventListener( 'triggerup', onTriggerUp );
-        // controller2.addEventListener( 'menuup', onMenuUp );
-        // controller2.addEventListener( 'menudown', onMenuDown );
-        // controller2.addEventListener( 'thumbpadup', onThumbpadUp );
-        // controller2.addEventListener( 'thumbpaddown', onThumbpadDown );
-        // controller2.addEventListener( 'axischanged', onAxisChanged );
-        // scene.add( controller2 );
 
         var loader = new THREE.OBJLoader();
         loader.setPath( 'models/obj/vive-controller/' );
@@ -1116,10 +1076,7 @@ PDB.render = {
 				controller1.add( object.clone() );
 				//controller2.add( object.clone() );
 			} );
-			
-			
-
-			
+	
 			// helpers
 			var geometry = new THREE.BufferGeometry();
 			geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( [ 0, 0, 0, 0, 0, - 1 ], 3 ) );
@@ -1131,26 +1088,7 @@ PDB.render = {
 			controller1.add( line.clone() );
 			//controller2.add( line.clone() );
 		});
-		
-		// controller2 = renderer.vr.getController( 1 );
-		// controller2.addEventListener( 'selectstart', onSelectStart );
-		// controller2.addEventListener( 'selectend', onSelectEnd );
-		//vive
-		//controller2 = new THREE.ViveController( 1 );
-		// general
-		// controller2 = new THREE.VRController( 1 );
-		// controller2.standingMatrix = renderer.vr.getStandingMatrix();
-		// controller2.addEventListener( 'triggerdown', onTriggerDown );
-        // controller2.addEventListener( 'triggerup', onTriggerUp );
-        // controller2.addEventListener( 'menuup', onMenuUp );
-        // controller2.addEventListener( 'menudown', onMenuDown );
-        // controller2.addEventListener( 'thumbpadup', onThumbpadUp );
-        // controller2.addEventListener( 'thumbpaddown', onThumbpadDown );
-        // controller2.addEventListener( 'axischanged', onAxisChanged );
-		// scene.add( controller2 );
-
-        
-		
+	
 		raycaster = new THREE.Raycaster();
 		//
 		window.addEventListener( 'resize', onWindowResize, false );
@@ -1159,19 +1097,6 @@ PDB.render = {
 			camera.updateProjectionMatrix();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 		}
-		
-		// window.addEventListener('gamepadconnected', function(e) {
-		  // info.textContent = 'Gamepad ' + e.gamepad.index + ' connected.';
-		  // if(!initialRun) {
-			  // setTimeout(removeGamepads, 1000);
-		  // }
-		// });
-
-		// window.addEventListener('gamepaddisconnected', function(e) {
-		  // info.textContent = 'Gamepad ' + e.gamepad.index + ' disconnected.';
-		  // setTimeout(removeGamepads, 1000);
-		// });
-
         
     },
     changeToThreeMode:function (mode,travelMode) {
@@ -1185,7 +1110,7 @@ PDB.render = {
         scene.background = new THREE.Color( 0x000000 );
         scene.add( camera );
         console.log("lightType:"+lightType);
-        //清空render
+        //render
         scope.clearRender();
         scope.generateRender();
         //all the group position back the initial location
@@ -1230,7 +1155,7 @@ PDB.render = {
             scene.background = new THREE.Color( 0x000000 );
             scene.add( camera );
             console.log("lightType:"+lightType);
-            //清空render
+            //render
             scope.clearRender();
             scope.generateRender();
             //all the group position back the initial location
@@ -1265,8 +1190,6 @@ PDB.render = {
 
     changeToVrMode:function (mode,travelMode) {
         if(PDB.mode !== mode){
-
-
 			var scope = this;
             PDB.mode = mode;
             PDB.TravelMode = travelMode;
@@ -1275,18 +1198,13 @@ PDB.render = {
 
             scope.initVR();
 
-
             if(PDB.TravelMode === true){
                 // PDB.controller.refreshGeometryByMode(PDB.TUBE);
-
-                    scope.openTrackMode();
-
+                scope.openTrackMode();
             }else{
                 PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
                 PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
             }
-
-
         }
     },
     openTrackMode:function () {
@@ -1306,8 +1224,6 @@ PDB.render = {
         //PDB.parent.add( cameraEye );
 		// console.log(PDB.TravelGeometry);
         if (PDB.TravelGeometry!="") {
-
-
             var time = Date.now();
             var looptime = 200 * 1000;
             var t = ( time % looptime ) / looptime;
@@ -1336,22 +1252,18 @@ PDB.render = {
             normal.copy( binormal ).cross( dir );
 
             // we move on a offset on its binormal
-
             pos.add( normal.clone().multiplyScalar( offset ) );
 
             splineCamera.position.copy( pos );
             cameraEye.position.copy( pos );
 
             // using arclength for stablization in look ahead
-
             var lookAt = PDB.TravelGeometry.parameters.path.getPointAt( ( t + 5 / PDB.TravelGeometry.parameters.path.getLength() ) % 1 ).multiplyScalar( PDB.TravelScale);
 
             // camera orientation 2 - up orientation via normal
-
             //if ( ! params.lookAhead ) lookAt.copy( pos ).add( dir );
             splineCamera.matrix.lookAt( splineCamera.position, lookAt, normal );
             splineCamera.rotation.setFromRotationMatrix( splineCamera.matrix, splineCamera.rotation.order );
-
             //cameraHelper.update();
             //params.animationView === true ? splineCamera : camera
         }
@@ -1398,18 +1310,6 @@ PDB.render = {
             particleLight.add( pointLight );
         }
     },
-	// handleController :function ( controller ) {
-		// if ( controller.userData.isSelecting ) {
-			// var object = room.children[ 0 ];
-			// room.remove( object );
-			// object.position.copy( controller.position );
-			// object.userData.velocity.x = ( Math.random() - 0.5 ) * 0.02;
-			// object.userData.velocity.y = ( Math.random() - 0.5 ) * 0.02;
-			// object.userData.velocity.z = ( Math.random() * 0.02 - 0.1 );
-			// object.userData.velocity.applyQuaternion( controller.quaternion );
-			// room.add( object );
-		// }
-	// }
     render : function(){
         if (PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR){
             //if(controller1!=undefined){controller1.update();}
@@ -1470,7 +1370,6 @@ PDB.render = {
                 var lookAt = PDB.TravelGeometry.parameters.path.getPointAt( ( t + 5 / PDB.TravelGeometry.parameters.path.getLength() ) % 1 ).multiplyScalar( PDB.TravelScale);
 
                 // camera orientation 2 - up orientation via normal
-
                 //if ( ! params.lookAhead ) lookAt.copy( pos ).add( dir );
                 // PDB.parent.matrix.lookAt( PDB.parent.position, lookAt, normal );
                 // PDB.parent.rotation.setFromRotationMatrix( PDB.parent.matrix, PDB.parent.rotation.order );
@@ -1734,7 +1633,6 @@ PDB.render = {
         }
     },
     animate : function(){
-
 		// if(PDB.mode === PDB.MODE_VR||PDB.mode === PDB.MODE_THREE){
 			// if((PDB.cameraPosition.x!=camera.position.x||PDB.cameraPosition.y!=camera.position.y||PDB.cameraPosition.y!=camera.position.y)){
 
