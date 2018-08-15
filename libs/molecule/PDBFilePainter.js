@@ -23,7 +23,8 @@ PDB.painter = {
         scale.set(scale.x*0.5,scale.y*0.5,scale.z*0.5);
         PDB.GROUP[PDB.GROUP_MAIN].scale.set(scale);
     },
-    near:function(){
+	//before sphere visualization 2018-08-16
+    near0:function(){
         for(var i in PDB.GROUP_STRUCTURE_INDEX){
             var z= PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z;
 			z-=PDB.ZOOM_STEP;
@@ -36,7 +37,8 @@ PDB.painter = {
 		PDB.painter.repeatPainter();
 		// PDB.painter.repeatPainter();
     },
-    far:function(){
+	//before sphere visualization 2018-08-16
+    far0:function(){
         for(var i in PDB.GROUP_STRUCTURE_INDEX){
             var z= PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z;
 			z+=PDB.ZOOM_STEP;
@@ -48,6 +50,34 @@ PDB.painter = {
 		//重新测距
 		PDB.painter.repeatPainter();
     },
+	near:function(){
+		for(var i in PDB.GROUP_STRUCTURE_INDEX){
+		   
+			PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z - PDB.ZOOM_STEP;
+		}
+		//旋转轴
+		PDB.rotateAxis.z = PDB.rotateAxis.z - PDB.ZOOM_STEP;		
+		PDB.zTemp = PDB.zTemp - PDB.ZOOM_STEP;		
+		for(var chain in PDB.residueGroupObject){
+			for(var resid in PDB.residueGroupObject[chain]){
+				PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z - PDB.ZOOM_STEP;
+			}
+		}		
+		PDB.painter.repeatPainter();
+	},
+	far:function(){	
+		for(var i in PDB.GROUP_STRUCTURE_INDEX){          
+			PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z  = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z+PDB.ZOOM_STEP;
+		}
+		PDB.zTemp = PDB.zTemp + PDB.ZOOM_STEP;
+		PDB.rotateAxis.z = PDB.rotateAxis.z + PDB.ZOOM_STEP;		
+		for(var chain in PDB.residueGroupObject){
+			for(var resid in PDB.residueGroupObject[chain]){			
+				PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z+PDB.ZOOM_STEP;
+			}
+		}		
+		PDB.painter.repeatPainter();
+	},
     showInput : function(text){
         if(text=="<--"){
             if(PDB.pdbVrId.length>0)PDB.pdbVrId=PDB.pdbVrId.substring(0,PDB.pdbVrId.length-1);
@@ -430,7 +460,8 @@ PDB.painter = {
 			PDB.tool.printProgress(jsonObj.message);
         }
     },
-    showResidueInfo : function (showAtom) {
+	// before sphere visualization 2018-08-16
+    showResidueInfo0 : function (showAtom) {
         // var pos = new THREE.Vector3();
         // pos.x = showAtom.pos_centered.x + 0.5;
         // pos.y = showAtom.pos_centered.y + 0.5;
@@ -439,6 +470,16 @@ PDB.painter = {
             + showAtom.resname.substring(0,1).toUpperCase()+ showAtom.resname.substring(1) + "."+ showAtom.resid;
         var pos1 =  PDB.tool.getAtomInfoPosition(showAtom.pos_curr,camera.position);
         PDB.drawer.drawText(PDB.GROUP_INFO,pos1,
+            message,"",showAtom.color,180);
+    },
+	showResidueInfo : function (showAtom) {
+		//得到显示的文字
+        var message = showAtom.chainname.toUpperCase() +"."
+            + showAtom.resname.substring(0,1).toUpperCase()+ showAtom.resname.substring(1) + "."+ showAtom.resid;
+		//得到显示位置
+        var pos1 =  PDB.tool.getAtomInfoPosition(showAtom.pos_curr,camera.position);
+        //对drawText的改造如第5点所示
+		PDB.drawer.drawText(PDB.GROUP_INFO,pos1,
             message,"",showAtom.color,180);
     },
     showResidueInfoPos : function (showAtom, position) {
@@ -3103,7 +3144,8 @@ PDB.painter = {
         //     }            
         // }   
 	},
-	showAllResidues : function(type){
+	//before sphere visualization 2018-08-16
+	showAllResidues0 : function(type){
 				
 		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;		
 		// console.log(showLengthThreshold);
@@ -3217,6 +3259,53 @@ PDB.painter = {
 			
 			
         }
+	},
+	showAllResidues : function(type){				
+		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;
+		var offset = camera.position;		
+		PDB.offset = offset.clone();
+		if(type===PDB.config.surfaceMode){
+			PDB.painter.showSurface(1,w3m.mol[PDB.pdbId].atom.main.length,true);
+		}else{		
+			var residueData = w3m.mol[PDB.pdbId].residueData;			
+			var chainNum = 0;			
+			//clear label
+			PDB.tool.clearChainNameFlag();			
+			for(var chain in residueData){
+				if(PDB.residueGroupObject[chain]==undefined){
+					PDB.residueGroupObject[chain] = {};
+				}
+				// console.log(chainNum);
+				var chainType = w3m.mol[PDB.pdbId].chain[chain];
+				if(chainType==w3m.CHAIN_NA&&type>=PDB.TUBE&&type!=PDB.HIDE){
+					for(var resid in residueData[chain]){
+						PDB.painter.showResidue(chain, resid, PDB.TUBE, true);
+						PDB.painter.showDNABond(chain, resid,true);
+					}
+					continue;
+				}				
+				chainNum++;				
+				PDB.tool.initChainNameFlag(chain,true,chainNum);
+				for(var resid in residueData[chain]){
+					var caid =  residueData[chain][resid].caid;
+					var pos = PDB.tool.getMainAtom(PDB.pdbId,caid).pos_centered;
+					PDB.residueGroupObject[chain][resid] = {
+						vector:{x:pos.x-offset.x,y:pos.y-offset.y,z:pos.z-offset.z}							
+					};
+					var length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
+					
+					PDB.residueGroupObject[chain][resid].len = length;
+					if(length<showLengthThreshold){
+						PDB.painter.showResidue(chain, resid, type, true);	
+						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;							
+					}else{
+						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;	
+					}						
+				}				
+			}
+			// bind initChainNumThreshold event
+			PDB.tool.bindAllChainEvent(type,chainNum);			
+		}
 	},
 	showFragmentsResidues : function(){
 		var residueData = w3m.mol[PDB.pdbId].residueData;
@@ -3354,7 +3443,8 @@ PDB.painter = {
         PDB.GROUP[PDB.GROUP_SURFACE_HET].add( mesh );
         PDB.GROUP[PDB.GROUP_SURFACE_HET].visible = true;
 	},
-	repeatPainter:function(){
+	//before sphere visualization 2018-08-16
+	repeatPainter0:function(){
 		var residueData = w3m.mol[PDB.pdbId].residueData;
 		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;
 		
@@ -3373,11 +3463,7 @@ PDB.painter = {
 				// }
 			// }
 		// }
-		
-		
-		
-		
-		
+
 		var chainNum = 0;		
 		for(var chain in residueData){
 			if(PDB.residueGroupObject[chain]==undefined){
@@ -3502,6 +3588,43 @@ PDB.painter = {
 			// PDB.GROUP["chain_a"].add( mesh );
 			
 			
+	},
+	repeatPainter:function(){	
+		var residueData = w3m.mol[PDB.pdbId].residueData;
+		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;		
+		for(var chain in residueData){			
+			for(var resid in residueData[chain]){			
+				var caid =  residueData[chain][resid].caid;				
+				var length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);				
+				PDB.residueGroupObject[chain][resid].len = length;
+				if(PDB.residueGroupObject[chain][resid].len < showLengthThreshold){					
+					if(PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_undefined){
+						PDB.painter.showResidue(chain, resid, PDB.config.mainMode, true);
+						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;
+					}else if(PDB.residueGroupObject[chain][resid].v==PDB.residueGroup_hide){
+						var groupindex = "chain_"+chain;
+						var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);						
+						if(meshs&&meshs.length>0){
+							for(var i in meshs){
+								meshs[i].visible = true;
+							}
+						}
+						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;						
+					}					
+				}else{
+					if(PDB.residueGroupObject[chain][resid].v==PDB.residueGroup_show){						
+						var groupindex = "chain_"+chain;
+						var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);
+						if(meshs&&meshs.length>0){
+							for(var i in meshs){
+								meshs[i].visible = false;
+							}
+						}
+						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_hide;						
+					}
+				}				
+			}	
+		}		
 	},
 	
 };

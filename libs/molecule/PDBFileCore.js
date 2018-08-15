@@ -3,7 +3,7 @@
  */
 //生成全局变量
 var PDB ;
-var ServerType = 2;
+var ServerType = 3;
 
 var SERVERURL = "http://localhost:8080/molecule_vr";
 if(ServerType ===1){
@@ -15,20 +15,24 @@ if(ServerType ===1){
     SERVERURL= "http://192.168.1.105";
 }
 PDB = {
-	
+	//旋转的角度计量
+	rotateAngleThreshold:0.005,
+	nowRotateAngle:0,
+	rotateAxis:{x:0,y:1,z:0},	
+	zTemp : 0,	
 	//residue绘画的三种模式：undefined,0-->没有生成Group,1-->生成并正常显示,2-->对相应的group进行hide 模式
 	residueGroup_undefined:0,
 	residueGroup_show:1,
 	residueGroup_hide:2,
 	residueGroupObject:{},
-	
-	initVRShowThreshold:80,//VR模式初始的距离
-	initDesktopShowThreshold:350,//VR模式初始的距离
+	initVRShowThreshold:35,//VR模式初始的距离	
+	initDesktopShowThreshold:1010,//Desktop模式初始的距离
 	cameraPosition:{//camera的位置
 		x:0,
 		y:0,
 		z:300
 	},
+	
 	initChainNumThreshold:5,//小于等于2使用SSE显示，大于2的使用PDB.line显示
     structureSizeLevel:0,
 	pptShow:false,

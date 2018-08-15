@@ -29,7 +29,8 @@ PDB.tool = {
         }
         return undefined;
     },
-    rotation:function (groupIndexs,type) {
+	// before sphere visualization 2018-08-16
+    rotation0:function (groupIndexs,type) {
         if(type === 0){
             groupIndexs.forEach(function (index) {
                 var group = PDB.GROUP[index];
@@ -845,7 +846,7 @@ PDB.tool = {
         maxSlice.innerHTML=PDB.EMMAP.MAX_SLICE;
         var currSlice = document.getElementById("currSlice");
         currSlice.innerHTML= PDB.EMMAP.MIN_SLICE;
-  },
+    },
 	initChainNameFlag:function(chainName,isNomal,chainNum){
 		// console.log(chainNum);
 		$("#chainNumThreshold").append("<button class=\"labelPDB chainBtn"+(isNomal?" chainSelected":"")+"\" name=\"chainName\" id=\"chain_"+chainName+"\">"+chainNum+":"+chainName+"</button>&nbsp;");
@@ -895,6 +896,118 @@ PDB.tool = {
 
 			PDB.initChainNumThreshold = chainNum;
 		})
-	}
+	},
+	getRealVectorForRepeatPainter:function(vec){
+		for(var chain in PDB.residueGroupObject){
+			for(var resid in PDB.residueGroupObject[chain]){
+				PDB.residueGroupObject[chain][resid].vector.x -= vec.x;
+				PDB.residueGroupObject[chain][resid].vector.y -= vec.y;
+				PDB.residueGroupObject[chain][resid].vector.z -= vec.z;
+			}
+		}
+		PDB.painter.repeatPainter();		
+	},
+	rotateAboutWorldAxis: function(vec,axis,angle){
+		var rotationMatrix = new THREE.Matrix4();
+		rotationMatrix.makeRotationAxis( axis.normalize(), angle );
+		var currentPos = new THREE.Vector4(vec.x, vec.y, vec.z, 1);
+		var newPos = currentPos.applyMatrix4(rotationMatrix);		
+		return new THREE.Vector3(newPos.x,newPos.y,newPos.z);
+		
+	},
+	
+	freshAllResidueGroupObject(angle){		
+		PDB.nowRotateAngle = PDB.nowRotateAngle+angle;
+		if(Math.abs(PDB.nowRotateAngle)>=PDB.rotateAngleThreshold){
+			var scope = this;
+			var axis = new THREE.Vector3(0,1,0);
+			for(var chain in PDB.residueGroupObject){
+				for(var resid in PDB.residueGroupObject[chain]){
+					var pos = camera.position;
+					var obj = PDB.residueGroupObject[chain][resid].vector;
+					var vec = {
+						x:pos.x+obj.x,
+						y:pos.y+obj.y,
+						z:pos.z+obj.z-PDB.rotateAxis.z
+					}					
+					var nowp = scope.rotateAboutWorldAxis(vec,axis,PDB.nowRotateAngle);
+					PDB.residueGroupObject[chain][resid].vector.x = (nowp.x-pos.x);
+					PDB.residueGroupObject[chain][resid].vector.y = (nowp.y-pos.y);
+					PDB.residueGroupObject[chain][resid].vector.z = (nowp.z-pos.z+PDB.rotateAxis.z);
+				}
+			}
+			
+			PDB.painter.repeatPainter();
+			PDB.nowRotateAngle = 0;
+		}
+		
+	},
+	getVectorLength(vector){
+		return Math.sqrt(Math.pow(vector.x,2)+Math.pow(vector.y,2)+Math.pow(vector.z,2));
+	},
+    //8. 对tool函数的rotation方法进行修改，添加旋转计算坐标逻辑，如下箭头指向行
+	rotation:function (groupIndexs,type) {
+		PDB.tool.rotation_y(groupIndexs,type);
+	},
+	rotation_x:function (groupIndexs,type) {
+        var scope = this;
+		if(type === 0){
+            groupIndexs.forEach(function (index) {
+                var group = PDB.GROUP[index];
+                if(group!== undefined){
+                    group.rotation.x = group.rotation.x - 0.005;					
+                }
+            });
+			scope.freshAllResidueGroupObject(-0.005);//转动-0.005度<-------------
+        }else if(type ===1){
+            groupIndexs.forEach(function (index) {
+                var group = PDB.GROUP[index];
+                if(group!== undefined){
+                    group.rotation.x = group.rotation.x + 0.005;
+                }
+            });
+			scope.freshAllResidueGroupObject(0.005);//转动0.005度<---------------
+        }
+    },
+	rotation_y:function (groupIndexs,type) {
+        var scope = this;
+		if(type === 0){
+            groupIndexs.forEach(function (index) {
+                var group = PDB.GROUP[index];
+                if(group!== undefined){
+                    group.rotation.y = group.rotation.y - 0.005;					
+                }
+            });
+			scope.freshAllResidueGroupObject(-0.005);//转动-0.005度<-------------
+        }else if(type ===1){
+            groupIndexs.forEach(function (index) {
+                var group = PDB.GROUP[index];
+                if(group!== undefined){
+                    group.rotation.y = group.rotation.y + 0.005;
+                }
+            });
+			scope.freshAllResidueGroupObject(0.005);//转动0.005度<---------------
+        }
+    },
+	rotation_z:function (groupIndexs,type) {
+        var scope = this;
+		if(type === 0){
+            groupIndexs.forEach(function (index) {
+                var group = PDB.GROUP[index];
+                if(group!== undefined){
+                    group.rotation.z = group.rotation.z - 0.005;					
+                }
+            });
+			scope.freshAllResidueGroupObject(-0.005);//转动-0.005度<-------------
+        }else if(type ===1){
+            groupIndexs.forEach(function (index) {
+                var group = PDB.GROUP[index];
+                if(group!== undefined){
+                    group.rotation.z = group.rotation.z + 0.005;
+                }
+            });
+			scope.freshAllResidueGroupObject(0.005);//转动0.005度<---------------
+        }
+    },
 
 }

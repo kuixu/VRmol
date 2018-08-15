@@ -857,8 +857,8 @@ PDB.render = {
         renderer.gammaInput = true;
         renderer.gammaOutput = true;
         container.appendChild( renderer.domElement );
-        renderer.vr.enabled = true;
-        renderer.vr.standing = true;
+        //renderer.vr.enabled = true;
+        //renderer.vr.standing = true;
 
 
         if(controlsType==0){
@@ -880,7 +880,7 @@ PDB.render = {
         }
 
 
-        // window.addEventListener( 'resize',  this.onWindowResize, false );
+        window.addEventListener( 'resize',  this.onWindowResize, false );
     },
     initVR0:function(){
         // Scene
@@ -990,6 +990,7 @@ PDB.render = {
         scene.add( new THREE.HemisphereLight( 0x808080, 0x606060 ) );
         // Camera
         camera = new THREE.PerspectiveCamera( 10, window.innerWidth / window.innerHeight, 0.1, 50000 );
+		camera.position.copy(new THREE.Vector3(0,0,0));
 		//camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 50 );
         scene.add( camera );
 		//stats
@@ -1754,6 +1755,14 @@ PDB.render = {
             PDB.render.render();
             requestAnimationFrame( PDB.render.animate );
         }
+		//
+		var offset = camera.position;		
+		var movenlength = Math.sqrt(Math.pow(offset.x-PDB.offset.x,2)+Math.pow(offset.y-PDB.offset.y,2)+Math.pow(offset.z-PDB.offset.z,2));			
+		if(movenlength>0.01){//0.01值可以调整，以适应不同的眼镜移动灵敏度
+			var vec = {x:offset.x - PDB.offset.x,y:offset.y - PDB.offset.y,z:offset.z - PDB.offset.z}
+			PDB.tool.getRealVectorForRepeatPainter(vec);			
+		}
+		PDB.offset = offset.clone();
     },
     onWindowResize : function(){
         camera.aspect = window.innerWidth / window.innerHeight;

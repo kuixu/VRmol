@@ -46,7 +46,7 @@ PDB.drawer = {
         return sprite;
     },
     /**
-     * 绘画文字
+     * before sphere visualization 2018-08-16
      * @param group
      * @param pos
      * @param text
@@ -54,7 +54,7 @@ PDB.drawer = {
      * @param color
      * @param rotation
      */
-    drawText : function(group,pos, text, type,  color,rotation){
+    drawText0 : function(group,pos, text, type,  color,rotation){
         // load font
         var loader = new THREE.FontLoader();
         loader.load('fonts/helvetiker_bold.typeface.json', function(font) {
@@ -74,6 +74,29 @@ PDB.drawer = {
             mesh.lookAt(camera.position);
             mesh.userData = {type: type, name:text, group:group};
             PDB.GROUP[group].add( mesh );
+        });
+    },
+	drawText : function(group,pos, text, type,  color,rotation){        
+        var loader = new THREE.FontLoader();
+        loader.load('fonts/helvetiker_bold.typeface.json', function(font) {
+            var geometry = new THREE.TextGeometry( text, {
+                font: font,
+                size: 0.38,
+                height: 0.05,
+                curveSegments: 5
+            });
+            geometry.computeBoundingBox();
+            var material = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff } );
+            var mesh = new THREE.Mesh( geometry, material );
+            mesh.name=text;
+            //生成文字的mesh后，对GROUP的位置和朝向进行修改
+			var dir = new THREE.Vector3(0,0,0);
+			camera.getWorldDirection(dir);	
+            mesh.userData = {type: type, name:text, group:group};
+            PDB.GROUP[group].add( mesh );
+			PDB.GROUP[group].position.copy(pos);
+			PDB.GROUP[group].lookAt(dir);
+			
         });
     },
     /**
