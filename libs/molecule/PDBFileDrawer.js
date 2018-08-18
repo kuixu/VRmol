@@ -54,7 +54,7 @@ PDB.drawer = {
      * @param color
      * @param rotation
      */
-    drawText0 : function(group,pos, text, type,  color,rotation){
+    drawTextForDesktop : function(group,pos, text, type,  color,rotation){
         // load font
         var loader = new THREE.FontLoader();
         loader.load('fonts/helvetiker_bold.typeface.json', function(font) {

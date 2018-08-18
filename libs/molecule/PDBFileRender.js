@@ -1490,7 +1490,7 @@ PDB.render = {
                                 + atom.resname.substring(0,1).toUpperCase()+ atom.resname.substring(1) + "."+ atom.resid
                                 +"."+atom.name.substring(0,1).toUpperCase()+atom.name.substring(1);
                             var pos =  PDB.tool.getAtomInfoPosition(atom.pos_centered,camera.position);
-                            PDB.drawer.drawText(PDB.GROUP_INFO,pos,
+                            PDB.drawer.drawTextForDesktop(PDB.GROUP_INFO,pos,
                                 message,"",atom.color,180);
                         }
                         if(INTERSECTED.userData.mutation!=undefined ){
