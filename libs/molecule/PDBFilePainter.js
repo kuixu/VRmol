@@ -554,7 +554,7 @@ PDB.painter = {
 			var atom 		= PDB.tool.getMainAtom(PDB.pdbId, atomIdArray[t][1]);
 			var midp 		= PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
 			var groupindex 	= "chain_"+atom.chainname;
-
+		
             // var mat0 = new THREE.LineBasicMaterial({ color: sel?startAtom.color:color});
             // mater.push(mat0);
             // geometry.vertices.push(start,end);
@@ -563,8 +563,8 @@ PDB.painter = {
             // mater.push(mat1);
             // geometry.vertices.push(start,end);
             // geometry.vertices.materindex=mater.length-1;
-            PDB.drawer.drawLine(groupindex, startAtom.pos_centered, midp,sel?startAtom.color:color);
-			PDB.drawer.drawLine(groupindex, midp, atom.pos_centered, sel?atom.color:color);
+            PDB.drawer.drawTempLine(groupindex,resobj.caid, startAtom.pos_centered, midp,sel?startAtom.color:color);
+			PDB.drawer.drawTempLine(groupindex,resobj.caid, midp, atom.pos_centered, sel?atom.color:color);
             //geometry.vertices.push(start,end);
 		}
 
@@ -661,6 +661,7 @@ PDB.painter = {
         var  history ={};        
 		for(var i=0;i<bbond.length; i++){
 			var atom = PDB.tool.getMainAtom(PDB.pdbId, bbond[i]);
+			atom.caid = resobj.caid;
 			var groupindex = "chain_"+atom.chainname;
 			// sphere
 			PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel?atom.color:color, radius, atom, addgroup, w);
@@ -768,6 +769,7 @@ PDB.painter = {
             for ( var j = resobj.faid;j<=resobj.laid;j++) {
 				// var i_atom = main_obj[j];
                 var atom = PDB.tool.getMainAtom(i, j);
+				atom.caid = resobj.caid;
                 if(atom == undefined){
                     continue;
                 }
@@ -855,6 +857,8 @@ PDB.painter = {
 				PDB.drawer.drawSphere(groupindex, atom.pos_centered,sel?atom.color:color, radius, atom, addgroup, w);
 				history[atom.id]= 1;
 			}
+			startAtom.caid = resobj.caid;
+			atom.caid = resobj.caid;
 			var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
 			//group, start, end, color, radius, atom, addGroup
 			PDB.drawer.drawStick(groupindex, startAtom.pos_centered, midp, sel?startAtom.color:color, radius, startAtom);
@@ -3260,7 +3264,8 @@ PDB.painter = {
 			
         }
 	},
-	showAllResidues : function(type){				
+	showAllResidues : function(type){
+		
 		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;
 		var offset = camera.position;		
 		PDB.offset = offset.clone();
@@ -3289,11 +3294,14 @@ PDB.painter = {
 				for(var resid in residueData[chain]){
 					var caid =  residueData[chain][resid].caid;
 					var pos = PDB.tool.getMainAtom(PDB.pdbId,caid).pos_centered;
-					PDB.residueGroupObject[chain][resid] = {
-						vector:{x:pos.x-offset.x,y:pos.y-offset.y,z:pos.z-offset.z}							
-					};
-					var length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
-					
+					var length ;
+					if(!PDB.residueGroupObject[chain][resid]){
+						PDB.residueGroupObject[chain][resid] = {
+							vector:{x:pos.x-offset.x,y:pos.y-offset.y,z:pos.z-offset.z}							
+						};						
+					}
+					length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);	
+					// console.log('length:',length);
 					PDB.residueGroupObject[chain][resid].len = length;
 					if(length<showLengthThreshold){
 						PDB.painter.showResidue(chain, resid, type, true);	

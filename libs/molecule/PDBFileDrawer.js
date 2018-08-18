@@ -201,6 +201,18 @@ PDB.drawer = {
         geometry.vertices.push(start,end);
         var line = new THREE.Line( geometry, material );
         line.userData = {group:group};
+		// line.name = caid;
+        PDB.GROUP[group].add( line );
+    },
+	drawTempLine : function(group,caid, start, end, color){
+        var material = new THREE.LineBasicMaterial({
+            color: color
+        });
+        var geometry = new THREE.Geometry();
+        geometry.vertices.push(start,end);
+        var line = new THREE.Line( geometry, material );
+        line.userData = {group:group};
+		line.name = caid;
         PDB.GROUP[group].add( line );
     },
     drawWholeLine : function(group, start, end, color,geometry){
@@ -268,7 +280,7 @@ PDB.drawer = {
         //var sphereGeometry = new THREE.SphereGeometry( radius, 16, 16 );
         //var sphereGeometry = new THREE.IcosahedronBufferGeometry(radius, 2 );
         var mesh = new THREE.Mesh( geometry, material );
-        mesh.name = atom.id;
+        mesh.name = atom.caid;
         mesh.position.copy(point);
         mesh.userData = {group:group,presentAtom:atom};
         if (addGroup) {
@@ -364,7 +376,7 @@ PDB.drawer = {
         geometry.applyMatrix( new THREE.Matrix4().makeRotationX( THREE.Math.degToRad( 90 ) ) );
         // Make a mesh with the geometry
         var mesh = new THREE.Mesh( geometry, material );
-        mesh.name = atom.id;
+        mesh.name = atom.caid;
         // Position it where we want
         mesh.position.copy( start );
         // And make it point to where we want
