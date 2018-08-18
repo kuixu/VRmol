@@ -962,13 +962,20 @@ PDB.painter = {
         for(var t=0;t<lines.length; t++){
             var ids = lines[t];
             var startAtom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
+					
             var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
+			if(!startAtom.caid){
+				startAtom.caid = resobj.caid;
+				atom.caid = resobj.caid;
+			}	
             var groupindex = "chain_"+atom.chainname;
             if(history[startAtom.id]==undefined){
+				
                 PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, sel?startAtom.color:color, startAtom.radius * 0.2, startAtom, addgroup, w);
                 history[startAtom.id]= 1;
             }
 			if(history[atom.id]==undefined){
+				
                 PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel?atom.color:color, atom.radius * 0.2, atom, addgroup, w);
                 history[atom.id]= 1;
             }
