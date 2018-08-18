@@ -516,10 +516,27 @@ PDB.tool = {
             return PDB.BOND_TYPE_NONE;
         }
     },
-    backToTheInitialPosition:function () {
+    backToInitialPositionForVr:function () {
         for(var i in PDB.GROUP_STRUCTURE_INDEX){
-            PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = 0;
+            PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.copy(new THREE.Vector3(0,0,0));
         }
+		var offset = camera.position;
+		for(var chain in PDB.residueGroupObject){
+			for(var resid in PDB.residueGroupObject[chain]){
+				var caid = w3m.mol[PDB.pdbId].residueData[chain][resid].caid;
+				var pos = PDB.tool.getMainAtom(PDB.pdbId,caid).pos_centered;
+				PDB.residueGroupObject[chain][resid].vector = {x:pos.x-offset.x,y:pos.y-offset.y,z:pos.z-offset.z};
+			}
+        }
+        			
+		
+		for(var resid in w3m.mol[PDB.pdbId].residueData){
+			PDB.GROUP['chain_'+resid].position.copy(new THREE.Vector3(0,0,0));
+			PDB.GROUP['chain_'+resid].rotation.set(0,0,0);
+		}
+		
+		PDB.painter.repeatPainter();
+		
     },
     generateButton:function (parent,text,value,className) {
         var b_ = document.createElement("button");
@@ -604,11 +621,8 @@ PDB.tool = {
         var perValue = (max - min)/100;
         return Math.floor((curr - min)/perValue);
     },
-    backToInitialPositon:function(){
-        for(var i in PDB.GROUP_STRUCTURE_INDEX){
-            PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x = 0 ;
-            PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = 0 ;
-        }
+    backToInitialPositonForDesktop:function(){
+        camera.position.set(PDB.cameraPosition.x, PDB.cameraPosition.y, PDB.cameraPosition.z);
     },
     getAtomInfoPosition:function (formPos,toPos) {
         var x = (3*formPos.x+toPos.x)/4;

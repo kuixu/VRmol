@@ -494,7 +494,7 @@ PDB.controller = {
         //     PDB.selection_mode = PDB.SELECTION_MAIN;
         // } );
 		dragReset.addEventListener( 'click', function() {
-            PDB.tool.backToInitialPositon();
+            PDB.tool.backToInitialPositonForDesktop();
         } );
         dragHet.addEventListener( 'click', function() {
 			PDB.controller.switchDragByMode(PDB.SELECTION_HET);

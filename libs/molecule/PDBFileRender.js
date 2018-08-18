@@ -206,7 +206,7 @@ function dealwithMenu(object) {
             if(type !== 0){
                 PDB.controller.switchDragByMode(object.userData.reptype);
             }else {
-                //PDB.tool.backToInitialPositon();
+                PDB.tool.backToInitialPositionForVr();
             }
             onMenuDown();
             break;
@@ -1114,7 +1114,7 @@ PDB.render = {
         scope.clearRender();
         scope.generateRender();
         //all the group position back the initial location
-        PDB.tool.backToTheInitialPosition();
+        PDB.tool.backToInitialPositonForDesktop();
         console.log("lightType:"+lightType);
         this.addLightsByType(lightType);
 
@@ -1159,7 +1159,7 @@ PDB.render = {
             scope.clearRender();
             scope.generateRender();
             //all the group position back the initial location
-            PDB.tool.backToTheInitialPosition();
+            PDB.tool.backToInitialPositonForDesktop();
             console.log("lightType:"+lightType);
             this.addLightsByType(lightType);
             if(controlsType==0){
