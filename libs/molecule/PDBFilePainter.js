@@ -3271,8 +3271,7 @@ PDB.painter = {
 			
         }
 	},
-	showAllResidues : function(type){
-		
+	showAllResidues : function(type){		
 		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;
 		var offset = camera.position;		
 		PDB.offset = offset.clone();
@@ -3307,6 +3306,7 @@ PDB.painter = {
 							vector:{x:pos.x-offset.x,y:pos.y-offset.y,z:pos.z-offset.z}							
 						};						
 					}
+					
 					length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);	
 					// console.log('length:',length);
 					PDB.residueGroupObject[chain][resid].len = length;

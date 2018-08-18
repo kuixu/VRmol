@@ -1778,14 +1778,7 @@ PDB.render = {
         }
     },
     clearGroupIndex:function(groupIndex){
-		//清空链上residue缓存信息
-		if(typeof(groupIndex)=='string'){
-			var c = groupIndex.split("_");
-			if(c.length>1&&c[0]=='chain'){
-				delete PDB.residueGroupObject[c[1]];
-				PDB.residueGroupObject[c[1]] = {};
-			}
-		}
+		
 
         if(PDB.GROUP[groupIndex] != undefined && PDB.GROUP[groupIndex].children.length > 0){
             var children = PDB.GROUP[groupIndex].children;

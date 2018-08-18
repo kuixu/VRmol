@@ -1232,6 +1232,15 @@ PDB.controller = {
 	},
     requestRemote : function(name){
         console.log("controller.requestRemote:"+name);
+		
+		//清空链上residue缓存信息		
+		
+		for(var chain in PDB.residueGroupObject){
+			if(PDB.residueGroupObject[chain]){
+				delete PDB.residueGroupObject[chain];
+			}			
+		}
+		// console.log(PDB.residueGroupObject);		
 		PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
         var scope = this;
         var input = document.getElementById("search_text");
