@@ -915,8 +915,7 @@ PDB.tool = {
 		return new THREE.Vector3(newPos.x,newPos.y,newPos.z);
 		
 	},
-	
-	freshAllResidueGroupObject(angle){		
+	freshAllResidueGroupObject: function(angle){		
 		PDB.nowRotateAngle = PDB.nowRotateAngle+angle;
 		if(Math.abs(PDB.nowRotateAngle)>=PDB.rotateAngleThreshold){
 			var scope = this;
@@ -942,7 +941,7 @@ PDB.tool = {
 		}
 		
 	},
-	getVectorLength(vector){
+	getVectorLength: function(vector){
 		return Math.sqrt(Math.pow(vector.x,2)+Math.pow(vector.y,2)+Math.pow(vector.z,2));
 	},
     //8. 对tool函数的rotation方法进行修改，添加旋转计算坐标逻辑，如下箭头指向行

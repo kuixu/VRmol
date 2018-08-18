@@ -26,7 +26,7 @@ if ( location.search ) {
 
     w3m_isset(kv.tcga) ? tcga = parseInt(kv.tcga) : void(0);
 
-    w3m_isset(kv.vmode) ? vmode = kv.vmode:"desktop" ;
+    w3m_isset(kv.vmode) ? vmode = kv.vmode:"vr" ;
 
     if(PDB.panelShow==PDB.config.panelOpen){
         var panels = document.getElementsByClassName("panel");
