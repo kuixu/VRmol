@@ -93,9 +93,32 @@ PDB.drawer = {
 			var dir = new THREE.Vector3(0,0,0);
 			camera.getWorldDirection(dir);	
             mesh.userData = {type: type, name:text, group:group};
-            PDB.GROUP[group].add( mesh );
-			PDB.GROUP[group].position.copy(pos);
+		    PDB.GROUP[group].position.copy(pos);
 			PDB.GROUP[group].lookAt(dir);
+            PDB.GROUP[group].add( mesh );
+			
+        });
+    },
+	drawTextForDistance : function(group,pos, text, type,  color,rotation){        
+        var loader = new THREE.FontLoader();
+        loader.load('fonts/helvetiker_bold.typeface.json', function(font) {
+            var geometry = new THREE.TextGeometry( text, {
+                font: font,
+                size: 0.38,
+                height: 0.05,
+                curveSegments: 5
+            });
+            geometry.computeBoundingBox();
+            var material = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff } );
+            var mesh = new THREE.Mesh( geometry, material );
+            mesh.name=text;
+            //生成文字的mesh后，对GROUP的位置和朝向进行修改
+			var dir = new THREE.Vector3(0,0,0);
+			camera.getWorldDirection(dir);	
+            mesh.userData = {type: type, name:text, group:group};
+		    mesh.position.copy(pos);
+			mesh.lookAt(camera.position);
+            PDB.GROUP[group].add( mesh );
 			
         });
     },
@@ -197,6 +220,7 @@ PDB.drawer = {
         var material = new THREE.LineBasicMaterial({
             color: color
         });
+		console.log('-------------------'+start);
         var geometry = new THREE.Geometry();
         geometry.vertices.push(start,end);
         var line = new THREE.Line( geometry, material );

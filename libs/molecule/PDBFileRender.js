@@ -444,8 +444,10 @@ function onTriggerDown( event ) {
             case PDB.SELECTION_RESIDUE:
                 if(object.userData.presentAtom !== undefined){
                     //PDB.painter.showResidueInfo(object.userData.presentAtom);
-                    PDB.painter.showResidueInfoPos(object.userData.presentAtom, pos);
-
+                    //PDB.painter.showResidueInfoPos(object.userData.presentAtom, pos);
+                    atom = object.userData.presentAtom;
+                    atom["pos_curr"] = pos;
+                    PDB.painter.showAtomInfo(atom);
                     if(PDB.trigger === PDB.TRIGGER_EVENT_FRAGMENT){
 						// console.log(object);
                         PDB.fragmentArray.push(object);
@@ -543,9 +545,9 @@ function onTriggerUp( event ) {
                 var anglePoint = locationStart;
                 var edgePoint1 = PDB.distanceArray[0];
                 var edgePoint2 = locationEnd;
-                var anglePointPos = [anglePoint.pos_centered.x,anglePoint.pos_centered.y,anglePoint.pos_centered.z];
-                var edgePoint1Pos = [edgePoint1.pos_centered.x,edgePoint1.pos_centered.y,edgePoint1.pos_centered.z];
-                var edgePoint2Pos = [edgePoint2.pos_centered.x,edgePoint2.pos_centered.y,edgePoint2.pos_centered.z];
+                var anglePointPos = [anglePoint.pos_curr.x,anglePoint.pos_curr.y,anglePoint.pos_curr.z];
+                var edgePoint1Pos = [edgePoint1.pos_curr.x,edgePoint1.pos_curr.y,edgePoint1.pos_curr.z];
+                var edgePoint2Pos = [edgePoint2.pos_curr.x,edgePoint2.pos_curr.y,edgePoint2.pos_curr.z];
                 var ms = PDB.tool.getAngleMeasurement(anglePointPos,edgePoint1Pos,edgePoint2Pos);
                 //var labelPos = new THREE.Vector3(ms.label_xyz[0],ms.label_xyz[1],ms.label_xyz[2]);
                 var labelPos = locationStart.pos_curr;
