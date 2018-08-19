@@ -195,7 +195,8 @@ PDB.painter = {
                     ["Bond",              PDB.MENU_TYPE_HBOND],
                     // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
                     ["Density Map",              PDB.MENU_TYPE_DENSITYMAP],
-                    ["Drug Design",              PDB.MENU_TYPE_DRUG]
+                    ["Drug Design",              PDB.MENU_TYPE_DRUG],
+					["Move Direction",              PDB.MENU_TYPE_DIRECTION]
                 ];
                 for(var i = 0; i<mainMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x-2, y-i*0.2, z),  mainMenu[i][0], mainMenu[i][1], titleColor, 135);
@@ -406,6 +407,16 @@ PDB.painter = {
                 ];
                 for(var i = 0; i<bondMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_HBOND, new THREE.Vector3(x, y-i*0.2, z),  bondMenu[i][0], bondMenu[i][1], color, 135);
+                }
+                break;
+			case PDB.MENU_TYPE_DIRECTION:
+                var moveMenu =[
+                    ["Up and down",               1 ],
+                    ["Left and right",               2 ],
+                    ["Before and after",               3 ]
+                ];
+                for(var i = 0; i<moveMenu.length;i++){
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_DIRECTION, new THREE.Vector3(x, y-i*0.2, z),  moveMenu[i][0], moveMenu[i][1], color, 135);
                 }
                 break;
         }
