@@ -791,10 +791,12 @@ PDB.controller = {
         PDB.trigger = PDB.TRIGGER_EVENT_FRAGMENT;
         PDB.selection_mode = PDB.SELECTION_RESIDUE;
         PDB.fragmentMode = mode;
+		console.log(mode);
     },
     fragmentPainter : function(startId,endId,selectedMode){
 		var reptype = 0;
         var selectRadius = 0;
+		
 		if(selectedMode ==="Rectangle"){
             selectRadius = 0;
 			reptype = PDB.RIBBON_RECTANGLE;
@@ -813,7 +815,17 @@ PDB.controller = {
         }else if(selectedMode=="Flat"){
             selectRadius = 0;
 			reptype = PDB.RIBBON_FLAT;
-        }else if(selectedMode=="Surface"){
+        }else if(selectedMode=="Sphere"){
+			reptype = PDB.SPHERE;
+		}else if(selectedMode=="Backbone"){
+			reptype = PDB.BACKBONE;
+		}else if(selectedMode=="Line"){
+			reptype = PDB.LINE;
+		}else if(selectedMode=="Sticks"){
+			reptype = PDB.STICK;
+		}else if(selectedMode=="BallRod"){
+			reptype = PDB.BALL_AND_ROD;
+		}else if(selectedMode=="Surface"){
             selectRadius = 0;
         }
         if(selectedMode === "Surface"){
@@ -841,6 +853,7 @@ PDB.controller = {
 				PDB.fragmentList = {
 					0:obj
 				};
+				console.log(PDB.fragmentList);
 				PDB.painter.showFragmentsResidues();
 			}
 			
