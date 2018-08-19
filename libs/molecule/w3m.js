@@ -4748,6 +4748,7 @@ w3m.pdb = function ( text, drugname ) {
             occupancy    = parseFloat(w3m_sub(s, 55, 60)),
             b_factor     = parseFloat(w3m_sub(s, 61, 66)) || 0.0,
             element      = w3m_sub(s, 77, 78);
+			if (residue_id<0) return;
         math.limit(xyz[0], w3m.global.limit.x);
         math.limit(xyz[1], w3m.global.limit.y);
         math.limit(xyz[2], w3m.global.limit.z);		
@@ -4850,6 +4851,7 @@ w3m.pdb = function ( text, drugname ) {
             occupancy    = parseFloat(w3m_sub(s, 55, 60)),
             b_factor     = parseFloat(w3m_sub(s, 61, 66)) || 0.0,
             element      = w3m_sub(s, 77, 78);
+			if (residue_id<0) return;
         math.limit(xyz[0], w3m.global.limit.x);
         math.limit(xyz[1], w3m.global.limit.y);
         math.limit(xyz[2], w3m.global.limit.z);
