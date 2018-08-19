@@ -216,16 +216,16 @@ PDB.drawer = {
         mesh.userData = { group:group, atom:atom};
         PDB.GROUP[group].add( mesh );
     },
+	
     drawLine : function(group, start, end, color){
         var material = new THREE.LineBasicMaterial({
             color: color
         });
-		console.log('-------------------'+start);
+		
         var geometry = new THREE.Geometry();
         geometry.vertices.push(start,end);
         var line = new THREE.Line( geometry, material );
         line.userData = {group:group};
-		// line.name = caid;
         PDB.GROUP[group].add( line );
     },
 	drawTempLine : function(group,caid, start, end, color){

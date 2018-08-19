@@ -487,12 +487,13 @@ PDB.painter = {
             message,"",showAtom.color,180);
     },
     showChainInfo : function (showAtom) {
-        // var pos = new THREE.Vector3();
-        // pos.x = showAtom.pos_centered.x + 0.5;
-        // pos.y = showAtom.pos_centered.y + 0.5;
-        // pos.z = showAtom.pos_centered.z - 0.5;
         var message = showAtom.chainname.toUpperCase();
-        var pos1 =  PDB.tool.getAtomInfoPosition(showAtom.pos_centered,camera.position);
+		var pos1;
+		if(showAtom.point){
+			pos1 = showAtom.point;			
+		}else{
+			pos1 =  PDB.tool.getAtomInfoPosition(showAtom.pos_centered,camera.position);
+		}        
         PDB.drawer.drawText(PDB.GROUP_INFO,pos1,
             message,"",showAtom.color,180);
     },
@@ -2454,14 +2455,18 @@ PDB.painter = {
         }
     },
     showDistance : function (locationStart,locationEnd) {
-        var distance = locationStart.pos_curr.distanceTo(locationEnd.pos_curr);
+        PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+		PDB.GROUP[PDB.GROUP_INFO].position.copy(new THREE.Vector3(0,0,0));
+		PDB.GROUP[PDB.GROUP_INFO].rotation.set(0,0,0);
+		var distance = locationStart.pos_curr.distanceTo(locationEnd.pos_curr);
         var message = Number(distance).toFixed(2)+"A";
         var color = new THREE.Color(0.5,0.5,0.5);
-		console.log('-------------------'+locationStart.pos_curr.x+'|'+locationStart.pos_curr.y);
-        PDB.drawer.drawLine(PDB.GROUP_MAIN,locationStart.pos_curr,
+		// console.log('-------------------'+locationStart.pos_curr.x+'|'+locationStart.pos_curr.y);
+        PDB.drawer.drawLine(PDB.GROUP_INFO,locationStart.pos_curr,
             locationEnd.pos_curr,color);
-        PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN,PDB.tool.midPoint(locationStart.pos_curr,locationEnd.pos_curr),
+        PDB.drawer.drawTextForDistance(PDB.GROUP_INFO,PDB.tool.midPoint(locationStart.pos_curr,locationEnd.pos_curr),
             message,"",locationStart.color,180);
+		 
     },
 	showSegmentByStartEnd : function(startId,endId,selectMode,selectedRadius){
 		var isShowNonTube=false;

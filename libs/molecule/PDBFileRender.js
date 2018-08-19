@@ -418,7 +418,7 @@ function onTriggerDown( event ) {
     var intersection = intersections[ 0 ];
     var object = intersection.object;
     var pos    = intersection.pos;
-
+	
     // ================================ Deal with Menu ===
     if(PDB.isShowMenu){
         dealwithMenu(object);
@@ -675,10 +675,11 @@ function getIntersections( controller ) {
                     var groupindex = gIndexies[key];
                     if (!PDB.GROUP[groupindex].visible)continue;
                     var tmp_inters = raycaster.intersectObjects(PDB.GROUP[groupindex].children);
+					
                     if (tmp_inters.length <= 0)continue;
                     object = tmp_inters[0].object;
                     if (object.name != undefined && object.name != "" && object.userData.presentAtom !== undefined) {
-                        inters.push({"object": PDB.GROUP[groupindex]});
+                        inters.push({"object": PDB.GROUP[groupindex],"pos":tmp_inters[0].point});
                     }
                 }
                 break;
@@ -736,20 +737,10 @@ function getIntersections( controller ) {
                     if(tmp_inters.length<=0)continue;
                     j=0;
                     var object=tmp_inters[j].object;
-					// console.log(object);
                     var point=tmp_inters[0].point;
+					
 					inters.push({"object": object, "pos":point} );
-                    // if(object.name!=undefined&& object.name!=""){
-                        // var atomObjects = PDB.GROUP[gIndexies[i]].getChildrenByName( object.name );
-						
-                        // for (var a=0; a < atomObjects.length; a++) {
-							// console.log(atomObjects[a]);
-							// if(object.id==atomObjects[a].userData.presentAtom.id){
-								// inters.push({"object": atomObjects[a], "pos":point} );
-							// }
-                           
-                        // }
-                    // }
+                    
                 }
                 break;
             case PDB.SELECTION_OBJECT:
