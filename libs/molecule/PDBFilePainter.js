@@ -372,18 +372,11 @@ PDB.painter = {
         }
     },
     showAtomInfo : function (showAtom) {
-        var pos = new THREE.Vector3();
-        // pos.x = showAtom.pos_centered.x + 0.5;
-        // pos.y = showAtom.pos_centered.y + 0.5;
-        // pos.z = showAtom.pos_centered.z - 0.5;
-        pos.x = showAtom.pos_curr.x + 0.5;
-        pos.y = showAtom.pos_curr.y + 0.5;
-        pos.z = showAtom.pos_curr.z - 0.5;
         var message = showAtom.chainname.toUpperCase() +"."
             + showAtom.resname.substring(0,1).toUpperCase()+ showAtom.resname.substring(1) + "."+ showAtom.resid
             +"."+showAtom.name.substring(0,1).toUpperCase()+showAtom.name.substring(1);
-        var pos1 =  PDB.tool.getAtomInfoPosition(showAtom.pos_centered,camera.position);
-        PDB.drawer.drawText(PDB.GROUP_INFO,pos1,
+        var pos =  PDB.tool.getAtomInfoPosition(showAtom.pos_curr,camera.position);
+        PDB.drawer.drawText(PDB.GROUP_INFO,pos,
             message,"",showAtom.color,180);
     },
     showAtomInfoPos : function (showAtom, position) {
@@ -2467,15 +2460,6 @@ PDB.painter = {
         PDB.drawer.drawLine(PDB.GROUP_MAIN,locationStart.pos_curr,
             locationEnd.pos_curr,color);
         PDB.drawer.drawText(PDB.GROUP_MAIN,PDB.tool.midPoint(locationStart.pos_curr,locationEnd.pos_curr),
-            message,"",locationStart.color,180);
-    },
-    showDistance0 : function (locationStart,locationEnd) {
-        var distance = locationStart.pos_centered.distanceTo(locationEnd.pos_centered);
-        var message = Number(distance).toFixed(2)+"A";
-        var color = new THREE.Color(0.5,0.5,0.5);
-        PDB.drawer.drawLine(PDB.GROUP_MAIN,locationStart.pos_centered,
-            locationEnd.pos_centered,color);
-        PDB.drawer.drawText(PDB.GROUP_MAIN,PDB.tool.midPoint(locationStart.pos_centered,locationEnd.pos_centered),
             message,"",locationStart.color,180);
     },
 	showSegmentByStartEnd : function(startId,endId,selectMode,selectedRadius){

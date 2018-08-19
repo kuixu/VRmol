@@ -456,12 +456,10 @@ function onTriggerDown( event ) {
                 if(object.userData.presentAtom !== undefined){
                     atom = object.userData.presentAtom;
                     atom["pos_curr"] = pos;
-                    //PDB.painter.showAtomInfoPos(, pos);
                     PDB.painter.showAtomInfo(atom);
                     if(PDB.trigger === PDB.TRIGGER_EVENT_DISTANCE || PDB.trigger === PDB.TRIGGER_EVENT_ANGLE){
                         if(PDB.distanceArray.length > 0) {
                             if(!PDB.tool.equalAtom(PDB.distanceArray[PDB.distanceArray.length-1],atom)){
-                                //PDB.distanceArray.push(object.userData.presentAtom);
                                 PDB.distanceArray.push(atom);
                             }
                         }else{
