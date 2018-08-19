@@ -52,28 +52,67 @@ PDB.painter = {
     },
 	near:function(){
 		for(var i in PDB.GROUP_STRUCTURE_INDEX){
-		   
-			PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z - PDB.ZOOM_STEP;
+		    switch (PDB.MOVE_DIRECTION){
+				case 1:
+				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y + PDB.ZOOM_STEP;
+					break;
+				case 2:
+				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x - PDB.ZOOM_STEP;
+					break;
+				case 3:
+					PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z - PDB.ZOOM_STEP;
+					break;
+			}
 		}
 		//旋转轴
 		PDB.rotateAxis.z = PDB.rotateAxis.z - PDB.ZOOM_STEP;		
 		PDB.zTemp = PDB.zTemp - PDB.ZOOM_STEP;		
 		for(var chain in PDB.residueGroupObject){
 			for(var resid in PDB.residueGroupObject[chain]){
-				PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z - PDB.ZOOM_STEP;
+				switch (PDB.MOVE_DIRECTION){
+					case 1:
+						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.y + PDB.ZOOM_STEP;
+						break;
+					case 2:
+						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.x - PDB.ZOOM_STEP;
+						break;
+					case 3:
+						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z - PDB.ZOOM_STEP;
+						break;
+				}
 			}
 		}		
 		PDB.painter.repeatPainter();
 	},
 	far:function(){	
 		for(var i in PDB.GROUP_STRUCTURE_INDEX){          
-			PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z  = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z+PDB.ZOOM_STEP;
+			switch (PDB.MOVE_DIRECTION){
+				case 1:
+				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y - PDB.ZOOM_STEP;
+					break;
+				case 2:
+				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x + PDB.ZOOM_STEP;
+					break;
+				case 3:
+					PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z + PDB.ZOOM_STEP;
+					break;
+			}
 		}
 		PDB.zTemp = PDB.zTemp + PDB.ZOOM_STEP;
 		PDB.rotateAxis.z = PDB.rotateAxis.z + PDB.ZOOM_STEP;		
 		for(var chain in PDB.residueGroupObject){
 			for(var resid in PDB.residueGroupObject[chain]){			
-				PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z+PDB.ZOOM_STEP;
+				switch (PDB.MOVE_DIRECTION){
+					case 1:
+						PDB.residueGroupObject[chain][resid].vector.y = PDB.residueGroupObject[chain][resid].vector.y - PDB.ZOOM_STEP;
+						break;
+					case 2:
+						PDB.residueGroupObject[chain][resid].vector.x = PDB.residueGroupObject[chain][resid].vector.x + PDB.ZOOM_STEP;
+						break;
+					case 3:
+						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z + PDB.ZOOM_STEP;
+						break;
+				}
 			}
 		}		
 		PDB.painter.repeatPainter();

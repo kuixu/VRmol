@@ -2,7 +2,7 @@
  * Created by zhangdawei on 2017/6/27.
  */
 var PDB ;
-var ServerType = 2;
+var ServerType = 3;
 
 var SERVERURL = "http://localhost:8080/molecule_vr";
 if(ServerType ===1){
@@ -60,6 +60,7 @@ PDB = {
     isShowWater: false,
 	ROTATION_START_FLAG: false,
     ROTATION_DIRECTION:1, //0 left 1 right
+	MOVE_DIRECTION:1, //1 上下  2左右 3前后
 	PLANE:{a:0,b:0,c:0,d:0},
     TravelScale:6,
     currentType: 1,
