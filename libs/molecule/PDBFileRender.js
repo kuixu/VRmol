@@ -212,6 +212,7 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_FRAGMENT:
             PDB.selection_mode = PDB.SELECTION_RESIDUE;
+			// console.log(object.userData);
             PDB.controller.switchFragmentByMode(object.userData.reptype);
             onMenuDown();
             break;
@@ -446,7 +447,7 @@ function onTriggerDown( event ) {
                     PDB.painter.showResidueInfoPos(object.userData.presentAtom, pos);
 
                     if(PDB.trigger === PDB.TRIGGER_EVENT_FRAGMENT){
-						console.log(object);
+						// console.log(object);
                         PDB.fragmentArray.push(object);
                     }
                 }
@@ -735,13 +736,20 @@ function getIntersections( controller ) {
                     if(tmp_inters.length<=0)continue;
                     j=0;
                     var object=tmp_inters[j].object;
+					// console.log(object);
                     var point=tmp_inters[0].point;
-                    if(object.name!=undefined&& object.name!=""){
-                        var atomObjects = PDB.GROUP[gIndexies[i]].getChildrenByName( object.name );
-                        for (var a=0; a < atomObjects.length; a++) {
-                           inters.push({"object": atomObjects[a], "pos":point} );
-                        }
-                    }
+					inters.push({"object": object, "pos":point} );
+                    // if(object.name!=undefined&& object.name!=""){
+                        // var atomObjects = PDB.GROUP[gIndexies[i]].getChildrenByName( object.name );
+						
+                        // for (var a=0; a < atomObjects.length; a++) {
+							// console.log(atomObjects[a]);
+							// if(object.id==atomObjects[a].userData.presentAtom.id){
+								// inters.push({"object": atomObjects[a], "pos":point} );
+							// }
+                           
+                        // }
+                    // }
                 }
                 break;
             case PDB.SELECTION_OBJECT:
