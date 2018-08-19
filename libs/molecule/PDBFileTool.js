@@ -939,13 +939,13 @@ PDB.tool = {
 					var pos = camera.position;
 					var obj = PDB.residueGroupObject[chain][resid].vector;
 					var vec = {
-						x:pos.x+obj.x,
-						y:pos.y+obj.y,
+						x:pos.x+obj.x-PDB.rotateAxis.x,
+						y:pos.y+obj.y-PDB.rotateAxis.y,
 						z:pos.z+obj.z-PDB.rotateAxis.z
 					}					
 					var nowp = scope.rotateAboutWorldAxis(vec,axis,PDB.nowRotateAngle);
-					PDB.residueGroupObject[chain][resid].vector.x = (nowp.x-pos.x);
-					PDB.residueGroupObject[chain][resid].vector.y = (nowp.y-pos.y);
+					PDB.residueGroupObject[chain][resid].vector.x = (nowp.x-pos.x+PDB.rotateAxis.x);
+					PDB.residueGroupObject[chain][resid].vector.y = (nowp.y-pos.y+PDB.rotateAxis.y);
 					PDB.residueGroupObject[chain][resid].vector.z = (nowp.z-pos.z+PDB.rotateAxis.z);
 				}
 			}

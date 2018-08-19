@@ -65,19 +65,21 @@ PDB.painter = {
 			}
 		}
 		//旋转轴
-		PDB.rotateAxis.z = PDB.rotateAxis.z - PDB.ZOOM_STEP;		
-		PDB.zTemp = PDB.zTemp - PDB.ZOOM_STEP;		
 		for(var chain in PDB.residueGroupObject){
 			for(var resid in PDB.residueGroupObject[chain]){
 				switch (PDB.MOVE_DIRECTION){
 					case 1:
-						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.y + PDB.ZOOM_STEP;
+						PDB.residueGroupObject[chain][resid].vector.y = PDB.residueGroupObject[chain][resid].vector.y + PDB.ZOOM_STEP;
+						PDB.rotateAxis.y = PDB.rotateAxis.y + PDB.ZOOM_STEP;
 						break;
 					case 2:
-						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.x - PDB.ZOOM_STEP;
+						PDB.residueGroupObject[chain][resid].vector.x = PDB.residueGroupObject[chain][resid].vector.x - PDB.ZOOM_STEP;
+						PDB.rotateAxis.x = PDB.rotateAxis.x - PDB.ZOOM_STEP;
 						break;
 					case 3:
 						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z - PDB.ZOOM_STEP;
+						PDB.rotateAxis.z = PDB.rotateAxis.z - PDB.ZOOM_STEP;		
+		                // PDB.zTemp = PDB.zTemp - PDB.ZOOM_STEP;		
 						break;
 				}
 			}
@@ -98,19 +100,22 @@ PDB.painter = {
 					break;
 			}
 		}
-		PDB.zTemp = PDB.zTemp + PDB.ZOOM_STEP;
-		PDB.rotateAxis.z = PDB.rotateAxis.z + PDB.ZOOM_STEP;		
+			
 		for(var chain in PDB.residueGroupObject){
 			for(var resid in PDB.residueGroupObject[chain]){			
 				switch (PDB.MOVE_DIRECTION){
 					case 1:
 						PDB.residueGroupObject[chain][resid].vector.y = PDB.residueGroupObject[chain][resid].vector.y - PDB.ZOOM_STEP;
+						PDB.rotateAxis.y = PDB.rotateAxis.y - PDB.ZOOM_STEP;	
 						break;
 					case 2:
 						PDB.residueGroupObject[chain][resid].vector.x = PDB.residueGroupObject[chain][resid].vector.x + PDB.ZOOM_STEP;
+						PDB.rotateAxis.x = PDB.rotateAxis.x + PDB.ZOOM_STEP;	
 						break;
 					case 3:
 						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z + PDB.ZOOM_STEP;
+						// PDB.zTemp = PDB.zTemp + PDB.ZOOM_STEP;
+		                PDB.rotateAxis.z = PDB.rotateAxis.z + PDB.ZOOM_STEP;	
 						break;
 				}
 			}
