@@ -848,6 +848,8 @@ PDB.painter = {
 			var ids = lines[i];
 			var startAtom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
 			var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
+			startAtom.caid = resobj.caid;
+			atom.caid = resobj.caid;
 			var groupindex = "chain_"+atom.chainname;
 			if(history[startAtom.id]===undefined){
 				PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, sel?startAtom.color:color, radius, startAtom, addgroup, w);
@@ -857,8 +859,7 @@ PDB.painter = {
 				PDB.drawer.drawSphere(groupindex, atom.pos_centered,sel?atom.color:color, radius, atom, addgroup, w);
 				history[atom.id]= 1;
 			}
-			startAtom.caid = resobj.caid;
-			atom.caid = resobj.caid;
+			
 			var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
 			//group, start, end, color, radius, atom, addGroup
 			PDB.drawer.drawStick(groupindex, startAtom.pos_centered, midp, sel?startAtom.color:color, radius, startAtom);
@@ -1041,6 +1042,7 @@ PDB.painter = {
 		var resobj		= residueData[chainId][resid];
 		var path 		= resobj.path;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
+		atom.caid = resobj.caid;
 		if(residueData[chainId][Number(resid)-1]==undefined){		
 			
 			var groupindex = "chain_"+atom.chainname;
@@ -3314,7 +3316,8 @@ PDB.painter = {
 						PDB.painter.showResidue(chain, resid, type, true);	
 						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;							
 					}else{
-						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;	
+						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
+						
 					}						
 				}				
 			}
