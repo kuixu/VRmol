@@ -420,6 +420,7 @@ function onTriggerDown( event ) {
     }
     tempMatrix.getInverse( controller.matrixWorld );
     var intersection = intersections[ 0 ];
+	// console.log(intersection);
     var object = intersection.object;
     var pos    = intersection.pos;
 	
@@ -437,6 +438,8 @@ function onTriggerDown( event ) {
                 break;
             case PDB.SELECTION_CHAIN:
                 if(object.userData.presentAtom !== undefined){
+					object.userData.presentAtom.pos = pos;
+					// console.log(object.userData.presentAtom);
                     PDB.painter.showChainInfo(object.userData.presentAtom);
                 }
                 break;
@@ -684,7 +687,8 @@ function getIntersections( controller ) {
                     if (tmp_inters.length <= 0)continue;
                     object = tmp_inters[0].object;
                     if (object.name != undefined && object.name != "" && object.userData.presentAtom !== undefined) {
-                        inters.push({"object": PDB.GROUP[groupindex],"pos":tmp_inters[0].point});
+                        // console.log(object.point);
+						inters.push({"object": PDB.GROUP[groupindex],"pos":tmp_inters[0].point});
                     }
                 }
                 break;
@@ -745,6 +749,13 @@ function getIntersections( controller ) {
                     var point=tmp_inters[0].point;
 					
 					inters.push({"object": object, "pos":point} );
+					var atomObjects  = PDB.GROUP[gIndexies[i]].getChildrenByName( object.name );
+					for(var a in atomObjects ){
+						if(object.userData.presentAtom.id == atomObjects[a].userData.presentAtom.id){
+							inters.push({"object": atomObjects[a], "pos":point} );
+						}
+						
+					}
                     
                 }
                 break;
