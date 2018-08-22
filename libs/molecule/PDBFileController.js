@@ -1350,6 +1350,11 @@ PDB.controller = {
     },
     refreshSurface : function(structureType,surfaceType,opacity,wireframe){
         console.log("controller.refreshSurface:" + structureType );
+		if(PDB.mode===PDB.MODE_VR){
+            PDB.tool.backToInitialPositionForVr();
+        }else{
+            PDB.tool.backToInitialPositonForDesktop();
+        }
         var scope = this;
         var changeSurfaceType = false;
         if(surfaceType !== undefined && surfaceType !== PDB.SURFACE_TYPE){
