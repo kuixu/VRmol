@@ -1024,6 +1024,7 @@ PDB.painter = {
 
             var startAtom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
             var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
+			// atom.caid = atom.id;
             var groupindex = "chain_"+atom.chainname;
 			
             if(history[startAtom.id]==undefined){
@@ -2432,6 +2433,7 @@ PDB.painter = {
 			if(atom==undefined){
 				atom = PDB.tool.getMainAtom(molId, i_atom);
 			}
+			atom.caid = atom.id;
 			if(atom.resname!=="hoh"){
 				PDB.drawer.drawSphere(PDB.GROUP_HET, atom.pos_centered, atom.color, 0.9*atom.radius, atom, addgroup, w);
 			}
@@ -2458,6 +2460,7 @@ PDB.painter = {
 				if(atom==undefined){
 					atom = PDB.tool.getMainAtom(molId, i);
 				}
+				atom.caid = atom.id;
 				if(history[startAtom.id]==undefined){
 					 PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, radius+0.001, startAtom, addgroup, w);
 					 history[startAtom.id]= 1;
@@ -2496,6 +2499,7 @@ PDB.painter = {
 				if(atom==undefined){
 					atom = PDB.tool.getMainAtom(molId, i);
 				}
+				atom.caid = atom.id;
 				if(history[startAtom.id]==undefined){
 					PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom, addgroup, w);
 					history[startAtom.id]= 1;
