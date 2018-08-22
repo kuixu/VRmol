@@ -101,12 +101,12 @@ function onThumbpadDown(event){
 		    id =self.setInterval("PDB.painter.far()",20);
 			break;
 		case 3:
-			PDB.ROTATION_DIRECTION = 0;
-	    PDB.ROTATION_START_FLAG= true;
+		    PDB.ROTATION_DIRECTION=0; 
+			id =self.setInterval("PDB.painter.rotate()",20);
 			break;
 		case 4:
-		    PDB.ROTATION_DIRECTION = 1;
-	    PDB.ROTATION_START_FLAG= true;
+		    PDB.ROTATION_DIRECTION=1; 
+			id =self.setInterval("PDB.painter.rotate()",20);
 		    break;
 	}
 }

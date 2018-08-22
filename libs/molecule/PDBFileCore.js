@@ -17,7 +17,7 @@ PDB = {
 	//旋转的角度计量
 	rotateAngleThreshold:0.005,
 	nowRotateAngle:0,
-	rotateAxis:{x:0,y:1,z:0},	
+	rotateAxis:{x:0,y:0,z:0},	
 	zTemp : 0,	
 	//residue绘画的三种模式：undefined,0-->没有生成Group,1-->生成并正常显示,2-->对相应的group进行hide 模式
 	residueGroup_undefined:0,
@@ -60,7 +60,7 @@ PDB = {
     isShowWater: false,
 	ROTATION_START_FLAG: false,
     ROTATION_DIRECTION:1, //0 left 1 right
-	MOVE_DIRECTION:1, //1 上下  2左右 3前后
+	MOVE_DIRECTION:1, //1 上下  2左右 3前后 4 x轴旋转 5 y轴旋转 6 z轴旋转
 	PLANE:{a:0,b:0,c:0,d:0},
     TravelScale:6,
     currentType: 1,

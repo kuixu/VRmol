@@ -147,6 +147,19 @@ PDB.painter = {
 				
 		PDB.painter.repeatPainter();
 	},
+	rotate:function(){
+		switch (PDB.MOVE_DIRECTION){
+			case 4:
+				var rotation_x = PDB.tool.rotation_x(PDB.GROUP_STRUCTURE_INDEX,PDB.ROTATION_DIRECTION);
+				break;
+			case 5:
+				var rotation_y = PDB.tool.rotation_y(PDB.GROUP_STRUCTURE_INDEX,PDB.ROTATION_DIRECTION);
+				break;
+			case 6:
+				var rotation_z = PDB.tool.rotation_z(PDB.GROUP_STRUCTURE_INDEX,PDB.ROTATION_DIRECTION);
+				break;
+		}
+	},
     showInput : function(text){
         if(text=="<--"){
             if(PDB.pdbVrId.length>0)PDB.pdbVrId=PDB.pdbVrId.substring(0,PDB.pdbVrId.length-1);
@@ -443,7 +456,10 @@ PDB.painter = {
                 var moveMenu =[
                     ["Up and down",               1 ],
                     ["Left and right",               2 ],
-                    ["Before and after",               3 ]
+                    ["Before and after",               3 ],
+					["Rotation the x axis",               4 ],
+					["Rotation the y axis",               5 ],
+					["Rotation the z axis",               6 ]
                 ];
                 for(var i = 0; i<moveMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DIRECTION, new THREE.Vector3(x, y-i*0.2, z),  moveMenu[i][0], moveMenu[i][1], color, 135);
