@@ -296,7 +296,6 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_ROTATION:
             PDB.ROTATION_AXIS = object.userData.reptype;
-			console.log("-------------------rotation:"+PDB.ROTATION_AXIS);
             onMenuDown();
             break;
 		case PDB.GROUP_MENU_DIRECTION:
@@ -1005,27 +1004,27 @@ PDB.render = {
 			//controller1 = new THREE.VRController( 0 );
 			controller1.standingMatrix = renderer.vr.getStandingMatrix();
 			controller1.addEventListener('thumbstick touch began', function (event) {
-				//console.log("thumbstick touch began");
+				// console.log("-----------------------thumbstick touch began");
 				//onThumbpadDown(event);
             })
 			controller1.addEventListener('thumbstick touch ended', function (event) {
-				//console.log("thumbstick touch end");
+				// console.log("-----------------------thumbstick touch end");
 				//onThumbpadUp(event);
             })
 			controller1.addEventListener('thumbpad touch began', function (event) {
-				//console.log("thumbpad touch began");
+				// console.log("-----------------------thumbpad touch began");
 				//onThumbpadDown(event);
             })
 			controller1.addEventListener('thumbpad touch ended', function (event) {
-				//console.log("thumbpad touch end");
+				// console.log("-----------------------thumbpad touch end");
 				//onThumbpadUp(event);
             })
 			controller1.addEventListener('thumbpad press began', function (event) {
-				//console.log("thumbpad press began");
+				// console.log("-----------------------thumbpad press began");
 				onThumbpadDown(event);
             })
 			controller1.addEventListener('thumbpad press ended', function (event) {
-				//console.log("thumbpad press end");
+				// console.log("-----------------------thumbpad press end");
 				onThumbpadUp(event);
             })
 			// Trigger (vive and microsoft ok)
@@ -1329,7 +1328,10 @@ PDB.render = {
 			}
 
             cleanIntersected();
-            if(controller1!=undefined){intersectObjects( controller1 );}
+            if(controller1!=undefined){
+				intersectObjects( controller1 );
+				controller1.update();
+			}
             //intersectObjects( THREE.VRController.prototype );
 
             if (PDB.TravelMode === true && PDB.TravelGeometry!=="") {
