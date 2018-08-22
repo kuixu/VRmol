@@ -295,20 +295,8 @@ function dealwithMenu(object) {
             onMenuDown();
             break;
         case PDB.GROUP_MENU_ROTATION:
-            var type = object.userData.reptype;
-            switch (type){
-                case 1:
-                    PDB.ROTATION_START_FLAG= false;
-                    break;
-                case 2:
-                    PDB.ROTATION_DIRECTION = 0;
-                    PDB.ROTATION_START_FLAG= true;
-                    break;
-                case 3:
-                    PDB.ROTATION_DIRECTION = 1;
-                    PDB.ROTATION_START_FLAG= true;
-                    break;
-            }
+            PDB.ROTATION_AXIS = object.userData.reptype;
+			console.log("-------------------rotation:"+PDB.ROTATION_AXIS);
             onMenuDown();
             break;
 		case PDB.GROUP_MENU_DIRECTION:
