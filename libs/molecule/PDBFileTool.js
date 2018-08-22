@@ -933,27 +933,18 @@ PDB.tool = {
 		PDB.nowRotateAngle = PDB.nowRotateAngle+angle;
 		if(Math.abs(PDB.nowRotateAngle)>=PDB.rotateAngleThreshold){
 			var scope = this;
-			var axis = new THREE.Vector3(0,1,0);
-			// console.log(axis);
-			// switch (PDB.MOVE_DIRECTION){
-				// case 1:
-						
-						// PDB.residueGroupObject[chain][resid].vector.y = PDB.residueGroupObject[chain][resid].vector.y - PDB.ZOOM_STEP;
-						// PDB.rotateAxis.y = PDB.rotateAxis.y - PDB.ZOOM_STEP;	
-						// break;
-					// case 2:
-						// PDB.residueGroupObject[chain][resid].vector.x = PDB.residueGroupObject[chain][resid].vector.x + PDB.ZOOM_STEP;
-						// PDB.rotateAxis.x = PDB.rotateAxis.x + PDB.ZOOM_STEP;	
-						// break;
-					// case 3:
-						// PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z + PDB.ZOOM_STEP;
-						// // PDB.zTemp = PDB.zTemp + PDB.ZOOM_STEP;
-		                // PDB.rotateAxis.z = PDB.rotateAxis.z + PDB.ZOOM_STEP;	
-						// break;
-				
-				
-			// }
-			
+			var axis ;
+			switch (PDB.ROTATION_AXIS){
+				case 1:						
+					axis = new THREE.Vector3(1,0,0);
+					break;
+				case 2:
+					axis = new THREE.Vector3(0,1,0);
+					break;
+				case 3:
+					axis = new THREE.Vector3(0,0,1);	
+					break;				
+			}
 			for(var chain in PDB.residueGroupObject){
 				for(var resid in PDB.residueGroupObject[chain]){
 					var pos = camera.position;
