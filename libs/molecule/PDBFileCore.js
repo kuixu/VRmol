@@ -1,8 +1,8 @@
 /**
- * Created by zhangdawei on 2017/6/27.
+ * Created by Kui Xu on 2017/6/27.
  */
 var PDB ;
-var ServerType = 3;
+var ServerType = 2;
 
 var SERVERURL = "http://localhost:8080/molecule_vr";
 if(ServerType ===1){
@@ -11,6 +11,7 @@ if(ServerType ===1){
     SERVERURL= "http://vr.zhanglab.net";
 }else if(ServerType ===3){
     SERVERURL= "http://localhost";
+	SERVERURL= "http://192.168.1.101";
 }
 PDB = {
 	//旋转的角度计量
@@ -31,8 +32,7 @@ PDB = {
 		x:0,
 		y:0,
 		z:300
-	},
-	
+	},	
 	initChainNumThreshold:5,//小于等于2使用SSE显示，大于2的使用PDB.line显示
     structureSizeLevel:0,
 	pptShow:false,
