@@ -523,12 +523,20 @@ function onTriggerUp( event ) {
             if(PDB.distanceArray.length === 2){
                 var locationStart = PDB.distanceArray[0];
                 var locationEnd = PDB.distanceArray[1];
+				// PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+				// PDB.GROUP[PDB.GROUP_INFO].position.copy(new THREE.Vector3(0,0,0));
+				// PDB.GROUP[PDB.GROUP_INFO].rotation.set(0,0,0);
                 PDB.painter.showDistance(locationStart,locationEnd);
                 PDB.distanceArray = [];
             }
             break;
         case PDB.TRIGGER_EVENT_ANGLE:
-            if(PDB.distanceArray.length === 2){
+			
+			if(PDB.distanceArray.length === 1){
+				// PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+				// PDB.GROUP[PDB.GROUP_INFO].position.copy(new THREE.Vector3(0,0,0));
+				// PDB.GROUP[PDB.GROUP_INFO].rotation.set(0,0,0);
+			}else if(PDB.distanceArray.length === 2){
                 var locationStart = PDB.distanceArray[0];
                 var locationEnd = PDB.distanceArray[1];
                 PDB.painter.showDistance(locationStart,locationEnd);
@@ -545,7 +553,7 @@ function onTriggerUp( event ) {
                 var ms = PDB.tool.getAngleMeasurement(anglePointPos,edgePoint1Pos,edgePoint2Pos);
                 //var labelPos = new THREE.Vector3(ms.label_xyz[0],ms.label_xyz[1],ms.label_xyz[2]);
                 var labelPos = locationStart.pos_curr;
-                PDB.drawer.drawText(PDB.GROUP_MAIN,labelPos,
+                PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN,labelPos,
                     ms.result,"",anglePoint.color,180);
                 PDB.distanceArray = [];
             }
@@ -737,8 +745,9 @@ function getIntersections( controller ) {
 					
 					inters.push({"object": object, "pos":point} );
 					var atomObjects  = PDB.GROUP[gIndexies[i]].getChildrenByName( object.name );
+					
 					for(var a in atomObjects ){
-						if(object.userData.presentAtom.id == atomObjects[a].userData.presentAtom.id){
+						if(object.userData.presentAtom&&object.userData.presentAtom.id == atomObjects[a].userData.presentAtom.id){
 							inters.push({"object": atomObjects[a], "pos":point} );
 						}
 						

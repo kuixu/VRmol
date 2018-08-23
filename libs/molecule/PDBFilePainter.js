@@ -2553,16 +2553,46 @@ PDB.painter = {
         }
     },
     showDistance : function (locationStart,locationEnd) {
-        PDB.render.clearGroupIndex(PDB.GROUP_INFO);
-		PDB.GROUP[PDB.GROUP_INFO].position.copy(new THREE.Vector3(0,0,0));
-		PDB.GROUP[PDB.GROUP_INFO].rotation.set(0,0,0);
+        // PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+		//回到初始位置
+		var startPos = {
+				x:locationStart.pos_curr.x-PDB.rotateAxis.x,
+				y:locationStart.pos_curr.y-PDB.rotateAxis.y,
+				z:locationStart.pos_curr.z-PDB.rotateAxis.z,
+			}
+			
+		startPos = new THREE.Vector3(startPos.x,startPos.y,startPos.z);
+		// console.log(locationStart);
+		// console.log(startPos);
+		var axis = new THREE.Vector3(1,0,0);
+		startPos = PDB.tool.rotateAboutWorldAxis(startPos,axis,-PDB.rotateAxisAngle.x);
+		axis = new THREE.Vector3(0,1,0);
+		startPos = PDB.tool.rotateAboutWorldAxis(startPos,axis,-PDB.rotateAxisAngle.y);
+		axis = new THREE.Vector3(0,0,1);
+		startPos = PDB.tool.rotateAboutWorldAxis(startPos,axis,-PDB.rotateAxisAngle.z);
+			
+		var endPos = {
+				x:locationEnd.pos_curr.x-PDB.rotateAxis.x,
+				y:locationEnd.pos_curr.y-PDB.rotateAxis.y,
+				z:locationEnd.pos_curr.z-PDB.rotateAxis.z,
+			}
+		endPos = new THREE.Vector3(endPos.x,endPos.y,endPos.z);
+		// console.log(locationEnd);
+		// console.log(endPos);
+		axis = new THREE.Vector3(1,0,0);
+		endPos = PDB.tool.rotateAboutWorldAxis(endPos,axis,-PDB.rotateAxisAngle.x);
+		axis = new THREE.Vector3(0,1,0);
+		endPos = PDB.tool.rotateAboutWorldAxis(endPos,axis,-PDB.rotateAxisAngle.y);
+		axis = new THREE.Vector3(0,0,1);
+		endPos = PDB.tool.rotateAboutWorldAxis(endPos,axis,-PDB.rotateAxisAngle.z);
+		
 		var distance = locationStart.pos_curr.distanceTo(locationEnd.pos_curr);
         var message = Number(distance).toFixed(2)+"A";
         var color = new THREE.Color(0.5,0.5,0.5);
 		// console.log('-------------------'+locationStart.pos_curr.x+'|'+locationStart.pos_curr.y);
-        PDB.drawer.drawLine(PDB.GROUP_INFO,locationStart.pos_curr,
-            locationEnd.pos_curr,color);
-        PDB.drawer.drawTextForDistance(PDB.GROUP_INFO,PDB.tool.midPoint(locationStart.pos_curr,locationEnd.pos_curr),
+        PDB.drawer.drawLine(PDB.GROUP_MAIN,startPos,
+            endPos,color);
+        PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN,PDB.tool.midPoint(startPos,endPos),
             message,"",locationStart.color,180);
 		 
     },

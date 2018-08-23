@@ -935,13 +935,16 @@ PDB.tool = {
 			var scope = this;
 			var axis ;
 			switch (PDB.ROTATION_AXIS){
-				case 1:						
+				case 1:	
+					PDB.rotateAxisAngle.x +=angle;
 					axis = new THREE.Vector3(1,0,0);
 					break;
 				case 2:
+					PDB.rotateAxisAngle.y +=angle;
 					axis = new THREE.Vector3(0,1,0);
 					break;
 				case 3:
+					PDB.rotateAxisAngle.z +=angle;
 					axis = new THREE.Vector3(0,0,1);	
 					break;				
 			}
