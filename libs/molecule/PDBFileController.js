@@ -1255,8 +1255,12 @@ PDB.controller = {
         var scope = this;
         var input = document.getElementById("search_text");
         input.value = name;
-
-        PDB.pdbId = name.toLowerCase();
+        if(name.indexOf("http://") != -1){
+            name = name.substr(name.lastIndexOf("/")+1);
+            name = name.replace(".pdb","");
+        }else {
+            PDB.pdbId = name.toLowerCase();
+        }
         scope.clear(2,-1);
         PDB.loader.clear();
         //PDB.currentType = -1;
