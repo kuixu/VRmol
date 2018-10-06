@@ -15,6 +15,7 @@ if(ServerType ===1){
 }
 PDB = {
     map_step:2,//默认是4，有三个选项4，2，1
+    map_surface_show:0,//0 不是，1是
 	//旋转的角度计量
 	rotateAngleThreshold:0.005,
 	nowRotateAngle:0,

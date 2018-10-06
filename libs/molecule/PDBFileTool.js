@@ -703,6 +703,7 @@ PDB.tool = {
             solidMap.addEventListener( 'click', function(e){
                 PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
                 PDB.EMMAP.TYPE= 0;
+                PDB.map_surface_show = 0;
                 if(PDB.EMMAP.DATA){
                     var thresholdObj = document.getElementById("currThresHold");
                     PDB.painter.showMapSolid(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML));
@@ -710,23 +711,45 @@ PDB.tool = {
             });
             var surfaceMap = document.getElementById("surfaceMap");
             surfaceMap.addEventListener( 'click', function(e){
-                PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
-                PDB.render.clearStructure();
                 PDB.EMMAP.TYPE= 1;
-                if(PDB.EMMAP.DATA){
-                    var thresholdObj = document.getElementById("currThresHold");
-                    PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),false);
+                if(PDB.map_surface_show === 0){
+                    PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                    PDB.render.clearStructure();
+                    if(PDB.EMMAP.DATA){
+                        var thresholdObj = document.getElementById("currThresHold");
+                        PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),false);
+                    }
+                }else {
+                    var surfaceGroup = PDB.GROUP[PDB.GROUP_MAIN];
+                    if(surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh){
+                        var mesh = PDB.GROUP[PDB.GROUP_MAIN].children[0];
+                        if(mesh.material !== undefined){
+                            mesh.material.wireframe = false;
+                        }
+                    }
                 }
+                PDB.map_surface_show = 1;
             });
 
             var meshMap = document.getElementById("meshMap");
             meshMap.addEventListener( 'click', function(e){
-                PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
                 PDB.EMMAP.TYPE= 2;
-                if(PDB.EMMAP.DATA){
-                    var thresholdObj = document.getElementById("currThresHold");
-                    PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),true);
+                if(PDB.map_surface_show === 0){
+                    PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                    if(PDB.EMMAP.DATA){
+                        var thresholdObj = document.getElementById("currThresHold");
+                        PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),true);
+                    }
+                }else {
+                    var surfaceGroup = PDB.GROUP[PDB.GROUP_MAIN];
+                    if(surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh){
+                        var mesh = PDB.GROUP[PDB.GROUP_MAIN].children[0];
+                        if(mesh.material !== undefined){
+                            mesh.material.wireframe = true;
+                        }
+                    }
                 }
+                PDB.map_surface_show = 1;
             });
 
             //add step
