@@ -102,7 +102,7 @@ EmMapParser = {
 
     },
     parseMap : function (data, mapid) {
-        var t = new Date();
+        var start = new Date();
         header_int = new Int32Array(data, 0, 56);
         header_float = new Float32Array(data, 0, 56);
         map_header = {};
@@ -137,10 +137,13 @@ EmMapParser = {
         var min = 9999;
         var max = -9999;
         for (var i = 0; i < emmap.header.NS; i++) {
+			//if(i%4!=0) continue;
             map[i] = new Array();
             for (var j = 0; j < emmap.header.NR; j++) {
+				//if(j%4!=0) continue;
                 map[i][j] = new Array()
                 for (var k = 0; k < emmap.header.NC; k++) {
+					//if(k%4!=0) continue;
                     //map[i][j][k] = mapdata[i*emmap.header.NS*emmap.header.NR+ j*emmap.header.NS+ k];
                     map[i][j][k] = mapdata[i*emmap.header.NC*emmap.header.NR+ j*emmap.header.NC+ k];
                     // if (min > map[i][j][k]) min =map[i][j][k];
@@ -148,12 +151,21 @@ EmMapParser = {
                 }
             }
         }
+		//emmap.header.NS = emmap.header.NS/2;
+		//console.log(emmap.header.NS);
+		//emmap.header.NR = emmap.header.NR/2;
+		//console.log(emmap.header.NR);
+		//emmap.header.NC = emmap.header.NC/2;
+		//console.log(emmap.header.NC);
         emmap.id = mapid;
         emmap.data = map;
         //emmap.mapdata = mapdata;
         emmap.center = new THREE.Vector3(-emmap.header.NC/2, - emmap.header.NR/2, - emmap.header.NS/2);
         emmap.threshold = (emmap.header.max-emmap.header.mean)/2;
         emmap.slice = 0;
+		var end = new Date();
+		
+		console.log("times(ms):"+parseInt(end-start));
         return emmap;
     }
 }

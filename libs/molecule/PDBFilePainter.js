@@ -2824,7 +2824,8 @@ PDB.painter = {
     },
     //shader material
     showMapSolid :function(emmap,threshold){
-        console.log("map: "+new Date()+" Prepare color and position! threshold:"+threshold);
+		var start = new Date();
+        console.log("map: "+start+" Prepare color and position! threshold:"+threshold);
         var scale = chroma.scale(['green', 'red']);
         var positions = new Float32Array( emmap.header.NC *emmap.header.NR* emmap.header.NS * 3 );
         var colors  = new Float32Array( emmap.header.NC *emmap.header.NR* emmap.header.NS * 3 );
@@ -2836,11 +2837,14 @@ PDB.painter = {
         }
         var color = new THREE.Color("#FFFFFF");
         var di = emmap.header.max-emmap.header.min;
-        for (var i = 0; i < emmap.header.NC; i++) {
+        for (var i = 0; i < emmap.header.NS; i++) {
             for (var j = 0; j < emmap.header.NR; j++) {
-                for (var k = 0; k < emmap.header.NS; k++) {
+                for (var k = 0; k < emmap.header.NC; k++) {
                     var v = emmap.data[i][j][k];
-                    var m = i*emmap.header.NS* emmap.header.NR  + j* emmap.header.NS+ k;
+                    //var m = i*emmap.header.NS* emmap.header.NR  + j* emmap.header.NS+ k;
+					var m = i*emmap.header.NC* emmap.header.NR  + j* emmap.header.NC+ k;
+					
+					
                     var n = m*3;
                     positions[n]     = emmap.center.x+i;
                     positions[n + 1] = emmap.center.y+j;
@@ -2859,8 +2863,12 @@ PDB.painter = {
                 }
             }
         }
-        console.log("map: "+new Date()+"  position, color is ready!");
+		var end = new Date();
+        console.log("map: "+end+"  position, color is ready!");
+		
         PDB.drawer.drawMapPoints(PDB.GROUP_MAIN, positions,colors, alphas,Number(emmap.header.NS));
+		
+		console.log("time(ms):"+(new Date()-start));
     },
     showMapSolid2 :function(emmap,threshold){
         console.log("map: "+new Date()+" Prepare color and position! threshold:"+threshold);
@@ -2953,7 +2961,8 @@ PDB.painter = {
     },
     //ParticleSystem
     showMapSurface :function(emmap,threshold,wireframe){
-        var newScale = new THREE.Vector3(emmap.header.a/emmap.header.NC,emmap.header.b/emmap.header.NR,emmap.header.c/emmap.header.NS)
+        var start = new Date();
+		var newScale = new THREE.Vector3(emmap.header.a/emmap.header.NC,emmap.header.b/emmap.header.NR,emmap.header.c/emmap.header.NS)
         var wf = PDB.tool.getValue(wireframe,false);
         var offset = PDB.GeoCenterOffset;
         var minx = emmap.center.x,
@@ -2982,9 +2991,9 @@ PDB.painter = {
         for (var i = 0; i < emmap.header.NS; i++) {
             for (var j = 0; j < emmap.header.NR; j++) {
                 for (var k = 0; k < emmap.header.NC; k++) {
-                    var m = i*emmap.header.NC* emmap.header.NR  + j* emmap.header.NC+ k;
-
-                    var v = emmap.data[i][j][k];
+					var m = i*emmap.header.NC* emmap.header.NR  + j* emmap.header.NC+ k;                  
+					
+					var v = emmap.data[i][j][k];
                     if(v <threshold)continue;
                     numblobs=numblobs+1;
                     var per =Math.floor(((v -emmap.header.min)/(1.0*di))*99);
@@ -3048,6 +3057,7 @@ PDB.painter = {
         mesh.rotation.y =  -Math.PI/2;
         PDB.GROUP[PDB.GROUP_MAIN].add( mesh );
         PDB.GROUP[PDB.GROUP_MAIN].visible = true;
+		console.log("time(ms):"+(new Date()-start));
     }, //ParticleSystem
     showMapSurface1 :function(emmap,threshold,wireframe){
         var newScale = new THREE.Vector3(emmap.header.a/emmap.header.NC,emmap.header.b/emmap.header.NR,emmap.header.c/emmap.header.NS)
@@ -3146,7 +3156,7 @@ PDB.painter = {
         PDB.GROUP[PDB.GROUP_MAIN].visible = true;
     },
     showMapSlices :function(emmap,threshold,slice,dimensionType){
-        
+        var start = new Date();
         var scale = chroma.scale(['green', 'red']);
         switch (dimensionType){
             case PDB.DIMENSION_X:
@@ -3191,6 +3201,8 @@ PDB.painter = {
                 PDB.drawer.drawPlane(PDB.GROUP_SLICE,emmap.header.NC,emmap.header.NR,"",PDB.DIMENSION_Z,val,emmap);
                 break;
         }
+		
+		console.log("time(ms):"+(new Date()-start));
     },
 	// showTravelTube : function(paths,ids){
 		// PDB.drawer.drawTubeByTravel(paths,ids,PDB.CONFIG.tube_radius);
