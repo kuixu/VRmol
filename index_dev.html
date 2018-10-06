@@ -62,7 +62,38 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
+<!---------------------------xukui 0903 01:12------------------------------>
+<script type="x-shader/x-vertex" id="vertexshader">
+    uniform float delta;
+    attribute float opacity;
+    attribute vec3 customColor;
+    varying float vOpacity;
+    varying vec3 vCustomColor;
+    varying vec3 vUv;
+    void main()
+    {
+        vUv = position;
+        vOpacity = opacity;
+        vCustomColor = customColor;
+        vec3 p = position;
+        vec4 modelViewPosition = modelViewMatrix * vec4(p, 1.0);
+        gl_Position = projectionMatrix * modelViewPosition;
+    }
+</script>
 
+<script type="x-shader/x-fragment" id="fragmentshader">
+    uniform float delta;
+    varying float vOpacity;
+    varying vec3 vUv;
+    varying vec3 vCustomColor;
+    void main() {
+        float r = vCustomColor.r;
+        float g = vCustomColor.g;
+        float b = vCustomColor.b;
+        vec3 rgb = vec3(r, g, b);
+        gl_FragColor = vec4(rgb,vOpacity );
+    }
+</script>
 <div id="container"></div>
 <div id="info" class="panel"><strong>iNano</strong> by <a href="http://www.zhanglab.net" target="_blank">ZhangLab</a></div>
 <div id="searchDiv" class="panel">
