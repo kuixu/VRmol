@@ -509,7 +509,7 @@ PDB.painter = {
         if(jsonObj.code === 1 && jsonObj.data !== undefined){
             var consResidues = jsonObj.data;
 			if(consResidues.length==0){
-				PDB.tool.printProgress('conservation为空。');
+				PDB.tool.printProgress('Conservation information is missing.');
 			}else{
 				//consResidues 遍历
 				consResidues.forEach(function (consResidues) {
@@ -2837,9 +2837,9 @@ PDB.painter = {
         }
         var color = new THREE.Color("#FFFFFF");
         var di = emmap.header.max-emmap.header.min;
-        for (var i = 0; i < emmap.header.NS; i++) {
-            for (var j = 0; j < emmap.header.NR; j++) {
-                for (var k = 0; k < emmap.header.NC; k++) {
+        for (var i = 0; i < emmap.header.NS; i=i+PDB.map_step) {
+            for (var j = 0; j < emmap.header.NR; j=j+PDB.map_step) {
+                for (var k = 0; k < emmap.header.NC; k=k+PDB.map_step) {
                     var v = emmap.data[i][j][k];
                     //var m = i*emmap.header.NS* emmap.header.NR  + j* emmap.header.NS+ k;
 					var m = i*emmap.header.NC* emmap.header.NR  + j* emmap.header.NC+ k;
@@ -2988,9 +2988,9 @@ PDB.painter = {
         // }
 
         var di = emmap.header.max-emmap.header.min;
-        for (var i = 0; i < emmap.header.NS; i++) {
-            for (var j = 0; j < emmap.header.NR; j++) {
-                for (var k = 0; k < emmap.header.NC; k++) {
+        for (var i = 0; i < emmap.header.NS; i=i+PDB.map_step) {
+            for (var j = 0; j < emmap.header.NR; j=j+PDB.map_step) {
+                for (var k = 0; k < emmap.header.NC; k=k+PDB.map_step) {
 					var m = i*emmap.header.NC* emmap.header.NR  + j* emmap.header.NC+ k;                  
 					
 					var v = emmap.data[i][j][k];

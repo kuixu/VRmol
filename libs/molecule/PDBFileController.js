@@ -188,7 +188,7 @@ PDB.controller = {
                     PDB.tool.createDensityMapPanel(jsonObj);
                 }
 
-                var mapserver = "map";
+                var mapserver = "map-local";
                 //if(ServerType!==2){
                 //    mapserver = "map-local";
                 //}

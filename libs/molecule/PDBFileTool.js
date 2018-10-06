@@ -688,7 +688,11 @@ PDB.tool = {
                 '<input class="labelPDB" id="surfaceMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> Surface </label>   <BR/>'+
                 '<input class="labelPDB" id="meshMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> Mesh </label>   <BR/>'+
                 '<input class="labelPDB" type="checkbox" id="showSlice"><label class="label" for="showSlice"> Show/Hide Slice </label> <BR/>' +
-                '<input class="labelPDB" type="checkbox" checked id="showMap"><label class="label" for="showMap"> Show/Hide Map </label> <BR/>' +
+                '<input class="labelPDB" type="checkbox" checked id="showMap"><label class="label" for="showMap"> Show/Hide Map </label> <BR/><BR/>' +
+                // '<label class="label"> Step Option </label><BR/>'+
+                // '<input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label>'+
+                // '<input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label>'+
+                // '<input class="labelPDB" id="step4" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 4.x </label> <BR/><BR/>'+
                 '<label class="label"> Threshold Range </label><BR/> <input type="range" id="thresholdRange" title="Change the value of threshold" style="width: 180px;" name="" min="1" max="100" /><BR/>'+
                 '<label class="label" id="minThresHold" style="margin-left: 0px;padding-left: 0px;float: left;width: 60;text-align: left">0</label><label class="label" id="currThresHold" style="width: 60px;text-align: center">50</label><label class="label" style="width: 60px;text-align: right;" id="maxThresHold">100</label><BR/>'+
                 '<label class="label"> Slice Range </label><BR/> <input type="range" id="sliceRange" title="Change the value of slice" style="width: 180px;" name="" /><BR/> ' +
@@ -723,6 +727,21 @@ PDB.tool = {
                     var thresholdObj = document.getElementById("currThresHold");
                     PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),true);
                 }
+            });
+
+            //add step
+            var step1 = document.getElementById("step1");
+            step1.addEventListener( 'click', function(e){
+                PDB.map_step=1;
+            });
+            var step2 = document.getElementById("step2");
+            step2.addEventListener( 'click', function(e){
+                PDB.map_step=2;
+            });
+
+            var step4 = document.getElementById("step4");
+            step4.addEventListener( 'click', function(e){
+                PDB.map_step=4;
             });
 
             //显隐slice

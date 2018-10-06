@@ -37,6 +37,7 @@
 <script type="text/javascript" src="js/controls/VRControls.js"></script>
 <script type="text/javascript" src="js/effects/VREffect.js"></script>
 <script type="text/javascript" src="js/vr/WebVR.js"></script>
+<script type="text/javascript" src="js/utils/SceneUtils.js"></script>
 <script type="text/javascript" src="js/vr/statsvr.min.js"></script>
 <script type="text/javascript" src="js/vr/ViveController.js"></script>
 <script type="text/javascript" src="js/controllers/VRController.js"></script>
@@ -252,6 +253,10 @@
   <BR/>
   <LABEL onclick="switchMenu('eCloud')">Density Map</LABEL><BR/>
   <span class="submenu" id="eCloud">
+      <label class="label"> Step Option </label><BR/>
+      <input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label>
+      <input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label>
+      <input class="labelPDB" id="step4" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 4.x </label> <BR/>
       <button class="labelPDB" name="loadDensityMap" id="loadDensityMap">Load Density Map</button>
   </span>
   

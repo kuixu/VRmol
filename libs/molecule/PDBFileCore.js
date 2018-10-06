@@ -2,9 +2,9 @@
  * Created by Kui Xu on 2017/6/27.
  */
 var PDB ;
-var ServerType = 2;
+var ServerType = 0;
 
-var SERVERURL = "http://localhost:8080/molecule_vr";
+var SERVERURL = "http://localhost:8080/molwebvr";
 if(ServerType ===1){
     SERVERURL= "http://localhost/molecule_vr/web";
 }else if(ServerType ===2){
@@ -14,12 +14,12 @@ if(ServerType ===1){
 	SERVERURL= "http://192.168.1.101";
 }
 PDB = {
+    map_step:2,//默认是4，有三个选项4，2，1
 	//旋转的角度计量
 	rotateAngleThreshold:0.005,
 	nowRotateAngle:0,
 	rotateAxis:{x:0,y:0,z:0},
 	rotateAxisAngle:{x:0,y:0,z:0},
-	
 	zTemp : 0,	
 	//residue绘画的三种模式：undefined,0-->没有生成Group,1-->生成并正常显示,2-->对相应的group进行hide 模式
 	residueGroup_undefined:0,

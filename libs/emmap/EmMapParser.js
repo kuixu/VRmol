@@ -136,13 +136,13 @@ EmMapParser = {
         var map = new Array();
         var min = 9999;
         var max = -9999;
-        for (var i = 0; i < emmap.header.NS; i++) {
+        for (var i = 0; i < emmap.header.NS; i=i+PDB.map_step) {
 			//if(i%4!=0) continue;
             map[i] = new Array();
-            for (var j = 0; j < emmap.header.NR; j++) {
+            for (var j = 0; j < emmap.header.NR; j=j+PDB.map_step) {
 				//if(j%4!=0) continue;
                 map[i][j] = new Array()
-                for (var k = 0; k < emmap.header.NC; k++) {
+                for (var k = 0; k < emmap.header.NC; k=k+PDB.map_step) {
 					//if(k%4!=0) continue;
                     //map[i][j][k] = mapdata[i*emmap.header.NS*emmap.header.NR+ j*emmap.header.NS+ k];
                     map[i][j][k] = mapdata[i*emmap.header.NC*emmap.header.NR+ j*emmap.header.NC+ k];
