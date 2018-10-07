@@ -659,10 +659,11 @@ PDB.tool = {
                 PDB.tool.generateButton(menuSpan,data[i],data[i],"rightLabelPDB").addEventListener( 'click', function() {
                     var mapId = this.value;
                     //PDB.render.clear(2);
-                    var mapserver = "map";
+                    var mapserver = "map-local";
                     if(ServerType!==2){
                         mapserver = "map-local";
                     }
+					console.log('-----------------'+mapId);
                     PDB.controller.emmapLoad(mapId, mapserver,function (emmap) {
                         PDB.render.clearGroupIndex(PDB.GROUP_MAP);
 						var dimension = document.getElementById("dimension");

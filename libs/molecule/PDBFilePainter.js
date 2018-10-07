@@ -2797,9 +2797,9 @@ PDB.painter = {
         var color = new THREE.Color();
         color = new THREE.Color("#567856");
         var color1 = new THREE.Color("#ffffff");
-        for (var i = 0; i < emmap.header.NC; i++) {
-            for (var j = 0; j < emmap.header.NR; j++) {
-                for (var k = 0; k < emmap.header.NS; k++) {
+        for (var i = 0; i < emmap.header.NS; i=i+PDB.map_step) {
+            for (var j = 0; j < emmap.header.NR; j=j+PDB.map_step) {
+                for (var k = 0; k < emmap.header.NC; k=k+PDB.map_step) {
                     var v = emmap.data[i][j][k];
                     var m = i*emmap.header.NS* emmap.header.NR  + j* emmap.header.NS+ k;
                     var n = m*3;
