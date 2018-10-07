@@ -150,6 +150,7 @@ PDB.controller = {
 			}else{
 				PDB.isShowWater = false;
 			}
+			PDB.painter.showWater();
             scope.drawGeometry(PDB.config.hetMode);
         } );
 		//drugSurface
@@ -375,27 +376,55 @@ PDB.controller = {
         var surfaceOpacity5   = document.getElementById( "surfaceOpacity5" );
         var surfaceOpacity6   = document.getElementById( "surfaceOpacity6" );
         surfaceOpacity1.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
             scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,1.0,PDB.SURFACE_WIREFRAME);
         } );
         surfaceOpacity2.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
             scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.9,PDB.SURFACE_WIREFRAME);
         } );
         surfaceOpacity3.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
             scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.8,PDB.SURFACE_WIREFRAME);
         } );
         surfaceOpacity4.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
             scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.7,PDB.SURFACE_WIREFRAME);
         } );
         surfaceOpacity5.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
             scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.6,PDB.SURFACE_WIREFRAME);
         } );
         surfaceOpacity6.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
             scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.5,PDB.SURFACE_WIREFRAME);
         } );
 
 
         var wireFrame   = document.getElementById( "wireFrame" );
         wireFrame.addEventListener( 'click', function(event) {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
             if(event.target.checked !== undefined){
                 scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,PDB.SURFACE_OPACITY,event.target.checked);
             }

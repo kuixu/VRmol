@@ -2379,7 +2379,7 @@ PDB.painter = {
     showWater : function(){
 		var addgroup;
 		var w = PDB.CONFIG.water_sphere_w;
-        if(PDB.isShowWater&&(PDB.GROUP[PDB.GROUP_WATER] === undefined||PDB.GROUP[PDB.GROUP_WATER].children.length==0)){
+        if(PDB.isShowWater&&(PDB.GROUP[PDB.GROUP_WATER] === undefined||PDB.GROUP[PDB.GROUP_WATER].children.length === 0)){
             var data_obj = [];
             for(var i in w3m.mol){
                 var main_obj = w3m.mol[i].single;

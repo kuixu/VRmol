@@ -294,8 +294,7 @@ PDB.drawer = {
             color: diffuseColor,
             specular: specularColor,
             reflectivity: beta,
-            shininess: specularShininess,
-            shading: THREE.SmoothShading,
+            shininess: specularShininess
             //envMap: alphaIndex % 2 === 0 ? null : reflectionCube
         } );
 		//PDB.CONFIG.sphere_width, PDB.CONFIG.sphere_height
