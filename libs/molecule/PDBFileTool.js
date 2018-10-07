@@ -665,6 +665,19 @@ PDB.tool = {
                     }
                     PDB.controller.emmapLoad(mapId, mapserver,function (emmap) {
                         PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+						var dimension = document.getElementById("dimension");
+						PDB.DIMENSION = Number(dimension.value);
+						switch(PDB.DIMENSION){
+							case PDB.DIMENSION_X:
+								PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
+								break;
+							case PDB.DIMENSION_Y:
+								PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
+								break;
+							case PDB.DIMENSION_Z:
+								PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
+								break;
+						}
                         if(emmap){
                             switch (PDB.EMMAP.TYPE){
                                 case 0:

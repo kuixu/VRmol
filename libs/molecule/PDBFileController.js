@@ -195,6 +195,22 @@ PDB.controller = {
                 scope.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver,function (emmap) {
                     var middleSlice = Math.floor((PDB.EMMAP.MIN_SLICE+PDB.EMMAP.MAX_SLICE)/2);
                     // PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+					PDB.render.clearStructure();
+					
+					var dimension = document.getElementById("dimension");
+					PDB.DIMENSION = Number(dimension.value);
+					switch(PDB.DIMENSION){
+						case PDB.DIMENSION_X:
+							PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
+							break;
+						case PDB.DIMENSION_Y:
+							PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
+							break;
+						case PDB.DIMENSION_Z:
+							PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
+							break;
+					}
+					
                     switch (PDB.EMMAP.TYPE){
                         case 0:
                             PDB.painter.showMapSolid(emmap,emmap.threshold);
@@ -205,7 +221,7 @@ PDB.controller = {
                         case 2:
                             PDB.painter.showMapSurface(emmap,emmap.threshold,true);
                     }
-                    PDB.render.clearStructure();
+                    
                     PDB.tool.changeDensityMapRangeValue(emmap);
                 })
             })
@@ -738,20 +754,7 @@ PDB.controller = {
                 //setting
                 PDB.EMMAP.DATA = emmap;
                 PDB.EMMAP.MIN_SLICE = 1;
-
-                var dimension = document.getElementById("dimension");
-                PDB.DIMENSION = Number(dimension.value);
-                switch(PDB.DIMENSION){
-                    case PDB.DIMENSION_X:
-                        PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
-                        break;
-                    case PDB.DIMENSION_Y:
-                        PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
-                        break;
-                    case PDB.DIMENSION_Z:
-                        PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
-                        break;
-                }
+				
                 if(callBack !== undefined){
                     callBack(emmap);
                 }

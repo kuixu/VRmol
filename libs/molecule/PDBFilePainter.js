@@ -427,7 +427,7 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_DENSITYMAP:
                 var dmMenu =[
-                    ["Show hreshold",               1 ]
+                    ["Show threshold",               1 ]
                 ];
                 for(var i = 0; i<dmMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DENSITYMAP, new THREE.Vector3(x, y-i*0.2, z),  dmMenu[i][0], dmMenu[i][1], color, 135);
