@@ -931,15 +931,17 @@ PDB.drawer = {
                 plane.rotation.x = -Math.PI/2;
                 plane.rotation.y = -Math.PI/2;	
 				var i = val;
-				for (var j = 0; j < emmap.header.NR; j++) {
-					for (var k = 0; k < emmap.header.NS; k++) {
-						var v = emmap.data[i][j][k];
-						var per =Math.floor(100*((v -emmap.header.min)/(1.0*(emmap.header.max-emmap.header.min))));
-						// console.log(pre);
-						var posObj = {
-							x:j,y:k,width: emmap.header.NR,colorIndex:per
-						};
-						PDB.tool.setFaceColor(geometry, posObj)
+				if(PDB.mode != PDB.MODE_VR){
+					for (var j = 0; j < emmap.header.NR; j++) {
+						for (var k = 0; k < emmap.header.NS; k++) {
+							var v = emmap.data[i][j][k];
+							var per =Math.floor(100*((v -emmap.header.min)/(1.0*(emmap.header.max-emmap.header.min))));
+							// console.log(pre);
+							var posObj = {
+								x:j,y:k,width: emmap.header.NR,colorIndex:per
+							};
+							PDB.tool.setFaceColor(geometry, posObj)
+						}
 					}
 				}
                 val = val + emmap.center.x;
@@ -948,15 +950,17 @@ PDB.drawer = {
             case PDB.DIMENSION_Y:
                 plane.rotation.x = -Math.PI/2;				
 				var j = val;
-				for (var i = 0; i < emmap.header.NC; i++) {
-					for (var k = 0; k < emmap.header.NS; k++) {
-						var v = emmap.data[i][j][k];
-						var per =Math.floor(100*((v -emmap.header.min)/(1.0*(emmap.header.max-emmap.header.min))));
-						// console.log(pre);
-						var posObj = {
-							x:i,y:k,width: emmap.header.NR,colorIndex:per
-						};
-						PDB.tool.setFaceColor(geometry, posObj)
+				if(PDB.mode != PDB.MODE_VR){
+					for (var i = 0; i < emmap.header.NC; i++) {
+						for (var k = 0; k < emmap.header.NS; k++) {
+							var v = emmap.data[i][j][k];
+							var per =Math.floor(100*((v -emmap.header.min)/(1.0*(emmap.header.max-emmap.header.min))));
+							// console.log(pre);
+							var posObj = {
+								x:i,y:k,width: emmap.header.NR,colorIndex:per
+							};
+							PDB.tool.setFaceColor(geometry, posObj)
+						}
 					}
 				}
                 val = val + emmap.center.y;
@@ -964,17 +968,19 @@ PDB.drawer = {
                 break;
             case PDB.DIMENSION_Z:
 				var k = val;
-				for (var i = 0; i < emmap.header.NC; i++) {
-					for (var j = 0; j < emmap.header.NR; j++) {
-						var v = emmap.data[i][j][k];
-						var per =Math.floor(100*((v -emmap.header.min)/(1.0*(emmap.header.max-emmap.header.min))));
-						// console.log(pre);
-						var posObj = {
-							x:i,y:j,width: emmap.header.NR,colorIndex:per
-						};
-						PDB.tool.setFaceColor(geometry, posObj)
+				if(PDB.mode != PDB.MODE_VR){
+					for (var i = 0; i < emmap.header.NC; i++) {
+						for (var j = 0; j < emmap.header.NR; j++) {
+							var v = emmap.data[i][j][k];
+							var per =Math.floor(100*((v -emmap.header.min)/(1.0*(emmap.header.max-emmap.header.min))));
+							// console.log(pre);
+							var posObj = {
+								x:i,y:j,width: emmap.header.NR,colorIndex:per
+							};
+							PDB.tool.setFaceColor(geometry, posObj)
+						}
 					}
-				}
+				}	
                 val = val + emmap.center.y;
                 plane.position.copy(new THREE.Vector3(0,0,val));
                 break;
