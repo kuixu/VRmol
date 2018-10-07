@@ -266,13 +266,14 @@ PDB.drawer = {
             fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
             blending:       THREE.AdditiveBlending,
             depthTest:      false,
-            transparent:    true
+            transparent:    false
         });
         var points = new THREE.Points( geometry, material );
         points.scale = 0.5;
         points.rotation.y =  -Math.PI/2;
         PDB.GROUP[group].add( points );
-        console.log("map: added in scene!");
+        console.log("MapPoints: added in scene!");
+		PDB.GROUP[PDB.GROUP_MAIN].visible = true;
     },
     drawSphere : function(group, point,color,radius,atom, addGroup, w){
         var addGroup = PDB.tool.getValue(addGroup,true);

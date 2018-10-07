@@ -2771,17 +2771,17 @@ PDB.painter = {
 			}
 		}
 	},
-    showMapSolid0 :function(emmap,threshold){
+    showMapSolid :function(emmap,threshold){
         var scale = chroma.scale(['green', 'red']);
-        for (var i = 0; i < emmap.header.NC; i++) {
-            for (var j = 0; j < emmap.header.NR; j++) {
-                for (var k = 0; k < emmap.header.NS; k++) {
+        for (var i = 0; i < emmap.header.NS; i=i+PDB.map_step) {
+            for (var j = 0; j < emmap.header.NR; j=j+PDB.map_step) {
+                for (var k = 0; k < emmap.header.NC; k=k+PDB.map_step) {	
                     var v = emmap.data[i][j][k];
                     if(v>threshold){
                         var p= new THREE.Vector3(emmap.center.x+i, emmap.center.y+j, emmap.center.z+k) ;
                         var per =(v -threshold)/(1.0*(emmap.header.max-threshold));
                         var color = scale(per).hex();
-                        PDB.drawer.drawDot(PDB.GROUP_MAIN, p,color);
+                        PDB.drawer.drawDot(PDB.GROUP_MAP,p,color);
                     }
                 }
             }
@@ -2820,12 +2820,12 @@ PDB.painter = {
             }
         }
         console.log("map: "+new Date()+"  position, color is ready!");
-        PDB.drawer.drawMapPoints(PDB.GROUP_MAIN, positions,colors, alphas);
+        PDB.drawer.drawMapPoints(PDB.GROUP_MAP, positions,colors, alphas);
     },
     //shader material
-    showMapSolid :function(emmap,threshold){
+    showMapSolid00 :function(emmap,threshold){
 		var start = new Date();
-        console.log("map: "+start+" Prepare color and position! threshold:"+threshold);
+        console.log("MapSolid: "+start+" Prepare color and position! threshold:"+threshold);
         var scale = chroma.scale(['green', 'red']);
         var positions = new Float32Array( emmap.header.NC *emmap.header.NR* emmap.header.NS * 3 );
         var colors  = new Float32Array( emmap.header.NC *emmap.header.NR* emmap.header.NS * 3 );
@@ -2856,7 +2856,7 @@ PDB.painter = {
                     }
                     var per =Math.floor(((v -emmap.header.min)/(1.0*di))*99);
                     color = array[per];
-                    colors[ n]     = color.r;
+                    colors[ n]      = color.r;
                     colors[ n + 1 ] = color.g;
                     colors[ n + 2 ] = color.b;
 
@@ -2864,11 +2864,12 @@ PDB.painter = {
             }
         }
 		var end = new Date();
-        console.log("map: "+end+"  position, color is ready!");
+        console.log("MapSolid: "+end+"  position, color is ready!");
 		
-        PDB.drawer.drawMapPoints(PDB.GROUP_MAIN, positions,colors, alphas,Number(emmap.header.NS));
+        PDB.drawer.drawMapPoints(PDB.GROUP_MAP, positions,colors, alphas, Number(emmap.header.NS));
 		
-		console.log("time(ms):"+(new Date()-start));
+		
+		console.log("MapSolid time(ms):"+(new Date()-start));
     },
     showMapSolid2 :function(emmap,threshold){
         console.log("map: "+new Date()+" Prepare color and position! threshold:"+threshold);
@@ -2905,7 +2906,7 @@ PDB.painter = {
 
         }
         console.log("map: "+new Date()+"  position, color is ready!");
-        PDB.drawer.drawMapPoints(PDB.GROUP_MAIN, positions,colors, alphas);
+        PDB.drawer.drawMapPoints(PDB.GROUP_MAP, positions,colors, alphas);
     },
     //ParticleSystem
     showMapSolid3 :function(emmap,threshold){
@@ -2957,7 +2958,7 @@ PDB.painter = {
             }
         }
         console.log("map: "+new Date()+"  position, color is ready!");
-        //PDB.drawer.drawMapPoints(PDB.GROUP_MAIN, positions,colors, alphas,Number(emmap.header.NS));
+        PDB.drawer.drawMapPoints(PDB.GROUP_MAP, positions,colors, alphas,Number(emmap.header.NS));
     },
     //ParticleSystem
     showMapSurface :function(emmap,threshold,wireframe){
@@ -3055,8 +3056,8 @@ PDB.painter = {
         }));
         mesh.scale.set(newScale.x,newScale.y,newScale.z);
         mesh.rotation.y =  -Math.PI/2;
-        PDB.GROUP[PDB.GROUP_MAIN].add( mesh );
-        PDB.GROUP[PDB.GROUP_MAIN].visible = true;
+        PDB.GROUP[PDB.GROUP_MAP].add( mesh );
+        PDB.GROUP[PDB.GROUP_MAP].visible = true;
 		console.log("time(ms):"+(new Date()-start));
     }, //ParticleSystem
     showMapSurface1 :function(emmap,threshold,wireframe){
@@ -3152,8 +3153,8 @@ PDB.painter = {
         }));
         mesh.scale.set(newScale.x,newScale.y,newScale.z);
         // mesh.rotation.y =  Math.PI/2;
-        PDB.GROUP[PDB.GROUP_MAIN].add( mesh );
-        PDB.GROUP[PDB.GROUP_MAIN].visible = true;
+        PDB.GROUP[PDB.GROUP_MAP].add( mesh );
+        PDB.GROUP[PDB.GROUP_MAP].visible = true;
     },
     showMapSlices :function(emmap,threshold,slice,dimensionType){
         var start = new Date();

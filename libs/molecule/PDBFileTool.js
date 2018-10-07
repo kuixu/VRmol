@@ -645,10 +645,10 @@ PDB.tool = {
             var color = PDB.tool.generateColorPanel(rightMenuDiv);
             $('.simple_color').simpleColor({
                 onSelect: function(hex, element) {
-                    var mapSurfaceGroup = PDB.GROUP[PDB.GROUP_MAIN];
+                    var mapSurfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
                     if(mapSurfaceGroup !== undefined && mapSurfaceGroup.children.length > 0
                         && mapSurfaceGroup.children[0] instanceof THREE.Mesh && PDB.EMMAP.TYPE !== 0){
-                        var mesh = PDB.GROUP[PDB.GROUP_MAIN].children[0];
+                        var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
                         if(mesh.material !== undefined){
                             mesh.material.color = new THREE.Color("#"+hex);
                         }
@@ -664,11 +664,11 @@ PDB.tool = {
                         mapserver = "map-local";
                     }
                     PDB.controller.emmapLoad(mapId, mapserver,function (emmap) {
-                        PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                        PDB.render.clearGroupIndex(PDB.GROUP_MAP);
                         if(emmap){
                             switch (PDB.EMMAP.TYPE){
                                 case 0:
-                                    PDB.painter.showMapSolid(emmap,emmap.threshold);
+                                    PDB.painter.showMapSolid00000(emmap,emmap.threshold);
                                     break;
                                 case 1:
                                     PDB.painter.showMapSurface(emmap,emmap.threshold,false);
@@ -689,10 +689,10 @@ PDB.tool = {
                 '<input class="labelPDB" id="meshMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> Mesh </label>   <BR/>'+
                 '<input class="labelPDB" type="checkbox" id="showSlice"><label class="label" for="showSlice"> Show/Hide Slice </label> <BR/>' +
                 '<input class="labelPDB" type="checkbox" checked id="showMap"><label class="label" for="showMap"> Show/Hide Map </label> <BR/><BR/>' +
-                // '<label class="label"> Step Option </label><BR/>'+
-                // '<input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label>'+
-                // '<input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label>'+
-                // '<input class="labelPDB" id="step4" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 4.x </label> <BR/><BR/>'+
+                '<label class="label"> Step Option </label><BR/>'+
+                '<input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label>'+
+                '<input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label>'+
+                '<input class="labelPDB" id="step4" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 4.x </label> <BR/><BR/>'+
                 '<label class="label"> Threshold Range </label><BR/> <input type="range" id="thresholdRange" title="Change the value of threshold" style="width: 180px;" name="" min="1" max="100" /><BR/>'+
                 '<label class="label" id="minThresHold" style="margin-left: 0px;padding-left: 0px;float: left;width: 60;text-align: left">0</label><label class="label" id="currThresHold" style="width: 60px;text-align: center">50</label><label class="label" style="width: 60px;text-align: right;" id="maxThresHold">100</label><BR/>'+
                 '<label class="label"> Slice Range </label><BR/> <input type="range" id="sliceRange" title="Change the value of slice" style="width: 180px;" name="" /><BR/> ' +
@@ -701,7 +701,7 @@ PDB.tool = {
 
             var solidMap = document.getElementById("solidMap");
             solidMap.addEventListener( 'click', function(e){
-                PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                PDB.render.clearGroupIndex(PDB.GROUP_MAP);
                 PDB.EMMAP.TYPE= 0;
                 PDB.map_surface_show = 0;
                 if(PDB.EMMAP.DATA){
@@ -713,16 +713,16 @@ PDB.tool = {
             surfaceMap.addEventListener( 'click', function(e){
                 PDB.EMMAP.TYPE= 1;
                 if(PDB.map_surface_show === 0){
-                    PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                    PDB.render.clearGroupIndex(PDB.GROUP_MAP);
                     PDB.render.clearStructure();
                     if(PDB.EMMAP.DATA){
                         var thresholdObj = document.getElementById("currThresHold");
                         PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),false);
                     }
                 }else {
-                    var surfaceGroup = PDB.GROUP[PDB.GROUP_MAIN];
+                    var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
                     if(surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh){
-                        var mesh = PDB.GROUP[PDB.GROUP_MAIN].children[0];
+                        var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
                         if(mesh.material !== undefined){
                             mesh.material.wireframe = false;
                         }
@@ -735,15 +735,15 @@ PDB.tool = {
             meshMap.addEventListener( 'click', function(e){
                 PDB.EMMAP.TYPE= 2;
                 if(PDB.map_surface_show === 0){
-                    PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                    PDB.render.clearGroupIndex(PDB.GROUP_MAP);
                     if(PDB.EMMAP.DATA){
                         var thresholdObj = document.getElementById("currThresHold");
                         PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),true);
                     }
                 }else {
-                    var surfaceGroup = PDB.GROUP[PDB.GROUP_MAIN];
+                    var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
                     if(surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh){
-                        var mesh = PDB.GROUP[PDB.GROUP_MAIN].children[0];
+                        var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
                         if(mesh.material !== undefined){
                             mesh.material.wireframe = true;
                         }
@@ -756,15 +756,18 @@ PDB.tool = {
             var step1 = document.getElementById("step1");
             step1.addEventListener( 'click', function(e){
                 PDB.map_step=1;
+				PDB.tool.showDestinyMap();
             });
             var step2 = document.getElementById("step2");
             step2.addEventListener( 'click', function(e){
                 PDB.map_step=2;
+				PDB.tool.showDestinyMap();
             });
 
             var step4 = document.getElementById("step4");
             step4.addEventListener( 'click', function(e){
                 PDB.map_step=4;
+				PDB.tool.showDestinyMap();
             });
 
             //显隐slice
@@ -880,6 +883,30 @@ PDB.tool = {
             });
         }
     },
+    showDestinyMap:function(){
+		if(PDB.EMMAP.TYPE === 0){
+			PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+			PDB.map_surface_show = 0;
+			if(PDB.EMMAP.DATA){
+				var thresholdObj = document.getElementById("currThresHold");
+				PDB.painter.showMapSolid(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML));
+			}
+		}else if(PDB.EMMAP.TYPE === 1){
+			PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+			if(PDB.EMMAP.DATA){
+				var thresholdObj = document.getElementById("currThresHold");
+				PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),false);
+			}
+			PDB.map_surface_show = 1;
+		}else if(PDB.EMMAP.TYPE === 2){
+			PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+			if(PDB.EMMAP.DATA){
+				var thresholdObj = document.getElementById("currThresHold");
+				PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),true);
+			}
+			PDB.map_surface_show = 1;
+		}
+	},
     changeDensityMapRangeValue:function (emmap) {
         //threshold
         var thresholdRange = document.getElementById("thresholdRange");
