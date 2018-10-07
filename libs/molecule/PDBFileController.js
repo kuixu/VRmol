@@ -196,7 +196,6 @@ PDB.controller = {
                     var middleSlice = Math.floor((PDB.EMMAP.MIN_SLICE+PDB.EMMAP.MAX_SLICE)/2);
                     // PDB.painter.showMapSurface(emmap,emmap.threshold,false);
 					PDB.render.clearStructure();
-					
 					var dimension = document.getElementById("dimension");
 					PDB.DIMENSION = Number(dimension.value);
 					switch(PDB.DIMENSION){
@@ -210,7 +209,6 @@ PDB.controller = {
 							PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
 							break;
 					}
-					
                     switch (PDB.EMMAP.TYPE){
                         case 0:
                             PDB.painter.showMapSolid(emmap,emmap.threshold);
@@ -598,20 +596,20 @@ PDB.controller = {
         } );
 
 
-        var showDemo   = document.getElementById( "showDemo" );
-        showDemo.addEventListener( 'click', function(event) {
-            if(event.target.checked !== undefined){
-                PDB.DEMO.FLAG =  event.target.checked;
-                if(PDB.DEMO.FLAG){
-                    PDB.DEMO.ID = self.setInterval(PDB.render.showDemo,21);
-                }else{
-                    window.clearInterval(PDB.DEMO.ID);
-                }
-            }
-        } );
-        if(PDB.DEMO.FLAG){
-            PDB.DEMO.ID = self.setInterval(PDB.render.showDemo,21);
-        }
+        // var showDemo   = document.getElementById( "showDemo" );
+        // showDemo.addEventListener( 'click', function(event) {
+            // if(event.target.checked !== undefined){
+                // PDB.DEMO.FLAG =  event.target.checked;
+                // if(PDB.DEMO.FLAG){
+                    // PDB.DEMO.ID = self.setInterval(PDB.render.showDemo,21);
+                // }else{
+                    // window.clearInterval(PDB.DEMO.ID);
+                // }
+            // }
+        // } );
+        // if(PDB.DEMO.FLAG){
+            // PDB.DEMO.ID = self.setInterval(PDB.render.showDemo,21);
+        // }
 
         //bond event register
         var hideBond   = document.getElementById( "hideBond" );
