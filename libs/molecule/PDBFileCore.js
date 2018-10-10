@@ -10,11 +10,15 @@ if(ServerType ===1){
 }else if(ServerType ===2){
     SERVERURL= "http://vr.zhanglab.net";
 }else if(ServerType ===3){
-    SERVERURL= "http://localhost";
-	SERVERURL= "http://192.168.1.105";
+    SERVERURL= "http://localhost:8080";
+	//SERVERURL= "http://192.168.1.105";
 }
 PDB = {
-    map_step:2,//默认是4，有三个选项4，2，1
+    
+	bigmodel:19,//显示球外结构
+	smallmodel:20,//隐藏球外结构
+	loadType:20,//球外显示模式	
+	map_step:2,//默认是4，有三个选项4，2，1
     map_surface_show:0,//0 不是，1是
 	//旋转的角度计量
 	rotateAngleThreshold:0.005,
@@ -26,9 +30,10 @@ PDB = {
 	residueGroup_undefined:0,
 	residueGroup_show:1,
 	residueGroup_hide:2,
+	residueGroup_low:3,	
 	residueGroupObject:{},
 	initVRShowThreshold:35,//VR模式初始的距离	
-	initDesktopShowThreshold:1010,//Desktop模式初始的距离
+	initDesktopShowThreshold:300,//Desktop模式初始的距离
 	cameraPosition:{//camera的位置
 		x:0,
 		y:0,
@@ -94,17 +99,19 @@ PDB = {
     GROUP_STRUCTURE_INDEX:[],GROUP_MAIN_INDEX:[], GROUP_HET_INDEX:[],  GROUP_MENU_INDEX:[],GROUP_SURFACE_INDEX:[],
     GROUP_MUTATION_INDEX:[],
 
-    GROUP_COUNT:35, GROUP_MAIN:0, GROUP_HET:1, GROUP_WATER:2,GROUP_LABEL:3,GROUP_INFO:4,
+    GROUP_COUNT:36, GROUP_MAIN:0, GROUP_HET:1, GROUP_WATER:2,GROUP_LABEL:3,GROUP_INFO:4,
     GROUP_KEYBOARD:5,GROUP_INPUT:6,GROUP_CHAIN:7,GROUP_TRAVEL:8, GROUP_MENU:9,GROUP_MENU_MAIN:10,GROUP_MENU_HET:11,
     GROUP_MENU_COLOR:12,GROUP_MENU_MEASURE:13, GROUP_MENU_MODE:14,GROUP_MENU_DRAG:15,GROUP_MENU_FRAGMENT:16,
     GROUP_MENU_LABEL:17,GROUP_MENU_EX_HET:18, GROUP_MENU_TRAVEL:19,GROUP_MENU_SURFACE:20,GROUP_SURFACE:21,
     GROUP_MUTATION:22,GROUP_MENU_ROTATION:23,GROUP_MENU_MUTATION:24,GROUP_MENU_DRUG:25, GROUP_DRUG:26,GROUP_MENU_HBOND:27,
     GROUP_MENU_CONSERVATION:28,GROUP_MENU_DENSITYMAP:29,GROUP_SLICE:30,GROUP_SURFACE_HET:31,GROUP_BOND:32,GROUP_MENU_DIRECTION:33,
+	GROUP_MENU_OUTBALL:35,
 	GROUP_MAP:34,
 
     MENU_TYPE_FIRST:0,MENU_TYPE_MAIN:1,MENU_TYPE_LIGAND:2,MENU_TYPE_COLOR:3,MENU_TYPE_DRAG:4,MENU_TYPE_MEASURE:5,
     MENU_TYPE_FRAGMENT:6,MENU_TYPE_LABEL:7,MENU_TYPE_EX_HET:8,MENU_TYPE_TRAVEL:9,MENU_TYPE_SURFACE:10,MENU_TYPE_MUTATION:11,
-    MENU_TYPE_ROTATION:12,MENU_TYPE_DRUG:13,MENU_TYPE_HBOND:14,MENU_TYPE_CONSERVATION:15,MENU_TYPE_DENSITYMAP:16,MENU_TYPE_DIRECTION:17,MENU_TYPE_CURRENT:1,
+    MENU_TYPE_ROTATION:12,MENU_TYPE_DRUG:13,MENU_TYPE_HBOND:14,MENU_TYPE_CONSERVATION:15,MENU_TYPE_DENSITYMAP:16,MENU_TYPE_DIRECTION:17,
+	MENU_TYPE_CURRENT:1,MENU_TYPE_OUTBALL:18,MENU_TYPE_OUTSHOW:19,MENU_TYPE_OUTHIDE:20,
     // Fill Mode ( fmode ) 蛋白质、核酸的展示方式
     HIDE : 0,  LINE : 1, DOT : 2,BACKBONE : 3,  SPHERE: 4,STICK : 5, BALL_AND_ROD : 6,
     TUBE : 7,  RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11,
@@ -138,12 +145,19 @@ PDB = {
     LABEL_OCCUPANCY : 751, LABEL_B_FACTOR : 752, LABEL_VDW_RADIUS : 753,
     TRIGGER_EVENT_DRAG:1,TRIGGER_EVENT_DISTANCE:2,TRIGGER_EVENT_ANGLE:3,TRIGGER_EVENT_ATOM:4,TRIGGER_EVENT_FRAGMENT:5,
     TRIGGER_EVENT_LABEL:6,
-	CONFIG:{
-        sphere_width:20,sphere_height:20,stick_sphere_w:12,ballrod_sphere_w:12, water_sphere_w: 16, stick_radius:15,retangle_height:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
-		flat_height:0.001,flat_width:1,strip_radius:0.2,strip_ex:9,tubesegment:15,defaultColor:0xa345,
+	CONFIG_LOW:{
+        sphere_width:20,sphere_HIGH:20,stick_sphere_w:12,ballrod_sphere_w:12, water_sphere_w: 16, stick_radius:15,retangle_HIGH:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
+		flat_HIGH:0.001,flat_width:1,strip_radius:0.2,strip_ex:9,tubesegment:5,defaultColor:0xa345,
 		railway_radius:0.1,railway_gui:9,tube_radius:0.2,startSegmentSurfaceID:0,
         endSegmentSurfaceID:0
-
+	},
+	
+	
+	CONFIG_HIGH:{
+        sphere_width:20,sphere_HIGH:20,stick_sphere_w:12,ballrod_sphere_w:12, water_sphere_w: 16, stick_radius:15,retangle_HIGH:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
+		flat_HIGH:0.001,flat_width:1,strip_radius:0.2,strip_ex:9,tubesegment:15,defaultColor:0xa345,
+		railway_radius:0.1,railway_gui:9,tube_radius:0.2,startSegmentSurfaceID:0,
+        endSegmentSurfaceID:0
 	},
     EMMAP_CONFIG:{
         MIN_THRESHOLD:0,MAX_THRESHOLD:100,CURR_THRESHOLD:100,FIRST_EMMAP_ID:"",CURRENT_EMMAP_ID:"",MIN_SLICE:0,MAX_SLICE:100,CURR_SLICE:0,
@@ -202,7 +216,7 @@ PDB = {
 }
 
 PDB.config = {
-    mainMode : PDB.CARTOON_SSE,
+    mainMode : PDB.TUBE,
     hetMode :  PDB.HET_STICK,
     surfaceMode:PDB.SURFACE,
 	selectedDrug : 'DB04464',

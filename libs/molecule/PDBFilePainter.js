@@ -239,7 +239,8 @@ PDB.painter = {
                     // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
                     ["Density Map",              PDB.MENU_TYPE_DENSITYMAP],
                     ["Drug Design",              PDB.MENU_TYPE_DRUG],
-					["Move Direction",              PDB.MENU_TYPE_DIRECTION]
+					["Move Direction",              PDB.MENU_TYPE_DIRECTION],
+					["OUT BALL SHOW",              PDB.MENU_TYPE_OUTBALL]
                 ];
                 for(var i = 0; i<mainMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x-2, y-i*0.2, z),  mainMenu[i][0], mainMenu[i][1], titleColor, 135);
@@ -460,6 +461,15 @@ PDB.painter = {
                 ];
                 for(var i = 0; i<moveMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DIRECTION, new THREE.Vector3(x, y-i*0.2, z),  moveMenu[i][0], moveMenu[i][1], color, 135);
+                }
+                break;
+			case PDB.MENU_TYPE_OUTBALL:
+				var ballMenu =[
+                    ["SHOW",               PDB.MENU_TYPE_OUTSHOW ],
+                    ["HIDE",               PDB.MENU_TYPE_OUTHIDE ]                    
+                ];
+				for(var i = 0; i<ballMenu.length;i++){
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_OUTBALL, new THREE.Vector3(x, y-i*0.2, z),  ballMenu[i][0], ballMenu[i][1], color, 135);
                 }
                 break;
         }
@@ -1123,7 +1133,10 @@ PDB.painter = {
 			}
 		}
     },
-    showTubeByResdue : function(chainId,resid,sel){
+    showTubeByResdue : function(chainId,resid,sel,showLow,isshow){
+		
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
 		var radius = PDB.CONFIG.tube_radius;
@@ -1134,9 +1147,10 @@ PDB.painter = {
 		atom.caid = resobj.caid;
 		if(residueData[chainId][Number(resid)-1]==undefined){		
 			
-			var groupindex = "chain_"+atom.chainname;
+			var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
 			if(residueData[chainId][resid].path.length>0){
 				PDB.drawer.drawSphere(groupindex,residueData[chainId][resid].path[0], sel?atom.color:color, radius, atom, addgroup, w);
+				PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 			}
 			
 		}	
@@ -1147,20 +1161,24 @@ PDB.painter = {
 			path = [preresobj.path[preresobj.path.length-1]].concat(path);			
 		}		
         
-		var groupindex = "chain_"+atom.chainname;
+		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
 		if(path.length>0){
-			PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, path.length-1,[resobj.caid]);
+			PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:(path.length-1),[resobj.caid]);
+			PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 		}
 		
 		if(residueData[chainId][Number(resid)+1]==undefined&&(path.length-1)>0){			
 			//var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chainId][resid].laid);
-			var groupindex = "chain_"+atom.chainname;
+			var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
 			
 			PDB.drawer.drawSphere(groupindex,path[path.length-1], sel?atom.color:color, radius, atom, addgroup, w);
+			PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 		}
 		
     },
-	showTubeByResdueHEAD : function(chainId,resid,sel){		
+	showTubeByResdueHEAD : function(chainId,resid,sel,showLow,isshow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var resobj		= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var path 		= resobj.path.slice(0,resobj.path.length/2+1);///	
 		var color 		= new THREE.Color('#CCC');
@@ -1170,18 +1188,22 @@ PDB.painter = {
 		}		
         var radius = PDB.CONFIG.tube_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;
-		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, path.length-1,[resobj.caid]);
+		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
+		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:(path.length-1),[resobj.caid]);
+		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
     },
-	showTubeByResdueFOOT : function(chainId,resid,sel){		
+	showTubeByResdueFOOT : function(chainId,resid,sel,showLow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var resobj		= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var path 		= resobj.path.slice((resobj.path.length/2)-1,resobj.path.length);///	
 		var color 		= new THREE.Color('#CCC');
 				
         var radius = PDB.CONFIG.tube_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;
-		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, path.length-1,[resobj.caid]);
+		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
+		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:(path.length-1),[resobj.caid]);
+		
     },
     showRibbon_Flat:function(){
 		// var color  = 0xa345;
@@ -1246,7 +1268,9 @@ PDB.painter = {
 		}
 
     },
-	showRibbon_FlatByResdue:function(chainId,resid,sel){
+	showRibbon_FlatByResdue : function(chainId,resid,sel,showLow,isshow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var resobj 					= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var cubedataObj 			= {};		
 		cubedataObj.tangents 		= resobj.tangents;
@@ -1261,10 +1285,37 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
+		var bs = 1;
+		if(showLow){
+			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
+			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
+			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
+		}else if(showLow){
+			if(PDB.structureSizeLevel==3){
+				bs = 5;
+				var t = [];
+				var n = [];
+				var b = [];
+				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%5!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);
+					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}
+			
+		}
 		var radius = 0;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;		
-		PDB.drawer.drawFlat(groupindex,path, sel?atom.color:color, radius,cubedataObj,path.length-1,[resobj.caid]);
+		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');		
+		PDB.drawer.drawFlat(groupindex,path, sel?atom.color:color, radius,cubedataObj,showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
 	},
     showRibbon_Ellipse:function(){
 		var radius = PDB.CONFIG.ellipse_radius;
@@ -1325,7 +1376,9 @@ PDB.painter = {
 			// PDB.drawer.drawEllipse(PDB.GROUP_MAIN,path, color, radius,obj,path.length-1);//draw helix
 		// }
     },
-	 showRibbon_EllipseByResdue:function(chainId,resid,sel){
+	 showRibbon_EllipseByResdue : function(chainId,resid,sel,showLow,isshow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var resobj 					= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var cubedataObj 			= {};		
 		cubedataObj.tangents 		= resobj.tangents;
@@ -1340,14 +1393,45 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
+		var bs = 1;
+		if(showLow){
+			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
+			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
+			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
+		}else if(showLow){
+			if(PDB.structureSizeLevel==3){
+				bs = 5;
+				var t = [];
+				var n = [];
+				var b = [];
+				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%5!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);
+					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}
+			
+		}
+		//console.log(cubedataObj);
 		var radius = PDB.CONFIG.ellipse_radius;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;		
-		PDB.drawer.drawEllipse(groupindex,path, sel?atom.color:color, radius,cubedataObj,path.length-1,[resobj.caid]);
+		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');		
+		PDB.drawer.drawEllipse(groupindex,path, sel?atom.color:color, radius,cubedataObj, showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
+		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	 },
 	 
 	 
-	showRibbon_EllipseByResdueHEAD : function(chainId,resid,sel){		
+	showRibbon_EllipseByResdueHEAD : function(chainId,resid,sel,showLow,isshow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var resobj		= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var path 		= resobj.path.slice(0,resobj.path.length/2);///	
 		var cubedataObj 			= {};		
@@ -1361,13 +1445,46 @@ PDB.painter = {
 			cubedataObj.tangents = [preresobj.tangents[preresobj.tangents.length-1]].concat(cubedataObj.tangents);
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
-		}		
+		}
+		
+		var bs = 1;
+		if(showLow){
+			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
+			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
+			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
+		}else if(showLow){
+			if(PDB.structureSizeLevel==3){
+				bs = 5;
+				var t = [];
+				var n = [];
+				var b = [];
+				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%5!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);
+					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}
+			
+		}
+
+			
         var radius = PDB.CONFIG.ellipse_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;
-		PDB.drawer.drawEllipse(groupindex, path, sel?atom.color:color, radius,cubedataObj, path.length-1,[resobj.caid]);
+		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
+		PDB.drawer.drawEllipse(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
     },
-	showRibbon_EllipseByResdueFOOT : function(chainId,resid,sel){		
+	showRibbon_EllipseByResdueFOOT : function(chainId,resid,sel,showLow){		
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
+		
 		var resobj		= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var path 		= resobj.path.slice((resobj.path.length/2)-1,resobj.path.length);///
 		var cubedataObj 			= {};		
@@ -1375,11 +1492,39 @@ PDB.painter = {
 		cubedataObj.normals 		= resobj.normals.slice((resobj.normals.length/2)-1,resobj.normals.length);
 		cubedataObj.binormals 		= resobj.binormals.slice((resobj.binormals.length/2)-1,resobj.binormals.length);
 		
+		var bs = 1;
+		if(showLow){
+			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
+			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
+			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
+		}else if(showLow){
+			if(PDB.structureSizeLevel==3){
+				bs = 5;
+				var t = [];
+				var n = [];
+				var b = [];
+				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%5!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);
+					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}
+			
+		}
+		
 		var color 		= new THREE.Color('#CCC');				
         var radius = PDB.CONFIG.ellipse_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;
-		PDB.drawer.drawEllipse(groupindex, path, sel?atom.color:color, radius,cubedataObj, path.length-1,[resobj.caid]);
+		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
+		PDB.drawer.drawEllipse(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
     },
 	 
     showRibbon_Rectangle:function(){
@@ -1436,7 +1581,9 @@ PDB.painter = {
 			}
 		}
     },
-	showRibbon_RectangleByResdue:function(chainId,resid,sel){
+	showRibbon_RectangleByResdue:function(chainId,resid,sel,showLow,isshow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var resobj 					= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var cubedataObj 			= {};		
 		cubedataObj.tangents 		= resobj.tangents;
@@ -1451,10 +1598,37 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
+		var bs = 1;
+		if(showLow){
+			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
+			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
+			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
+		}else if(showLow){
+			if(PDB.structureSizeLevel==3){
+				bs = 5;
+				var t = [];
+				var n = [];
+				var b = [];
+				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%5!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);
+					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}
+			
+		}
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;
+		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
 		var radius = 0;
-		PDB.drawer.drawRectangle(groupindex,path,  sel?atom.color:color, radius,cubedataObj,path.length-1,[resobj.caid]);
+		PDB.drawer.drawRectangle(groupindex,path,  sel?atom.color:color, radius,cubedataObj,showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
 	},
     showRibbon_Strip:function(){
 		var radius = PDB.CONFIG.strip_radius;
@@ -1498,7 +1672,9 @@ PDB.painter = {
 		}
 
     },
-	showRibbon_StripByResdue:function(chainId,resid,sel){
+	showRibbon_StripByResdue : function(chainId,resid,sel,showLow,isshow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var resobj 					= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var cubedataObj 			= {};		
 		cubedataObj.tangents 		= resobj.tangents;
@@ -1513,11 +1689,38 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
+		var bs = 1;
+		if(showLow){
+			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
+			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
+			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
+		}else if(showLow){
+			if(PDB.structureSizeLevel==3){
+				bs = 5;
+				var t = [];
+				var n = [];
+				var b = [];
+				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%5!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);
+					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}
+			
+		}
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;
+		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
 		
 		var radius = PDB.CONFIG.strip_radius;
-		PDB.drawer.drawStrip(groupindex, path, sel?atom.color:color, radius,cubedataObj, path.length-1,[resobj.caid]);
+		PDB.drawer.drawStrip(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
 	},
     showRibbon_Railway:function(){
         // var color  = 0xa345;
@@ -1573,7 +1776,10 @@ PDB.painter = {
 			}
 		}
     },
-	showRibbon_RailwayByResdue:function(chainId,resid,sel){
+	showRibbon_RailwayByResdue:function(chainId,resid,sel,showLow,isshow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
+		
 		var resobj 					= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		var cubedataObj 			= {};		
 		cubedataObj.tangents 		= resobj.tangents;
@@ -1588,10 +1794,37 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
+		var bs = 1;
+		if(showLow){
+			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
+			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
+			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
+		}else if(showLow){
+			if(PDB.structureSizeLevel==3){
+				bs = 5;
+				var t = [];
+				var n = [];
+				var b = [];
+				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%5!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);
+					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}
+			
+		}
 		var radius = PDB.CONFIG.railway_radius;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname;		
-		PDB.drawer.drawRailway(groupindex,path, sel?atom.color:color, radius,cubedataObj,path.length-1,[resobj.caid]);
+		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');		
+		PDB.drawer.drawRailway(groupindex,path, sel?atom.color:color, radius,cubedataObj,showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
 	},
     showCartoon_SSE0:function(){
         var color = '';
@@ -2023,7 +2256,9 @@ PDB.painter = {
 		}	
         
     },
-	showRibbon_Arrow : function(chainId,resid,sel){
+	showRibbon_Arrow : function(chainId,resid,sel,showLow,isshow){
+		showLow = (showLow == undefined?false:isshow);
+		isshow = (isshow == undefined?true:isshow);
 		var resobj 					= w3m.mol[PDB.pdbId].residueData[chainId][resid];				
 		var arrow 					= resobj.arrow;
 		if(arrow.length==0)return;
@@ -2036,11 +2271,11 @@ PDB.painter = {
 			arrow = [preresobj.arrow[preresobj.arrow.length-4]].concat(arrow);
 		}
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-        var groupindex = "chain_"+atom.chainname;
+        var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
 		PDB.drawer.drawArrowByPaths(groupindex, arrow, sel?atom.color:color,[resobj.caid]);
 		
 	},
-	showCartoon_SSEByResdue : function(chainId,resid,sel){
+	showCartoon_SSEByResdue : function(chainId,resid,sel,showLow,isshow){
 		
 		var resobj	= w3m.mol[PDB.pdbId].residueData[chainId][resid];
 		
@@ -2051,37 +2286,37 @@ PDB.painter = {
 		// this.showRibbon_Arrow(chainId,resid,sel);
 		switch(resobj.sse){
 			case	w3m.HELIX_HEAD: //tube-->loop & ellipse 
-				this.showTubeByResdueHEAD(chainId,resid,sel);//
-				this.showRibbon_EllipseByResdueFOOT(chainId,resid,sel);
+				this.showTubeByResdueHEAD(chainId,resid,sel,showLow,isshow);//
+				this.showRibbon_EllipseByResdueFOOT(chainId,resid,sel,showLow,isshow);
 				break;	
 			case	w3m.HELIX_BODY: //ellipse-->ellipse
-				this.showRibbon_EllipseByResdue(chainId,resid,sel);
+				this.showRibbon_EllipseByResdue(chainId,resid,sel,showLow,isshow);
 				break;			
 			case	w3m.HELIX_FOOT: //ellipse-->ellipse & loop
-				this.showRibbon_EllipseByResdueHEAD(chainId,resid,sel);			
-				this.showTubeByResdueFOOT(chainId,resid,sel);				
+				this.showRibbon_EllipseByResdueHEAD(chainId,resid,sel,showLow,isshow);			
+				this.showTubeByResdueFOOT(chainId,resid,sel,showLow,isshow);				
 				break;
 			case	w3m.SHEET_HEAD: //loop-->tube
-				this.showTubeByResdueHEAD(chainId,resid,sel);//
-				this.showRibbon_Arrow(chainId,resid,sel);
+				this.showTubeByResdueHEAD(chainId,resid,sel,showLow,isshow);//
+				this.showRibbon_Arrow(chainId,resid,sel,showLow,isshow);
 				
 				break;
 			case	w3m.SHEET_BODY: //helix-->ellipse
-				this.showRibbon_Arrow(chainId,resid,sel);
+				this.showRibbon_Arrow(chainId,resid,sel,showLow,isshow);
 				break;	
 			case	w3m.SHEET_FOOT: //sheet-->rectangle
 				
-				this.showRibbon_Arrow(chainId,resid,sel);
-				this.showTubeByResdueFOOT(chainId,resid,sel);	
+				this.showRibbon_Arrow(chainId,resid,sel,showLow,isshow);
+				this.showTubeByResdueFOOT(chainId,resid,sel,showLow,isshow);	
 				break;			
 			case	w3m.LOOP_HEAD: //sheet-->arrow	
-				this.showTubeByResdue(chainId,resid,sel);
+				this.showTubeByResdue(chainId,resid,sel,showLow,isshow);
 				break;
 			case	w3m.LOOP_BODY: //loop-->tube
-				this.showTubeByResdue(chainId,resid,sel);
+				this.showTubeByResdue(chainId,resid,sel,showLow,isshow);
 				break;
 			case	w3m.LOOP_FOOT: //loop-->tube
-				this.showTubeByResdue(chainId,resid,sel);
+				this.showTubeByResdue(chainId,resid,sel,showLow,isshow);
 				break;
 		}
 	},
@@ -2379,7 +2614,7 @@ PDB.painter = {
     showWater : function(){
 		var addgroup;
 		var w = PDB.CONFIG.water_sphere_w;
-        if(PDB.isShowWater&&(PDB.GROUP[PDB.GROUP_WATER] === undefined||PDB.GROUP[PDB.GROUP_WATER].children.length === 0)){
+        if(PDB.isShowWater&&(PDB.GROUP[PDB.GROUP_WATER] === undefined||PDB.GROUP[PDB.GROUP_WATER].children.length==0)){
             var data_obj = [];
             for(var i in w3m.mol){
                 var main_obj = w3m.mol[i].single;
@@ -2569,8 +2804,7 @@ PDB.painter = {
 		axis = new THREE.Vector3(0,1,0);
 		startPos = PDB.tool.rotateAboutWorldAxis(startPos,axis,-PDB.rotateAxisAngle.y);
 		axis = new THREE.Vector3(0,0,1);
-		startPos = PDB.tool.rotateAboutWorldAxis(startPos,axis,-PDB.rotateAxisAngle.z);
-			
+		startPos = PDB.tool.rotateAboutWorldAxis(startPos,axis,-PDB.rotateAxisAngle.z);			
 		var endPos = {
 				x:locationEnd.pos_curr.x-PDB.rotateAxis.x,
 				y:locationEnd.pos_curr.y-PDB.rotateAxis.y,
@@ -2797,9 +3031,9 @@ PDB.painter = {
         var color = new THREE.Color();
         color = new THREE.Color("#567856");
         var color1 = new THREE.Color("#ffffff");
-        for (var i = 0; i < emmap.header.NS; i=i+PDB.map_step) {
-            for (var j = 0; j < emmap.header.NR; j=j+PDB.map_step) {
-                for (var k = 0; k < emmap.header.NC; k=k+PDB.map_step) {
+        for (var i = 0; i < emmap.header.NC; i++) {
+            for (var j = 0; j < emmap.header.NR; j++) {
+                for (var k = 0; k < emmap.header.NS; k++) {
                     var v = emmap.data[i][j][k];
                     var m = i*emmap.header.NS* emmap.header.NR  + j* emmap.header.NS+ k;
                     var n = m*3;
@@ -3208,7 +3442,7 @@ PDB.painter = {
 	// showTravelTube : function(paths,ids){
 		// PDB.drawer.drawTubeByTravel(paths,ids,PDB.CONFIG.tube_radius);
 	// },
-	showResidue : function(chainId,resid,reptype,sel){
+	showResidue : function(chainId,resid,reptype,sel,showLow,isshow){
 		
 		switch(reptype){
 			case PDB.LINE              : PDB.painter.showLineByResdue(chainId,resid,sel);             break;
@@ -3217,15 +3451,15 @@ PDB.painter = {
 			case PDB.SPHERE            : PDB.painter.showSphereByResdue(chainId,resid,sel);           break;
 			case PDB.STICK             : PDB.painter.showSticksByResdue(chainId,resid,sel);           break;
 			case PDB.BALL_AND_ROD      : PDB.painter.showBallRodByResdue(chainId,resid,sel);          break;
-			case PDB.TUBE              : PDB.painter.showTubeByResdue(chainId,resid,sel);	    	  break;
-			case PDB.RIBBON_FLAT       : PDB.painter.showRibbon_FlatByResdue(chainId,resid,sel);      break;
-			case PDB.RIBBON_ELLIPSE    : PDB.painter.showRibbon_EllipseByResdue(chainId,resid,sel);   break;
-			case PDB.RIBBON_RECTANGLE  : PDB.painter.showRibbon_RectangleByResdue(chainId,resid,sel); break;
-			case PDB.RIBBON_STRIP      : PDB.painter.showRibbon_StripByResdue(chainId,resid,sel);     break;
-			case PDB.RIBBON_RAILWAY    : PDB.painter.showRibbon_RailwayByResdue(chainId,resid,sel);   break;
-			case PDB.CARTOON_SSE       : PDB.painter.showCartoon_SSEByResdue(chainId,resid,sel);      break;
+			case PDB.TUBE              : PDB.painter.showTubeByResdue(chainId,resid,sel,showLow,isshow);	    	  break;
+			case PDB.RIBBON_FLAT       : PDB.painter.showRibbon_FlatByResdue(chainId,resid,sel,showLow,isshow);      break;
+			case PDB.RIBBON_ELLIPSE    : PDB.painter.showRibbon_EllipseByResdue(chainId,resid,sel,showLow,isshow);   break;
+			case PDB.RIBBON_RECTANGLE  : PDB.painter.showRibbon_RectangleByResdue(chainId,resid,sel,showLow,isshow); break;
+			case PDB.RIBBON_STRIP      : PDB.painter.showRibbon_StripByResdue(chainId,resid,sel,showLow,isshow);     break;
+			case PDB.RIBBON_RAILWAY    : PDB.painter.showRibbon_RailwayByResdue(chainId,resid,sel,showLow,isshow);   break;
+			case PDB.CARTOON_SSE       : PDB.painter.showCartoon_SSEByResdue(chainId,resid,sel,showLow,isshow);      break;
 			//case PDB.SURFACE           : PDB.painter.showSurfaceByResdue(chainId,resid,sel);		  break;			
-			default                    : PDB.painter.showTubeByResdue(chainId,resid,sel);
+			default                    : PDB.painter.showTubeByResdue(chainId,resid,sel,showLow,isshow);
 		}
 	},
     showBond:function(type){
@@ -3358,9 +3592,6 @@ PDB.painter = {
 			//为链标签绑定改变initChainNumThreshold的事件
 			PDB.tool.bindAllChainEvent(type,chainNum);
 			
-			
-			
-			
 			//显示offset
 			// var alpha = 0.5,
             // beta  = 0.5,
@@ -3392,16 +3623,6 @@ PDB.painter = {
 			
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
         }
 	},
 	showAllResidues : function(type){		
@@ -3423,7 +3644,7 @@ PDB.painter = {
 				var chainType = w3m.mol[PDB.pdbId].chain[chain];
 				if(chainType==w3m.CHAIN_NA&&type>=PDB.TUBE&&type!=PDB.HIDE){
 					for(var resid in residueData[chain]){
-						PDB.painter.showResidue(chain, resid, PDB.TUBE, true);
+						PDB.painter.showResidue(chain, resid, PDB.TUBE, true,false, true);
 						PDB.painter.showDNABond(chain, resid,true);
 					}
 					continue;
@@ -3443,12 +3664,41 @@ PDB.painter = {
 					length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);	
 					// console.log('length:',length);
 					PDB.residueGroupObject[chain][resid].len = length;
-					if(length<showLengthThreshold){
-						PDB.painter.showResidue(chain, resid, type, true);	
-						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;							
+					if(length<showLengthThreshold){						
+						if(PDB.loadType == PDB.bigmodel){
+							PDB.CONFIG = PDB.CONFIG_HIGH;							
+							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;								
+							if(type>=PDB.TUBE&&type<=PDB.CARTOON_SSE){
+								PDB.painter.showResidue(chain, resid, type, true, true, true);
+								PDB.painter.showResidue(chain, resid, type, true, false,false);
+
+							}else if(type<PDB.TUBE){
+								PDB.painter.showResidue(chain, resid, type, true, false, true);
+							}
+							
+							
+						}else if(PDB.loadType == PDB.smallmodel){
+							PDB.painter.showResidue(chain, resid, type, true);	
+							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;	
+						}
+												
 					}else{
-						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
 						
+						if(PDB.loadType == PDB.bigmodel){
+							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_low;
+							//PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
+							PDB.CONFIG = PDB.CONFIG_LOW;
+							if(type>=PDB.TUBE&&type<=PDB.CARTOON_SSE){
+								PDB.painter.showResidue(chain, resid, type, true, true, true);
+								PDB.painter.showResidue(chain, resid, type, true, false,false);
+								
+							}else if(type<PDB.TUBE){
+								PDB.painter.showResidue(chain, resid, type, true, true, true);
+							}
+							
+						}else if(PDB.loadType == PDB.smallmodel){
+							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
+						}					
 					}						
 				}				
 			}
@@ -3746,31 +3996,96 @@ PDB.painter = {
 				var caid =  residueData[chain][resid].caid;				
 				var length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);				
 				PDB.residueGroupObject[chain][resid].len = length;
-				if(PDB.residueGroupObject[chain][resid].len < showLengthThreshold){					
-					if(PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_undefined){
-						PDB.painter.showResidue(chain, resid, PDB.config.mainMode, true);
-						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;
-					}else if(PDB.residueGroupObject[chain][resid].v==PDB.residueGroup_hide){
-						var groupindex = "chain_"+chain;
-						var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);						
-						if(meshs&&meshs.length>0){
-							for(var i in meshs){
-								meshs[i].visible = true;
+				if(PDB.residueGroupObject[chain][resid].len < showLengthThreshold){
+					
+					if(PDB.loadType == PDB.bigmodel){
+						if(PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_low){						
+							
+							
+							if(PDB.config.mainMode>=PDB.TUBE&&PDB.config.mainMode<=PDB.CARTOON_SSE){
+								var gindex_low = "chain_"+chain+"_low";
+								var meshs_low = PDB.GROUP[gindex_low].getChildrenByName(residueData[chain][resid].caid);
+								for(var i in meshs_low ){
+									meshs_low[i].visible = false;							
+								}					
+								
+								var groupindex = "chain_"+chain;
+								var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);
+								for(var i in meshs ){
+									meshs[i].visible = true;							
+								}
+								PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;	
+								
+							}else if(PDB.config.mainMode<PDB.TUBE){
+								var groupindex = "chain_"+chain;
+								var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);
+								for(var i in meshs ){
+									meshs[i].visible = true;							
+								}
+								PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;
 							}
+							
+						}	
+					}else if(PDB.loadType == PDB.smallmodel){
+						if(PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_undefined){
+							PDB.painter.showResidue(chain, resid, PDB.config.mainMode, true);
+							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;
+						}else if(PDB.residueGroupObject[chain][resid].v==PDB.residueGroup_hide){
+							var groupindex = "chain_"+chain;
+							var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);						
+							if(meshs&&meshs.length>0){
+								for(var i in meshs){
+									meshs[i].visible = true;
+								}
+							}
+							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;						
 						}
-						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;						
-					}					
+					}						
+					
 				}else{
-					if(PDB.residueGroupObject[chain][resid].v==PDB.residueGroup_show){						
-						var groupindex = "chain_"+chain;
-						var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);
-						if(meshs&&meshs.length>0){
-							for(var i in meshs){
-								meshs[i].visible = false;
+					
+					if(PDB.loadType == PDB.bigmodel){
+						if(PDB.residueGroupObject[chain][resid].v==PDB.residueGroup_show){						
+							
+							
+							if(PDB.config.mainMode>=PDB.TUBE&&PDB.config.mainMode<=PDB.CARTOON_SSE){
+								var gindex_low = "chain_"+chain+"_low";
+								var meshs_low = PDB.GROUP[gindex_low].getChildrenByName(residueData[chain][resid].caid);
+								for(var i in meshs_low ){
+									meshs_low[i].visible = true;							
+								}						
+								var groupindex = "chain_"+chain;
+								var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);
+								for(var i in meshs ){
+									meshs[i].visible = false;							
+								}
+								PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_low;	
+								
+							}else if(PDB.config.mainMode<PDB.TUBE){
+								var groupindex = "chain_"+chain;
+								var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);
+								for(var i in meshs ){
+									meshs[i].visible = false;							
+								}
+								PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_low;	
 							}
+							
+							
+																		
 						}
-						PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_hide;						
+					}else if(PDB.loadType == PDB.smallmodel){
+						if(PDB.residueGroupObject[chain][resid].v==PDB.residueGroup_show){						
+							var groupindex = "chain_"+chain;
+							var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);
+							if(meshs&&meshs.length>0){
+								for(var i in meshs){
+									meshs[i].visible = false;
+								}
+							}
+							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_hide;						
+						}
 					}
+					
 				}				
 			}	
 		}		

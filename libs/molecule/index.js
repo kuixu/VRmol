@@ -108,6 +108,8 @@ if ( location.search ) {
      }*/
 }
 //	PDB.mode=PDB.MODE_VR;
+
+PDB.CONFIG = PDB.CONFIG_HIGH;
 PDB.controller.init();
 PDB.CHANGESTYLE = PDB.DRAWSTYLE_FRAGMENT;
 PDB.controller.requestRemote(PDB.pdbId);
