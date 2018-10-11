@@ -196,7 +196,7 @@ PDB.controller = {
                 scope.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver,function (emmap) {
                     var middleSlice = Math.floor((PDB.EMMAP.MIN_SLICE+PDB.EMMAP.MAX_SLICE)/2);
                     // PDB.painter.showMapSurface(emmap,emmap.threshold,false);
-					PDB.render.clearStructure();
+                    // PDB.render.clearStructure();
 					var dimension = document.getElementById("dimension");
 					PDB.DIMENSION = Number(dimension.value);
 					switch(PDB.DIMENSION){

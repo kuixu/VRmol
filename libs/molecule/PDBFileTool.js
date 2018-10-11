@@ -731,7 +731,6 @@ PDB.tool = {
                 PDB.EMMAP.TYPE= 1;
                 if(PDB.map_surface_show === 0){
                     PDB.render.clearGroupIndex(PDB.GROUP_MAP);
-                    PDB.render.clearStructure();
                     if(PDB.EMMAP.DATA){
                         var thresholdObj = document.getElementById("currThresHold");
                         PDB.painter.showMapSurface(PDB.EMMAP.DATA,Number(thresholdObj.innerHTML),false);
