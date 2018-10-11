@@ -35,7 +35,7 @@ PDB.controller = {
 			}else if(!this.checked){
 				PDB.loadType = PDB.smallmodel;
 			}			
-			PDB.render.clear(5);
+			PDB.render.clear(2);
             scope.refreshGeometryByMode(PDB.config.mainMode);
             
         } );

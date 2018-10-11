@@ -308,7 +308,7 @@ function dealwithMenu(object) {
 		case PDB.GROUP_MENU_OUTBALL:
             PDB.loadType = object.userData.reptype;
             onMenuDown();
-			PDB.render.clear(5);
+			PDB.render.clear(2);
             PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
             break;
         case PDB.GROUP_MENU_DRUG:
