@@ -701,11 +701,11 @@ PDB.tool = {
                 } );
                 PDB.tool.generateALink(menuSpan,"mapLink"+i,"Detail",PDB.LINK_CONFIG.EMMAP+data[i],"");
             }
-            menuSpan1.innerHTML='<input class="labelPDB" id="solidMap" name="mapType" checked="checked"   type="radio" title="Map Type"/>  <label class="label" for="threeMode"> Solid </label>   <BR/>'+
-                '<input class="labelPDB" id="surfaceMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> Surface </label>   <BR/>'+
-                '<input class="labelPDB" id="meshMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> Mesh </label>   <BR/>'+
-                '<input class="labelPDB" type="checkbox" id="showSlice"><label class="label" for="showSlice"> Show/Hide Slice </label> <BR/>' +
-                '<input class="labelPDB" type="checkbox" checked id="showMap"><label class="label" for="showMap"> Show/Hide Map </label> <BR/><BR/>' +
+            menuSpan1.innerHTML='<input class="labelPDB" id="solidMap" name="mapType" checked="checked"   type="radio" title="Map Type"/>  <label class="label"  for="solidMap"> Solid </label>   <BR/>'+
+                '<input class="labelPDB" id="surfaceMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label"  for="surfaceMap"> Surface </label>   <BR/>'+
+                '<input class="labelPDB" id="meshMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label"   for="meshMap"> Mesh </label>   <BR/>'+
+                '<input class="labelPDB" type="checkbox" id="showSlice"><label class="label" for="showSlice"  > Show/Hide Slice </label> <BR/>' +
+                '<input class="labelPDB" type="checkbox" checked id="showMap"><label class="label" for="showMap" > Show/Hide Map </label> <BR/><BR/>' +
                 '<label class="label"> Step Option </label><BR/>'+
                 '<input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label>'+
                 '<input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label>'+
