@@ -17,7 +17,7 @@ PDB = {
     
 	bigmodel:19,//显示球外结构
 	smallmodel:20,//隐藏球外结构
-	loadType:20,//球外显示模式	
+	loadType:19,//球外显示模式	
 	map_step:2,//默认是4，有三个选项4，2，1
     map_surface_show:0,//0 不是，1是
 	//旋转的角度计量
@@ -33,7 +33,7 @@ PDB = {
 	residueGroup_low:3,	
 	residueGroupObject:{},
 	initVRShowThreshold:35,//VR模式初始的距离	
-	initDesktopShowThreshold:300,//Desktop模式初始的距离
+	initDesktopShowThreshold:1000,//Desktop模式初始的距离
 	cameraPosition:{//camera的位置
 		x:0,
 		y:0,
@@ -146,7 +146,7 @@ PDB = {
     TRIGGER_EVENT_DRAG:1,TRIGGER_EVENT_DISTANCE:2,TRIGGER_EVENT_ANGLE:3,TRIGGER_EVENT_ATOM:4,TRIGGER_EVENT_FRAGMENT:5,
     TRIGGER_EVENT_LABEL:6,
 	CONFIG_LOW:{
-        sphere_width:8,sphere_height:4,stick_sphere_w:6,ballrod_sphere_w:12, water_sphere_w: 16, stick_radius:6,retangle_HIGH:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
+        sphere_width:8,sphere_height:4,stick_sphere_w:4,ballrod_sphere_w:4, water_sphere_w: 8, stick_radius:3,retangle_HIGH:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
 		flat_HIGH:0.001,flat_width:1,strip_radius:0.2,strip_ex:9,tubesegment:5,defaultColor:0xa345,
 		railway_radius:0.1,railway_gui:9,tube_radius:0.2,startSegmentSurfaceID:0,
         endSegmentSurfaceID:0
@@ -216,7 +216,7 @@ PDB = {
 }
 
 PDB.config = {
-    mainMode : PDB.CARTOON_SSE,
+    mainMode : PDB.BALL_AND_ROD,
     hetMode :  PDB.HET_STICK,
     surfaceMode:PDB.SURFACE,
 	selectedDrug : 'DB04464',

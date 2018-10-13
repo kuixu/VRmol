@@ -2499,15 +2499,17 @@
 		},
 
 		fromArray: function ( array, offset ) {
+			if(array){
+				if ( offset === undefined ) offset = 0;
 
-			if ( offset === undefined ) offset = 0;
+				this._x = array[ offset ];
+				this._y = array[ offset + 1 ];
+				this._z = array[ offset + 2 ];
+				this._w = array[ offset + 3 ];
 
-			this._x = array[ offset ];
-			this._y = array[ offset + 1 ];
-			this._z = array[ offset + 2 ];
-			this._w = array[ offset + 3 ];
-
-			this.onChangeCallback();
+				this.onChangeCallback();
+			}
+			
 
 			return this;
 

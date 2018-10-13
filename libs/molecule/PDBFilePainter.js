@@ -3794,16 +3794,15 @@ PDB.painter = {
 							PDB.CONFIG = PDB.CONFIG_HIGH;							
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;	
 							if(type!=PDB.DOT&&type!=PDB.LINE){
-								PDB.painter.showResidue(chain, resid, type, true, false, true);
-								PDB.painter.showResidue(chain, resid, type, true, true,false);
+								//PDB.painter.showResidue(chain, resid, type, true, false, true);
+								PDB.CONFIG = PDB.CONFIG_LOW;
+								PDB.painter.showResidue(chain, resid, type, true, true,true);
 							}else{
 								PDB.painter.showResidue(chain, resid, type, true, false,true);
 							}
 							
-							
-							
 						}else if(PDB.loadType == PDB.smallmodel){
-							PDB.CONFIG = PDB.CONFIG_HIGH;
+						
 							PDB.painter.showResidue(chain, resid, type, true);	
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;	
 						}
@@ -3813,10 +3812,11 @@ PDB.painter = {
 						if(PDB.loadType == PDB.bigmodel){
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_low;
 							//PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
-							PDB.CONFIG = PDB.CONFIG_LOW;
-							if(type!=PDB.DOT&&type!=PDB.LINE){
+								PDB.CONFIG = PDB.CONFIG_LOW;
+							if(type!=PDB.DOT&&type!=PDB.LINE){								
 								PDB.painter.showResidue(chain, resid, type, true, true, true);
-								PDB.painter.showResidue(chain, resid, type, true, false,false);
+								// PDB.CONFIG = PDB.CONFIG_HIGH;
+								// PDB.painter.showResidue(chain, resid, type, true, false,false);
 							}else{
 								
 								PDB.painter.showResidue(chain, resid, type, true, false,true);
@@ -4132,7 +4132,7 @@ PDB.painter = {
 								var meshs_low = PDB.GROUP[gindex_low].getChildrenByName(residueData[chain][resid].caid);
 								for(var i in meshs_low ){
 									meshs_low[i].visible = false;							
-								}					
+								}				
 								
 								var groupindex = "chain_"+chain;
 								var meshs = PDB.GROUP[groupindex].getChildrenByName(residueData[chain][resid].caid);
