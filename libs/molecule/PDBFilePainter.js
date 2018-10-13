@@ -1188,7 +1188,8 @@ PDB.painter = {
         
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
 		if(path.length>0){
-			PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:(path.length-1),[resobj.caid]);
+			var high_r = PDB.structureSizeLevel==3?(path.length-1):Math.floor(path.length/4);	
+			PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
 			PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 		}
 		
@@ -1214,7 +1215,8 @@ PDB.painter = {
         var radius = PDB.CONFIG.tube_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
-		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:(path.length-1),[resobj.caid]);
+		var high_r = PDB.structureSizeLevel==3?(path.length-1):Math.floor(path.length/4);		
+		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
     },
 	showTubeByResdueFOOT : function(chainId,resid,sel,showLow,isshow){
@@ -1227,7 +1229,8 @@ PDB.painter = {
         var radius = PDB.CONFIG.tube_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
-		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:(path.length-1),[resobj.caid]);
+		var high_r = PDB.structureSizeLevel==3?(path.length-1):Math.floor(path.length/4);	
+		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
     },
     showRibbon_Flat:function(){
@@ -1310,24 +1313,36 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
-		var bs = 1;
+		
 		if(showLow){
 			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
 			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
 			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
-		}else if(showLow){
-			if(PDB.structureSizeLevel==3){
-				bs = 5;
+		}else if(!showLow){
+			if(PDB.structureSizeLevel==3){				
 				var t = [];
 				var n = [];
-				var b = [];
-				
+				var b = [];				
 				for(var i =0;i<cubedataObj.tangents.length;i++){
-					if (i%5!=0) continue;
+					if (i%2!=0) continue;
 					t.push(cubedataObj.tangents[i]);
 					n.push(cubedataObj.normals[i]);
-					b.push(cubedataObj.binormals[i]);
-					
+					b.push(cubedataObj.binormals[i]);					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}else if(PDB.structureSizeLevel==4){
+				var t = [];
+				var n = [];
+				var b = [];				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%4!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);					
 				}
 				cubedataObj = {
 					tangents:t,
@@ -1340,7 +1355,7 @@ PDB.painter = {
 		var radius = 0;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');		
-		PDB.drawer.drawFlat(groupindex,path, sel?atom.color:color, radius,cubedataObj,showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
+		PDB.drawer.drawFlat(groupindex,path, sel?atom.color:color, radius,cubedataObj,showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	},
     showRibbon_Ellipse:function(){
@@ -1419,24 +1434,36 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
-		var bs = 1;
+		
 		if(showLow){
 			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
 			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
 			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
-		}else if(showLow){
-			if(PDB.structureSizeLevel==3){
-				bs = 5;
+		}else if(!showLow){
+			if(PDB.structureSizeLevel==3){				
 				var t = [];
 				var n = [];
-				var b = [];
-				
+				var b = [];				
 				for(var i =0;i<cubedataObj.tangents.length;i++){
-					if (i%5!=0) continue;
+					if (i%2!=0) continue;
 					t.push(cubedataObj.tangents[i]);
 					n.push(cubedataObj.normals[i]);
-					b.push(cubedataObj.binormals[i]);
-					
+					b.push(cubedataObj.binormals[i]);					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}else if(PDB.structureSizeLevel==4){
+				var t = [];
+				var n = [];
+				var b = [];				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%4!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);					
 				}
 				cubedataObj = {
 					tangents:t,
@@ -1450,7 +1477,7 @@ PDB.painter = {
 		var radius = PDB.CONFIG.ellipse_radius;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');		
-		PDB.drawer.drawEllipse(groupindex,path, sel?atom.color:color, radius,cubedataObj, showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
+		PDB.drawer.drawEllipse(groupindex,path, sel?atom.color:color, radius,cubedataObj, showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	 },
 	 
@@ -1473,24 +1500,36 @@ PDB.painter = {
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
 		
-		var bs = 1;
+		
 		if(showLow){
 			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
 			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
 			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
-		}else if(showLow){
-			if(PDB.structureSizeLevel==3){
-				bs = 5;
+		}else if(!showLow){
+			if(PDB.structureSizeLevel==3){				
 				var t = [];
 				var n = [];
-				var b = [];
-				
+				var b = [];				
 				for(var i =0;i<cubedataObj.tangents.length;i++){
-					if (i%5!=0) continue;
+					if (i%2!=0) continue;
 					t.push(cubedataObj.tangents[i]);
 					n.push(cubedataObj.normals[i]);
-					b.push(cubedataObj.binormals[i]);
-					
+					b.push(cubedataObj.binormals[i]);					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}else if(PDB.structureSizeLevel==4){
+				var t = [];
+				var n = [];
+				var b = [];				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%4!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);					
 				}
 				cubedataObj = {
 					tangents:t,
@@ -1505,7 +1544,7 @@ PDB.painter = {
         var radius = PDB.CONFIG.ellipse_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
-		PDB.drawer.drawEllipse(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
+		PDB.drawer.drawEllipse(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
     },
 	showRibbon_EllipseByResdueFOOT : function(chainId,resid,sel,showLow,isshow){		
@@ -1519,24 +1558,36 @@ PDB.painter = {
 		cubedataObj.normals 		= resobj.normals.slice((resobj.normals.length/2)-1,resobj.normals.length);
 		cubedataObj.binormals 		= resobj.binormals.slice((resobj.binormals.length/2)-1,resobj.binormals.length);
 		
-		var bs = 1;
+		
 		if(showLow){
 			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
 			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
 			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
-		}else if(showLow){
-			if(PDB.structureSizeLevel==3){
-				bs = 5;
+		}else if(!showLow){
+			if(PDB.structureSizeLevel==3){				
 				var t = [];
 				var n = [];
-				var b = [];
-				
+				var b = [];				
 				for(var i =0;i<cubedataObj.tangents.length;i++){
-					if (i%5!=0) continue;
+					if (i%2!=0) continue;
 					t.push(cubedataObj.tangents[i]);
 					n.push(cubedataObj.normals[i]);
-					b.push(cubedataObj.binormals[i]);
-					
+					b.push(cubedataObj.binormals[i]);					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}else if(PDB.structureSizeLevel==4){
+				var t = [];
+				var n = [];
+				var b = [];				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%4!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);					
 				}
 				cubedataObj = {
 					tangents:t,
@@ -1547,11 +1598,11 @@ PDB.painter = {
 			
 		}
 		
-		var color 		= new THREE.Color('#CCC');				
+		var color = new THREE.Color('#CCC');				
         var radius = PDB.CONFIG.ellipse_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
-		PDB.drawer.drawEllipse(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
+		PDB.drawer.drawEllipse(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	},
 	 
@@ -1626,24 +1677,36 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
-		var bs = 1;
+		
 		if(showLow){
 			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
 			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
 			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
-		}else if(showLow){
-			if(PDB.structureSizeLevel==3){
-				bs = 5;
+		}else if(!showLow){
+			if(PDB.structureSizeLevel==3){				
 				var t = [];
 				var n = [];
-				var b = [];
-				
+				var b = [];				
 				for(var i =0;i<cubedataObj.tangents.length;i++){
-					if (i%5!=0) continue;
+					if (i%2!=0) continue;
 					t.push(cubedataObj.tangents[i]);
 					n.push(cubedataObj.normals[i]);
-					b.push(cubedataObj.binormals[i]);
-					
+					b.push(cubedataObj.binormals[i]);					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}else if(PDB.structureSizeLevel==4){
+				var t = [];
+				var n = [];
+				var b = [];				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%4!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);					
 				}
 				cubedataObj = {
 					tangents:t,
@@ -1656,7 +1719,7 @@ PDB.painter = {
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
 		var radius = 0;
-		PDB.drawer.drawRectangle(groupindex,path,  sel?atom.color:color, radius,cubedataObj,showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
+		PDB.drawer.drawRectangle(groupindex,path,  sel?atom.color:color, radius,cubedataObj,showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	},
     showRibbon_Strip:function(){
@@ -1718,24 +1781,36 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
-		var bs = 1;
+		
 		if(showLow){
 			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
 			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
 			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
-		}else if(showLow){
-			if(PDB.structureSizeLevel==3){
-				bs = 5;
+		}else if(!showLow){
+			if(PDB.structureSizeLevel==3){				
 				var t = [];
 				var n = [];
-				var b = [];
-				
+				var b = [];				
 				for(var i =0;i<cubedataObj.tangents.length;i++){
-					if (i%5!=0) continue;
+					if (i%2!=0) continue;
 					t.push(cubedataObj.tangents[i]);
 					n.push(cubedataObj.normals[i]);
-					b.push(cubedataObj.binormals[i]);
-					
+					b.push(cubedataObj.binormals[i]);					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}else if(PDB.structureSizeLevel==4){
+				var t = [];
+				var n = [];
+				var b = [];				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%4!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);					
 				}
 				cubedataObj = {
 					tangents:t,
@@ -1749,7 +1824,7 @@ PDB.painter = {
 		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
 		
 		var radius = PDB.CONFIG.strip_radius;
-		PDB.drawer.drawStrip(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
+		PDB.drawer.drawStrip(groupindex, path, sel?atom.color:color, radius,cubedataObj, showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	},
     showRibbon_Railway:function(){
@@ -1824,24 +1899,36 @@ PDB.painter = {
 			cubedataObj.normals = [preresobj.normals[preresobj.normals.length-1]].concat(cubedataObj.normals);
 			cubedataObj.binormals = [preresobj.binormals[preresobj.binormals.length-1]].concat(cubedataObj.binormals);
 		}
-		var bs = 1;
+		
 		if(showLow){
 			cubedataObj.tangents = [cubedataObj.tangents[0],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/4)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length/2)],cubedataObj.tangents[Math.floor(cubedataObj.tangents.length*3/4)],cubedataObj.tangents[cubedataObj.tangents.length-1]];
 			cubedataObj.normals = [cubedataObj.normals[0],cubedataObj.normals[Math.floor(cubedataObj.normals.length/4)],cubedataObj.normals[Math.floor(cubedataObj.normals.length/2)],cubedataObj.normals[Math.floor(cubedataObj.normals.length*3/4)],cubedataObj.normals[cubedataObj.normals.length-1]];
 			cubedataObj.binormals = [cubedataObj.binormals[0],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/4)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length/2)],cubedataObj.binormals[Math.floor(cubedataObj.binormals.length*3/4)],cubedataObj.binormals[cubedataObj.binormals.length-1]];
-		}else if(showLow){
-			if(PDB.structureSizeLevel==3){
-				bs = 5;
+		}else if(!showLow){
+			if(PDB.structureSizeLevel==3){				
 				var t = [];
 				var n = [];
-				var b = [];
-				
+				var b = [];				
 				for(var i =0;i<cubedataObj.tangents.length;i++){
-					if (i%5!=0) continue;
+					if (i%2!=0) continue;
 					t.push(cubedataObj.tangents[i]);
 					n.push(cubedataObj.normals[i]);
-					b.push(cubedataObj.binormals[i]);
-					
+					b.push(cubedataObj.binormals[i]);					
+				}
+				cubedataObj = {
+					tangents:t,
+					normals:n,
+					binormals:b
+				}
+			}else if(PDB.structureSizeLevel==4){
+				var t = [];
+				var n = [];
+				var b = [];				
+				for(var i =0;i<cubedataObj.tangents.length;i++){
+					if (i%4!=0) continue;
+					t.push(cubedataObj.tangents[i]);
+					n.push(cubedataObj.normals[i]);
+					b.push(cubedataObj.binormals[i]);					
 				}
 				cubedataObj = {
 					tangents:t,
@@ -1854,7 +1941,7 @@ PDB.painter = {
 		var radius = PDB.CONFIG.railway_radius;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');		
-		PDB.drawer.drawRailway(groupindex,path, sel?atom.color:color, radius,cubedataObj,showLow?4:(Math.floor((path.length-1)/bs)),[resobj.caid]);
+		PDB.drawer.drawRailway(groupindex,path, sel?atom.color:color, radius,cubedataObj,showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	},
     showCartoon_SSE0:function(){

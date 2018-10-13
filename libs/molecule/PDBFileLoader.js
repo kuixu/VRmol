@@ -201,8 +201,10 @@ PDB.loader = {
             PDB.structureSizeLevel=1;
         }else if(mainAtomCount<10000){
             PDB.structureSizeLevel=2;
-        }else {
+        }else if(mainAtomCount<30000){
             PDB.structureSizeLevel=3;
+        }else{
+            PDB.structureSizeLevel=4;
         }
 
         // switch(PDB.structureSizeLevel){
