@@ -363,7 +363,7 @@ function dealwithMenu(object) {
 			}else{
 				var mapserver = 'map-local';
 				PDB.controller.emmapLoad('3298', mapserver,function (emmap) {
-					PDB.render.clearStructure();
+					// PDB.render.clearStructure();
 					if(type === 1) {
 						PDB.SHOWSOLID = true;
 						PDB.map_surface_show =0;
