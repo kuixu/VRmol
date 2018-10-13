@@ -3139,9 +3139,9 @@ PDB.painter = {
                 }
             }
         }
-		var rotation = PDB.GROUP[PDB.GROUP_MAIN].rotation;
-        PDB.GROUP[PDB.GROUP_MAP].rotation.set(rotation.x,rotation.y,rotation.z);
-        PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
+		var newScale = new THREE.Vector3(emmap.header.a/emmap.header.NC,emmap.header.b/emmap.header.NR,emmap.header.c/emmap.header.NS);
+		PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x,newScale.y,newScale.z);
+        // PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
     },
     // point material
     showMapSolid00000 :function(emmap,threshold){
@@ -3414,9 +3414,8 @@ PDB.painter = {
         mesh.rotation.y =  -Math.PI/2;
         PDB.GROUP[PDB.GROUP_MAP].add( mesh );
         PDB.GROUP[PDB.GROUP_MAP].visible = true;
-		var rotation = PDB.GROUP[PDB.GROUP_MAIN].rotation;
-        PDB.GROUP[PDB.GROUP_MAP].rotation.set(rotation.x,rotation.y,rotation.z);
-        PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
+		PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x,newScale.y,newScale.z);
+        // PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
 		console.log("time(ms):"+(new Date()-start));
     }, //ParticleSystem
     showMapSurface1 :function(emmap,threshold,wireframe){
