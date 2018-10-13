@@ -326,7 +326,7 @@ function dealwithMenu(object) {
 					PDB.SHOWSOLID = true;
 					PDB.map_surface_show =0;
 					PDB.render.clearGroupIndex(PDB.GROUP_MAP);
-					PDB.painter.showMapSolid(emmap,PDB.THRESHOLD);
+					PDB.painter.showMapSolid(emmap,emmap.threshold);
 				}else if(type === 2){
 					if(PDB.map_surface_show === 0){
 						PDB.render.clearGroupIndex(PDB.GROUP_MAP);
@@ -367,7 +367,7 @@ function dealwithMenu(object) {
 					if(type === 1) {
 						PDB.SHOWSOLID = true;
 						PDB.map_surface_show =0;
-						PDB.painter.showMapSolid(emmap,PDB.THRESHOLD);
+						PDB.painter.showMapSolid(emmap,emmap.threshold);
 					}else if(type === 2){
 						PDB.painter.showMapSurface(emmap,emmap.threshold,false);
 						PDB.map_surface_show =1;
