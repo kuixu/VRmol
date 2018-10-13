@@ -9,6 +9,7 @@ PDB.loader = {
     load: function ( name,callBack) {
         var scope = this;
         w3m.ajax.get(name, function(text) {
+			
             w3m.tool.clear();
             w3m.config.rep_mode_main = PDB.config.mainMode;
             w3m.config.rep_mode_het = PDB.config.hetMode;
@@ -34,13 +35,33 @@ PDB.loader = {
                 PDB.GROUP[gindex] = new THREE.Group();
                 PDB.GROUP[gindex].name = chain;
                 PDB.GROUP[gindex].userData["group"] = gindex;
+				PDB.GROUP[gindex].userData["type"] = 'normal';
                 PDB.GROUP[gindex].userData["presentAtom"] = PDB.tool.getMainAtom(PDB.pdbId, first_atomid);
 				if(!PDB.pptShow){
 					scene.add(PDB.GROUP[gindex]);
 				}                
                 PDB.GROUP_MAIN_INDEX.push(gindex);
                 PDB.GROUP_STRUCTURE_INDEX.push(gindex);
+				
+				
+				var gindex_low = "chain_"+chain+"_low";
+				//var first_atomid = PDB.tool.getFirstAtomIdByChain(chain);
+				PDB.GROUP[gindex_low] = new THREE.Group();
+				PDB.GROUP[gindex_low].name = chain;
+				PDB.GROUP[gindex_low].userData["group"] = gindex_low;
+				PDB.GROUP[gindex_low].userData["type"] = 'low';
+				PDB.GROUP[gindex_low].userData["presentAtom"] = PDB.tool.getMainAtom(PDB.pdbId, first_atomid);
+				if(!PDB.pptShow){
+					scene.add(PDB.GROUP[gindex_low]);
+				}
+				PDB.GROUP_MAIN_INDEX.push(gindex_low);
+				PDB.GROUP_STRUCTURE_INDEX.push(gindex_low);
+				
+				
+				
             }
+			
+					
             PDB.GROUP_MAIN_INDEX.push(PDB.GROUP_MAIN);
             PDB.GROUP_HET_INDEX.push(PDB.GROUP_HET);
             PDB.GROUP_HET_INDEX.push(PDB.GROUP_WATER);
@@ -90,12 +111,28 @@ PDB.loader = {
                 PDB.GROUP[gindex] = new THREE.Group();
                 PDB.GROUP[gindex].name = chain;
                 PDB.GROUP[gindex].userData["group"] = gindex;
+				PDB.GROUP[gindex].userData["type"] = 'normal';
                 PDB.GROUP[gindex].userData["presentAtom"] = PDB.tool.getMainAtom(PDB.pdbId, first_atomid);
                 if(!PDB.pptShow){
                     scene.add(PDB.GROUP[gindex]);
                 }
                 PDB.GROUP_MAIN_INDEX.push(gindex);
                 PDB.GROUP_STRUCTURE_INDEX.push(gindex);
+				
+				//low
+				var gindex_low = "chain_"+chain+"_low";
+				//var first_atomid = PDB.tool.getFirstAtomIdByChain(chain);
+				PDB.GROUP[gindex_low] = new THREE.Group();
+				PDB.GROUP[gindex_low].name = chain;
+				PDB.GROUP[gindex_low].userData["group"] = gindex_low;
+				PDB.GROUP[gindex_low].userData["type"] = 'low';
+				PDB.GROUP[gindex_low].userData["presentAtom"] = PDB.tool.getMainAtom(PDB.pdbId, first_atomid);
+				if(!PDB.pptShow){
+					scene.add(PDB.GROUP[gindex_low]);
+				}
+				PDB.GROUP_MAIN_INDEX.push(gindex_low);
+				PDB.GROUP_STRUCTURE_INDEX.push(gindex_low);
+				
             }
             PDB.GROUP_MAIN_INDEX.push(PDB.GROUP_MAIN);
             PDB.GROUP_HET_INDEX.push(PDB.GROUP_HET);

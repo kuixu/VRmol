@@ -21,7 +21,27 @@ PDB.controller = {
     createMenu : function(){
         var scope = this;
 
-        //search button
+        
+		//switch Mode of show on big Structure
+		
+		var c_isLow = document.getElementById("isLow");
+		
+		
+		c_isLow.addEventListener( 'click', function(e) {
+            //PDB.render.changeToThreeMode(PDB.MODE_THREE,false);
+			//console.log(this.checked);
+			if(this.checked){
+				PDB.loadType = PDB.bigmodel;
+			}else if(!this.checked){
+				PDB.loadType = PDB.smallmodel;
+			}			
+			PDB.render.clear(2);
+            scope.refreshGeometryByMode(PDB.config.mainMode);
+            
+        } );
+		
+		
+		//search button
         var b_search = document.getElementById("search_button");
 
         b_search.addEventListener( 'click', function() {
@@ -51,6 +71,7 @@ PDB.controller = {
             PDB.painter.showResidueByThreeTravel();
 
         } );
+		
 
         vrMode.addEventListener( 'click', function(e) {
             //PDB.render.changeToVrMode(PDB.MODE_VR,false);
@@ -196,7 +217,7 @@ PDB.controller = {
                 scope.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver,function (emmap) {
                     var middleSlice = Math.floor((PDB.EMMAP.MIN_SLICE+PDB.EMMAP.MAX_SLICE)/2);
                     // PDB.painter.showMapSurface(emmap,emmap.threshold,false);
-                    // PDB.render.clearStructure();
+					// PDB.render.clearStructure();
 					var dimension = document.getElementById("dimension");
 					PDB.DIMENSION = Number(dimension.value);
 					switch(PDB.DIMENSION){
