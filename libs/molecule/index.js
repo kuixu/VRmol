@@ -108,7 +108,6 @@ if ( location.search ) {
      }*/
 }
 //	PDB.mode=PDB.MODE_VR;
-PDB.pdbId = '5ftm';
 PDB.controller.init();
 PDB.CHANGESTYLE = PDB.DRAWSTYLE_FRAGMENT;
 PDB.controller.requestRemote(PDB.pdbId);
