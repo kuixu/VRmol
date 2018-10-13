@@ -216,7 +216,7 @@ PDB = {
 }
 
 PDB.config = {
-    mainMode : PDB.BALL_AND_ROD,
+    mainMode : PDB.CARTOON_SSE,
     hetMode :  PDB.HET_STICK,
     surfaceMode:PDB.SURFACE,
 	selectedDrug : 'DB04464',

@@ -4142,7 +4142,7 @@ PDB.painter = {
 						if(PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_low){
 
 
-							if(type!=PDB.DOT&&type!=PDB.LINE&&type!=PDB.BALL_AND_ROD){
+							if(PDB.config.mainMode!=PDB.DOT&&PDB.config.mainMode!=PDB.LINE&&PDB.config.mainMode!=PDB.BALL_AND_ROD){
 								var gindex_low = "chain_"+chain+"_low";
 								var meshs_low = PDB.GROUP[gindex_low].getChildrenByName(residueData[chain][resid].caid);
 								for(var i in meshs_low ){
