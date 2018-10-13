@@ -3793,13 +3793,19 @@ PDB.painter = {
 						if(PDB.loadType == PDB.bigmodel){
 							PDB.CONFIG = PDB.CONFIG_HIGH;							
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;	
-							if(type!=PDB.DOT&&type!=PDB.LINE){
+							if(type!=PDB.DOT&&type!=PDB.LINE&&type!=PDB.BALL_AND_ROD){
 								PDB.painter.showResidue(chain, resid, type, true, false, true);
 								PDB.CONFIG = PDB.CONFIG_LOW;
-								PDB.painter.showResidue(chain, resid, type, true, true,true);
-							}else if(PDB.config.mainMode==PDB.BALL_AND_ROD){
-								
-							}else{
+								PDB.painter.showResidue(chain, resid, type, true, true,false);
+							}else if(type==PDB.BALL_AND_ROD){
+								if(PDB.structureSizeLevel>=3){
+									PDB.CONFIG = PDB.CONFIG_LOW;
+									PDB.painter.showResidue(chain, resid, type, true, true,true);
+								}else{
+									PDB.CONFIG = PDB.CONFIG_HIGH;
+									PDB.painter.showResidue(chain, resid, type, true, false,true);
+								}
+							}else if(type==PDB.DOT||type==PDB.LINE) {
 								PDB.painter.showResidue(chain, resid, type, true, false,true);
 							}
 							
@@ -3814,17 +3820,23 @@ PDB.painter = {
 						if(PDB.loadType == PDB.bigmodel){
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_low;
 							//PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
-								PDB.CONFIG = PDB.CONFIG_LOW;
-							if(type!=PDB.DOT&&type!=PDB.LINE){								
+							PDB.CONFIG = PDB.CONFIG_LOW;
+							
+							if(type!=PDB.DOT&&type!=PDB.LINE&&type!=PDB.BALL_AND_ROD){
 								PDB.painter.showResidue(chain, resid, type, true, true, true);
 								PDB.CONFIG = PDB.CONFIG_HIGH;
 								PDB.painter.showResidue(chain, resid, type, true, false,false);
-							}else{
-								
+							}else if(type==PDB.BALL_AND_ROD){
+								if(PDB.structureSizeLevel>=3){
+									PDB.CONFIG = PDB.CONFIG_LOW;
+									PDB.painter.showResidue(chain, resid, type, true, true,true);
+								}else{
+									PDB.CONFIG = PDB.CONFIG_HIGH;
+									PDB.painter.showResidue(chain, resid, type, true, false,true);
+								}
+							}else if(type==PDB.DOT||type==PDB.LINE) {
 								PDB.painter.showResidue(chain, resid, type, true, false,true);
 							}
-							
-							
 						}else if(PDB.loadType == PDB.smallmodel){
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
 						}					
@@ -4128,8 +4140,10 @@ PDB.painter = {
 				if(PDB.residueGroupObject[chain][resid].len < showLengthThreshold){
 					
 					if(PDB.loadType == PDB.bigmodel){
-						if(PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_low){						
-							if(PDB.config.mainMode!=PDB.DOT&&PDB.config.mainMode!=PDB.LINE&&PDB.config.mainMode!=PDB.BALL_AND_ROD){
+						if(PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_low){
+
+
+							if(type!=PDB.DOT&&type!=PDB.LINE&&type!=PDB.BALL_AND_ROD){
 								var gindex_low = "chain_"+chain+"_low";
 								var meshs_low = PDB.GROUP[gindex_low].getChildrenByName(residueData[chain][resid].caid);
 								for(var i in meshs_low ){
