@@ -1370,7 +1370,7 @@ PDB.controller = {
 		if(w3m.mol[PDB.pdbId]==undefined) return;
 		var scope = this;
         console.log("sta: "+type+": "+new Date());
-       if(type>=PDB.HET){
+        if(type>=PDB.HET){
 			PDB.painter.showHet(PDB.pdbId);
 		}else{
 			if(PDB.CHANGESTYLE!=1&&PDB.CHANGESTYLE!=0&&PDB.CHANGESTYLE!=6){

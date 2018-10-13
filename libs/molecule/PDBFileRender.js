@@ -320,33 +320,65 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_DENSITYMAP:
             var type = object.userData.reptype;
-            PDB.render.clear(2);
-			PDB.SHOWSOLID = true;
-			if(PDB.EMMAP.DATA.length > 0){
-
-				if(PDB.SHOWSILICE){
-					PDB.painter.showMapSlices(PDB.EMMAP,PDB.THRESHOLD,PDB.SLICE,PDB.DIMENSION);
+			if(PDB.EMMAP.DATA != undefined && PDB.EMMAP.DATA.data != undefined){
+				var emmap = PDB.EMMAP.DATA;
+                if(type === 1) {
+					PDB.SHOWSOLID = true;
+					PDB.map_surface_show =0;
+					PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+					PDB.painter.showMapSolid(emmap,PDB.THRESHOLD);
+				}else if(type === 2){
+					if(PDB.map_surface_show === 0){
+						PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+						PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+					}else {
+						var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
+						if(surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh){
+							var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
+							if(mesh.material !== undefined){
+								mesh.material.wireframe = false;
+							}
+						}
+					}
+					PDB.map_surface_show =1;
+				}else if(type === 3){
+					if(PDB.map_surface_show === 0){
+						PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+						PDB.painter.showMapSurface(emmap,emmap.threshold,true);
+					}else {
+						var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
+						if(surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh){
+							var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
+							if(mesh.material !== undefined){
+								mesh.material.wireframe = true;
+							}
+						}
+					}
+					PDB.map_surface_show = 1;
+				}else if(type === 4){
+					PDB.map_surface_show = 0;
+					PDB.render.clearGroupIndex(PDB.GROUP_MAP);
 				}
-				PDB.painter.showMapSolid(PDB.EMMAP,PDB.THRESHOLD);
+				onMenuDown();
 			}else{
-				var url = "http://localhost/data/emd_1001.map.gz";
 				var mapserver = 'map-local';
 				PDB.controller.emmapLoad('3298', mapserver,function (emmap) {
-					var middleSlice = Math.floor((PDB.EMMAP.MIN_SLICE+PDB.EMMAP.MAX_SLICE)/2);
-					// PDB.painter.showMapSurface(emmap,emmap.threshold,false);
 					PDB.render.clearStructure();
-					PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+					if(type === 1) {
+						PDB.SHOWSOLID = true;
+						PDB.map_surface_show =0;
+						PDB.painter.showMapSolid(emmap,PDB.THRESHOLD);
+					}else if(type === 2){
+						PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+						PDB.map_surface_show =1;
+					}else if(type === 3){
+						PDB.painter.showMapSurface(emmap,emmap.threshold,true);
+						PDB.map_surface_show = 1;
+					}else if(type === 4){
+						PDB.map_surface_show = 0;
+						PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+					}
 					onMenuDown();
-					// switch (PDB.EMMAP.TYPE){
-						// case 0:
-							// PDB.painter.showMapSolid(emmap,emmap.threshold);
-							// break;
-						// case 1:
-							// PDB.painter.showMapSurface(emmap,emmap.threshold,false);
-							// break;
-						// case 2:
-							// PDB.painter.showMapSurface(emmap,emmap.threshold,true);
-					// }
 				})
 				// EmMapParser.loadMap('3298','map-local',function (emmap) {
 
