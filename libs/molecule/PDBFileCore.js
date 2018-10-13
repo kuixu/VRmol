@@ -11,7 +11,7 @@ if(ServerType ===1){
     SERVERURL= "http://vr.zhanglab.net";
 }else if(ServerType ===3){
     SERVERURL= "http://localhost:8080";
-	//SERVERURL= "http://192.168.1.105";
+	SERVERURL= "http://192.168.1.101";
 }
 PDB = {
     
@@ -146,7 +146,7 @@ PDB = {
     TRIGGER_EVENT_DRAG:1,TRIGGER_EVENT_DISTANCE:2,TRIGGER_EVENT_ANGLE:3,TRIGGER_EVENT_ATOM:4,TRIGGER_EVENT_FRAGMENT:5,
     TRIGGER_EVENT_LABEL:6,
 	CONFIG_LOW:{
-        sphere_width:8,sphere_height:4,stick_sphere_w:12,ballrod_sphere_w:12, water_sphere_w: 16, stick_radius:6,retangle_HIGH:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
+        sphere_width:8,sphere_height:4,stick_sphere_w:6,ballrod_sphere_w:12, water_sphere_w: 16, stick_radius:6,retangle_HIGH:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
 		flat_HIGH:0.001,flat_width:1,strip_radius:0.2,strip_ex:9,tubesegment:5,defaultColor:0xa345,
 		railway_radius:0.1,railway_gui:9,tube_radius:0.2,startSegmentSurfaceID:0,
         endSegmentSurfaceID:0
@@ -216,7 +216,7 @@ PDB = {
 }
 
 PDB.config = {
-    mainMode : PDB.TUBE,
+    mainMode : PDB.CARTOON_SSE,
     hetMode :  PDB.HET_STICK,
     surfaceMode:PDB.SURFACE,
 	selectedDrug : 'DB04464',
