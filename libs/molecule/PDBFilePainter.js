@@ -1190,7 +1190,7 @@ PDB.painter = {
         
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
 		if(path.length>0){
-			var high_r = PDB.structureSizeLevel>=3?(path.length-1):Math.floor(path.length/4);	
+			var high_r = PDB.structureSizeLevel>=3?Math.floor(path.length/4):(path.length-1);	
 			PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
 			PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 		}
@@ -1217,7 +1217,7 @@ PDB.painter = {
         var radius = PDB.CONFIG.tube_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
-		var high_r = PDB.structureSizeLevel>=3?(path.length-1):Math.floor(path.length/4);		
+		var high_r = PDB.structureSizeLevel>=3?Math.floor(path.length/4):(path.length-1);	
 		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
     },
@@ -1231,7 +1231,7 @@ PDB.painter = {
         var radius = PDB.CONFIG.tube_radius;
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
-		var high_r = PDB.structureSizeLevel>=3?(path.length-1):Math.floor(path.length/4);	
+		var high_r = PDB.structureSizeLevel>=3?Math.floor(path.length/4):(path.length-1);
 		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
     },
