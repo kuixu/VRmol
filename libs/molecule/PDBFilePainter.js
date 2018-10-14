@@ -3911,7 +3911,7 @@ PDB.painter = {
 		PDB.drawer.drawTubeByTravel(allPath,allId,redius);
 	},
 	showHet : function(molId){
-		
+		PDB.CONFIG = PDB.CONFIG_HIGH;
 		switch(PDB.config.hetMode){
 			case PDB.HET_LINE 			: 	this.showHet_Line(molId);			break;
 			case PDB.HET_SPHERE 		: 	this.showHet_Sphere(molId);			break;
