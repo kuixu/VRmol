@@ -822,7 +822,7 @@ PDB.tool = {
                             PDB.painter.showMapSurface(emmap,tvalue,true);
                     }
                 }else{
-                    PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                    PDB.render.clearGroupIndex(PDB.GROUP_MAP);
                     PDB.EMMAP.SHOW_MAP = false;
                 }
             });
