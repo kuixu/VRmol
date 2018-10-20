@@ -535,6 +535,7 @@ PDB.controller = {
         //trigger mode
         var distance     = document.getElementById( "triggerDistance" );
         var angle     = document.getElementById( "triggerAngle" );
+		var isHide     = document.getElementById( "isHide" );
         distance.addEventListener( 'click', function(e) {
             PDB.selection_mode = PDB.SELECTION_ATOM;
             PDB.trigger = PDB.TRIGGER_EVENT_DISTANCE;
@@ -544,7 +545,15 @@ PDB.controller = {
             PDB.selection_mode = PDB.SELECTION_ATOM;
             PDB.trigger = PDB.TRIGGER_EVENT_ANGLE;
         } );
-
+		
+		isHide.addEventListener( 'click', function(e) {
+			if(e.target.checked){
+				PDB.GROUP[PDB.GROUP_MAIN].visible = false;
+			}else{
+				PDB.GROUP[PDB.GROUP_MAIN].visible = true;
+			}
+           
+        } );
         //switch color  add color checkBox Listener ByClassName
         var updateColor = document.getElementsByClassName("updateColor");
         for(var i in updateColor){
