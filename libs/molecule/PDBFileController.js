@@ -250,6 +250,7 @@ PDB.controller = {
         var input = document.getElementById("search_text");
         input.value = PDB.pdbId ;
 
+		var b_hide      = document.getElementById( "b_hide" );
         var b_line      = document.getElementById( "b_line" );
         var b_dot       = document.getElementById( "b_dot" );
         var b_backbone  = document.getElementById( "b_backbone" );
@@ -266,6 +267,28 @@ PDB.controller = {
         var b_surface   = document.getElementById( "b_surface" );
 
 
+		b_hide.addEventListener( 'click', function(e) {
+			//console.log(e.target.innerText);
+			if(e.target.innerText=='Hide'){
+				var residueData = w3m.mol[PDB.pdbId].residueData;
+				for(var chain in residueData){
+					PDB.GROUP['chain_'+chain].visible = false;
+					PDB.GROUP['chain_'+chain+'_low'].visible = false;
+				}
+				PDB.GROUP[PDB.GROUP_HET].visible = false;
+				e.target.innerText='Show';
+			}else if(e.target.innerText=='Show'){
+				var residueData = w3m.mol[PDB.pdbId].residueData;
+				for(var chain in residueData){
+					PDB.GROUP['chain_'+chain].visible = true;
+					PDB.GROUP['chain_'+chain+'_low'].visible = true;
+				}
+				PDB.GROUP[PDB.GROUP_HET].visible = true;
+				e.target.innerText='Hide';
+			}
+			
+		   
+        } );
         b_line.addEventListener( 'click', function() {
             PDB.render.clear(5);
             PDB.config.mainMode = PDB.LINE;
@@ -489,7 +512,9 @@ PDB.controller = {
         //
         var b_export_scene = document.getElementById("b_export_scene");
         b_export_scene.addEventListener( 'click', function() {
-            PDB.render.exportToObj();
+            //console.log(document.getElementById( "exportType" ).value);
+			
+			PDB.render.exportToObj(document.getElementById( "exportType" ).value);
 
 
             // worker.addEventListener('message', function(e) {

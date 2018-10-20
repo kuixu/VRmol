@@ -1979,13 +1979,48 @@ PDB.render = {
         })
 
     },
-    exportToObj:function() {
-        var exporter = new THREE.OBJExporter();
-        var result = exporter.parse( scene );
-        //console.log(result);
-        var f = PDB.pdbId+".obj";
+    exportToObj:function(type) {
+        
+		
+		var exporter = new THREE.OBJExporter();
+		
+		switch(type){
+			case 'MainStructure':
+				var residueData = w3m.mol[PDB.pdbId].residueData;
+				//var t_group = new THREE.Group();
+				for(var chain in residueData){
+					var output = exporter.parse(PDB.GROUP['chain_'+chain]);
+					PDB.tool.saveString( output, PDB.pdbId+'_'+chain+'.obj' );
+				}
+				
+				//delete t_group;
+				break;
+			case 'Map':
+				
+				var output = exporter.parse( PDB.GROUP[PDB.GROUP_MAP] );
+				PDB.tool.saveString( output, PDB.pdbId+'.obj' );
+				
+				break;
+			case 'LigandStructure':
+				if(PDB.GROUP[PDB.GROUP_HET]){
+					var output = exporter.parse( PDB.GROUP[PDB.GROUP_HET] );
+					PDB.tool.saveString( output, 'het.obj' );
+				}
+				
+				
+				break;
+        }
+			
+		
+		
+		
+		
 
-        PDB.tool.writeTextFile(f, result);
+        // var result = scene.toJSON();
+        // //console.log(result);
+        // var f = PDB.pdbId+".json";
+		// result = JSON.stringify( result );
+        // PDB.tool.writeTextFile(f, result);
     }
 
 };

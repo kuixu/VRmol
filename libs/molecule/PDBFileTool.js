@@ -1131,5 +1131,14 @@ PDB.tool = {
 			scope.freshAllResidueGroupObject(0.005);//转动0.005度<---------------
         }
     },
+	saveString :function( text, filename){
+		var blob = new Blob( [ text ], { type: 'text/plain' } );
+		var link = document.createElement( 'a' );
+		link.style.display = 'none';
+		document.body.appendChild( link ); // Firefox workaround, see #6594
+		link.href = URL.createObjectURL( blob );
+		link.download = filename || 'data.obj';
+		link.click();
+	}
 
 }

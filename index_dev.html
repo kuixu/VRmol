@@ -121,7 +121,8 @@
     <BR/>
   <LABEL onclick="switchMenu('mainStructure')">Main Structure</LABEL><BR/>
   <span class="submenu" id="mainStructure">
-    <button id="b_line">Line</button><BR/>
+    <button id="b_hide">Hide</button><BR/>
+	<button id="b_line">Line</button><BR/>
     <button id="b_dot">Dot</button><BR/>
     <button id="b_backbone">Backbone</button><BR/>
     <button id="b_a">Sphere</button><BR/>
@@ -281,7 +282,13 @@
 
   <LABEL onclick="switchMenu('exportScene')">Export</LABEL><BR/>
   <span class="submenu" id="exportScene">
-    <button class="labelPDB" name="b_export_scene" id="b_export_scene" value="Export">Export</button>
+    <button class="labelPDB" name="b_export_scene" id="b_export_scene" value="Export">Export</button><br/>
+	<select id="exportType">
+		<option value="MainStructure" selected>MainStructure</option>
+		<option value="LigandStructure" >LigandStructure</option>
+		<option value="Map" >Map</option>
+		
+	<select>
   </span>
   <BR/>
   <!-- <LABEL onclick="switchMenu('chainNumThreshold')">ChainNumThreshold</LABEL><BR/> -->
