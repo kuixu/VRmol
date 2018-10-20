@@ -1866,9 +1866,7 @@ PDB.render = {
         }
     },
     clearGroupIndex:function(groupIndex){
-		
-
-        if(PDB.GROUP[groupIndex] != undefined && PDB.GROUP[groupIndex].children.length > 0){
+		if(PDB.GROUP[groupIndex] != undefined && PDB.GROUP[groupIndex].children.length > 0){
             var children = PDB.GROUP[groupIndex].children;
             for (var i = 0;i<children.length;i++){
                 if(children[i] instanceof THREE.Mesh){
@@ -1885,9 +1883,13 @@ PDB.render = {
             }
             PDB.GROUP[groupIndex].children = [];
 			//console.log(groupIndex);
+			
+        }
+		if(PDB.GROUP[groupIndex]){
 			PDB.GROUP[groupIndex].position.copy(new THREE.Vector3(0,0,0));
 			PDB.GROUP[groupIndex].rotation.set(0,0,0);
-        }
+		}
+		
     },
     clear:function(mode){
         THREE.Cache.clear();
