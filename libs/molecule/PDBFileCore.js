@@ -68,7 +68,7 @@ PDB = {
 	ROTATION_START_FLAG: false,
     ROTATION_DIRECTION:1, //0 left 1 right
 	ROTATION_AXIS:1, //1 x轴旋转 2 y轴旋转 3 z轴旋转
-	MOVE_DIRECTION:1, //1 上下  2左右 3前后 
+	MOVE_DIRECTION:2, //1 上下  2左右 3前后 
 	PLANE:{a:0,b:0,c:0,d:0},
     TravelScale:6,
     currentType: 1,
