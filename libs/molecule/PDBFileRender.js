@@ -299,6 +299,15 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_ROTATION:
             PDB.ROTATION_AXIS = object.userData.reptype;
+			if(PDB.ROTATION_AXIS==1){
+				PDB.MOVE_DIRECTION = 2;
+			}else if(PDB.ROTATION_AXIS==2){
+				PDB.MOVE_DIRECTION = 1;
+			}else if(PDB.ROTATION_AXIS==2){
+				PDB.MOVE_DIRECTION = 3;
+			}
+			
+			//PDB.MOVE_DIRECTION = PDB.ROTATION_AXIS;
             onMenuDown();
             break;
 		case PDB.GROUP_MENU_DIRECTION:
@@ -1875,6 +1884,9 @@ PDB.render = {
                 }
             }
             PDB.GROUP[groupIndex].children = [];
+			//console.log(groupIndex);
+			PDB.GROUP[groupIndex].position.copy(new THREE.Vector3(0,0,0));
+			PDB.GROUP[groupIndex].rotation.set(0,0,0);
         }
     },
     clear:function(mode){
@@ -1901,6 +1913,7 @@ PDB.render = {
                        }
                    })
                 }
+				//PDB.GROUP[PDB.GROUP_WATER].position.copy(new THREE.Vector3(0,0,0));
                 break;
             case 3:
                 PDB.render.clearGroupIndex(PDB.GROUP_SURFACE);

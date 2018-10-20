@@ -1333,8 +1333,10 @@ PDB.controller = {
 		
 		//清空链上residue缓存信息		
 		
-		delete PDB.residueGroupObject;
-		PDB.residueGroupObject = {};
+		if(PDB.residueGroupObject){
+			delete PDB.residueGroupObject;
+			PDB.residueGroupObject = {};
+		}
 		// console.log(PDB.residueGroupObject);		
 		PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
         var scope = this;
