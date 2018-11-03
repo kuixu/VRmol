@@ -656,49 +656,7 @@ PDB.tool = {
                 }
             });
             for (var i in data){
-                PDB.tool.generateButton(menuSpan,data[i],data[i],"rightLabelPDB").addEventListener( 'click', function() {
-                    var mapId = this.value;
-                    //PDB.render.clear(2);
-                    var mapserver = "map-local";
-                    if(ServerType!==2){
-                        mapserver = "map-local";
-                    }
-					console.log('-----------------'+mapId);
-                    PDB.controller.emmapLoad(mapId, mapserver,function (emmap) {
-                        PDB.render.clearGroupIndex(PDB.GROUP_MAP);
-						var dimension = document.getElementById("dimension");
-						if(dimension != undefined){
-							PDB.DIMENSION = Number(dimension.value);
-							switch(PDB.DIMENSION){
-								case PDB.DIMENSION_X:
-									PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
-									break;
-								case PDB.DIMENSION_Y:
-									PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
-									break;
-								case PDB.DIMENSION_Z:
-									PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
-									break;
-							}
-						}
-						
-                        if(emmap){
-                            switch (PDB.EMMAP.TYPE){
-                                case 0:
-                                    PDB.painter.showMapSolid(emmap,emmap.threshold);
-                                    break;
-                                case 1:
-                                    PDB.painter.showMapSurface(emmap,emmap.threshold,false);
-                                    break;
-                                case 2:
-                                    PDB.painter.showMapSurface(emmap,emmap.threshold,true);
-                            }
-
-                            //PDB.painter.showMapSlices(PDB.EMMAP,PDB.EMMAP.threshold,PDB.EMMAP.MIN_SLICE,PDB.DIMENSION_X);
-                            scope.changeDensityMapRangeValue(emmap);
-                        }
-                    });
-                } );
+                PDB.tool.generateButton(menuSpan,data[i],data[i],"rightLabelPDB");
                 PDB.tool.generateALink(menuSpan,"mapLink"+i,"Detail",PDB.LINK_CONFIG.EMMAP+data[i],"");
             }
             menuSpan1.innerHTML='<input class="labelPDB" id="solidMap" name="mapType" checked="checked"   type="radio" title="Map Type"/>  <label class="label"  for="solidMap"> Solid </label>   <BR/>'+

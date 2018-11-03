@@ -190,9 +190,10 @@ PDB.controller = {
 
         var loadDensityMap = document.getElementById("loadDensityMap");
         loadDensityMap.addEventListener('click',function () {
-            var url = SERVERURL+"/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
+            // var url = SERVERURL+"/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
+            var url = SERVERURL+"/server/api.php?taskid=13&pdbid=5ftm";
             if(ServerType!==2){
-                url=SERVERURL+"/data/map.json";
+                url=SERVERURL+"/data/map01.json";
             }
             PDB.tool.ajax.get(url,function (text) {
                 //PDB.render.clear(2);
@@ -208,42 +209,44 @@ PDB.controller = {
                 var jsonObj = JSON.parse(text);
                 if(jsonObj.code === 1 && jsonObj.data !== undefined){
                     PDB.tool.createDensityMapPanel(jsonObj);
-                }
-
-                var mapserver = "map-local";
-                //if(ServerType!==2){
-                //    mapserver = "map-local";
-                //}
-                scope.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver,function (emmap) {
-                    var middleSlice = Math.floor((PDB.EMMAP.MIN_SLICE+PDB.EMMAP.MAX_SLICE)/2);
-                    // PDB.painter.showMapSurface(emmap,emmap.threshold,false);
-					// PDB.render.clearStructure();
-					var dimension = document.getElementById("dimension");
-					PDB.DIMENSION = Number(dimension.value);
-					switch(PDB.DIMENSION){
-						case PDB.DIMENSION_X:
-							PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
-							break;
-						case PDB.DIMENSION_Y:
-							PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
-							break;
-						case PDB.DIMENSION_Z:
-							PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
-							break;
-					}
-                    switch (PDB.EMMAP.TYPE){
-                        case 0:
-                            PDB.painter.showMapSolid(emmap,emmap.threshold);
-                            break;
-                        case 1:
-                            PDB.painter.showMapSurface(emmap,emmap.threshold,false);
-                            break;
-                        case 2:
-                            PDB.painter.showMapSurface(emmap,emmap.threshold,true);
-                    }
-                    
-                    PDB.tool.changeDensityMapRangeValue(emmap);
-                })
+					
+					var mapserver = "map-local";
+					//if(ServerType!==2){
+					//    mapserver = "map-local";
+					//}
+					scope.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver,function (emmap) {
+						var middleSlice = Math.floor((PDB.EMMAP.MIN_SLICE+PDB.EMMAP.MAX_SLICE)/2);
+						// PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+						// PDB.render.clearStructure();
+						var dimension = document.getElementById("dimension");
+						PDB.DIMENSION = Number(dimension.value);
+						switch(PDB.DIMENSION){
+							case PDB.DIMENSION_X:
+								PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
+								break;
+							case PDB.DIMENSION_Y:
+								PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
+								break;
+							case PDB.DIMENSION_Z:
+								PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
+								break;
+						}
+						switch (PDB.EMMAP.TYPE){
+							case 0:
+								PDB.painter.showMapSolid(emmap,emmap.threshold);
+								break;
+							case 1:
+								PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+								break;
+							case 2:
+								PDB.painter.showMapSurface(emmap,emmap.threshold,true);
+						}
+						
+						PDB.tool.changeDensityMapRangeValue(emmap);
+					})
+                }else{
+					alert(jsonObj.message);
+				}
             })
         });
 
