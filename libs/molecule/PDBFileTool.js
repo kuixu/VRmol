@@ -538,6 +538,13 @@ PDB.tool = {
 		PDB.painter.repeatPainter();
 		
     },
+	matchSurfaceAndMainGroupLocationForVR:function(surfaceGroup,mainGroup){
+		if(surfaceGroup instanceof THREE.Group && mainGroup instanceof THREE.Group){
+			surfaceGroup.position.copy(mainGroup.position);
+			surfaceGroup.rotation.copy(mainGroup.rotation);
+			surfaceGroup.scale.copy(mainGroup.scale);
+		}
+	},
     generateButton:function (parent,text,value,className) {
         var b_ = document.createElement("button");
         b_.innerHTML = text;

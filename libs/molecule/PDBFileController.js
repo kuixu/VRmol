@@ -1470,12 +1470,14 @@ PDB.controller = {
                 mesh.material.wireframe = PDB.SURFACE_WIREFRAME;
             }
         }else {
+			PDB.render.clearGroupIndex(PDB.GROUP_SURFACE);
+			
 			if(PDB.mode===PDB.MODE_VR){
-				PDB.tool.backToInitialPositionForVr();
+				PDB.tool.matchSurfaceAndMainGroupLocationForVR(PDB.GROUP[PDB.GROUP_SURFACE],PDB.GROUP[PDB.GROUP_MAIN]);
 			}else{
 				PDB.tool.backToInitialPositonForDesktop();
 			}
-            PDB.render.clearGroupIndex(PDB.GROUP_SURFACE);
+            
             scope.drawGeometry(structureType);
         }
     },

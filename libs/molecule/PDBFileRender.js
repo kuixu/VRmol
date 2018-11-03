@@ -1922,10 +1922,10 @@ PDB.render = {
 			//console.log(groupIndex);
 			
         }
-		if(PDB.GROUP[groupIndex]){
-			PDB.GROUP[groupIndex].position.copy(new THREE.Vector3(0,0,0));
-			PDB.GROUP[groupIndex].rotation.set(0,0,0);
-		}
+		// if(PDB.GROUP[groupIndex]){
+			// PDB.GROUP[groupIndex].position.copy(new THREE.Vector3(0,0,0));
+			// PDB.GROUP[groupIndex].rotation.set(0,0,0);
+		// }
 		
     },
     clear:function(mode){
