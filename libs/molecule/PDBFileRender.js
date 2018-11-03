@@ -321,6 +321,12 @@ function dealwithMenu(object) {
             break;
 		case PDB.GROUP_MENU_OUTBALL:
             PDB.loadType = object.userData.reptype;
+			if(PDB.loadType == PDB.bigmodel){
+				document.getElementById("isLow").checked = true;
+			}else {
+				document.getElementById("isLow").checked = false;
+			}
+			
             onMenuDown();
 			PDB.render.clear(2);
             PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
