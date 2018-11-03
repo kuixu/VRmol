@@ -4634,29 +4634,68 @@ w3m.pdb = function ( text, drugname ) {
     /**
      * PDB文件解析方法
      */
-    var parse = function (text) {
+    var parse = function (text) {		
         text = text.split('\n');
 		// var preResidueID,nextResidueID;
-        for(var i = 0, l = text.length; i < l; i++) {
-            var s = text[i].toLowerCase();
-			// console.log(w3m_sub(s, 0, 6));
-            switch(w3m_sub(s, 0, 6)) {
-                case 'atom'   : doAtom(s);    break;
-                case 'hetatm' : doHet(s);     break;
-                case 'conect' : doConnect(s); break;
-                case 'ssbond' : doSSBond(s);  break;
-                case 'helix'  : doHelix(s);   break;
-                case 'sheet'  : doSheet(s);   break;
-                case 'header' : doHeader(s);  break;
-                case 'title'  : doTitle(s);   break;
-                case 'source' : doSource(s);  break;
-                case 'author' : doAuthor(s);  break;
-                case 'expdta' : doExpdata(s); break;
-                case 'jrnl'   : doJrnl(s);    break;
-                case 'remark' : doRemark(s);  break;
-                case 'cryst1' : doCryst(s);   break;
-            }
-        }
+        if(PDB.exportPdb){
+			//导出pdb文件
+			console.log('开始修改导出pdb文件内容');
+			var afterText = '';
+			for(var i = 0, l = text.length; i < l; i++) {
+				
+				var s = text[i].toLowerCase();
+				switch(w3m_sub(s, 0, 6)) {
+					case 'atom'   : 
+					
+						s = doEditAtom(s); 
+						console.log(s);
+						if(s){
+							afterText = afterText + s;
+						}else{
+							afterText = afterText + s;
+						}
+						break;
+					case 'hetatm' :
+						s = doeEitHet(s);     
+						if(s){
+							afterText = afterText + s;
+						}else{
+							afterText = afterText + s;
+						}
+						break;
+					default :
+						afterText = afterText + s;
+						break;
+				}
+			}
+			
+			PDB.tool.saveString(afterText,PDB.pdbId+'.pdb');	
+			PDB.exportPdb = false;
+			return;
+		}else{
+			for(var i = 0, l = text.length; i < l; i++) {
+				var s = text[i].toLowerCase();
+				
+				switch(w3m_sub(s, 0, 6)) {
+					case 'atom'   : doAtom(s);    break;
+					case 'hetatm' : doHet(s);     break;
+					case 'conect' : doConnect(s); break;
+					case 'ssbond' : doSSBond(s);  break;
+					case 'helix'  : doHelix(s);   break;
+					case 'sheet'  : doSheet(s);   break;
+					case 'header' : doHeader(s);  break;
+					case 'title'  : doTitle(s);   break;
+					case 'source' : doSource(s);  break;
+					case 'author' : doAuthor(s);  break;
+					case 'expdta' : doExpdata(s); break;
+					case 'jrnl'   : doJrnl(s);    break;
+					case 'remark' : doRemark(s);  break;
+					case 'cryst1' : doCryst(s);   break;
+				}
+			}
+		}
+		
+		
         text = null;
         doLaterWork();
 		
@@ -4730,7 +4769,36 @@ w3m.pdb = function ( text, drugname ) {
         o.info.cell.angle = [ parseFloat(w3m_sub(s, 34, 40)), parseFloat(w3m_sub(s, 41, 47)), parseFloat(w3m_sub(s, 48, 54)) ];
         o.info.cell.space_group = w3m_trim(w3m_sub(s, 56, 66));
     };
+	var doEditAtom = function ( s ) {
+		
+		var atom_alt = w3m_sub(s, 17);
+        if( atom_alt != '' && atom_alt != 'a' ) {
+            return;
+        }
+        // if this is not AA or NA
+        var chain_type = w3m.tool.getChainType(w3m_sub(s, 18, 20));
+        if( chain_type == w3m.CHAIN_UNK ) {
+            s = doeEitHet(s);
+            return s;
+        }
+		var atom_id      = parseInt(w3m_sub(s, 7, 11)),
+            atom_name    = w3m_sub(s, 13, 16),
+            residue_name = w3m_sub(s, 18, 20) || 'xxx',
+            chain_id     = w3m_sub(s, 22) || 'x',
+            residue_id   = parseInt(w3m_sub(s, 23, 26)) || 0,
+            xyz          = [ parseFloat(w3m_sub(s, 31, 38)), parseFloat(w3m_sub(s, 39, 46)), parseFloat(w3m_sub(s, 47, 54)) ],
+            occupancy    = parseFloat(w3m_sub(s, 55, 60)),
+            b_factor     = parseFloat(w3m_sub(s, 61, 66)) || 0.0,
+            element      = w3m_sub(s, 77, 78);
+			if (residue_id<0) return;
+			math.limit(xyz[0], w3m.global.limit.x);
+			math.limit(xyz[1], w3m.global.limit.y);
+			math.limit(xyz[2], w3m.global.limit.z);
+		return s;
+			
+	}
     var doAtom = function ( s ) {
+		
         // omit alternate location
         var atom_alt = w3m_sub(s, 17);
         if( atom_alt != '' && atom_alt != 'a' ) {
@@ -4845,6 +4913,24 @@ w3m.pdb = function ( text, drugname ) {
      * 解析非标准基团原�?
      * @param s
      */
+	var doeEitHet =  function ( s ) {
+		console.log(s);
+		var atom_id      = parseInt(w3m_sub(s, 7, 11)),
+            atom_name    = w3m_sub(s, 13, 16),
+            residue_name = w3m_sub(s, 18, 20) || 'xxx',
+            chain_id     = w3m_sub(s, 22) || 'x',
+            residue_id   = parseInt(w3m_sub(s, 23, 26)) || 0,
+            xyz          = [ parseFloat(w3m_sub(s, 31, 38)), parseFloat(w3m_sub(s, 39, 46)), parseFloat(w3m_sub(s, 47, 54)) ],
+            occupancy    = parseFloat(w3m_sub(s, 55, 60)),
+            b_factor     = parseFloat(w3m_sub(s, 61, 66)) || 0.0,
+            element      = w3m_sub(s, 77, 78);
+			if (residue_id<0) return;
+        math.limit(xyz[0], w3m.global.limit.x);
+        math.limit(xyz[1], w3m.global.limit.y);
+        math.limit(xyz[2], w3m.global.limit.z);
+		return s;
+		
+	}
     var doHet = function ( s ) {
         var atom_id      = parseInt(w3m_sub(s, 7, 11)),
             atom_name    = w3m_sub(s, 13, 16),

@@ -675,6 +675,21 @@ function objectTrans(controller, object){
             object.matrix.decompose( object.position, object.quaternion, object.scale );
             controller.add( object );
             controller.userData.selected = object;
+			
+			if(object.userData["type"]){
+				var ot_index = '';
+				if(object.userData["type"]=='low'){
+					ot_index = groupindex.substring(0,groupindex.length-4);					
+				}else if(object.userData["type"]=='normal'){		
+					ot_index = groupindex+'_low';
+				}
+				console.log(ot_index);
+				PDB.tool.colorIntersectObjectBlue(PDB.GROUP[ot_index],1);
+				PDB.GROUP[ot_index].matrix.premultiply( tempMatrix );
+				PDB.GROUP[ot_index].matrix.decompose( PDB.GROUP[ot_index].position, PDB.GROUP[ot_index].quaternion, PDB.GROUP[ot_index].scale );				
+				
+				controller.add( PDB.GROUP[ot_index] );
+			}
         }
     }
 }
@@ -690,7 +705,24 @@ function objectDeTrans(controller, object){
                 console.log(groupindex); // || groupindex == PDB.GROUP_MENU
                 PDB.GROUP[groupindex].add(object);
             }
+			
+			
+			
+			
         }else{
+			if(object.userData["type"]){
+				var ot_index = '';
+				if(object.userData["type"]=='low'){
+					ot_index = groupindex.substring(0,groupindex.length-4);					
+				}else if(object.userData["type"]=='normal'){
+					ot_index = groupindex+'_low';					
+				}				
+				
+				PDB.GROUP[ot_index].matrix.premultiply( controller.matrixWorld );
+				PDB.GROUP[ot_index].matrix.decompose( PDB.GROUP[ot_index].position, PDB.GROUP[ot_index].quaternion, PDB.GROUP[ot_index].scale );
+				PDB.tool.colorIntersectObjectBlue(PDB.GROUP[ot_index],0);
+				scene.add( PDB.GROUP[ot_index] );
+			}
             scene.add(object);
         }
     }
