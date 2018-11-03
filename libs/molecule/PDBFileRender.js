@@ -145,9 +145,14 @@ function dealwithMenu(object) {
             }
             break;
         case PDB.GROUP_MENU_MAIN:
-		    PDB.render.clear(5);
-            PDB.config.mainMode = curr_reptype;
-            PDB.controller.refreshGeometryByMode(curr_reptype);
+			if(curr_reptype !== PDB.HIDE){
+				PDB.render.clear(5);
+				PDB.config.mainMode = curr_reptype;
+                PDB.controller.refreshGeometryByMode(curr_reptype);
+			}else{
+		        PDB.render.clear(0);
+				PDB.render.clear(1);
+			}
             onMenuDown();
             break;
         case PDB.GROUP_MENU_HET:

@@ -262,6 +262,7 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_MAIN:
                 var main =[
+				    ["Hide",                PDB.HIDE, ],  
                     ["Line",                PDB.LINE, ],
                     ["Backbone",            PDB.BACKBONE],
                     ["Sphere",              PDB.SPHERE, ],
