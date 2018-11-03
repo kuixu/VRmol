@@ -519,6 +519,7 @@ PDB.tool = {
     backToInitialPositionForVr:function () {
         for(var i in PDB.GROUP_STRUCTURE_INDEX){
             PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.copy(new THREE.Vector3(0,0,0));
+			PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].rotation.set(0,0,0);
         }
 		var offset = camera.position;
 		for(var chain in PDB.residueGroupObject){
