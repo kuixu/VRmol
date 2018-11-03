@@ -543,7 +543,6 @@ PDB.tool = {
 		if(surfaceGroup instanceof THREE.Group && mainGroup instanceof THREE.Group){
 			surfaceGroup.position.copy(mainGroup.position);
 			surfaceGroup.rotation.copy(mainGroup.rotation);
-			surfaceGroup.scale.copy(mainGroup.scale);
 		}
 	},
     generateButton:function (parent,text,value,className) {
