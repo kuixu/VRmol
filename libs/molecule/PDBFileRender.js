@@ -886,7 +886,20 @@ function intersectObjects( controller ) {
 
         for(var i = 0 ; i< intersections.length ; i++) {
             var intersection = intersections[ i ];
-            var object = intersection.object;
+			 if(intersection.object.type==="Group") {
+				var ot_index = '';
+				var groupindex = intersection.object.userData["group"];
+				if(intersection.object.userData["type"]=='low'){
+					ot_index = groupindex.substring(0,groupindex.length-4);					
+				}else if(intersection.object.userData["type"]=='normal'){
+					ot_index = groupindex+'_low';					
+				}
+				if(ot_index!=''){
+					PDB.tool.colorIntersectObjectRed(PDB.GROUP[ot_index],1);
+				}				
+			 }
+			
+			var object = intersection.object;
             intersected.push( object );
             PDB.tool.colorIntersectObjectRed(object,1);
         }
@@ -901,6 +914,18 @@ function cleanIntersected() {
     while ( intersected.length ) {
         var object = intersected.pop();
         PDB.tool.colorIntersectObjectRed(object,0);
+		if(object.type==="Group") {
+			var ot_index = '';
+			var groupindex = object.userData["group"];
+			if(object.userData["type"]=='low'){
+				ot_index = groupindex.substring(0,groupindex.length-4);					
+			}else if(object.userData["type"]=='normal'){
+				ot_index = groupindex+'_low';					
+			}
+			if(ot_index!=''){
+				PDB.tool.colorIntersectObjectRed(PDB.GROUP[ot_index],0);
+			}				
+		 }
         //PDB.render.clearGroupIndex(PDB.GROUP_INFO);
     }
 
