@@ -110,6 +110,7 @@ if ( location.search ) {
 //	PDB.mode=PDB.MODE_VR;
 PDB.controller.init();
 PDB.CHANGESTYLE = PDB.DRAWSTYLE_FRAGMENT;
+PDB.CONFIG = PDB.CONFIG_HIGH;
 PDB.controller.requestRemote(PDB.pdbId);
 
 PDB.controller.switchColorBymode("607");

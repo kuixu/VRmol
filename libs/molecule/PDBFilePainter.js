@@ -3419,7 +3419,7 @@ PDB.painter = {
             transparent: true,
         }));
         mesh.scale.set(newScale.x,newScale.y,newScale.z);
-        mesh.rotation.y =  -Math.PI/2;
+        // mesh.rotation.y =  -Math.PI/2;
         PDB.GROUP[PDB.GROUP_MAP].add( mesh );
         PDB.GROUP[PDB.GROUP_MAP].visible = true;
 		PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x,newScale.y,newScale.z);
@@ -3427,15 +3427,15 @@ PDB.painter = {
 		console.log("time(ms):"+(new Date()-start));
     }, //ParticleSystem
     showMapSurface1 :function(emmap,threshold,wireframe){
-        var newScale = new THREE.Vector3(emmap.header.a/emmap.header.NC,emmap.header.b/emmap.header.NR,emmap.header.c/emmap.header.NS)
+        var newScale = new THREE.Vector3(emmap.header.c/emmap.header.NS,emmap.header.b/emmap.header.NR,emmap.header.a/emmap.header.NC)
         var wf = PDB.tool.getValue(wireframe,false);
         var offset = PDB.GeoCenterOffset;
         var minx = emmap.center.x,
             miny = emmap.center.y,
             minz = emmap.center.z;
-        var maxx = emmap.center.x + emmap.header.NC,
+        var maxx = emmap.center.x + emmap.header.NS,
             maxy = emmap.center.y + emmap.header.NR,
-            maxz = emmap.center.z + emmap.header.NS;
+            maxz = emmap.center.z + emmap.header.NC;
         // MATERIALS
         var material = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x888888, shininess: 250 } );
         // MARCHING CUBES
