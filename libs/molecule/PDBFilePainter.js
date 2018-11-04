@@ -458,9 +458,9 @@ PDB.painter = {
                 break;
 			case PDB.MENU_TYPE_DIRECTION:
                 var moveMenu =[
-                    ["Up and down",               1 ],
-                    ["Left and right",               2 ],
-                    ["Before and after",               3 ],
+                    ["Move along the X axis",               2 ],
+                    ["Move along the Y axis",               1 ],
+                    ["Move along the Z axis",               3 ],
 					["1 times speed",               4 ],
 					["2 times speed",               5 ],
 					["4 times speed",               6 ],
