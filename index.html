@@ -15,6 +15,20 @@
 <script type="text/javascript" src="js/webvr-polyfill/webvr-polyfill.min.js"></script>
 <script type="text/javascript" src="js/webvr-ui/webvr-ui.min.js"></script>
 -->
+<!-- Our Design-->
+<script type="text/javascript" src="libs/molecule/w3m.js"></script>
+<script type="text/javascript" src="libs/molecule/extension.js"></script>
+<script type="text/javascript" src="libs/molecule/static.js"></script>
+<script type="text/javascript" src="libs/molecule/math.js"></script>
+
+
+<script type="text/javascript" src="libs/molecule/PDBFileCore.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileLoader.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileRender.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileTool.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileDrawer.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFilePainter.js"></script>
+<script type="text/javascript" src="libs/molecule/PDBFileController.js"></script>
 <!--three.js-->
 
 <script type="text/javascript" src="js/controls/TrackballControls.js"></script>
@@ -23,9 +37,10 @@
 <script type="text/javascript" src="js/controls/VRControls.js"></script>
 <script type="text/javascript" src="js/effects/VREffect.js"></script>
 <script type="text/javascript" src="js/vr/WebVR.js"></script>
+<script type="text/javascript" src="js/utils/SceneUtils.js"></script>
 <script type="text/javascript" src="js/vr/statsvr.min.js"></script>
-<script type="text/javascript" src="js/controllers/VRController.js"></script>
 <script type="text/javascript" src="js/vr/ViveController.js"></script>
+<script type="text/javascript" src="js/controllers/VRController.js"></script>
 <script type="text/javascript" src="js/loaders/OBJLoader.js"></script>
 <!-- tube相关引用 -->
 <script type="text/javascript" src="js/CurveExtras.js"></script>
@@ -96,6 +111,8 @@
         <button id="vrMode">VR</button><BR/>
         <button id="threeWithTravel">Desktop Travel</button><BR/>
         <button id="vrWithTravel">VR Travel</button><BR/>
+	<input class="labelPDB" id="isLow"  name="" type="checkbox" title="isLow" checked/> 
+	<label class="label" for="isLow"> Out Ball Show </label><BR/> 
     <!--<input class="labelPDB" id="threeMode" name="modeStr" checked="checked"   type="radio" title="Three Mode"/>  <label class="label" for="threeMode"> Three </label>   <BR/>-->
     <!--<input class="labelPDB" id="vrMode"  name="modeStr"  type="radio" title="VR Mode"/>   <label class="label" for="vrMode"> VR </label>    <BR/>-->
     <!--<input class="labelPDB" id="threeWithTravel" name="modeStr" type="radio" title="Travel in the Tube"/><label class="label" for="threeWithTravel"> Travel + Three </label> <BR/>-->
@@ -104,7 +121,8 @@
     <BR/>
   <LABEL onclick="switchMenu('mainStructure')">Main Structure</LABEL><BR/>
   <span class="submenu" id="mainStructure">
-    <button id="b_line">Line</button><BR/>
+    <button id="b_hide">Hide</button><BR/>
+	<button id="b_line">Line</button><BR/>
     <button id="b_dot">Dot</button><BR/>
     <button id="b_backbone">Backbone</button><BR/>
     <button id="b_a">Sphere</button><BR/>
@@ -184,6 +202,7 @@
   <span class="submenu" id="trigger">
     <input class="labelPDB" name="trigger" id="triggerDistance" type="radio"  title="Distance"  />  <label class="label" for="triggerDistance"> Distance </label>   <BR/>
     <input class="labelPDB" name="trigger" id="triggerAngle" type="radio"  title="Angle" />  <label class="label" for="triggerAngle"> Angle </label>   <BR/>
+	<input class="labelPDB" name="trigger" id="isHide" type="checkbox"  title="Hide&Show" />  <label class="label" for="isHide"> isHide </label>   <BR/>
   </span>
   <BR/>
 
@@ -223,11 +242,11 @@
         <button class="labelPDB" name="rotationRight" id="rotationRight" value="right">Right</button><BR/>
   </span>
     <BR/>
-    <LABEL onclick="switchMenu('demoMenu')">Demos</LABEL><BR/>
-    <span class="submenu" id="demoMenu">
-     <input class="labelPDB" name="mode" id="showDemo" checked="checked"  type="checkbox" title="Show Demo" />  <label class="label" for="showDemo"> Show Demo</label>   <BR/>
-  </span>
-    <BR/>
+    <!-- <LABEL onclick="switchMenu('demoMenu')">Demos</LABEL><BR/> -->
+    <!-- <span class="submenu" id="demoMenu"> -->
+     <!-- <input class="labelPDB" name="mode" id="showDemo" checked="checked"  type="checkbox" title="Show Demo" />  <label class="label" for="showDemo"> Show Demo</label>   <BR/> -->
+  <!-- </span> -->
+    <!-- <BR/> -->
   <LABEL onclick="switchMenu('bondMenu')">Bond</LABEL><BR/>
     <span class="submenu" id="bondMenu">
         <button class="labelPDB" name="hideBond" id="hideBond"  title="Hide Bond">Hide Bond</button>   <BR/>
@@ -238,6 +257,10 @@
   <BR/>
   <LABEL onclick="switchMenu('eCloud')">Density Map</LABEL><BR/>
   <span class="submenu" id="eCloud">
+      <!-- <label class="label"> Step Option </label><BR/> -->
+      <!-- <input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label> -->
+      <!-- <input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label> -->
+      <!-- <input class="labelPDB" id="step4" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 4.x </label> <BR/> -->
       <button class="labelPDB" name="loadDensityMap" id="loadDensityMap">Load Density Map</button>
   </span>
   
@@ -260,23 +283,29 @@
 
   <LABEL onclick="switchMenu('exportScene')">Export</LABEL><BR/>
   <span class="submenu" id="exportScene">
-    <button class="labelPDB" name="b_export_scene" id="b_export_scene" value="Export">Export</button>
+    <button class="labelPDB" name="b_export_scene" id="b_export_scene" value="Export">Export</button><br/>
+	<select id="exportType">
+		<option value="MainStructure" selected>MainStructure</option>
+		<option value="LigandStructure" >LigandStructure</option>
+		<option value="Map" >Map</option>
+		
+	<select><br/>
+	<button class="labelPDB" name="b_export_pdb" id="b_export_pdb" value="Export">Export PDB</button>
   </span>
   <BR/>
-  <LABEL onclick="switchMenu('chainNumThreshold')">ChainNumThreshold</LABEL><BR/>
-  <span class="submenu" id="chainNumThreshold">
-    <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>-->
-  </span>
-  <BR/>
-  <LABEL id="progmsg">Progress</LABEL><BR/>
-    <progress id="progress" value="0"></progress>
-    <BR/>
+  <!-- <LABEL onclick="switchMenu('chainNumThreshold')">ChainNumThreshold</LABEL><BR/> -->
+  <!-- <span class="submenu" id="chainNumThreshold"> -->
+    <!-- <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>--> 
+  <!-- </span> -->
+  <!-- <BR/> -->
   <LABEL onclick="switchMenu('contact')" id="contact">Contact Us</LABEL><BR/>
     <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
    
     <BR/>
-
-
+  <LABEL id="progmsg">Progress</LABEL><BR/>
+    <progress id="progress" value="0"></progress>
+    <BR/> 
+   
 </div>
 <div id="rightmenu">
 	<LABEL id="titleLab"></LABEL><BR/>
@@ -395,8 +424,7 @@
 		<button id="Confirm_fregment" style="width: 68px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 30px;">Confirm</button>
 	</div>
 </div>
-<!-- Our Design-->
-<script type="text/javascript" src="libs/molecule/inano.min.js"></script>
+<script type="text/javascript" src="libs/molecule/index.js"></script>
 <script type="text/javascript">
     <!-- menu -->
     if (document.getElementById){ //DynamicDrive.com change
@@ -436,14 +464,9 @@
             }
         }
     }
-
     var worker = new Worker('libs/fileutils/export.js');
-
-
-
     (function(){
 		
-
     })()
 </script>
 </body>
