@@ -316,7 +316,27 @@ function dealwithMenu(object) {
             onMenuDown();
             break;
 		case PDB.GROUP_MENU_DIRECTION:
-            PDB.MOVE_DIRECTION = object.userData.reptype;
+		    var  type = object.userData.reptype;
+			switch (type){
+				case 1:
+					PDB.MOVE_DIRECTION = type;
+					break;
+				case 2:
+					PDB.MOVE_DIRECTION = type;
+					break;
+				case 3:
+					PDB.MOVE_DIRECTION = type;
+					break;
+				case 4:
+					PDB.ZOOM_TIMES = 1;
+					break;
+				case 5:
+					PDB.ZOOM_TIMES = 2;
+					break;
+				case 6:
+					PDB.ZOOM_TIMES = 4;
+					break;	
+			}
             onMenuDown();
             break;
 		case PDB.GROUP_MENU_OUTBALL:

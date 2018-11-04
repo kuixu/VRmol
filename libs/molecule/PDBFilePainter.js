@@ -54,13 +54,13 @@ PDB.painter = {
 		for(var i in PDB.GROUP_STRUCTURE_INDEX){
 		    switch (PDB.MOVE_DIRECTION){
 				case 1:
-				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y - PDB.ZOOM_STEP;
+				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					break;
 				case 2:
-				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x - PDB.ZOOM_STEP;
+				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					break;
 				case 3:
-					PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z - PDB.ZOOM_STEP;
+					PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					break;
 			}
 		}
@@ -104,13 +104,13 @@ PDB.painter = {
 		for(var i in PDB.GROUP_STRUCTURE_INDEX){          
 			switch (PDB.MOVE_DIRECTION){
 				case 1:
-				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y + PDB.ZOOM_STEP;
+				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					break;
 				case 2:
-				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x + PDB.ZOOM_STEP;
+				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.x + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					break;
 				case 3:
-					PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z + PDB.ZOOM_STEP;
+					PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.z + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					break;
 			}
 		}
@@ -460,7 +460,10 @@ PDB.painter = {
                 var moveMenu =[
                     ["Up and down",               1 ],
                     ["Left and right",               2 ],
-                    ["Before and after",               3 ]
+                    ["Before and after",               3 ],
+					["1 times speed",               4 ],
+					["2 times speed",               5 ],
+					["4 times speed",               6 ],
                 ];
                 for(var i = 0; i<moveMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DIRECTION, new THREE.Vector3(x, y-i*0.2, z),  moveMenu[i][0], moveMenu[i][1], color, 135);

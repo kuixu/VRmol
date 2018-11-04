@@ -11,7 +11,7 @@ if(ServerType ===1){
     SERVERURL= "http://vr.zhanglab.net";
 }else if(ServerType ===3){
     SERVERURL= "http://localhost:8080";
-	SERVERURL= "http://192.168.1.101";
+	SERVERURL= "http://192.168.1.105:8080";
 }
 PDB = {
     
@@ -189,6 +189,7 @@ PDB = {
     BOND_TYPE_COVALENT:2,
     BOND_TYPE_HBOND:3,
     ZOOM_STEP:0.1,
+	ZOOM_TIMES:1,
     //surface setting
     SURFACE_TYPE:1,
     CURRENT_SURFACE_TYPE:1,
