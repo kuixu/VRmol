@@ -2606,9 +2606,7 @@ PDB.painter = {
         var maxx = offset.x +limit.x[1],
             maxy = offset.y +limit.y[1],
             maxz = offset.z +limit.z[1];
-        // MATERIALS
-        var material = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x888888, shininess: 250 } );
-        // MARCHING CUBES
+      
         var atoms = {};
         for(var i in w3m.mol){
             var main_obj = w3m.mol[i].atom.main;
@@ -2662,11 +2660,13 @@ PDB.painter = {
                 return atoms[geo.vertices[f[d]].atomid].color;
             });
         });
-        var mesh = new THREE.Mesh(geoc, new THREE.MeshLambertMaterial({
+        var mesh = new THREE.Mesh(geoc, new THREE.MeshPhongMaterial({
             vertexColors: THREE.VertexColors,
             wireframe: PDB.SURFACE_WIREFRAME,
             opacity: PDB.SURFACE_OPACITY,
             transparent: true,
+			specular: 0x888888,
+			shininess: 250
         }));
         PDB.GROUP[PDB.GROUP_SURFACE].add( mesh );
         PDB.GROUP[PDB.GROUP_SURFACE].visible = true;
