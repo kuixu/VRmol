@@ -1188,7 +1188,7 @@ PDB.painter = {
 			
 		var color 		= new THREE.Color('#CCC');
 		var preresobj 	= w3m.mol[PDB.pdbId].residueData[chainId][resid-1];
-		if(preresobj!=undefined){
+		if(preresobj!=undefined&&preresobj.path&&preresobj.path.length>0){
 			path = [preresobj.path[preresobj.path.length-1]].concat(path);			
 		}		
         
@@ -4159,8 +4159,13 @@ PDB.painter = {
 	repeatPainter:function(){	
 		var residueData = w3m.mol[PDB.pdbId].residueData;
 		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;		
-		for(var chain in residueData){			
-			for(var resid in residueData[chain]){			
+		for(var chain in residueData){
+			// var chainType = w3m.mol[PDB.pdbId].chain[chain];
+			// if(chainType==w3m.CHAIN_NA&&PDB.config.mainMode>=PDB.TUBE&&PDB.config.mainMode!=PDB.HIDE){				
+				// continue;
+			// }
+			for(var resid in residueData[chain]){
+					
 				var caid =  residueData[chain][resid].caid;				
 				var length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);				
 				PDB.residueGroupObject[chain][resid].len = length;
