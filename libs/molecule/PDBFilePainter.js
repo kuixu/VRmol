@@ -70,28 +70,28 @@ PDB.painter = {
 			case 1:
 				for(var chain in PDB.residueGroupObject){
 					for(var resid in PDB.residueGroupObject[chain]){
-						PDB.residueGroupObject[chain][resid].vector.y = PDB.residueGroupObject[chain][resid].vector.y - PDB.ZOOM_STEP;
+						PDB.residueGroupObject[chain][resid].vector.y = PDB.residueGroupObject[chain][resid].vector.y - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					}
 				}					
-				PDB.rotateAxis.y = PDB.rotateAxis.y - PDB.ZOOM_STEP;
+				PDB.rotateAxis.y = PDB.rotateAxis.y - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 				break;
 			case 2:
 				
 				for(var chain in PDB.residueGroupObject){
 					for(var resid in PDB.residueGroupObject[chain]){
-						PDB.residueGroupObject[chain][resid].vector.x = PDB.residueGroupObject[chain][resid].vector.x - PDB.ZOOM_STEP;
+						PDB.residueGroupObject[chain][resid].vector.x = PDB.residueGroupObject[chain][resid].vector.x - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					}
 				}
-				PDB.rotateAxis.x = PDB.rotateAxis.x - PDB.ZOOM_STEP;
+				PDB.rotateAxis.x = PDB.rotateAxis.x - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 				break;
 			case 3:
 				
 				for(var chain in PDB.residueGroupObject){
 					for(var resid in PDB.residueGroupObject[chain]){
-						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z - PDB.ZOOM_STEP;
+						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					}
 				}
-				PDB.rotateAxis.z = PDB.rotateAxis.z - PDB.ZOOM_STEP;		
+				PDB.rotateAxis.z = PDB.rotateAxis.z - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;		
 				// PDB.zTemp = PDB.zTemp - PDB.ZOOM_STEP;		
 				break;
 		}
@@ -118,30 +118,30 @@ PDB.painter = {
 			case 1:
 				for(var chain in PDB.residueGroupObject){
 					for(var resid in PDB.residueGroupObject[chain]){			
-						PDB.residueGroupObject[chain][resid].vector.y = PDB.residueGroupObject[chain][resid].vector.y + PDB.ZOOM_STEP;
+						PDB.residueGroupObject[chain][resid].vector.y = PDB.residueGroupObject[chain][resid].vector.y + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					}
 				}
 				
-				PDB.rotateAxis.y = PDB.rotateAxis.y + PDB.ZOOM_STEP;	
+				PDB.rotateAxis.y = PDB.rotateAxis.y + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;	
 				break;
 			case 2:
 				for(var chain in PDB.residueGroupObject){
 					for(var resid in PDB.residueGroupObject[chain]){			
-						PDB.residueGroupObject[chain][resid].vector.x = PDB.residueGroupObject[chain][resid].vector.x + PDB.ZOOM_STEP;
+						PDB.residueGroupObject[chain][resid].vector.x = PDB.residueGroupObject[chain][resid].vector.x + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					}
 				}
 				
-				PDB.rotateAxis.x = PDB.rotateAxis.x + PDB.ZOOM_STEP;	
+				PDB.rotateAxis.x = PDB.rotateAxis.x + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;	
 				break;
 			case 3:
 				for(var chain in PDB.residueGroupObject){
 					for(var resid in PDB.residueGroupObject[chain]){			
-						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z + PDB.ZOOM_STEP;
+						PDB.residueGroupObject[chain][resid].vector.z = PDB.residueGroupObject[chain][resid].vector.z + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					}
 				}
 				
 				// PDB.zTemp = PDB.zTemp + PDB.ZOOM_STEP;
-				PDB.rotateAxis.z = PDB.rotateAxis.z + PDB.ZOOM_STEP;	
+				PDB.rotateAxis.z = PDB.rotateAxis.z + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;	
 				break;
 		}	
 				

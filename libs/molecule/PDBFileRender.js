@@ -308,7 +308,7 @@ function dealwithMenu(object) {
 				PDB.MOVE_DIRECTION = 2;
 			}else if(PDB.ROTATION_AXIS==2){
 				PDB.MOVE_DIRECTION = 1;
-			}else if(PDB.ROTATION_AXIS==2){
+			}else if(PDB.ROTATION_AXIS==3){
 				PDB.MOVE_DIRECTION = 3;
 			}
 			
