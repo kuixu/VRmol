@@ -1163,7 +1163,7 @@ PDB.painter = {
     },
     showTubeByResdue : function(chainId,resid,sel,showLow,isshow){
 		
-		showLow = (showLow == undefined?false:showLow);
+		showLow = (showLow == undefined?false:showLow);		
 		isshow = (isshow == undefined?true:isshow);
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
@@ -1191,8 +1191,9 @@ PDB.painter = {
         
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
 		if(path.length>0){
-			var high_r = PDB.structureSizeLevel>=3?Math.floor(path.length/4):(path.length-1);	
-			PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
+			var high_r = PDB.structureSizeLevel>=3?Math.floor(path.length/4):(path.length-1);
+			var low_h = PDB.structureSizeLevel<=1?high_r:3;
+			PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?low_h:high_r,[resobj.caid]);
 			PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 		}
 		
@@ -1219,7 +1220,8 @@ PDB.painter = {
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
 		var high_r = PDB.structureSizeLevel>=3?Math.floor(path.length/4):(path.length-1);	
-		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
+		var low_h = PDB.structureSizeLevel<=1?high_r:3;
+		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?low_h:high_r,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
     },
 	showTubeByResdueFOOT : function(chainId,resid,sel,showLow,isshow){
@@ -1233,7 +1235,8 @@ PDB.painter = {
         var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = showLow?("chain_"+atom.chainname+"_low"):("chain_"+atom.chainname);
 		var high_r = PDB.structureSizeLevel>=3?Math.floor(path.length/4):(path.length-1);
-		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?3:high_r,[resobj.caid]);
+		var low_h = PDB.structureSizeLevel<=1?high_r:3;
+		PDB.drawer.drawTube(groupindex, path, sel?atom.color:color, radius,{}, showLow?low_h:high_r,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
     },
     showRibbon_Flat:function(){
@@ -1359,6 +1362,7 @@ PDB.painter = {
 		var radius = 0;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
 		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');		
+		
 		PDB.drawer.drawFlat(groupindex,path, sel?atom.color:color, radius,cubedataObj,showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	},
@@ -1480,7 +1484,8 @@ PDB.painter = {
 		//console.log(cubedataObj);
 		var radius = PDB.CONFIG.ellipse_radius;
 		var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
-		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');		
+		var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');	
+		
 		PDB.drawer.drawEllipse(groupindex,path, sel?atom.color:color, radius,cubedataObj, showLow?4:cubedataObj.tangents.length-1,[resobj.caid]);
 		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
 	 },
@@ -3800,25 +3805,31 @@ PDB.painter = {
 					if(length<showLengthThreshold){						
 						if(PDB.loadType == PDB.bigmodel){
 							PDB.CONFIG = PDB.CONFIG_HIGH;							
-							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;	
-							if(type!=PDB.DOT&&type!=PDB.LINE&&type!=PDB.BALL_AND_ROD&&type!=PDB.STICK){
-								PDB.painter.showResidue(chain, resid, type, true, false, true);
-								PDB.CONFIG = PDB.CONFIG_LOW;
-								PDB.painter.showResidue(chain, resid, type, true, true,false);
-							}else if(type==PDB.BALL_AND_ROD||type==PDB.STICK){
-								if(PDB.structureSizeLevel>=3){
-									PDB.CONFIG = PDB.CONFIG_LOW;
-									PDB.painter.showResidue(chain, resid, type, true, true,true);
-								}else{
-									PDB.CONFIG = PDB.CONFIG_HIGH;
+							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;
+							if(PDB.structureSizeLevel>1){
+								if(type!=PDB.DOT&&type!=PDB.LINE&&type!=PDB.BALL_AND_ROD&&type!=PDB.STICK){
+									PDB.painter.showResidue(chain, resid, type, true, false, true);
+									PDB.CONFIG = PDB.CONFIG_LOW;																
+									PDB.painter.showResidue(chain, resid, type, true, true,false);
+								}else if(type==PDB.BALL_AND_ROD||type==PDB.STICK){
+									if(PDB.structureSizeLevel>=3){
+										PDB.CONFIG = PDB.CONFIG_LOW;
+										PDB.painter.showResidue(chain, resid, type, true, true,true);
+									}else{
+										PDB.CONFIG = PDB.CONFIG_HIGH;
+										PDB.painter.showResidue(chain, resid, type, true, false,true);
+									}
+								}else if(type==PDB.DOT||type==PDB.LINE) {
 									PDB.painter.showResidue(chain, resid, type, true, false,true);
 								}
-							}else if(type==PDB.DOT||type==PDB.LINE) {
+							}else{
+								PDB.CONFIG = PDB.CONFIG_HIGH;
 								PDB.painter.showResidue(chain, resid, type, true, false,true);
 							}
 							
+							
 						}else if(PDB.loadType == PDB.smallmodel){
-						
+							PDB.CONFIG = PDB.CONFIG_HIGH;
 							PDB.painter.showResidue(chain, resid, type, true);	
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;	
 						}
@@ -3829,22 +3840,27 @@ PDB.painter = {
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_low;
 							//PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
 							PDB.CONFIG = PDB.CONFIG_LOW;
-							
-							if(type!=PDB.DOT&&type!=PDB.LINE&&type!=PDB.BALL_AND_ROD&&type!=PDB.STICK){
-								PDB.painter.showResidue(chain, resid, type, true, true, true);
-								PDB.CONFIG = PDB.CONFIG_HIGH;
-								PDB.painter.showResidue(chain, resid, type, true, false,false);
-							}else if(type==PDB.BALL_AND_ROD||type==PDB.STICK){
-								if(PDB.structureSizeLevel>=3){
-									PDB.CONFIG = PDB.CONFIG_LOW;
-									PDB.painter.showResidue(chain, resid, type, true, true,true);
-								}else{
+							if(PDB.structureSizeLevel>1){
+								if(type!=PDB.DOT&&type!=PDB.LINE&&type!=PDB.BALL_AND_ROD&&type!=PDB.STICK){									
+									PDB.painter.showResidue(chain, resid, type, true, true, true);
 									PDB.CONFIG = PDB.CONFIG_HIGH;
+									PDB.painter.showResidue(chain, resid, type, true, false,false);
+								}else if(type==PDB.BALL_AND_ROD||type==PDB.STICK){
+									if(PDB.structureSizeLevel>=3){
+										PDB.CONFIG = PDB.CONFIG_LOW;
+										PDB.painter.showResidue(chain, resid, type, true, true,true);
+									}else{
+										PDB.CONFIG = PDB.CONFIG_HIGH;
+										PDB.painter.showResidue(chain, resid, type, true, false,true);
+									}
+								}else if(type==PDB.DOT||type==PDB.LINE) {
 									PDB.painter.showResidue(chain, resid, type, true, false,true);
 								}
-							}else if(type==PDB.DOT||type==PDB.LINE) {
+							}else{
+								PDB.CONFIG = PDB.CONFIG_HIGH;
 								PDB.painter.showResidue(chain, resid, type, true, false,true);
 							}
+							
 						}else if(PDB.loadType == PDB.smallmodel){
 							PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_undefined;
 						}					
@@ -4148,7 +4164,7 @@ PDB.painter = {
 				if(PDB.residueGroupObject[chain][resid].len < showLengthThreshold){					
 					if(PDB.loadType == PDB.bigmodel){
 						if(PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_low){
-							if(PDB.config.mainMode!=PDB.DOT&&PDB.config.mainMode!=PDB.LINE&&PDB.config.mainMode!=PDB.BALL_AND_ROD&&PDB.config.mainMode!=PDB.STICK){
+							if(PDB.config.mainMode!=PDB.DOT&&PDB.config.mainMode!=PDB.LINE&&PDB.config.mainMode!=PDB.BALL_AND_ROD&&PDB.config.mainMode!=PDB.STICK&&PDB.structureSizeLevel>1){
 								var gindex_low = "chain_"+chain+"_low";
 								var meshs_low = PDB.GROUP[gindex_low].getChildrenByName(residueData[chain][resid].caid);
 								for(var i in meshs_low ){
@@ -4187,7 +4203,7 @@ PDB.painter = {
 					if(PDB.loadType == PDB.bigmodel){
 						if(PDB.residueGroupObject[chain][resid].v==PDB.residueGroup_show){						
 							
-							if(PDB.config.mainMode!=PDB.DOT&&PDB.config.mainMode!=PDB.LINE&&PDB.config.mainMode!=PDB.BALL_AND_ROD&&PDB.config.mainMode!=PDB.STICK){
+							if(PDB.config.mainMode!=PDB.DOT&&PDB.config.mainMode!=PDB.LINE&&PDB.config.mainMode!=PDB.BALL_AND_ROD&&PDB.config.mainMode!=PDB.STICK&&PDB.structureSizeLevel>1){
 								var gindex_low = "chain_"+chain+"_low";
 								var meshs_low = PDB.GROUP[gindex_low].getChildrenByName(residueData[chain][resid].caid);
 								for(var i in meshs_low ){
