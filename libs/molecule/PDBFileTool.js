@@ -637,6 +637,27 @@ PDB.tool = {
         var z = (3*formPos.z+toPos.z)/4;
         return new THREE.Vector3(x,y,z);
     },
+	createDensityMapMenuForVR:function(jsonObj){
+		var color      = 0xa345;
+			limit = w3m.global.limit;
+			var x = limit.x[1]  + PDB.GeoCenterOffset.x ;
+			var y = 2;
+			var z = limit.z[1]  + PDB.GeoCenterOffset.z ;
+			x = x*0.02;
+			z = z*0.02;
+		
+		if(jsonObj.code === 1 && jsonObj.data !== undefined){
+			
+		    var data = jsonObj.data;
+			
+			if(PDB.EMMAP.FIRST_ID === 0 && data.length > 0){
+                PDB.EMMAP.FIRST_ID = data[0];
+            }
+		
+		}else {
+			PDB.drawer.drawTextKB(PDB.GROUP_MENU_DENSITYMAP, new THREE.Vector3(x, y-3*0.2, z),  jsonObj.message, jsonObj.message, color, 135);
+		}
+	},
     createDensityMapPanel:function(jsonObj){
         if(jsonObj.code === 1 && jsonObj.data !== undefined){
             var scope = this;

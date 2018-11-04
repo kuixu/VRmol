@@ -401,24 +401,47 @@ function dealwithMenu(object) {
 				}
 				onMenuDown();
 			}else{
-				var mapserver = 'map-local';
-				PDB.controller.emmapLoad('3298', mapserver,function (emmap) {
-					// PDB.render.clearStructure();
-					if(type === 1) {
-						PDB.SHOWSOLID = true;
-						PDB.map_surface_show =0;
-						PDB.painter.showMapSolid(emmap,emmap.threshold);
-					}else if(type === 2){
-						PDB.painter.showMapSurface(emmap,emmap.threshold,false);
-						PDB.map_surface_show =1;
-					}else if(type === 3){
-						PDB.painter.showMapSurface(emmap,emmap.threshold,true);
-						PDB.map_surface_show = 1;
-					}else if(type === 4){
-						PDB.map_surface_show = 0;
-						PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+				// var url ="http://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
+				var url = "http://vr.zhanglab.net/server/api.php?taskid=13&pdbid=5ftm";
+				PDB.tool.ajax.get(url,function (text) {
+                //PDB.render.clear(2);
+				//生成Material 数组
+					PDB.MATERIALLIST = [];
+					if(PDB.MATERIALLIST.length==0){
+						for(var i = 1000;i<1100;i++){
+							var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(w3m.rgb[i][0],w3m.rgb[i][1],w3m.rgb[i][2]), wireframe: false, side: THREE.DoubleSide} );
+							PDB.MATERIALLIST.push(material);
+						}
 					}
-					onMenuDown();
+					//生成面板
+					var jsonObj = JSON.parse(text);
+					if(jsonObj.code === 1 && jsonObj.data !== undefined){
+						
+						var data = jsonObj.data;
+			
+						if(PDB.EMMAP.FIRST_ID === 0 && data.length > 0){
+							PDB.EMMAP.FIRST_ID = data[0];
+						}
+						var mapserver = "map-local";
+						PDB.controller.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver,function (emmap) {
+							// PDB.render.clearStructure();
+							if(type === 1) {
+								PDB.SHOWSOLID = true;
+								PDB.map_surface_show =0;
+								PDB.painter.showMapSolid(emmap,emmap.threshold);
+							}else if(type === 2){
+								PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+								PDB.map_surface_show =1;
+							}else if(type === 3){
+								PDB.painter.showMapSurface(emmap,emmap.threshold,true);
+								PDB.map_surface_show = 1;
+							}else if(type === 4){
+								PDB.map_surface_show = 0;
+								PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+							}
+							onMenuDown();
+						})
+					}
 				})
 				// EmMapParser.loadMap('3298','map-local',function (emmap) {
 
