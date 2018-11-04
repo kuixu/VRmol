@@ -337,7 +337,8 @@ PDB.painter = {
                     ["Reset Position",               0 ],
                     ["Drag Het",             PDB.SELECTION_HET ],
                     ["Drag Chain",           PDB.SELECTION_CHAIN ],
-                    ["Drag Drug",           PDB.SELECTION_DRUG ]
+					["Drag Residue",         PDB.SELECTION_RESIDUE ],
+                    ["Drag Drug",            PDB.SELECTION_DRUG ]
                 ];
                 for(var i = 0; i< dragMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DRAG, new THREE.Vector3(x, y-i*0.2, z),  dragMenu[i][0], dragMenu[i][1], color, 135);
@@ -4160,10 +4161,10 @@ PDB.painter = {
 		var residueData = w3m.mol[PDB.pdbId].residueData;
 		var showLengthThreshold = PDB.mode==PDB.MODE_VR?PDB.initVRShowThreshold:PDB.initDesktopShowThreshold;		
 		for(var chain in residueData){
-			// var chainType = w3m.mol[PDB.pdbId].chain[chain];
-			// if(chainType==w3m.CHAIN_NA&&PDB.config.mainMode>=PDB.TUBE&&PDB.config.mainMode!=PDB.HIDE){				
-				// continue;
-			// }
+			var chainType = w3m.mol[PDB.pdbId].chain[chain];
+			if(chainType==w3m.CHAIN_NA&&PDB.config.mainMode>=PDB.TUBE&&PDB.config.mainMode!=PDB.HIDE){				
+				continue;
+			}
 			for(var resid in residueData[chain]){
 					
 				var caid =  residueData[chain][resid].caid;				
