@@ -702,6 +702,34 @@ function objectTrans(controller, object){
             controller.add( object );
             controller.userData.selected = object;
 			
+			if(object.type=='Mesh'){
+				if(groupindex.search('_low')>0){
+					var n_groupindex = groupindex.substring(0,groupindex.length-4);
+					for(var i in PDB.GROUP[n_groupindex].children){
+						if(PDB.GROUP[n_groupindex].children[i].id == object.id){
+							var _h = PDB.GROUP[n_groupindex].children[i]
+							_h.matrix.premultiply( tempMatrix );
+							_h.matrix.decompose( _h.position, _h.quaternion, _h.scale );
+							controller.add( _h );
+							break;
+						}
+					}
+					//PDB.GROUP[n_groupindex].getObjectById(object.id);
+				}else{
+					if(PDB.GROUP[groupindex+'_low']&&PDB.GROUP[groupindex+'_low'].children.length>0){
+						for(var i in PDB.GROUP[groupindex+'_low'].children){
+							if(PDB.GROUP[groupindex+'_low'].children[i].id == object.id){
+								var _h = PDB.GROUP[groupindex+'_low'].children[i]
+								_h.matrix.premultiply( tempMatrix );
+								_h.matrix.decompose( _h.position, _h.quaternion, _h.scale );
+								controller.add( _h );
+								break;
+							}
+						}
+					}
+				}
+			}
+			
 			if(object.userData["type"]){
 				var ot_index = '';
 				if(object.userData["type"]=='low'){
@@ -709,7 +737,7 @@ function objectTrans(controller, object){
 				}else if(object.userData["type"]=='normal'){		
 					ot_index = groupindex+'_low';
 				}
-				console.log(ot_index);
+				//console.log(ot_index);
 				PDB.tool.colorIntersectObjectBlue(PDB.GROUP[ot_index],1);
 				PDB.GROUP[ot_index].matrix.premultiply( tempMatrix );
 				PDB.GROUP[ot_index].matrix.decompose( PDB.GROUP[ot_index].position, PDB.GROUP[ot_index].quaternion, PDB.GROUP[ot_index].scale );				
@@ -728,11 +756,38 @@ function objectDeTrans(controller, object){
         var groupindex = object.userData["group"];
         if(object.type!="Group"){
             if(groupindex!=undefined){
-                console.log(groupindex); // || groupindex == PDB.GROUP_MENU
+                //console.log(groupindex); // || groupindex == PDB.GROUP_MENU
                 PDB.GROUP[groupindex].add(object);
+				if(groupindex.search('_low')>0){
+					var n_groupindex = groupindex.substring(0,groupindex.length-4);
+					for(var i in PDB.GROUP[n_groupindex].children){
+						if(PDB.GROUP[n_groupindex].children[i].id == object.id){
+							var _h = PDB.GROUP[n_groupindex].children[i]
+								_h.matrix.premultiply( controller.matrixWorld );
+								_h.matrix.decompose( _h.position, _h.quaternion, _h.scale );
+							PDB.GROUP[n_groupindex].add(object);
+							break;
+						}
+					}
+					//PDB.GROUP[n_groupindex].getObjectById(object.id);
+				}else{
+					if(PDB.GROUP[groupindex+'_low']&&PDB.GROUP[groupindex+'_low'].children.length>0){
+						for(var i in PDB.GROUP[groupindex+'_low'].children){
+							if(PDB.GROUP[groupindex+'_low'].children[i].id == object.id){
+								var _h = PDB.GROUP[groupindex+'_low'].children[i]
+								_h.matrix.premultiply( controller.matrixWorld );
+								_h.matrix.decompose( _h.position, _h.quaternion, _h.scale );
+								PDB.GROUP[groupindex+'_low'].add(object);
+								break;
+							}
+						}
+					}
+				}
             }
 			
-			
+			if(object.userData['presentAtom']&&object.userData['presentAtom']['chainname']&&object.userData['presentAtom']['resid']&&PDB.residueGroupObject[object.userData['presentAtom']['chainname']][object.userData['presentAtom']['resid']]){
+				PDB.residueGroupObject[object.userData['presentAtom']['chainname']][object.userData['presentAtom']['resid']].moveVec = object.position;
+			}
 			
 			
         }else{

@@ -4648,23 +4648,25 @@ w3m.pdb = function ( text, drugname ) {
 					case 'atom'   : 
 					
 						s = doEditAtom(s); 
-						console.log(s);
+						s = s.toUpperCase();
 						if(s){
-							afterText = afterText + s;
+							afterText = afterText + s+"\n";
 						}else{
-							afterText = afterText + s;
+							afterText = afterText + s+"\n";
 						}
 						break;
 					case 'hetatm' :
-						s = doeEitHet(s);     
+						s = doeEitHet(s); 
+						s = s.toUpperCase();
 						if(s){
-							afterText = afterText + s;
+							afterText = afterText + s+"\n";
 						}else{
-							afterText = afterText + s;
+							afterText = afterText + s+"\n";
 						}
 						break;
 					default :
-						afterText = afterText + s;
+						s = s.toUpperCase();
+						afterText = afterText + s+"\n";
 						break;
 				}
 			}
@@ -4794,6 +4796,18 @@ w3m.pdb = function ( text, drugname ) {
 			math.limit(xyz[0], w3m.global.limit.x);
 			math.limit(xyz[1], w3m.global.limit.y);
 			math.limit(xyz[2], w3m.global.limit.z);
+			if(PDB.residueGroupObject[chain_id][residue_id].moveVec){
+				var v = PDB.residueGroupObject[chain_id][residue_id].moveVec;
+				math.limit(v.x, w3m.global.limit.x);
+				math.limit(v.y, w3m.global.limit.y);
+				math.limit(v.z, w3m.global.limit.z);
+				xyz[0] = xyz[0]+v.x*10;
+				xyz[1] = xyz[1]+v.y*10;
+				xyz[2] = xyz[2]+v.z*10;
+				s = s.replace(w3m_sub(s, 31, 38),Math.floor(xyz[0]*1000)/1000);
+				s = s.replace(w3m_sub(s, 39, 46),Math.floor(xyz[1]*1000)/1000);
+				s = s.replace(w3m_sub(s, 47, 54),Math.floor(xyz[2]*1000)/1000);
+			}
 		return s;
 			
 	}

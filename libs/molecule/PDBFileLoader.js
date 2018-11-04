@@ -35,7 +35,10 @@ PDB.loader = {
                 PDB.GROUP[gindex] = new THREE.Group();
                 PDB.GROUP[gindex].name = chain;
                 PDB.GROUP[gindex].userData["group"] = gindex;
-				PDB.GROUP[gindex].userData["type"] = 'normal';
+				if(PDB.structureSizeLevel>1){
+					PDB.GROUP[gindex].userData["type"] = 'normal';
+				}
+				
                 PDB.GROUP[gindex].userData["presentAtom"] = PDB.tool.getMainAtom(PDB.pdbId, first_atomid);
 				if(!PDB.pptShow){
 					scene.add(PDB.GROUP[gindex]);
@@ -43,19 +46,21 @@ PDB.loader = {
                 PDB.GROUP_MAIN_INDEX.push(gindex);
                 PDB.GROUP_STRUCTURE_INDEX.push(gindex);
 				
-				
-				var gindex_low = "chain_"+chain+"_low";
-				//var first_atomid = PDB.tool.getFirstAtomIdByChain(chain);
-				PDB.GROUP[gindex_low] = new THREE.Group();
-				PDB.GROUP[gindex_low].name = chain;
-				PDB.GROUP[gindex_low].userData["group"] = gindex_low;
-				PDB.GROUP[gindex_low].userData["type"] = 'low';
-				PDB.GROUP[gindex_low].userData["presentAtom"] = PDB.tool.getMainAtom(PDB.pdbId, first_atomid);
-				if(!PDB.pptShow){
-					scene.add(PDB.GROUP[gindex_low]);
+				if(PDB.structureSizeLevel>1){
+					var gindex_low = "chain_"+chain+"_low";
+					//var first_atomid = PDB.tool.getFirstAtomIdByChain(chain);
+					PDB.GROUP[gindex_low] = new THREE.Group();
+					PDB.GROUP[gindex_low].name = chain;
+					PDB.GROUP[gindex_low].userData["group"] = gindex_low;
+					PDB.GROUP[gindex_low].userData["type"] = 'low';
+					PDB.GROUP[gindex_low].userData["presentAtom"] = PDB.tool.getMainAtom(PDB.pdbId, first_atomid);
+					if(!PDB.pptShow){
+						scene.add(PDB.GROUP[gindex_low]);
+					}
+					PDB.GROUP_MAIN_INDEX.push(gindex_low);
+					PDB.GROUP_STRUCTURE_INDEX.push(gindex_low);
 				}
-				PDB.GROUP_MAIN_INDEX.push(gindex_low);
-				PDB.GROUP_STRUCTURE_INDEX.push(gindex_low);
+				
 				
 				
 				
