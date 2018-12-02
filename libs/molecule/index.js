@@ -116,3 +116,71 @@ PDB.controller.requestRemote(PDB.pdbId);
 PDB.controller.switchColorBymode("607");
 //PDB.trigger = PDB.TRIGGER_EVENT_DRAG;
 //PDB.selection_mode= PDB.SELECTION_DRUG;
+
+
+
+function endRecord(){
+    p=endrecording();
+    p.then(
+        result => voiceOperation(result), // shows "done!" after 1 second
+        error => alert(error) // doesn't run
+    );
+    // console.log(a)
+}
+
+//
+function voiceOperation(code) {
+    switch (code) {
+        case 73:
+            PDB.controller.startRotation(1,1);
+            break;
+        case 74:
+            PDB.controller.startRotation(1,0);
+            break;
+        case 701:
+            PDB.controller.cancelRotation();
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        case 9:
+            break;
+        case 10:
+            break;
+        case 11:
+            break;
+        case 12:
+            break;
+        case 13:
+            break;
+        case 14:
+            break;
+        case 15:
+            break;
+        case 16:
+            break;
+        case 17:
+            break;
+        case 18:
+            break;
+        case 19:
+            break;
+        case 20:
+            break;
+        case 21:
+            break;
+        case 22:
+            break;
+        case 23:
+            break;
+        case 24:
+            break;
+    }
+}

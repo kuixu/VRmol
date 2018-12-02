@@ -680,15 +680,15 @@ PDB.controller = {
         var rotationRight = document.getElementById("rotationRight");
 
         rotationSwitch.addEventListener( 'click', function() {
-            PDB.ROTATION_START_FLAG= false;
+            PDB.controller.cancelRotation();
         } );
         rotationLeft.addEventListener( 'click', function() {
-            PDB.ROTATION_DIRECTION = 0;
-            PDB.ROTATION_START_FLAG= true;
+            PDB.controller.cancelRotation();
+            PDB.controller.startRotation(2,0);
         } );
         rotationRight.addEventListener( 'click', function() {
-            PDB.ROTATION_DIRECTION = 1;
-            PDB.ROTATION_START_FLAG= true;
+            PDB.controller.cancelRotation();
+            PDB.controller.startRotation(2,1);
         } );
 
 
@@ -1504,5 +1504,15 @@ PDB.controller = {
         if(PDB.pdbVrId.length==4){
             scope.requestRemote(PDB.pdbVrId);
         }
+    },
+    startRotation: function (axis,direction) {
+        PDB.ROTATION_DIRECTION=direction;
+        PDB.ROTATION_AXIS=axis;
+        PDB.ROTATION_START_FLAG = true;
+        PDB.ROTATION_TASK_ID =self.setInterval("PDB.painter.rotate()",20);
+    },
+    cancelRotation:function () {
+        PDB.ROTATION_START_FLAG = false;
+        window.clearInterval(PDB.ROTATION_TASK_ID);
     }
 };

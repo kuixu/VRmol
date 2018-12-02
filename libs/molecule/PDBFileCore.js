@@ -10,8 +10,9 @@ if(ServerType ===1){
 }else if(ServerType ===2){
     SERVERURL= "http://vr.zhanglab.net";
 }else if(ServerType ===3){
-    SERVERURL= "http://localhost:8080";
-	SERVERURL= "http://192.168.1.105:8080";
+    SERVERURL= "localhost";
+    // SERVERURL= "https://inano.zhanglab.net";
+	// SERVERURL= "http://192.168.1.105:8080";
 }
 PDB = {
     
@@ -68,6 +69,7 @@ PDB = {
 	ROTATION_START_FLAG: false,
     ROTATION_DIRECTION:1, //0 left 1 right
 	ROTATION_AXIS:1, //1 x轴旋转 2 y轴旋转 3 z轴旋转
+    ROTATION_TASK_ID:0,//旋转任务ID
 	MOVE_DIRECTION:2, //1 上下  2左右 3前后 
 	PLANE:{a:0,b:0,c:0,d:0},
     TravelScale:6,

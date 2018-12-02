@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>iNano - Molecule Virtual Reality </title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>iNano - Molecule Virtual Reality </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/index.css" type="text/css" />
 </head>
 <body >
@@ -63,6 +63,8 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
+<script type="text/javascript" src="https://vr.zhanglab.net/server/listen/sr.min.js"></script>
+
 <!---------------------------xukui 0903 01:12------------------------------>
 <script type="x-shader/x-vertex" id="vertexshader">
     uniform float delta;
@@ -112,15 +114,15 @@
         <button id="threeWithTravel">Desktop Travel</button><BR/>
         <button id="vrWithTravel">VR Travel</button><BR/>
 	<input class="labelPDB" id="isLow"  name="" type="checkbox" title="isLow" checked/> 
-	<label class="label" for="isLow"> Out Ball Show </label><BR/> 
-    <!--<input class="labelPDB" id="threeMode" name="modeStr" checked="checked"   type="radio" title="Three Mode"/>  <label class="label" for="threeMode"> Three </label>   <BR/>-->
-    <!--<input class="labelPDB" id="vrMode"  name="modeStr"  type="radio" title="VR Mode"/>   <label class="label" for="vrMode"> VR </label>    <BR/>-->
-    <!--<input class="labelPDB" id="threeWithTravel" name="modeStr" type="radio" title="Travel in the Tube"/><label class="label" for="threeWithTravel"> Travel + Three </label> <BR/>-->
-    <!--<input class="labelPDB" id="vrWithTravel" name="modeStr" type="radio" title="Travel in the Tube at the mode of VR"/><label class="label" for="vrWithTravel"> Travel + VR</label> <BR/>-->
+	<label class="label" for="isLow"> Out Ball Show </label><BR/>
+        <!--<input class="labelPDB" id="threeMode" name="modeStr" checked="checked"   type="radio" title="Three Mode"/>  <label class="label" for="threeMode"> Three </label>   <BR/>-->
+        <!--<input class="labelPDB" id="vrMode"  name="modeStr"  type="radio" title="VR Mode"/>   <label class="label" for="vrMode"> VR </label>    <BR/>-->
+        <!--<input class="labelPDB" id="threeWithTravel" name="modeStr" type="radio" title="Travel in the Tube"/><label class="label" for="threeWithTravel"> Travel + Three </label> <BR/>-->
+        <!--<input class="labelPDB" id="vrWithTravel" name="modeStr" type="radio" title="Travel in the Tube at the mode of VR"/><label class="label" for="vrWithTravel"> Travel + VR</label> <BR/>-->
   </span>
     <BR/>
-  <LABEL onclick="switchMenu('mainStructure')">Main Structure</LABEL><BR/>
-  <span class="submenu" id="mainStructure">
+    <LABEL onclick="switchMenu('mainStructure')">Main Structure</LABEL><BR/>
+    <span class="submenu" id="mainStructure">
     <button id="b_hide">Hide</button><BR/>
 	<button id="b_line">Line</button><BR/>
     <button id="b_dot">Dot</button><BR/>
@@ -135,25 +137,25 @@
     <button id="b_strip">Cartoon-strip</button><BR/>
     <button id="b_railway">Cartoon-railway</button><BR/>
     <button id="b_sse">Cartoon-SSE</button><BR/>
-    <!--<button id="b_surface">Surface</button><BR/>-->
+        <!--<button id="b_surface">Surface</button><BR/>-->
   </span>
-  <BR/>
-  <LABEL onclick="switchMenu('ligandStructure')">Ligand Structure</LABEL><BR/>
-  <span class="submenu" id="ligandStructure">
+    <BR/>
+    <LABEL onclick="switchMenu('ligandStructure')">Ligand Structure</LABEL><BR/>
+    <span class="submenu" id="ligandStructure">
     <button id="h_line">Line</button><BR/>
     <button id="h_sphere">Sphere</button><BR/>
     <button id="h_stick">Stick</button><BR/>
     <button id="h_ballrod">Ball & Rod</button><BR/>
   </span>
-  <BR/>
-  <LABEL onclick="switchMenu('showOthers')">Show Others</LABEL><BR/>
-  <span class="submenu" id="showOthers">
+    <BR/>
+    <LABEL onclick="switchMenu('showOthers')">Show Others</LABEL><BR/>
+    <span class="submenu" id="showOthers">
      <input class="labelPDB" name="mode" id="showWater"  type="checkbox" title="Show Water" />  <label class="label" for="showWater"> Show Water</label>   <BR/>
   </span>
-  <BR/>
+    <BR/>
 
-  <LABEL onclick="switchMenu('surfaceStructure')">Surface Structure</LABEL><BR/>
-  <span class="submenu" id="surfaceStructure">
+    <LABEL onclick="switchMenu('surfaceStructure')">Surface Structure</LABEL><BR/>
+    <span class="submenu" id="surfaceStructure">
         <input class="labelPDB" id="surfaceN"  name="surfaceType" type="radio" title="nothing"/>  <label class="label" for="surfaceN"> Hide </label>   <BR/>
         <input class="labelPDB" id="surfaceVDW" name="surfaceType"   type="radio" title="Van der Waals surface"/> <label class="label" for="surfaceVDW">Van der Waals</label> <BR/>
         <input class="labelPDB" id="surfaceSE"  name="surfaceType"  type="radio" title="solvent excluded surface"/>   <label class="label" for="surfaceSE">Solvent excluded</label>    <BR/>
@@ -169,22 +171,22 @@
     <hr class="line">
         <input class="labelPDB" id="wireFrame" name="surfaceWireframe"   type="checkbox" title="Wireframe"/>  <label class="label" for="wireFrame"> Wireframe </label>   <BR/>
   </span>
-  <BR/>
+    <BR/>
 
-  <LABEL onclick="switchMenu('selectionMode')">Label</LABEL><BR/>
-  <span class="submenu" id="selectionMode">
+    <LABEL onclick="switchMenu('selectionMode')">Label</LABEL><BR/>
+    <span class="submenu" id="selectionMode">
   <input class="labelPDB" name="mode" id="selModel" checked="checked"  type="radio" title="All the models" />  <label class="label" for="selModel"> All the models</label>   <BR/>
-    <!--<input class="labelPDB" name="mode" id="selMainHet"    type="radio" title="Main and Het"/>   <label class="label" for="selMainHet"> Main and Het</label>    <BR/>-->
-    <!--<input class="labelPDB" name="mode" id="selMain" type="radio" title="Only Main"/><label class="label" for="selMain"> Only Main </label> <BR/>
-    <input class="labelPDB" name="mode" id="selHet"   type="radio" title="Only Het"/>  <label class="label" for="selHet"> Only Het </label>   <BR/>-->
+        <!--<input class="labelPDB" name="mode" id="selMainHet"    type="radio" title="Main and Het"/>   <label class="label" for="selMainHet"> Main and Het</label>    <BR/>-->
+        <!--<input class="labelPDB" name="mode" id="selMain" type="radio" title="Only Main"/><label class="label" for="selMain"> Only Main </label> <BR/>
+        <input class="labelPDB" name="mode" id="selHet"   type="radio" title="Only Het"/>  <label class="label" for="selHet"> Only Het </label>   <BR/>-->
     <input class="labelPDB" name="mode" id="selChain"   type="radio" title="By Chain"/>  <label class="label" for="selChain"> By Chain</label>   <BR/>
     <input class="labelPDB" name="mode" id="selResidue"   type="radio" title="By Residue"/>  <label class="label" for="selResidue"> By Residue </label>   <BR/>
     <input class="labelPDB" name="mode" id="selAtom"   type="radio" title="By Atom"/>  <label class="label" for="selAtom"> By Atom </label>   <BR/>
   </span>
-  <BR/>
+    <BR/>
 
-  <LABEL onclick="switchMenu('updateColorMode')">Color</LABEL><BR/>
-  <span class="submenu" id="updateColorMode">
+    <LABEL onclick="switchMenu('updateColorMode')">Color</LABEL><BR/>
+    <span class="submenu" id="updateColorMode">
     <input class="updateColor" name="colorMode" id="updatecolor_ByElement" type="radio" checked="checked"  title=" By Element" color_mode="601" />  <label class="label" for="updatecolor_ByElement"> By Element </label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByResidue" type="radio"  title="By Residue" color_mode="602"/>  <label class="label" for="updatecolor_ByResidue">By Residue </label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_BySecondaryStructure" type="radio"  title="By Residue" color_mode="603"/> <label class="label" for="updatecolor_BySecondaryStructure">By Secondary Structure</label>   <BR/>
@@ -196,36 +198,36 @@
 	<input class="updateColor" name="colorMode" id="updatecolor_ByHydrophobicity" type="radio"  title="By Residue" color_mode="609"/>  <label class="label" for="updatecolor_ByHydrophobicity">By Hydrophobicity</label>   <BR/>
 	<button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>
   </span>
-  <BR/>
+    <BR/>
 
-  <LABEL onclick="switchMenu('trigger')">Measure</LABEL><BR/>
-  <span class="submenu" id="trigger">
+    <LABEL onclick="switchMenu('trigger')">Measure</LABEL><BR/>
+    <span class="submenu" id="trigger">
     <input class="labelPDB" name="trigger" id="triggerDistance" type="radio"  title="Distance"  />  <label class="label" for="triggerDistance"> Distance </label>   <BR/>
     <input class="labelPDB" name="trigger" id="triggerAngle" type="radio"  title="Angle" />  <label class="label" for="triggerAngle"> Angle </label>   <BR/>
 	<input class="labelPDB" name="trigger" id="isHide" type="checkbox"  title="Hide&Show" />  <label class="label" for="isHide"> isHide </label>   <BR/>
   </span>
-  <BR/>
+    <BR/>
 
 
-  <LABEL onclick="switchMenu('dragMode')">Drag</LABEL><BR/>
-  <span class="submenu" id="dragMode">
+    <LABEL onclick="switchMenu('dragMode')">Drag</LABEL><BR/>
+    <span class="submenu" id="dragMode">
     <!--<input class="labelPDB" name="mode" id="dragModel" checked="checked"  type="radio" title="All the models" />  <label class="label" for="dragModel"> All the models</label>   <BR/>
     <input class="labelPDB" name="mode" id="dragMainHet"    type="radio" title="Main and Het"/>   <label class="label" for="dragMainHet"> Main and Het</label>    <BR/>
     <input class="labelPDB" name="mode" id="dragMain" type="radio" title="Only Main"/><label class="label" for="dragMain"> Only Main </label> <BR/>-->
-	<input class="labelPDB" name="mode" id="dragReset"   type="radio" title="Reset"/>  <label class="label" for="reset"> Reset </label>   <BR/>
+	<input class="labelPDB" name="mode" id="dragReset"   type="radio" title="Reset"/>  <label class="label" for="dragReset"> Reset </label>   <BR/>
     <input class="labelPDB" name="mode" id="dragHet"   type="radio" title="Drag Ligand"/>  <label class="label" for="dragHet"> Drag Ligand </label>   <BR/>
     <input class="labelPDB" name="mode" id="dragChain"   type="radio" title="Drag Chain"/>  <label class="label" for="dragChain"> Drag Chain</label>   <BR/>
   </span>
-  <BR/>
+    <BR/>
 
 
-  <LABEL onclick="switchMenu('getSegments')">Fragment</LABEL><BR/>
-  <span class="submenu" id="getSegments">
+    <LABEL onclick="switchMenu('getSegments')">Fragment</LABEL><BR/>
+    <span class="submenu" id="getSegments">
     <button class="labelPDB" name="" id="b_show_segmenpanel" value="">Open Panel</button>
   </span>
-  <BR/>
+    <BR/>
 
-  
+
     <LABEL onclick="switchMenu('mutationMenu')">Mutation</LABEL><BR/>
     <span class="submenu" id="mutationMenu">
         <button class="labelPDB" name="mutationNone" id="mutationNone" value="ExAC">Hide</button><BR/>
@@ -244,45 +246,45 @@
     <BR/>
     <!-- <LABEL onclick="switchMenu('demoMenu')">Demos</LABEL><BR/> -->
     <!-- <span class="submenu" id="demoMenu"> -->
-     <!-- <input class="labelPDB" name="mode" id="showDemo" checked="checked"  type="checkbox" title="Show Demo" />  <label class="label" for="showDemo"> Show Demo</label>   <BR/> -->
-  <!-- </span> -->
+    <!-- <input class="labelPDB" name="mode" id="showDemo" checked="checked"  type="checkbox" title="Show Demo" />  <label class="label" for="showDemo"> Show Demo</label>   <BR/> -->
+    <!-- </span> -->
     <!-- <BR/> -->
-  <LABEL onclick="switchMenu('bondMenu')">Bond</LABEL><BR/>
+    <LABEL onclick="switchMenu('bondMenu')">Bond</LABEL><BR/>
     <span class="submenu" id="bondMenu">
         <button class="labelPDB" name="hideBond" id="hideBond"  title="Hide Bond">Hide Bond</button>   <BR/>
         <button class="labelPDB" name="showHBond" id="showHBond"  title="Show HBond">Show HBond</button>   <BR/>
         <button class="labelPDB" name="showSSBond" id="showSSBond"  title="Show SSBond">Show SSBond</button>   <BR/>
         <button class="labelPDB" name="showCovalent" id="showCovalent"  title="Show Covalent">Show Covalent</button>   <BR/>
   </span>
-  <BR/>
-  <LABEL onclick="switchMenu('eCloud')">Density Map</LABEL><BR/>
-  <span class="submenu" id="eCloud">
+    <BR/>
+    <LABEL onclick="switchMenu('eCloud')">Density Map</LABEL><BR/>
+    <span class="submenu" id="eCloud">
       <!-- <label class="label"> Step Option </label><BR/> -->
-      <!-- <input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label> -->
-      <!-- <input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label> -->
-      <!-- <input class="labelPDB" id="step4" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 4.x </label> <BR/> -->
+        <!-- <input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label> -->
+        <!-- <input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label> -->
+        <!-- <input class="labelPDB" id="step4" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 4.x </label> <BR/> -->
       <button class="labelPDB" name="loadDensityMap" id="loadDensityMap">Load Density Map</button>
   </span>
-  
-  <BR/>
 
-  <!--<LABEL onclick="switchMenu('conservation')">Conservation</LABEL><BR/>
-  <span class="submenu" id="conservation">
-    <button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>
-  </span>
-  <BR/>-->
+    <BR/>
 
-  <LABEL onclick="switchMenu('drugDesign')">Drug Design</LABEL><BR/>
-  <span class="submenu" id="drugDesign">
+    <!--<LABEL onclick="switchMenu('conservation')">Conservation</LABEL><BR/>
+    <span class="submenu" id="conservation">
+      <button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>
+    </span>
+    <BR/>-->
+
+    <LABEL onclick="switchMenu('drugDesign')">Drug Design</LABEL><BR/>
+    <span class="submenu" id="drugDesign">
     <button class="labelPDB" name="b_load_drug" id="b_load_drug" value="Export">Load Drug</button><br/>
 	<input class="labelPDB" name="drugSurface" id="drugSurface"   type="checkbox" title="Drug Het Surface" /> 
 	<label class="label">Drug Surface</label>
   </span>
-  <BR/>
+    <BR/>
 
 
-  <LABEL onclick="switchMenu('exportScene')">Export</LABEL><BR/>
-  <span class="submenu" id="exportScene">
+    <LABEL onclick="switchMenu('exportScene')">Export</LABEL><BR/>
+    <span class="submenu" id="exportScene">
     <button class="labelPDB" name="b_export_scene" id="b_export_scene" value="Export">Export</button><br/>
 	<select id="exportType">
 		<option value="MainStructure" selected>MainStructure</option>
@@ -292,23 +294,32 @@
 	<select><br/>
 	<button class="labelPDB" name="b_export_pdb" id="b_export_pdb" value="Export">Export PDB</button>
   </span>
-  <BR/>
-  <!-- <LABEL onclick="switchMenu('chainNumThreshold')">ChainNumThreshold</LABEL><BR/> -->
-  <!-- <span class="submenu" id="chainNumThreshold"> -->
-    <!-- <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>--> 
-  <!-- </span> -->
-  <!-- <BR/> -->
-  <LABEL onclick="switchMenu('contact')" id="contact">Contact Us</LABEL><BR/>
-    <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
-   
     <BR/>
-  <LABEL id="progmsg">Progress</LABEL><BR/>
+    <!-- <LABEL onclick="switchMenu('chainNumThreshold')">ChainNumThreshold</LABEL><BR/> -->
+    <!-- <span class="submenu" id="chainNumThreshold"> -->
+    <!-- <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>-->
+    <!-- </span> -->
+    <!-- <BR/> -->
+    <LABEL onclick="switchMenu('contact')" id="contact">Contact Us</LABEL><BR/>
+    <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
+
+    <BR/>
+    <LABEL id="progmsg">Progress</LABEL><BR/>
     <progress id="progress" value="0"></progress>
-    <BR/> 
-   
+    <BR/>
+
+    <div class="messages"></div>
+    <button class="test" onmousedown="startRecording()" onmouseup="endRecord()">一键操作</button>
+    <br>
+    <input name="language" value="Chinese" type="radio" id="Chinese" onclick="getlanguage()" checked="true">
+    <label for="Chinese">中文语音</label>
+    <br>
+    <input name="language" value="English" type="radio" id="English" onclick="getlanguage()">
+    <label for="English">English voice</label>
+
 </div>
 <div id="rightmenu">
-	<LABEL id="titleLab"></LABEL><BR/>
+    <LABEL id="titleLab"></LABEL><BR/>
     <span class="rightsubmenu" id="menuSpan">
     </span>
     <BR/>
@@ -329,100 +340,101 @@
     border-style: outset;
     border-radius: 5px;
     box-shadow: 0px 1px 0px 3px #afb2ef;" id="segmentPanel">
-	<div id="segmentHeader" style="height:25px;float:left;border-bottom:1px solid #ccc;width:100%">		
-			<span style="float:right;font-size:18px;color:red;margin:2px 3px 0px 0px;cursor: pointer;" id="closesegment" class="closerClass">&nbsp;X&nbsp;</span>
-			
-	</div>
+    <div id="segmentHeader" style="height:25px;float:left;border-bottom:1px solid #ccc;width:100%">
+        <span style="float:right;font-size:18px;color:red;margin:2px 3px 0px 0px;cursor: pointer;" id="closesegment" class="closerClass">&nbsp;X&nbsp;</span>
+
+    </div>
     <DIV>
         <audio id="player" src="data/audios/4PYP.mp3"></audio>
     </DIV>
-	<div id="segmentContent" style="height:calc(100% - 25px);float:left;width:100%">
-		<ul>
-			<!--<li>Select Mode</li>
-			<li style="margin-left:30px;list-style: none;"><span style="float:left">Residue</span>
-				<input name="selectedStyle" id="residueStyle" type="radio" style="float:left"></input>
-			</li>
-			<br/>-->
-			<li>Select Region</li>
-				<li style="margin-left:30px;list-style: none;">
-					<div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
-						<input name="selectedStyle" id="chainStyle" type="radio" style="float:left;margin-top:10px;" value=2></input>
-						<span style="float:left;line-height: 38px; ">By Chain</span>
-						
-						<!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">Chain ID</span>-->
-						<select style="float:left;margin-left:90px;color:#333;    margin-top: 12px;width:100px" id="chainIDSelect">
-							
-						</select>
-					</div>
-					<div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
-						<input id="fragmentStyle" type="radio" style="float:left;margin-top:10px;" value=1 name="selectedStyle" checked ></input>
-						<span style="float:left;line-height: 38px; ">By Fragment</span>
-						
-						<!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">StartResidue:</span>-->
-						<select style="float:left;margin-left:62px;color:#333;    margin-top: 12px;width:100px" id="startPoint">
-							
-						</select>
-						
-						<!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">EndResidue:</span>-->
-						<select style="float:left;margin-left:62px;color:#333;margin-top: 12px;width:100px"  id="endPoint">
-							
-						</select>
-					</div>
-					<div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
-						<input name="selectedStyle" id="sseType" type="radio" style="float:left;margin-top:10px;" value=3></input>
-						<span style="float:left;line-height: 38px;">By sseType</span>
-											
-						
-						<!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">SSE TYPE:</span>-->
-						<select style="float:left;margin-left:73px;color:#333;margin-top:12px;width:100px" id="sseTypeSelect">
-							<option value=150>HELIX</option>
-							<option value=151>SHEET</option>
-							<option value=152>LOOP</option>
-						</select>						
-						
-					</div>
-					<div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
-						<input name="selectedStyle" id="residueType" type="radio" style="float:left;margin-top:10px;" value=4></input>
-						<span style="float:left;line-height: 38px;">By residueType</span>
-						
-						<!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">Residue TYPE:</span>-->
-						<select style="float:left;margin-left:62px;color:#333;margin-top:12px;width:100px"  id="residueTypeSelect">
-							
-						</select>
-					</div>
-				</li>
-				<br/>
-			<li>Representation</li>
-				<li style="margin-left:30px;list-style: none;">
-					<div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
-						<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">Representation:</span>
-						<select style="float:left;margin-left:40px;color:#333;margin-top: 12px;width:150px"  id="selectedMode">
-							<option value=3>BACKBONE</option>
-							<option value=1>LINE</option>
-							<option value=2>DOT</option>
-							<option value=6>BALL_AND_ROD</option>
-							<option value=5>STICKS</option>	
-							<option value=4>SPHERE</option>
-							<option value=7>CARTOON_TUBE</option>
-							<option value=8>CARTOON_FLAT</option>
-							<option value=9>CARTOON_ELLIPSE</option>
-							<option value=10>CARTOON_RECTANGLE</option>
-							<option value=11>CARTOON_STRIP</option>
-							<option value=12>CARTOON_RAILWAY</option>
-							<option value=13>CARTOON_SSE</option>
-							<option value=14>SURFACE</option>				
-						</select>
-					</div>
-				</li>
-				<br/>
-			<li>Fragment List</li>				
-		</ul>
-		<div style="width:98%;height:120px;float:left;border:1px solid #CCC;" id="seletedPanel">
-			<!--<span class="fragment" attr=""><span class="fragmentdel">X</span>&nbsp;</span>-->
-		</div>
-		<button id="addSelected" style="width: 138px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 10px;text-align:center;">Add Selected</button>
-		<button id="Confirm_fregment" style="width: 68px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 30px;">Confirm</button>
-	</div>
+    <div id="segmentContent" style="height:calc(100% - 25px);float:left;width:100%">
+        <ul>
+            <!--<li>Select Mode</li>
+            <li style="margin-left:30px;list-style: none;"><span style="float:left">Residue</span>
+                <input name="selectedStyle" id="residueStyle" type="radio" style="float:left"></input>
+            </li>
+            <br/>-->
+            <li>Select Region</li>
+            <li style="margin-left:30px;list-style: none;">
+                <div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
+                    <input name="selectedStyle" id="chainStyle" type="radio" style="float:left;margin-top:10px;" value=2></input>
+                    <span style="float:left;line-height: 38px; ">By Chain</span>
+
+                    <!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">Chain ID</span>-->
+                    <select style="float:left;margin-left:90px;color:#333;    margin-top: 12px;width:100px" id="chainIDSelect">
+
+                    </select>
+                </div>
+                <div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
+                    <input id="fragmentStyle" type="radio" style="float:left;margin-top:10px;" value=1 name="selectedStyle" checked ></input>
+                    <span style="float:left;line-height: 38px; ">By Fragment</span>
+
+                    <!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">StartResidue:</span>-->
+                    <select style="float:left;margin-left:62px;color:#333;    margin-top: 12px;width:100px" id="startPoint">
+
+                    </select>
+
+                    <!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">EndResidue:</span>-->
+                    <select style="float:left;margin-left:62px;color:#333;margin-top: 12px;width:100px"  id="endPoint">
+
+                    </select>
+                </div>
+                <div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
+                    <input name="selectedStyle" id="sseType" type="radio" style="float:left;margin-top:10px;" value=3></input>
+                    <span style="float:left;line-height: 38px;">By sseType</span>
+
+
+                    <!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">SSE TYPE:</span>-->
+                    <select style="float:left;margin-left:73px;color:#333;margin-top:12px;width:100px" id="sseTypeSelect">
+                        <option value=150>HELIX</option>
+                        <option value=151>SHEET</option>
+                        <option value=152>LOOP</option>
+                    </select>
+
+                </div>
+                <div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
+                    <input name="selectedStyle" id="residueType" type="radio" style="float:left;margin-top:10px;" value=4></input>
+                    <span style="float:left;line-height: 38px;">By residueType</span>
+
+                    <!--<span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">Residue TYPE:</span>-->
+                    <select style="float:left;margin-left:62px;color:#333;margin-top:12px;width:100px"  id="residueTypeSelect">
+
+                    </select>
+                </div>
+            </li>
+            <br/>
+            <li>Representation</li>
+            <li style="margin-left:30px;list-style: none;">
+                <div style="width:98%;height:40px;border-bottom:1px dashed #ccc;float:left;">
+                    <span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">Representation:</span>
+                    <select style="float:left;margin-left:40px;color:#333;margin-top: 12px;width:150px"  id="selectedMode">
+                        <option value=3>BACKBONE</option>
+                        <option value=1>LINE</option>
+                        <option value=2>DOT</option>
+                        <option value=6>BALL_AND_ROD</option>
+                        <option value=5>STICKS</option>
+                        <option value=4>SPHERE</option>
+                        <option value=7>CARTOON_TUBE</option>
+                        <option value=8>CARTOON_FLAT</option>
+                        <option value=9>CARTOON_ELLIPSE</option>
+                        <option value=10>CARTOON_RECTANGLE</option>
+                        <option value=11>CARTOON_STRIP</option>
+                        <option value=12>CARTOON_RAILWAY</option>
+                        <option value=13>CARTOON_SSE</option>
+                        <option value=14>SURFACE</option>
+                    </select>
+                </div>
+            </li>
+            <br/>
+            <li>Fragment List</li>
+        </ul>
+        <div style="width:98%;height:120px;float:left;border:1px solid #CCC;" id="seletedPanel">
+            <!--<span class="fragment" attr=""><span class="fragmentdel">X</span>&nbsp;</span>-->
+        </div>
+        <button id="addSelected" style="width: 138px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 10px;text-align:center;">Add Selected</button>
+        <button id="Confirm_fregment" style="width: 68px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 30px;">Confirm</button>
+    </div>
+
 </div>
 <script type="text/javascript" src="libs/molecule/index.js"></script>
 <script type="text/javascript">
@@ -433,7 +445,7 @@
         document.write('</style>\n');
         switchMenu("mainStructure");
     }
-	function switchRightMenu(obj){
+    function switchRightMenu(obj){
         if(document.getElementById){
             var el = document.getElementById(obj);
             var ar = document.getElementById("rightmenu").getElementsByTagName("span"); //DynamicDrive.com change
@@ -448,7 +460,7 @@
             }
         }
     }
-	
+
     function switchMenu(obj){
         if(document.getElementById){
             var el = document.getElementById(obj);
@@ -466,7 +478,7 @@
     }
     var worker = new Worker('libs/fileutils/export.js');
     (function(){
-		
+
     })()
 </script>
 </body>
