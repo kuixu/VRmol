@@ -245,6 +245,7 @@ function voiceOperation(code) {
             PDB.controller.refreshSurface(PDB.config.surfaceMode,2,0.5,PDB.SURFACE_WIREFRAME);
             break;
         case 53:
+            PDB.render.clear(3);
             PDB.render.clear(5);
             PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
             PDB.GROUP[PDB.GROUP_SURFACE].visible = false;
