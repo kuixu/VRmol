@@ -1169,11 +1169,11 @@ PDB.tool = {
 	},
 	generateDrugMigrationPath : function(){
 		var pathScope = 20;
-		var startPos = PDB.offset; 
+		var startPos = new THREE.Vector3(-pathScope,0,0); 
 		var rotateScope = Math.PI;
 		PDB.DRUGMigrationPaths = [];
 		PDB.DRUGMigrationRotates = [];
-		for(var i=0;i<pathScope*2;i++){			
+		for(var i=0;i<5000;i++){			
 			var pos = new THREE.Vector3(Math.random()*2*pathScope-pathScope,Math.random()*2*pathScope-pathScope,Math.random()*2*pathScope-pathScope);			
 			pos.len= Math.sqrt(Math.pow(pos.x - startPos.x,2)+Math.pow(pos.y - startPos.y,2)+Math.pow(pos.z - startPos.z,2));			
 			PDB.DRUGMigrationPaths.push(pos);
