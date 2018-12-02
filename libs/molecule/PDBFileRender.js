@@ -305,11 +305,11 @@ function dealwithMenu(object) {
         case PDB.GROUP_MENU_ROTATION:
             PDB.ROTATION_AXIS = object.userData.reptype;
 			if(PDB.ROTATION_AXIS==1){
-				PDB.MOVE_DIRECTION = 2;
+				PDB.MOVE_AXIS = 2;
 			}else if(PDB.ROTATION_AXIS==2){
-				PDB.MOVE_DIRECTION = 1;
+				PDB.MOVE_AXIS = 1;
 			}else if(PDB.ROTATION_AXIS==3){
-				PDB.MOVE_DIRECTION = 3;
+				PDB.MOVE_AXIS = 3;
 			}
 			
 			//PDB.MOVE_DIRECTION = PDB.ROTATION_AXIS;
@@ -319,13 +319,13 @@ function dealwithMenu(object) {
 		    var  type = object.userData.reptype;
 			switch (type){
 				case 1:
-					PDB.MOVE_DIRECTION = type;
+					PDB.MOVE_AXIS = type;
 					break;
 				case 2:
-					PDB.MOVE_DIRECTION = type;
+					PDB.MOVE_AXIS = type;
 					break;
 				case 3:
-					PDB.MOVE_DIRECTION = type;
+					PDB.MOVE_AXIS = type;
 					break;
 				case 4:
 					PDB.ZOOM_TIMES = 1;

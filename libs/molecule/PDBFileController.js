@@ -1496,6 +1496,7 @@ PDB.controller = {
         }
     },
     startRotation: function (axis,direction) {
+        window.clearInterval(PDB.ROTATION_TASK_ID);
         PDB.ROTATION_DIRECTION=direction;
         PDB.ROTATION_AXIS=axis;
         PDB.ROTATION_START_FLAG = true;
@@ -1504,5 +1505,18 @@ PDB.controller = {
     cancelRotation:function () {
         PDB.ROTATION_START_FLAG = false;
         window.clearInterval(PDB.ROTATION_TASK_ID);
+    },
+    startMotion: function (axia,direction) {
+        window.clearInterval(PDB.MOVE_TASK_ID);
+        PDB.MOVE_AXIS = axia;
+        PDB.MOVE_DIRECTION =direction;
+        if(PDB.MOVE_DIRECTION === 1){
+            PDB.MOVE_TASK_ID =self.setInterval("PDB.painter.near()",20);
+        }else if(PDB.MOVE_DIRECTION === 2) {
+            PDB.MOVE_TASK_ID =self.setInterval("PDB.painter.far()",20);
+        }
+    },
+    cancelMotion: function () {
+        window.clearInterval(PDB.MOVE_TASK_ID);
     }
 };

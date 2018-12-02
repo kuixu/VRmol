@@ -52,7 +52,7 @@ PDB.painter = {
     },
 	near:function(){
 		for(var i in PDB.GROUP_STRUCTURE_INDEX){
-		    switch (PDB.MOVE_DIRECTION){
+		    switch (PDB.MOVE_AXIS){
 				case 1:
 				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y - PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					break;
@@ -66,7 +66,7 @@ PDB.painter = {
 		}
 		//旋转轴
 		
-		switch (PDB.MOVE_DIRECTION){
+		switch (PDB.MOVE_AXIS){
 			case 1:
 				for(var chain in PDB.residueGroupObject){
 					for(var resid in PDB.residueGroupObject[chain]){
@@ -102,7 +102,7 @@ PDB.painter = {
 	},
 	far:function(){	
 		for(var i in PDB.GROUP_STRUCTURE_INDEX){          
-			switch (PDB.MOVE_DIRECTION){
+			switch (PDB.MOVE_AXIS){
 				case 1:
 				    PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.y + PDB.ZOOM_STEP*PDB.ZOOM_TIMES;
 					break;
@@ -114,7 +114,7 @@ PDB.painter = {
 					break;
 			}
 		}
-		switch (PDB.MOVE_DIRECTION){
+		switch (PDB.MOVE_AXIS){
 			case 1:
 				for(var chain in PDB.residueGroupObject){
 					for(var resid in PDB.residueGroupObject[chain]){			

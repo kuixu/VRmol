@@ -117,7 +117,7 @@ PDB.controller.switchColorBymode("607");
 //PDB.trigger = PDB.TRIGGER_EVENT_DRAG;
 //PDB.selection_mode= PDB.SELECTION_DRUG;
 
-
+var rotation_task_id = 0;
 
 function endRecord(){
     p=endrecording();
@@ -284,24 +284,45 @@ function voiceOperation(code) {
             PDB.controller.switchColorBymode(609);
             break;
         case 73:
-            PDB.controller.startRotation(1,1);
-            break;
-        case 74:
-            PDB.controller.startRotation(1,0);
-            break;
-        case 75:
             PDB.controller.startRotation(2,1);
             break;
-        case 76:
-            PDB.controller.startRotation(3,0);
-        case 77:
-            PDB.controller.startRotation(3,1);
+        case 741:
+            PDB.controller.startRotation(1,PDB.ROTATION_DIRECTION);
             break;
-        case 78:
-            PDB.controller.startRotation(2,0);
+        case 742:
+            PDB.controller.startRotation(3,PDB.ROTATION_DIRECTION);
+            break;
+        case 743:
+            PDB.controller.startRotation(2,PDB.ROTATION_DIRECTION);
+        case 751:
+            PDB.controller.startRotation(PDB.ROTATION_AXIS,2);
+            break;
+        case 752:
+            PDB.controller.startRotation(PDB.ROTATION_AXIS,1);
             break;
         case 701:
             PDB.controller.cancelRotation();
+            break;
+        case 76:
+            PDB.controller.startMotion(3,1);
+            break;
+        case 771:
+            PDB.controller.startMotion(1,PDB.MOVE_DIRECTION);
+            break;
+        case 772:
+            PDB.controller.startMotion(2,PDB.MOVE_DIRECTION);
+            break;
+        case 773:
+            PDB.controller.startMotion(3,PDB.MOVE_DIRECTION);
+            break;
+        case 781:
+            PDB.controller.startMotion(PDB.MOVE_AXIS,1);
+            break;
+        case 782:
+            PDB.controller.startMotion(PDB.MOVE_AXIS,2);
+            break;
+        case 702:
+            PDB.controller.cancelMotion();
             break;
     }
 }

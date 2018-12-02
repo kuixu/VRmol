@@ -70,7 +70,9 @@ PDB = {
     ROTATION_DIRECTION:1, //0 left 1 right
 	ROTATION_AXIS:1, //1 x轴旋转 2 y轴旋转 3 z轴旋转
     ROTATION_TASK_ID:0,//旋转任务ID
-	MOVE_DIRECTION:2, //1 上下  2左右 3前后 
+	MOVE_DIRECTION:2, //1 正向  2 负向
+	MOVE_AXIS:3, //1 y轴  2 x轴 3 z轴
+    MOVE_TASK_ID:0,
 	PLANE:{a:0,b:0,c:0,d:0},
     TravelScale:6,
     currentType: 1,
