@@ -1166,6 +1166,39 @@ PDB.tool = {
 		link.href = URL.createObjectURL( blob );
 		link.download = filename || 'data.obj';
 		link.click();
+	},
+	generateDrugMigrationPath : function(){
+		var pathScope = 20;
+		var startPos = PDB.offset; 
+		var rotateScope = Math.PI;
+		PDB.DRUGMigrationPaths = [];
+		PDB.DRUGMigrationRotates = [];
+		for(var i=0;i<pathScope*2;i++){			
+			var pos = new THREE.Vector3(Math.random()*2*pathScope-pathScope,Math.random()*2*pathScope-pathScope,Math.random()*2*pathScope-pathScope);			
+			pos.len= Math.sqrt(Math.pow(pos.x - startPos.x,2)+Math.pow(pos.y - startPos.y,2)+Math.pow(pos.z - startPos.z,2));			
+			PDB.DRUGMigrationPaths.push(pos);
+			var rota = new THREE.Euler( Math.random()*2*rotateScope-rotateScope, Math.random()*2*rotateScope-rotateScope, Math.random()*2*rotateScope-rotateScope, 'XYZ' );
+			PDB.DRUGMigrationRotates.push(rota);			
+		}
+		function sortPos(posA,posB){			
+			return posA.len - posB.len;
+		}		
+		PDB.DRUGMigrationPaths.sort(sortPos);		
+	},
+	migrationDrug : function(){
+		if(PDB.GROUP[PDB.GROUP_DRUG]&&PDB.GROUP[PDB.GROUP_DRUG].children.length>0){
+			if(!PDB.PathCount){
+				PDB.PathCount = 0;
+			}
+			
+			var i = PDB.PathCount%(PDB.DRUGMigrationPaths.length);
+			if(PDB.DRUGMigrationPaths.length>0){
+				PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.DRUGMigrationPaths[i]);
+				PDB.GROUP[PDB.GROUP_DRUG].rotation.copy(PDB.DRUGMigrationRotates[i]);
+			}					
+			PDB.PathCount++;
+		}
+		
 	}
 
 }

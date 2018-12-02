@@ -520,6 +520,8 @@ function dealwithMenu(object) {
 function onTriggerDown( event ) {
 	//console.log("onTriggerDown");
     var controller = event.target;
+	//console.log(controller.position);
+	//console.log(controller.rotation);
     var intersections = getIntersections( controller );
     if ( intersections.length <= 0 ) {
         return;
@@ -630,10 +632,28 @@ function onTriggerUp( event ) {
     if ( controller.userData!== undefined && controller.userData.selected !== undefined ) {
         var intersections = controller.userData.selected;
         var object =intersections;
-        objectDeTrans(controller, object);
+        
+		//var aaa = getIntersections( controller );
+		//console.log(aaa[0].pos);
+		// var pos = undefined;
+		// if ( intersections.length > 0 ) {
+			// var intersection = intersections[ 0 ];	
+			// var pos = intersection.pos;
+		// }
+		
+		objectDeTrans(controller, object);
         controller.userData.selected = undefined;
     }
 
+	
+    
+  
+   
+	
+	
+	
+	
+	
     switch (PDB.trigger){
         case PDB.GROUP_MENU_DRAG:
 
@@ -807,9 +827,13 @@ function objectDeTrans(controller, object){
 					}
 				}
             }
-			
+			//console.log('------------------------------------');
+			//console.log(object.position);
 			if(object.userData['presentAtom']&&object.userData['presentAtom']['chainname']&&object.userData['presentAtom']['resid']&&PDB.residueGroupObject[object.userData['presentAtom']['chainname']][object.userData['presentAtom']['resid']]){
-				PDB.residueGroupObject[object.userData['presentAtom']['chainname']][object.userData['presentAtom']['resid']].moveVec = object.position;
+				if(!PDB.residueGroupObject[object.userData['presentAtom']['chainname']][object.userData['presentAtom']['resid']].moveVec){
+					PDB.residueGroupObject[object.userData['presentAtom']['chainname']][object.userData['presentAtom']['resid']].moveVec = new THREE.Vector3(0,0,0);
+				}
+				PDB.residueGroupObject[object.userData['presentAtom']['chainname']][object.userData['presentAtom']['resid']].moveVec.copy(object.position);
 			}
 			
 			
@@ -1906,6 +1930,20 @@ PDB.render = {
 			PDB.tool.getRealVectorForRepeatPainter(vec);			
 		}
 		PDB.offset = offset.clone();
+		
+		
+		//====add the random  migration path and scope of drug
+		
+		if(PDB.DRUGMOVE){
+			var now = new Date();
+			//console.log(PDB.drugMoveTime - now);
+			if(PDB.drugMoveTime - now<-2000){
+				PDB.tool.migrationDrug();
+				PDB.drugMoveTime = new Date();				
+			}			
+			
+		}
+		
     },
     onWindowResize : function(){
         camera.aspect = window.innerWidth / window.innerHeight;
