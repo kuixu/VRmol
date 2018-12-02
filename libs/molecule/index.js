@@ -128,59 +128,180 @@ function endRecord(){
     // console.log(a)
 }
 
-//
+//声音操作
 function voiceOperation(code) {
-    switch (code) {
+    switch (parseInt(code)) {
+        case 11:
+            window.location.href="index.html?vmode=desktop";
+            break;
+        case 12:
+            window.location.href="index.html?vmode=vr";
+            break;
+        case 13:
+            PDB.CHANGESTYLE = 6;
+            PDB.render.clearStructure();
+            PDB.render.changeToThreeMode(PDB.MODE_TRAVEL_THREE,true);
+            PDB.painter.showResidueByThreeTravel();
+            break;
+        case 20:
+            PDB.render.clear(5);
+            PDB.config.mainMode = PDB.LINE;
+            PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+            break;
+        case 21:
+            PDB.render.clear(5);
+            PDB.config.mainMode = PDB.DOT;
+            PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+            break;
+        case 22:
+            PDB.render.clear(5);
+            PDB.config.mainMode = PDB.BACKBONE;
+            PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+            break;
+        case 23:
+            PDB.render.clear(5);
+            PDB.config.mainMode = PDB.SPHERE;
+            PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+            break;
+        case 24:
+            PDB.render.clear(5);
+            PDB.config.mainMode = PDB.STICK;
+            PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+            break;
+        case 25:
+            PDB.render.clear(5);
+            PDB.config.mainMode = PDB.BALL_AND_ROD;
+            PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+            break;
+        case 26:
+            PDB.render.clear(5);
+            PDB.config.mainMode = PDB.TUBE;
+            PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+            break;
+        case 27:
+            PDB.render.clear(5);
+            PDB.config.mainMode = PDB.CARTOON_SSE;
+            PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+            break;
+        case 28:
+            PDB.render.hideStructure();
+            break;
+        case 29:
+            PDB.render.showStructure();
+            break;
+        case 31:
+            PDB.render.clear(5);
+            PDB.config.hetMode = PDB.HET_LINE;
+            PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
+            break;
+        case 32:
+            PDB.render.clear(5);
+            PDB.config.hetMode = PDB.HET_SPHERE;
+            PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
+            break;
+        case 33:
+            PDB.render.clear(5);
+            PDB.config.hetMode = PDB.HET_STICK;
+            PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
+            break;
+        case 34:
+            PDB.render.clear(5);
+            PDB.config.hetMode = PDB.HET_BALL_ROD;
+            PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
+            break;
+        case 35:
+            PDB.GROUP[PDB.GROUP_HET].visible=false;
+            break;
+        case 36:
+            PDB.GROUP[PDB.GROUP_HET].visible=true;
+            break;
+        case 41:
+            PDB.isShowWater = true;
+            break;
+        case 42:
+            PDB.isShowWater = false;
+            break;
+        case 43:
+            PDB.render.clearGroupIndex(PDB.GROUP_BOND);
+            PDB.painter.showBond(PDB.BOND_TYPE_HBOND);
+            break;
+        case 44:
+            PDB.render.clearGroupIndex(PDB.GROUP_BOND);
+            break;
+        case 45:
+            break;
+        case 46:
+            break;
+        case 51:
+            PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            PDB.SURFACE_OPACITY = 0.5;
+            PDB.SURFACE_WIREFRAME = false;
+            PDB.controller.refreshSurface(PDB.config.surfaceMode,2,PDB.SURFACE_OPACITY,PDB.SURFACE_WIREFRAME);
+            break;
+        case 52:
+            PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            PDB.SURFACE_OPACITY = 1;
+            PDB.SURFACE_WIREFRAME = true;
+            PDB.controller.refreshSurface(PDB.config.surfaceMode,2,0.5,PDB.SURFACE_WIREFRAME);
+            break;
+        case 53:
+            PDB.render.clear(5);
+            PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            PDB.GROUP[PDB.GROUP_SURFACE].visible = false;
+            break;
+        case 54:
+            PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            PDB.SURFACE_OPACITY = 1;
+            PDB.SURFACE_WIREFRAME = false;
+            PDB.controller.refreshSurface(PDB.config.surfaceMode,2,PDB.SURFACE_OPACITY,PDB.SURFACE_WIREFRAME);
+            PDB.GROUP[PDB.GROUP_SURFACE].visible = true;
+            break;
+        case 61:
+            PDB.controller.switchColorBymode(601);
+            break;
+        case 62:
+            PDB.controller.switchColorBymode(602);
+            break;
+        case 63:
+            PDB.controller.switchColorBymode(603);
+            break;
+        case 64:
+            PDB.controller.switchColorBymode(604);
+            break;
+        case 65:
+            PDB.controller.switchColorBymode(605);
+            break;
+        case 66:
+            PDB.controller.switchColorBymode(606);
+            break;
+        case 67:
+            PDB.controller.switchColorBymode(607);
+            break;
+        case 68:
+            PDB.controller.switchColorBymode(608);
+            break;
+        case 69:
+            PDB.controller.switchColorBymode(609);
+            break;
         case 73:
             PDB.controller.startRotation(1,1);
             break;
         case 74:
             PDB.controller.startRotation(1,0);
             break;
+        case 75:
+            PDB.controller.startRotation(2,1);
+            break;
+        case 76:
+            PDB.controller.startRotation(3,0);
+        case 77:
+            PDB.controller.startRotation(3,1);
+            break;
+        case 78:
+            PDB.controller.startRotation(2,0);
+            break;
         case 701:
             PDB.controller.cancelRotation();
-            break;
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-        case 8:
-            break;
-        case 9:
-            break;
-        case 10:
-            break;
-        case 11:
-            break;
-        case 12:
-            break;
-        case 13:
-            break;
-        case 14:
-            break;
-        case 15:
-            break;
-        case 16:
-            break;
-        case 17:
-            break;
-        case 18:
-            break;
-        case 19:
-            break;
-        case 20:
-            break;
-        case 21:
-            break;
-        case 22:
-            break;
-        case 23:
-            break;
-        case 24:
             break;
     }
 }

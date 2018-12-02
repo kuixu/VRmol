@@ -273,20 +273,10 @@ PDB.controller = {
 		b_hide.addEventListener( 'click', function(e) {
 			//console.log(e.target.innerText);
 			if(e.target.innerText=='Hide'){
-				var residueData = w3m.mol[PDB.pdbId].residueData;
-				for(var chain in residueData){
-					PDB.GROUP['chain_'+chain].visible = false;
-					PDB.GROUP['chain_'+chain+'_low'].visible = false;
-				}
-				PDB.GROUP[PDB.GROUP_HET].visible = false;
+				PDB.render.hideStructure();
 				e.target.innerText='Show';
 			}else if(e.target.innerText=='Show'){
-				var residueData = w3m.mol[PDB.pdbId].residueData;
-				for(var chain in residueData){
-					PDB.GROUP['chain_'+chain].visible = true;
-					PDB.GROUP['chain_'+chain+'_low'].visible = true;
-				}
-				PDB.GROUP[PDB.GROUP_HET].visible = true;
+                PDB.render.showStructure();
 				e.target.innerText='Hide';
 			}
 			
