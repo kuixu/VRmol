@@ -202,3 +202,20 @@ http://vr.zhanglab.net/server/api.php?taskid=13&pdbid=1MI6
    message: "success"
 }
 ```
+
+
+## AutoDock
+http://vr.zhanglab.net/server/autodock/autodock.php?pdbid=1mbs&smolid=DB04464&x_c=10&y_c=10&z_c=10&x_s=50&y_s=50&z_s=50
+
+```
+{
+   jobid : "1mbs_DB04464_20181223200624_92",
+   log : "http:\/\/vr.zhanglab.net\/server\/autodock\/jobs\/1mbs_DB04464_20181223200624_92\/log",
+   pdbid : "1mbs",
+   smolid : "DB04464",
+   fullmodel : "DB04464_out.pdb",
+   fullmodel_url : "http:\/\/vr.zhanglab.net\/server\/autodock\/jobs\/1mbs_DB04464_20181223200624_92\/DB04464_out.pdb",
+   model_list":       ["DB04464_out_1.pdb","DB04464_out_2.pdb","DB04464_out_3.pdb","DB04464_out_4.pdb","DB04464_out_5.pdb","DB04464_out_6.pdb","DB04464_out_7.pdb","DB04464_out_8.pdb","DB04464_out_9.pdb"],
+   outdir : "http:\/\/vr.zhanglab.net\/server\/autodock\/jobs\/1mbs_DB04464_20181223200624_92"
+}
+```
