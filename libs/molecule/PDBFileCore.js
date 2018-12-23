@@ -10,9 +10,8 @@ if(ServerType ===1){
 }else if(ServerType ===2){
     SERVERURL= "http://vr.zhanglab.net";
 }else if(ServerType ===3){
-    SERVERURL= "localhost";
-    // SERVERURL= "https://inano.zhanglab.net";
-	// SERVERURL= "http://192.168.1.105:8080";
+    SERVERURL= "http://localhost:8080";
+	SERVERURL= "http://localhost";
 }
 PDB = {
     
@@ -87,7 +86,7 @@ PDB = {
     DRUG_URL: SERVERURL + "/server/api.php?taskid=12",
     currentUrl: "data/aaa.pdb",
     remoteUrl: [SERVERURL + '/data/', 'http://files.rcsb.org/view/', 'http://www.rcsb.org/pdb/files/' ],
-    drugPDBUrl: [ 'http://vr.zhanglab.net/data/drugbank/',SERVERURL + '/data/','https://www.drugbank.ca/structures/small_molecule_drugs/DB04464.pdb'],
+    drugPDBUrl: [ SERVERURL + '/data/','https://www.drugbank.ca/structures/small_molecule_drugs/DB04464.pdb'],
     pdbId:"1mbs",
     molecules : {
         "aaa": "aaa.pdb",

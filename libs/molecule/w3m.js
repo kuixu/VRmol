@@ -4801,9 +4801,9 @@ w3m.pdb = function ( text, drugname ) {
 				math.limit(v.x, w3m.global.limit.x);
 				math.limit(v.y, w3m.global.limit.y);
 				math.limit(v.z, w3m.global.limit.z);
-				xyz[0] = xyz[0]+v.x*10;
-				xyz[1] = xyz[1]+v.y*10;
-				xyz[2] = xyz[2]+v.z*10;
+				xyz[0] = xyz[0]+v.x;
+				xyz[1] = xyz[1]+v.y;
+				xyz[2] = xyz[2]+v.z;
 				s = s.replace(w3m_sub(s, 31, 38),Math.floor(xyz[0]*1000)/1000);
 				s = s.replace(w3m_sub(s, 39, 46),Math.floor(xyz[1]*1000)/1000);
 				s = s.replace(w3m_sub(s, 47, 54),Math.floor(xyz[2]*1000)/1000);
@@ -4928,7 +4928,7 @@ w3m.pdb = function ( text, drugname ) {
      * @param s
      */
 	var doeEitHet =  function ( s ) {
-		console.log(s);
+		//console.log(s);
 		var atom_id      = parseInt(w3m_sub(s, 7, 11)),
             atom_name    = w3m_sub(s, 13, 16),
             residue_name = w3m_sub(s, 18, 20) || 'xxx',

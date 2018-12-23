@@ -273,9 +273,27 @@ PDB.controller = {
 		b_hide.addEventListener( 'click', function(e) {
 			//console.log(e.target.innerText);
 			if(e.target.innerText=='Hide'){
+				var residueData = w3m.mol[PDB.pdbId].residueData;
+				for(var chain in residueData){
+					PDB.GROUP['chain_'+chain].visible = false;
+					if(PDB.structureSizeLevel>1){
+						PDB.GROUP['chain_'+chain+'_low'].visible = false;
+					}
+
+				}
+				PDB.GROUP[PDB.GROUP_HET].visible = false;
 				PDB.render.hideStructure();
 				e.target.innerText='Show';
 			}else if(e.target.innerText=='Show'){
+				var residueData = w3m.mol[PDB.pdbId].residueData;
+				for(var chain in residueData){
+					PDB.GROUP['chain_'+chain].visible = true;
+					if(PDB.structureSizeLevel>1){
+						PDB.GROUP['chain_'+chain+'_low'].visible = true;
+					}
+
+				}
+				PDB.GROUP[PDB.GROUP_HET].visible = true;
                 PDB.render.showStructure();
 				e.target.innerText='Hide';
 			}
@@ -741,16 +759,35 @@ PDB.controller = {
 
 
         //=============================== Drug Design =======================
-        //
+
+		//=======add randomMigration
+		var randomMigration = document.getElementById("randomMigration");
+		randomMigration.addEventListener( 'click', function(e) {
+			if(this.checked){
+				PDB.DRUGMOVE = true;
+				PDB.drugMoveTime = new Date();
+			}else{
+				PDB.DRUGMOVE = false;
+			}
+
+		});
+
+
+		//
+
+
+
         var b_load_drug = document.getElementById("b_load_drug");
         b_load_drug.addEventListener( 'click', function() {
+
             var url = SERVERURL+"/server/api.php?taskid=12&pdbid="+PDB.pdbId.toUpperCase();
             url = "http://vr.zhanglab.net/server/api.php?taskid=12&pdbid="+PDB.pdbId.toUpperCase();
-            // if(ServerType!==2){
-            //     url = SERVERURL+"/data/drug.json";
-            // }
+            if(ServerType!==2){
+                url = SERVERURL+"/data/drug.json";
+            }
             PDB.tool.ajax.get(url,function (text) {
                 var jsonObj = JSON.parse(text);
+
                 if(jsonObj.code === 1 && jsonObj.data !== undefined){
                     //生成面板
                     var rightMenuDiv = document.getElementById("rightmenu");
@@ -798,6 +835,10 @@ PDB.controller = {
                         w3m.mol[drugId].drug = true;
                         PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
                         PDB.painter.showHet(drugId);
+
+						//====add the random migration path and scope
+						PDB.tool.generateDrugMigrationPath();
+
                     });
                 });
                 PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUBDB_URL[dbname] + drugids[i], "");
