@@ -772,11 +772,6 @@ PDB.controller = {
 
 		});
 
-
-		//
-
-
-
         var b_load_drug = document.getElementById("b_load_drug");
         b_load_drug.addEventListener( 'click', function() {
 
@@ -811,8 +806,6 @@ PDB.controller = {
 
                     var drugbank = jsonObj.data[0].drugbank;
                     PDB.controller.LoadDrugDetails(span,"drugbank",drugbank);
-
-
                 }else {
 					PDB.tool.printProgress(jsonObj.message);
                     // alert(jsonObj.message);
@@ -842,10 +835,11 @@ PDB.controller = {
                     });
                 });
                 PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUBDB_URL[dbname] + drugids[i], "");
+                PDB.tool.generateDocklingLink(span, "link" + i, "docking", drugids[i], "");
+                span.appendChild(document.createElement("br"));
             }
         }
     },
-
     onKeyDown : function (event) {
         var scope = this;
         var e = event || window.event;

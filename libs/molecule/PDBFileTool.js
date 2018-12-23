@@ -583,7 +583,46 @@ PDB.tool = {
         aLink.className=className;
         aLink.id = id;
         parent.appendChild(aLink);
-        parent.appendChild(document.createElement("br"));
+        // parent.appendChild(document.createElement("br"));
+        return aLink;
+    },
+    generateDocklingLink:function (parent,id,text,link,className) {
+        var aLink = document.createElement("a");
+        var node = document.createTextNode(text);
+        aLink.appendChild(node);
+        aLink.className=className;
+        aLink.id = id;
+        aLink.addEventListener( 'click', function() {
+            var url = "http://vr.zhanglab.net/server/autodock/autodock.php?pdbid=1mbs&smolid=DB04464&x_c=10&y_c=10&z_c=10&x_s=50&y_s=50&z_s=50";
+            if(ServerType!==2){
+                url = SERVERURL+"/data/autodock.json";
+            }
+            PDB.tool.ajax.get(url,function (text) {
+                var jsonObj = JSON.parse(text);
+                if(jsonObj.model_list != undefined &&  jsonObj.model_list.length > 0){
+                    var menuSpan = document.getElementById("menuSpan");
+                    PDB.tool.generateLabel(menuSpan, "ModelList", "");
+                    for (var i in jsonObj.model_list) {
+                        if (jsonObj.model_list[i] === "") {
+                            continue;
+                        }
+                        PDB.tool.generateButton(menuSpan, jsonObj.model_list[i], jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
+                            var drugId = this.value;
+                            PDB.config.selectedDrug = drugId;
+                            PDB.loader.loadDrug(drugId, function () {
+                                w3m.mol[drugId].drug = true;
+                                PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+                                PDB.painter.showHet(drugId);
+                                PDB.tool.generateDrugMigrationPath();
+                            });
+                        });
+                    }
+                }
+            });
+            //停止移动drug
+            PDB.DRUGMOVE = false;
+        } );
+        parent.appendChild(aLink);
         return aLink;
     },
 	setFaceColor : function(geometry, posObj){

@@ -2,7 +2,7 @@
  * Created by Kui Xu on 2017/6/27.
  */
 var PDB ;
-var ServerType = 3;
+var ServerType = 4;
 
 var SERVERURL = "http://localhost:8080/molwebvr";
 if(ServerType ===1){
@@ -11,7 +11,7 @@ if(ServerType ===1){
     SERVERURL= "http://vr.zhanglab.net";
 }else if(ServerType ===3){
     SERVERURL= "http://localhost:8080";
-	SERVERURL= "http://localhost";
+	// SERVERURL= "http://localhost";
 }
 PDB = {
     
