@@ -593,7 +593,7 @@ PDB.tool = {
         aLink.className=className;
         aLink.id = id;
         aLink.addEventListener( 'click', function() {
-            var url = "http://vr.zhanglab.net/server/autodock/autodock.php?pdbid=1mbs&smolid=DB04464&x_c=10&y_c=10&z_c=10&x_s=50&y_s=50&z_s=50";
+            var url = "http://vr.zhanglab.net/server/autodock/autodock.php?pdbid="+PDB.pdbId.toUpperCase()+"&smolid="+text.toUpperCase()+"&x_c=10&y_c=10&z_c=10&x_s=50&y_s=50&z_s=50";
             if(ServerType!==2){
                 url = SERVERURL+"/data/autodock.json";
             }
