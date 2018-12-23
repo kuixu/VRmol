@@ -181,7 +181,14 @@ PDB = {
     DIMENSION_Y:1,
     DIMENSION_Z:2,
     MAP_SCOPE:{x:0,y:0,z:0},
-
+    DRUG_MODE_CONFIG:{
+        x_c:10,
+        y_c:10,
+        z_c:10,
+        x_s:10,
+        y_s:10,
+        z_s:10
+    },
     SHOWSOLID : true,
     SHOWSILICE : true,
 
