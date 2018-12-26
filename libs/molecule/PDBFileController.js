@@ -190,8 +190,8 @@ PDB.controller = {
 
         var loadDensityMap = document.getElementById("loadDensityMap");
         loadDensityMap.addEventListener('click',function () {
-            // var url ="http://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
-            var url = "http://vr.zhanglab.net/server/api.php?taskid=13&pdbid=5ftm";
+            var url ="https://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
+            //var url = "https://vr.zhanglab.net/server/api.php?taskid=13&pdbid=5ftm";
             // if(ServerType!==2){
                 // url=SERVERURL+"/data/map01.json";
             // }
@@ -776,7 +776,7 @@ PDB.controller = {
         b_load_drug.addEventListener( 'click', function() {
 
             var url = SERVERURL+"/server/api.php?taskid=12&pdbid="+PDB.pdbId.toUpperCase();
-            url = "http://vr.zhanglab.net/server/api.php?taskid=12&pdbid="+PDB.pdbId.toUpperCase();
+            //url = "http://vr.zhanglab.net/server/api.php?taskid=12&pdbid="+PDB.pdbId.toUpperCase();
             if(ServerType!==2){
                 url = SERVERURL+"/data/drug.json";
             }

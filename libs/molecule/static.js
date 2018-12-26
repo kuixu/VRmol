@@ -3,7 +3,7 @@ var w3m_crossline = function(fn) { return fn.toString().split('\n').slice(1,-1).
 /* === Static Resource === */
 
 /* URL 远程分子pdb文件请求路径*/
-w3m.url = [ 'http://files.rcsb.org/view/', 'http://www.rcsb.org/pdb/files/' ];
+w3m.url = [ 'https://files.rcsb.org/view/', 'https://www.rcsb.org/pdb/files/' ];
 //w3m.url = [ 'http://localhost:8080/molecule_vr/'];
 
 /* Dict */
