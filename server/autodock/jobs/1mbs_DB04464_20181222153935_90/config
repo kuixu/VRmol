@@ -1,0 +1,12 @@
+
+
+receptor = 1jsn_mod.pdbqt
+ligand = DB04464.pdbqt
+
+center_x =  2
+center_y =  6
+center_z = -7
+
+size_x = 25
+size_y = 25
+size_z = 25

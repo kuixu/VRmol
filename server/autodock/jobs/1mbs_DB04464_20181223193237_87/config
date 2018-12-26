@@ -1,0 +1,12 @@
+
+
+receptor = 1mbs.pdbqt
+ligand = DB04464.pdbqt
+
+center_x = 10
+center_y = 10  
+center_z = 10
+
+size_x = 10  
+size_y = 10  
+size_z = 10
