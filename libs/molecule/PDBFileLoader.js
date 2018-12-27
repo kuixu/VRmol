@@ -163,9 +163,9 @@ PDB.loader = {
             callBack();
         });
     },
-    loadDrug: function ( drugname,callBack) {
+    loadDrug: function ( drugname,dbname,callBack) {
         var scope = this;
-        w3m.ajax.getDrug(drugname, function(text) {
+        w3m.ajax.getDrug(drugname, dbname,function(text) {
             w3m.tool.clear();
             w3m.pdb(text, drugname);
             w3m.mol[drugname].drug=true;

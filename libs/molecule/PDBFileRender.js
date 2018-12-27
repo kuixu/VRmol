@@ -353,7 +353,7 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_DRUG:
             var type = object.userData.reptype;
-            PDB.loader.loadDrug("DB04464",function () {
+            PDB.loader.loadDrug("DB04464",PDB.DRUG_MODE_CONFIG.DRUG_BANK,function () {
                 PDB.painter.showHet('DB04464');
                 onMenuDown();
             });

@@ -2,7 +2,7 @@
  * Created by Kui Xu on 2017/6/27.
  */
 var PDB ;
-var ServerType = 2;
+var ServerType = 6;
 
 var SERVERURL = "http://localhost:8080/molwebvr";
 if(ServerType ===1){
@@ -187,7 +187,12 @@ PDB = {
         z_c:10,
         x_s:10,
         y_s:10,
-        z_s:10
+        z_s:10,
+        DRUG_BANK:"drugbank",
+        BINDING_DB:"bindingdb",
+        CHEMBL:"chembl",
+        GUIDETOPHARMACOLOGY:"guidetopharmacology",
+        SWISSLIPIDS:"swisslipids"
     },
     SHOWSOLID : true,
     SHOWSILICE : true,

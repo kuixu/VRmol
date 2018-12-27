@@ -790,22 +790,22 @@ PDB.controller = {
                     var titleLab = PDB.tool.generateLabel(rightMenuDiv,"DrugBank List","");
                     var span = PDB.tool.generateSpan(rightMenuDiv,"menuSpan","rightsubmenu");
                     var bindingdb = jsonObj.data[0].bindingdb;
-                    PDB.controller.LoadDrugDetails(span,"bindingdb",bindingdb);
+                    PDB.controller.LoadDrugDetails(span,PDB.DRUG_MODE_CONFIG.BINDING_DB,bindingdb);
 
 
                     var chembl = jsonObj.data[0].chembl;
-                    PDB.controller.LoadDrugDetails(span,"chembl",chembl);
+                    PDB.controller.LoadDrugDetails(span,PDB.DRUG_MODE_CONFIG.CHEMBL,chembl);
 
 
                     var swisslipids = jsonObj.data[0].swisslipids;
-                    PDB.controller.LoadDrugDetails(span,"swisslipids",swisslipids);
+                    PDB.controller.LoadDrugDetails(span,PDB.DRUG_MODE_CONFIG.SWISSLIPIDS,swisslipids);
 
                     var guidetopharmacology = jsonObj.data[0].guidetopharmacology;
-                    PDB.controller.LoadDrugDetails(span,"guidetopharmacology",guidetopharmacology);
+                    PDB.controller.LoadDrugDetails(span,PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY,guidetopharmacology);
 
 
                     var drugbank = jsonObj.data[0].drugbank;
-                    PDB.controller.LoadDrugDetails(span,"drugbank",drugbank);
+                    PDB.controller.LoadDrugDetails(span,PDB.DRUG_MODE_CONFIG.DRUG_BANK,drugbank);
                 }else {
 					PDB.tool.printProgress(jsonObj.message);
                     // alert(jsonObj.message);
@@ -824,7 +824,7 @@ PDB.controller = {
                 PDB.tool.generateButton(span, drugids[i], drugids[i], "rightLabelPDB").addEventListener('click', function () {
                     var drugId = this.value;
                     PDB.config.selectedDrug = drugId;
-                    PDB.loader.loadDrug(drugId, function () {
+                    PDB.loader.loadDrug(drugId,dbname, function () {
                         w3m.mol[drugId].drug = true;
                         PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
                         PDB.painter.showHet(drugId);
@@ -835,7 +835,7 @@ PDB.controller = {
                     });
                 });
                 PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUBDB_URL[dbname] + drugids[i], "");
-                PDB.tool.generateDocklingLink(span, "link" + i, "docking", drugids[i], "");
+                PDB.tool.generateDocklingLink(span, "link" + i, "docking", drugids[i], dbname);
                 span.appendChild(document.createElement("br"));
             }
         }

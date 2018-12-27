@@ -338,9 +338,9 @@ w3m.ajax = (function() {
         this.open('GET', url, true);
         this.send();
     };
-    io.getDrug = function(mol_id, fn) {
+    io.getDrug = function(mol_id,dbname, fn) {
         id       = mol_id;
-        url      = PDB.drugPDBUrl[url_index] + mol_id + '.pdb';
+        url      =  PDB.DRUBDB_URL[dbname] + mol_id + '.pdb';
         callback = fn;
         drug     = true;
         this.open('GET', url, true);

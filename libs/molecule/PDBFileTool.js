@@ -586,11 +586,10 @@ PDB.tool = {
         // parent.appendChild(document.createElement("br"));
         return aLink;
     },
-    generateDocklingLink:function (parent,id,text,link,className) {
+    generateDocklingLink:function (parent,id,text,link,dbname) {
         var aLink = document.createElement("a");
         var node = document.createTextNode(text);
         aLink.appendChild(node);
-        aLink.className=className;
         aLink.id = id;
         aLink.addEventListener( 'click', function() {
             var url = "http://vr.zhanglab.net/server/autodock/autodock.php?pdbid="+PDB.pdbId.toUpperCase()+"&smolid="+text.toUpperCase()
@@ -615,7 +614,7 @@ PDB.tool = {
                         PDB.tool.generateButton(menuSpan, jsonObj.model_list[i], jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
                             var drugId = this.value;
                             PDB.config.selectedDrug = drugId;
-                            PDB.loader.loadDrug(drugId, function () {
+                            PDB.loader.loadDrug(drugId,dbname, function () {
                                 w3m.mol[drugId].drug = true;
                                 PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
                                 PDB.painter.showHet(drugId);
