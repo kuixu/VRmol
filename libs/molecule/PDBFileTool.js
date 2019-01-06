@@ -1226,13 +1226,17 @@ PDB.tool = {
 		link.click();
 	},
 	generateDrugMigrationPath : function(){
-		var pathScope = 10;
-		var startPos = new THREE.Vector3(-pathScope,0,0); 
+		
+		var pathScopex = w3m.global.limit.x[1]-w3m.global.limit.x[0];
+		var pathScopey = w3m.global.limit.y[1]-w3m.global.limit.y[0];
+		var pathScopez = w3m.global.limit.z[1]-w3m.global.limit.z[0];
+		//var startPos = new THREE.Vector3(-pathScope,0,0); 
+		var startPos = PDB.GeoCenterOffset;
 		var rotateScope = Math.PI;
 		PDB.DRUGMigrationPaths = [];
 		PDB.DRUGMigrationRotates = [];
 		for(var i=0;i<5000;i++){			
-			var pos = new THREE.Vector3(Math.random()*2*pathScope-pathScope,Math.random()*2*pathScope-pathScope,Math.random()*2*pathScope-pathScope);			
+			var pos = new THREE.Vector3(Math.random()*pathScopex+w3m.global.limit.x[0],Math.random()*pathScopey+w3m.global.limit.y[0],Math.random()*pathScopez+w3m.global.limit.z[0]);			
 			pos.len= Math.sqrt(Math.pow(pos.x - startPos.x,2)+Math.pow(pos.y - startPos.y,2)+Math.pow(pos.z - startPos.z,2));			
 			PDB.DRUGMigrationPaths.push(pos);
 			var rota = new THREE.Euler( Math.random()*2*rotateScope-rotateScope, Math.random()*2*rotateScope-rotateScope, Math.random()*2*rotateScope-rotateScope, 'XYZ' );
@@ -1241,7 +1245,7 @@ PDB.tool = {
 		function sortPos(posA,posB){			
 			return posA.len - posB.len;
 		}		
-		PDB.DRUGMigrationPaths.sort(sortPos);		
+		PDB.DRUGMigrationPaths.sort(sortPos);
 	},
 	migrationDrug : function(){
 		if(PDB.GROUP[PDB.GROUP_DRUG]&&PDB.GROUP[PDB.GROUP_DRUG].children.length>0){
@@ -1252,7 +1256,7 @@ PDB.tool = {
 			var i = PDB.PathCount%(PDB.DRUGMigrationPaths.length);
 			if(PDB.DRUGMigrationPaths.length>0){
 				PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.DRUGMigrationPaths[i]);
-				PDB.GROUP[PDB.GROUP_DRUG].rotation.copy(PDB.DRUGMigrationRotates[i]);
+				PDB.GROUP[PDB.GROUP_DRUG].rotation.set(PDB.DRUGMigrationRotates[i].x,PDB.DRUGMigrationRotates[i].y,PDB.DRUGMigrationRotates[i].z);
 			}					
 			PDB.PathCount++;
 		}
