@@ -606,12 +606,18 @@ PDB.tool = {
                 var jsonObj = JSON.parse(text);
                 if(jsonObj.model_list != undefined &&  jsonObj.model_list.length > 0){
                     var menuSpan = document.getElementById("menuSpan");
-                    PDB.tool.generateLabel(menuSpan, "ModelList", "");
+                    var modelSpan = document.getElementById("modelSpan");
+                    if(modelSpan == undefined){
+                        modelSpan = PDB.tool.generateSpan(menuSpan,"modelSpan","rightsubmenu");
+                    }else {
+                        modelSpan.innerHTML="";
+                    }
+                    PDB.tool.generateLabel(modelSpan, "ModelList", "");
                     for (var i in jsonObj.model_list) {
                         if (jsonObj.model_list[i] === "") {
                             continue;
                         }
-                        PDB.tool.generateButton(menuSpan, jsonObj.model_list[i], jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
+                        PDB.tool.generateButton(modelSpan, jsonObj.model_list[i], jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
                             var drugId = this.value.replace(".pdb","");
                             PDB.config.selectedDrug = drugId;
                             PDB.DRUBDB_URL.docking=jsonObj.outdir+"/";
