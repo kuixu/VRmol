@@ -348,7 +348,7 @@ w3m.ajax = (function() {
     };
     io.getDocking = function(path,dockingName, fn) {
         id       = dockingName;
-        url      =  path + dockingName;
+        url      =  path +"/"+ dockingName;
         callback = fn;
         drug     = true;
         this.open('GET', url, true);
