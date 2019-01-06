@@ -612,9 +612,10 @@ PDB.tool = {
                             continue;
                         }
                         PDB.tool.generateButton(menuSpan, jsonObj.model_list[i], jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
-                            var drugId = this.value;
+                            var drugId = this.value.replace(".pdb","");
                             PDB.config.selectedDrug = drugId;
-                            PDB.loader.loadDocking(jsonObj.outdir,drugId, function () {
+                            PDB.DRUBDB_URL.docking=jsonObj.outdir+"/";
+                            PDB.loader.loadDrug(drugId,"docking", function () {
                                 w3m.mol[drugId].drug = true;
                                 PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
                                 PDB.painter.showHet(drugId);

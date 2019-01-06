@@ -174,7 +174,8 @@ PDB = {
         'bindingdb':"http://www.bindingdb.org/uniport/"        ,
         'chembl':"https://www.ebi.ac.uk/chembldb/target/inspect/",
         'guidetopharmacology':"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="        ,
-        'swisslipids':"http://www.swisslipids.org/#/entity/"
+        'swisslipids':"http://www.swisslipids.org/#/entity/",
+        'docking':""
     },
     //坐标系参数
     DIMENSION:0,
