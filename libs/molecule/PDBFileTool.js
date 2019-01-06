@@ -592,6 +592,11 @@ PDB.tool = {
         aLink.appendChild(node);
         aLink.id = id;
         aLink.addEventListener( 'click', function() {
+
+            //点击docking 移动
+            PDB.DRUGMOVE = true;
+            PDB.drugMoveTime = new Date();
+
             var url = "https://vr.zhanglab.net/server/autodock/autodock.php?pdbid="+PDB.pdbId.toUpperCase()+"&smolid="+link.toUpperCase()
                 +"&x_c="+PDB.DRUG_MODE_CONFIG.x_c
                 +"&y_c="+PDB.DRUG_MODE_CONFIG.y_c
@@ -618,6 +623,7 @@ PDB.tool = {
                             continue;
                         }
                         PDB.tool.generateButton(modelSpan, jsonObj.model_list[i], jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
+
                             var drugId = this.value.replace(".pdb","");
                             PDB.config.selectedDrug = drugId;
                             PDB.DRUBDB_URL.docking=jsonObj.outdir+"/";
@@ -631,6 +637,7 @@ PDB.tool = {
                     }
                 }
             });
+
             //停止移动drug
             PDB.DRUGMOVE = false;
         } );
@@ -1219,7 +1226,7 @@ PDB.tool = {
 		link.click();
 	},
 	generateDrugMigrationPath : function(){
-		var pathScope = 20;
+		var pathScope = 10;
 		var startPos = new THREE.Vector3(-pathScope,0,0); 
 		var rotateScope = Math.PI;
 		PDB.DRUGMigrationPaths = [];
