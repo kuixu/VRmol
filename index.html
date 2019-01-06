@@ -103,7 +103,11 @@
     <input type="text" name="search_text" class="search_text" id="search_text" placeholder="INPUT PDB ID" onkeydown="PDB.controller.onKeyDown(event)"/>
     <input type="button" class="search_button" id="search_button" value="Search">
     <a class="input-file input-fileup">
-        + Upload PDB/EMMAP File<input size="100" type="file" name="file" id="upload_button">
+        + Upload<input size="100" type="file" name="file" id="upload_button">
+
+    </a>
+    <a class="input-file input-fileup">
+        <button class="test" onmousedown="startRecording()" onmouseup="endRecord()">Voice input</button>
     </a>
 </div>
 <div id="topmenu" class="panel">
@@ -279,8 +283,8 @@
         <button class="labelPDB" name="b_load_drug" id="b_load_drug" value="Export">Load Drug</button><br/>
         <input class="labelPDB" name="drugSurface" id="drugSurface"   type="checkbox" title="Drug Het Surface" />
         <label class="label">Drug Surface</label>
-        <input class="labelPDB" name="randomMigration" id="randomMigration"   type="checkbox" title="Drug Random Migration" />
-	    <label class="label">Drug Random Migration</label>
+        <!--<input class="labelPDB" name="randomMigration" id="randomMigration"   type="checkbox" title="Drug Random Migration" />-->
+	    <!--<label class="label">Drug Random Migration</label>-->
     </span>
     <BR/>
 
@@ -311,7 +315,6 @@
     <BR/>
 
     <div class="messages"></div>
-    <button class="test" onmousedown="startRecording()" onmouseup="endRecord()">Voice input</button>
     <br>
     <input name="language" value="Chinese" type="radio" id="Chinese" onclick="getlanguage()" checked="true">
     <label for="Chinese">Chinese voice</label>
