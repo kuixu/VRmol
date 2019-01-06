@@ -592,7 +592,7 @@ PDB.tool = {
         aLink.appendChild(node);
         aLink.id = id;
         aLink.addEventListener( 'click', function() {
-            var url = "https://vr.zhanglab.net/server/autodock/autodock.php?pdbid="+PDB.pdbId.toUpperCase()+"&smolid="+text.toUpperCase()
+            var url = "https://vr.zhanglab.net/server/autodock/autodock.php?pdbid="+PDB.pdbId.toUpperCase()+"&smolid="+link.toUpperCase()
                 +"&x_c="+PDB.DRUG_MODE_CONFIG.x_c
                 +"&y_c="+PDB.DRUG_MODE_CONFIG.y_c
                 +"&z_c="+PDB.DRUG_MODE_CONFIG.z_c
