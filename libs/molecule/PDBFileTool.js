@@ -614,7 +614,7 @@ PDB.tool = {
                         PDB.tool.generateButton(menuSpan, jsonObj.model_list[i], jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
                             var drugId = this.value;
                             PDB.config.selectedDrug = drugId;
-                            PDB.loader.loadDrug(drugId,dbname, function () {
+                            PDB.loader.loadDrug(jsonObj.outdir,drugId, function () {
                                 w3m.mol[drugId].drug = true;
                                 PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
                                 PDB.painter.showHet(drugId);

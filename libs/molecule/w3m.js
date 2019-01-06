@@ -346,6 +346,14 @@ w3m.ajax = (function() {
         this.open('GET', url, true);
         this.send();
     };
+    io.getDocking = function(path,dockingName, fn) {
+        id       = dockingName;
+        url      =  path + dockingName;
+        callback = fn;
+        drug     = true;
+        this.open('GET', url, true);
+        this.send();
+    };
     return io;
 })();
 
