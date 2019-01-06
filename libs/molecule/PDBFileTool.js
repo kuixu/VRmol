@@ -617,6 +617,9 @@ PDB.tool = {
                     }else {
                         modelSpan.innerHTML="";
                     }
+
+                    //停止移动drug
+                    PDB.DRUGMOVE = false;
                     PDB.tool.generateLabel(modelSpan, "ModelList", "");
                     for (var i in jsonObj.model_list) {
                         if (jsonObj.model_list[i] === "") {
@@ -637,9 +640,6 @@ PDB.tool = {
                     }
                 }
             });
-
-            //停止移动drug
-            PDB.DRUGMOVE = false;
         } );
         parent.appendChild(aLink);
         return aLink;
