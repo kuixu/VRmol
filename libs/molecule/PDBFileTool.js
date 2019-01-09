@@ -593,10 +593,21 @@ PDB.tool = {
         aLink.id = id;
         aLink.addEventListener( 'click', function() {
 
-            //点击docking 移动
+            //docking move 
             PDB.DRUGMOVE = true;
             PDB.drugMoveTime = new Date();
-
+            var x_c = w3m.global.limit.x[0] + (w3m.global.limit.x[1]-w3m.global.limit.x[0])/2;
+            var y_c = w3m.global.limit.y[0] + (w3m.global.limit.y[1]-w3m.global.limit.y[0])/2;
+            var z_c = w3m.global.limit.z[0] + (w3m.global.limit.z[1]-w3m.global.limit.z[0])/2;
+            var x_s = w3m.global.limit.x[1]-w3m.global.limit.x[0];
+            var y_s = w3m.global.limit.y[1]-w3m.global.limit.y[0];
+            var z_s = w3m.global.limit.z[1]-w3m.global.limit.z[0];
+            PDB.DRUG_MODE_CONFIG.x_c = x_c;
+            PDB.DRUG_MODE_CONFIG.y_c = y_c;
+            PDB.DRUG_MODE_CONFIG.z_c = z_c;
+            PDB.DRUG_MODE_CONFIG.x_s = x_s;
+            PDB.DRUG_MODE_CONFIG.y_s = y_s;
+            PDB.DRUG_MODE_CONFIG.z_s = z_s;
             var url = "https://vr.zhanglab.net/server/autodock/autodock.php?pdbid="+PDB.pdbId.toUpperCase()+"&smolid="+link.toUpperCase()
                 +"&x_c="+PDB.DRUG_MODE_CONFIG.x_c
                 +"&y_c="+PDB.DRUG_MODE_CONFIG.y_c

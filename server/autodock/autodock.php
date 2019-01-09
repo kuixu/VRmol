@@ -72,7 +72,7 @@ $cmd = $cmd.' '.$mgtools.'/splitpdb.sh '.$smolid.'_out &';
 exec($cmd);
 exec('sleep 2');
 // echo '<p>'.exec("ls jobs/".$dir_name).'</p>';
-$outdir = "http://vr.zhanglab.net/server/autodock/jobs/".$dir_name;
+$outdir = "https://vr.zhanglab.net/server/autodock/jobs/".$dir_name;
 $log = $outdir.'/log';
 $target = $smolid.'_out.pdb';
 $target_url = $outdir.'/'.$target ;

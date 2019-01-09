@@ -761,16 +761,15 @@ PDB.controller = {
         //=============================== Drug Design =======================
 
 		//=======add randomMigration
-		// var randomMigration = document.getElementById("randomMigration");
-		// randomMigration.addEventListener( 'click', function(e) {
-		// 	if(this.checked){
-		// 		PDB.DRUGMOVE = true;
-		// 		PDB.drugMoveTime = new Date();
-		// 	}else{
-		// 		PDB.DRUGMOVE = false;
-		// 	}
-        //
-		// });
+		 var randomMigration = document.getElementById("randomMigration");
+		 randomMigration.addEventListener( 'click', function(e) {
+		 	if(this.checked){
+		 		PDB.DRUGMOVE = true;
+		 		PDB.drugMoveTime = new Date();
+		 	}else{
+		 		PDB.DRUGMOVE = false;
+		 	}
+		 });
 
         var b_load_drug = document.getElementById("b_load_drug");
         b_load_drug.addEventListener( 'click', function() {
