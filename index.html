@@ -107,7 +107,7 @@
 
     </a>
     <a class="input-file input-fileup">
-        <button class="test" onmousedown="startRecording()" onmouseup="endRecord()">Voice input</button>
+        <button class="test" onmousedown="startRecording()" onmouseup="endRecord()">Voice</button>
     </a>
 </div>
 <div id="topmenu" class="panel">
@@ -144,7 +144,7 @@
         <!--<button id="b_surface">Surface</button><BR/>-->
   </span>
     <BR/>
-    <LABEL onclick="switchMenu('ligandStructure')">Ligand Structure</LABEL><BR/>
+    <LABEL onclick="switchMenu('ligandStructure')">Ligand </LABEL><BR/>
     <span class="submenu" id="ligandStructure">
     <button id="h_line">Line</button><BR/>
     <button id="h_sphere">Sphere</button><BR/>
@@ -158,7 +158,7 @@
   </span>
     <BR/>
 
-    <LABEL onclick="switchMenu('surfaceStructure')">Surface Structure</LABEL><BR/>
+    <LABEL onclick="switchMenu('surfaceStructure')">Surface</LABEL><BR/>
     <span class="submenu" id="surfaceStructure">
         <input class="labelPDB" id="surfaceN"  name="surfaceType" type="radio" title="nothing"/>  <label class="label" for="surfaceN"> Hide </label>   <BR/>
         <input class="labelPDB" id="surfaceVDW" name="surfaceType"   type="radio" title="Van der Waals surface"/> <label class="label" for="surfaceVDW">Van der Waals</label> <BR/>
@@ -200,6 +200,7 @@
 	<input class="updateColor" name="colorMode" id="updatecolor_BySpectrum" type="radio"  title="By Residue" color_mode="607"/>  <label class="label" for="updatecolor_BySpectrum">By Spectrum</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByChainSpectrum" type="radio"  title="By Residue" color_mode="608"/>  <label class="label" for="updatecolor_ByChainSpectrum">By Chain Spectrum</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByHydrophobicity" type="radio"  title="By Residue" color_mode="609"/>  <label class="label" for="updatecolor_ByHydrophobicity">By Hydrophobicity</label>   <BR/>
+	<input class="updateColor" name="b_load_conser" id="" type="radio"  title="By Residue" color_mode="610"/>  <label class="label" for="b_load_conser">By Conservation</label>   <BR/>
 	<button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>
   </span>
     <BR/>
@@ -278,7 +279,7 @@
     </span>
     <BR/>-->
 
-    <LABEL onclick="switchMenu('drugDesign')">Drug Design</LABEL><BR/>
+    <LABEL onclick="switchMenu('drugDesign')">Drugs</LABEL><BR/>
     <span class="submenu" id="drugDesign">
         <button class="labelPDB" name="b_load_drug" id="b_load_drug" value="Export">Load Drug</button><br/>
         <input class="labelPDB" name="drugSurface" id="drugSurface"   type="checkbox" title="Drug Het Surface" />

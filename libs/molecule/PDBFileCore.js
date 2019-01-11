@@ -177,7 +177,7 @@ PDB = {
         'swisslipids':"http://www.swisslipids.org/#/entity/",
         'docking':""
     },
-    //坐标系参数
+    // docking var
     DIMENSION:0,
     DIMENSION_X:0,
     DIMENSION_Y:1,
@@ -199,7 +199,7 @@ PDB = {
     SHOWSOLID : true,
     SHOWSILICE : true,
 
-    //bond 类型
+    //bond type
     BOND_TYPE:0,
     BOND_TYPE_NONE:0,
     BOND_TYPE_SSBOND:1,
@@ -213,7 +213,7 @@ PDB = {
     SURFACE_OPACITY:1.0,
     SURFACE_WIREFRAME:false,
 
-    //演示相关变量
+    // var in demo
     DEMO: {
         INDEX:0,
         PRE_INDEX:-1,
@@ -234,11 +234,11 @@ PDB = {
 }
 
 PDB.config = {
-    mainMode : PDB.CARTOON_SSE,
-    hetMode :  PDB.HET_STICK,
-    surfaceMode:PDB.SURFACE,
-	selectedDrug : 'DB04464',
-	panelOpen:1,
-	panelClose:0,
-	openSurface:1
+    mainMode :     PDB.CARTOON_SSE,
+    hetMode :      PDB.HET_BALL_ROD,
+    surfaceMode :  PDB.SURFACE,
+    selectedDrug : 'DB04464',
+    panelOpen :    1,
+    panelClose :   0,
+    openSurface :  1
 }
