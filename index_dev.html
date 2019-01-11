@@ -217,7 +217,7 @@
     <!--<input class="labelPDB" name="mode" id="dragModel" checked="checked"  type="radio" title="All the models" />  <label class="label" for="dragModel"> All the models</label>   <BR/>
     <input class="labelPDB" name="mode" id="dragMainHet"    type="radio" title="Main and Het"/>   <label class="label" for="dragMainHet"> Main and Het</label>    <BR/>
     <input class="labelPDB" name="mode" id="dragMain" type="radio" title="Only Main"/><label class="label" for="dragMain"> Only Main </label> <BR/>-->
-	<input class="labelPDB" name="mode" id="dragReset"   type="radio" title="Reset"/>  <label class="label" for="reset"> Reset </label>   <BR/>
+	<input class="labelPDB" name="mode" id="dragReset"   type="radio" title="Reset"/>  <label class="label" for="dragReset"> Reset </label>   <BR/>
     <input class="labelPDB" name="mode" id="dragHet"   type="radio" title="Drag Ligand"/>  <label class="label" for="dragHet"> Drag Ligand </label>   <BR/>
     <input class="labelPDB" name="mode" id="dragChain"   type="radio" title="Drag Chain"/>  <label class="label" for="dragChain"> Drag Chain</label>   <BR/>
   </span>
@@ -238,6 +238,8 @@
         <button class="labelPDB" name="mutationCCLE" id="mutationCCLE" value="CCLE">CCLE</button><BR/>
         <button class="labelPDB" name="mutationExAC" id="mutationExAC" value="ExAC">ExAC</button><BR/>
         <button class="labelPDB" name="dbSNP" id="dbSNP" value="dbSNP">dbSNP</button><BR/>
+        <input class="labelPDB" name="hideTable" id="hideTable"   type="checkbox" title="Hide Mutation Table" />
+        <label class="label" for="hideTable">Hide Mutation Table</label><BR/>
   </span>
     <BR/>
     <LABEL onclick="switchMenu('rotationMenu')">Rotation</LABEL><BR/>
@@ -296,7 +298,7 @@
 		<option value="LigandStructure" >LigandStructure</option>
 		<option value="Map" >Map</option>
 		
-	<select><br/>
+	</select><br/>
 	<button class="labelPDB" name="b_export_pdb" id="b_export_pdb" value="Export">Export PDB</button>
   </span>
   <BR/>
@@ -327,6 +329,10 @@
     <span class="rightsubmenu" id="menuSpan">
     </span>
     <BR/>
+</div>
+<div id="mutationTable">
+    <span class="rightsubmenu" id="span">
+    </span>
 </div>
 <div id="menu" ></div>
 <div id="weChatMask"></div>
