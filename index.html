@@ -63,7 +63,7 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
-<script type="text/javascript" src="https://vr.zhanglab.net/server/listen/sr.min.js"></script>
+<!--<script type="text/javascript" src="https://vr.zhanglab.net/server/listen/sr.min.js"></script>-->
 
 <!---------------------------xukui 0903 01:12------------------------------>
 <script type="x-shader/x-vertex" id="vertexshader">
@@ -240,6 +240,10 @@
         <button class="labelPDB" name="mutationCCLE" id="mutationCCLE" value="CCLE">CCLE</button><BR/>
         <button class="labelPDB" name="mutationExAC" id="mutationExAC" value="ExAC">ExAC</button><BR/>
         <button class="labelPDB" name="dbSNP" id="dbSNP" value="dbSNP">dbSNP</button><BR/>
+         <!--<button class="labelPDB" name="hideTable" id="hideTable" value="dbSNP">dbSNP</button><BR/>-->
+        <input class="labelPDB" name="hideTable" id="hideTable"   type="checkbox" title="Hide Mutation Table" />
+        <label class="label" for="hideTable">Hide Mutation Table</label><BR/>
+
   </span>
     <BR/>
     <LABEL onclick="switchMenu('rotationMenu')">Rotation</LABEL><BR/>
@@ -292,16 +296,16 @@
 
     <LABEL onclick="switchMenu('exportScene')">Export</LABEL><BR/>
     <span class="submenu" id="exportScene">
-    <button class="labelPDB" name="b_export_scene" id="b_export_scene" value="Export">Export</button><br/>
-	<select id="exportType">
-		<option value="MainStructure" selected>MainStructure</option>
-		<option value="LigandStructure" >LigandStructure</option>
-		<option value="Map" >Map</option>
-		
-	<select><br/>
-	<button class="labelPDB" name="b_export_pdb" id="b_export_pdb" value="Export">Export PDB</button>
-  </span>
-    <BR/>
+        <button class="labelPDB" name="b_export_scene" id="b_export_scene" value="Export">Export</button><br/>
+        <select id="exportType">
+            <option value="MainStructure" selected>MainStructure</option>
+            <option value="LigandStructure" >LigandStructure</option>
+            <option value="Map" >Map</option>
+
+        </select><br/>
+        <button class="labelPDB" name="b_export_pdb" id="b_export_pdb" value="Export">Export PDB</button>
+        <BR/>
+    </span>
     <!-- <LABEL onclick="switchMenu('chainNumThreshold')">ChainNumThreshold</LABEL><BR/> -->
     <!-- <span class="submenu" id="chainNumThreshold"> -->
     <!-- <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>-->
@@ -329,6 +333,10 @@
     <span class="rightsubmenu" id="menuSpan">
     </span>
     <BR/>
+</div>
+<div id="mutationTable">
+    <span class="rightsubmenu" id="span">
+    </span>
 </div>
 <div id="menu" ></div>
 <div id="weChatMask"></div>

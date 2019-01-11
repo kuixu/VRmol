@@ -646,12 +646,17 @@ PDB.controller = {
         var mutationExAC = document.getElementById("mutationExAC");
         var mutationNone = document.getElementById("mutationNone");
         var dbSNP = document.getElementById("dbSNP");
+        var hideTable = document.getElementById("hideTable");
 
         mutationTCGA.addEventListener( 'click', function() {
             var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=tcga";
+            if(ServerType !== 2){
+                url = SERVERURL+"/data/mutation.json";
+            }
             PDB.tool.ajax.get(url,function (text) {
                 PDB.controller.clear(4,undefined);
                 PDB.painter.showMutation(text);
+                PDB.tool.showMutationTable(true,text);
             })
         } );
         mutationCCLE.addEventListener( 'click', function() {
@@ -679,6 +684,14 @@ PDB.controller = {
 
         mutationNone.addEventListener( 'click', function() {
             PDB.controller.clear(4,undefined);
+        } );
+
+        hideTable.addEventListener( 'click', function() {
+            if(this.checked){
+                document.getElementById("mutationTable").hidden=true;
+            }else{
+                document.getElementById("mutationTable").hidden=false;
+            }
         } );
 
         //============================rotation==========================
