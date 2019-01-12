@@ -646,7 +646,7 @@ PDB.controller = {
         var mutationExAC = document.getElementById("mutationExAC");
         var mutationNone = document.getElementById("mutationNone");
         var dbSNP = document.getElementById("dbSNP");
-        var hideTable = document.getElementById("hideTable");
+        var showMutationTable = document.getElementById("showMutationTable");
 
         mutationTCGA.addEventListener( 'click', function() {
             var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=tcga";
@@ -656,7 +656,7 @@ PDB.controller = {
             PDB.tool.ajax.get(url,function (text) {
                 PDB.controller.clear(4,undefined);
                 PDB.painter.showMutation(text);
-                PDB.tool.showMutationTable(true,text);
+                PDB.tool.showMutationTable(false,text);
             })
         } );
         mutationCCLE.addEventListener( 'click', function() {
@@ -686,11 +686,11 @@ PDB.controller = {
             PDB.controller.clear(4,undefined);
         } );
 
-        hideTable.addEventListener( 'click', function() {
+        showMutationTable.addEventListener( 'click', function() {
             if(this.checked){
-                document.getElementById("mutationTable").hidden=true;
-            }else{
                 document.getElementById("mutationTable").hidden=false;
+            }else{
+                document.getElementById("mutationTable").hidden=true;
             }
         } );
 
