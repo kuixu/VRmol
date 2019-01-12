@@ -2,7 +2,7 @@
  * Created by Kui Xu on 2017/6/27.
  */
 var PDB ;
-var ServerType = 3;
+var ServerType = 2;
 
 var SERVERURL = "http://localhost:8080/molwebvr";
 if(ServerType ===1){
@@ -11,7 +11,7 @@ if(ServerType ===1){
     SERVERURL= "https://vr.zhanglab.net";
 }else if(ServerType ===3){
     SERVERURL= "http://localhost:8080";
-	SERVERURL= "http://localhost";
+	//SERVERURL= "http://localhost";
 }
 PDB = {
     
@@ -169,8 +169,8 @@ PDB = {
         ,CHEMBL:"https://www.ebi.ac.uk/chembldb/target/inspect/",GUIDETOPHARMACOLOGY:"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="
         ,SWISSLIPIDS:"http://www.swisslipids.org/#/entity/",EMMAP:"https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-"},
     DRUBDB_URL : {
-        'drugbank':SERVERURL+"/data/drugbank/",
-		// 'drugbank':"https://www.drugbank.ca/drugs/",
+        //'drugbank':SERVERURL+"/data/drugbank/",
+		'drugbank':"https://www.drugbank.ca/drugs/",
         //'drugbank':"https://vr.zhanglab.net/data/drugbank/",
         'bindingdb':"http://www.bindingdb.org/uniport/"        ,
         'chembl':"https://www.ebi.ac.uk/chembldb/target/inspect/",
