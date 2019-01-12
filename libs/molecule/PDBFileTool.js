@@ -1237,7 +1237,7 @@ PDB.tool = {
 		link.click();
 	},
 	generateDrugMigrationPath : function(limit){
-		var offset = PDB.GeoCenterOffset;
+		var offset = "";
 		if(!limit){					
 			limit = {
 				x:w3m.global.limit.x,
@@ -1247,6 +1247,7 @@ PDB.tool = {
 			limit.x = [limit.x[0],limit.x[1]];
 			limit.y = [limit.y[0],limit.y[1]];
 			limit.z = [limit.z[0],limit.z[1]];
+			offset = PDB.GeoCenterOffset;
 		}else{
 			var x = -(limit.x[0]+limit.x[1])/2 ;
 			var y = -(limit.y[0]+limit.y[1])/2 ;

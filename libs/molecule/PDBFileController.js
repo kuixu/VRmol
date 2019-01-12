@@ -835,23 +835,24 @@ PDB.controller = {
 								z:w3m.global.limit.z
 							};							
 							if(!isNaN(x_min)){
-								limit.x[0] = isNaN(x_min);								
+								limit.x[0] = x_min;								
 							}
 							if(!isNaN(x_max)){
-								limit.x[1] = isNaN(x_max);								
+								limit.x[1] = x_max;								
 							}
 							if(!isNaN(y_min)){
-								limit.y[0] = isNaN(y_min);								
+								limit.y[0] = y_min;								
 							}
 							if(!isNaN(y_max)){
-								limit.y[1] = isNaN(y_max);								
+								limit.y[1] = y_max;								
 							}
 							if(!isNaN(z_min)){
-								limit.z[0] = isNaN(z_min);								
+								limit.z[0] = z_min;								
 							}
 							if(!isNaN(z_max)){
-								limit.z[1] = isNaN(z_max);								
+								limit.z[1] = z_max;								
 							}
+							//console.log(limit);
 							PDB.render.clearGroupIndex(PDB.GROUP_BOX_HELPER);
 							PDB.painter.showBoxHelper(limit);
 							PDB.tool.generateDrugMigrationPath(limit);

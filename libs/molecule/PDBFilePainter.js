@@ -4244,6 +4244,7 @@ PDB.painter = {
 		}		
 	},
 	showBoxHelper:function(limit){
+		console.log(limit);
 		if(!limit){
 			limit = {
 				x:w3m.global.limit.x,
