@@ -185,7 +185,6 @@ button:active {
 }
 
 #mutationTable {
-	display:none;
     position: absolute;
     top: 80px;
     right: 10px;
