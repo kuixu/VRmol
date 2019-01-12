@@ -1274,48 +1274,49 @@ PDB.tool = {
 
     },showMutationTable: function(flag,text){
         var rightMenuDiv = document.getElementById("mutationTable");
-	    if(!flag){
-            rightMenuDiv.hidden=true;
+        rightMenuDiv.innerHTML="";
+        if(flag){
+            rightMenuDiv.hidden=false;
         }else {
-            rightMenuDiv.innerHTML="";
-            var jsonObj = JSON.parse(text);
-            if(jsonObj.code === 1 && jsonObj.data !== undefined ){
-                var titleLab = PDB.tool.generateLabel(rightMenuDiv,"Mutation info table","");
+            rightMenuDiv.hidden=true;
+        }
+        var jsonObj = JSON.parse(text);
+        if(jsonObj.code === 1 && jsonObj.data !== undefined ){
+            var titleLab = PDB.tool.generateLabel(rightMenuDiv,"Mutation info table","");
 
-                var data = jsonObj.data.mutations;
-                var table = document.createElement("table");
-                var tr= document.createElement('tr');
-                var titles = ["pos","p_change","v_class","v_type","disease"];
-                for(var i=0;i<titles.length;i++){
-                    var td=document.createElement('td');
-                    td.innerHTML=titles[i];
-                    tr.appendChild(td);
-                }
-                table.appendChild(tr);
-                table.style.color='#FFFFFF';
-                table.style.borderColor="#FFFFFF";
-
-                for(var i=0;i<data.length;i++){
-                    var newRow=table.insertRow();
-
-                    var pos= newRow.insertCell(0);
-                    pos.innerHTML=data[i].pos;
-
-                    var p_change=newRow.insertCell(1);
-                    p_change.innerHTML=data[i].p_change;
-
-                    var v_class=newRow.insertCell(2);
-                    v_class.innerHTML=data[i].v_class
-
-                    var v_type=newRow.insertCell(3);
-                    v_type.innerHTML=data[i].v_type
-
-                    var disease=newRow.insertCell(4);
-                    disease.innerHTML=data[i].disease
-                }
-                var span = PDB.tool.generateSpan(rightMenuDiv,"span","rightsubmenu");
-                span.appendChild(table);
+            var data = jsonObj.data.mutations;
+            var table = document.createElement("table");
+            var tr= document.createElement('tr');
+            var titles = ["pos","p_change","v_class","v_type","disease"];
+            for(var i=0;i<titles.length;i++){
+                var td=document.createElement('td');
+                td.innerHTML=titles[i];
+                tr.appendChild(td);
             }
+            table.appendChild(tr);
+            table.style.color='#FFFFFF';
+            table.style.borderColor="#FFFFFF";
+
+            for(var i=0;i<data.length;i++){
+                var newRow=table.insertRow();
+
+                var pos= newRow.insertCell(0);
+                pos.innerHTML=data[i].pos;
+
+                var p_change=newRow.insertCell(1);
+                p_change.innerHTML=data[i].p_change;
+
+                var v_class=newRow.insertCell(2);
+                v_class.innerHTML=data[i].v_class
+
+                var v_type=newRow.insertCell(3);
+                v_type.innerHTML=data[i].v_type
+
+                var disease=newRow.insertCell(4);
+                disease.innerHTML=data[i].disease
+            }
+            var span = PDB.tool.generateSpan(rightMenuDiv,"span","rightsubmenu");
+            span.appendChild(table);
         }
     }
 
