@@ -212,6 +212,9 @@ PDB.loader = {
 
         var offset = new THREE.Vector3(x,y,z);
         PDB.GeoCenterOffset = offset;
+		PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = false;
+		PDB.painter.showBoxHelper();
+		
         return offset;
     },
     dealwithBigPDB : function(){

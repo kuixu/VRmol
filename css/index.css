@@ -185,7 +185,7 @@ button:active {
 }
 
 #mutationTable {
-
+	display:none;
     position: absolute;
     top: 80px;
     right: 10px;
@@ -234,4 +234,9 @@ button:active {
 .chainBtn{	
 	float:left;
 	margin-left:3px;
+}
+.xyz_min_max input{
+	width:60px;
+	height:14px;
+	background:#fff
 }

@@ -2,7 +2,7 @@
  * Created by Kui Xu on 2017/6/27.
  */
 var PDB ;
-var ServerType = 2;
+var ServerType = 3;
 
 var SERVERURL = "http://localhost:8080/molwebvr";
 if(ServerType ===1){
@@ -11,7 +11,7 @@ if(ServerType ===1){
     SERVERURL= "https://vr.zhanglab.net";
 }else if(ServerType ===3){
     SERVERURL= "http://localhost:8080";
-	// SERVERURL= "http://localhost";
+	SERVERURL= "http://localhost";
 }
 PDB = {
     
@@ -102,13 +102,13 @@ PDB = {
     GROUP_STRUCTURE_INDEX:[],GROUP_MAIN_INDEX:[], GROUP_HET_INDEX:[],  GROUP_MENU_INDEX:[],GROUP_SURFACE_INDEX:[],
     GROUP_MUTATION_INDEX:[],
 
-    GROUP_COUNT:36, GROUP_MAIN:0, GROUP_HET:1, GROUP_WATER:2,GROUP_LABEL:3,GROUP_INFO:4,
+    GROUP_COUNT:37, GROUP_MAIN:0, GROUP_HET:1, GROUP_WATER:2,GROUP_LABEL:3,GROUP_INFO:4,
     GROUP_KEYBOARD:5,GROUP_INPUT:6,GROUP_CHAIN:7,GROUP_TRAVEL:8, GROUP_MENU:9,GROUP_MENU_MAIN:10,GROUP_MENU_HET:11,
     GROUP_MENU_COLOR:12,GROUP_MENU_MEASURE:13, GROUP_MENU_MODE:14,GROUP_MENU_DRAG:15,GROUP_MENU_FRAGMENT:16,
     GROUP_MENU_LABEL:17,GROUP_MENU_EX_HET:18, GROUP_MENU_TRAVEL:19,GROUP_MENU_SURFACE:20,GROUP_SURFACE:21,
     GROUP_MUTATION:22,GROUP_MENU_ROTATION:23,GROUP_MENU_MUTATION:24,GROUP_MENU_DRUG:25, GROUP_DRUG:26,GROUP_MENU_HBOND:27,
     GROUP_MENU_CONSERVATION:28,GROUP_MENU_DENSITYMAP:29,GROUP_SLICE:30,GROUP_SURFACE_HET:31,GROUP_BOND:32,GROUP_MENU_DIRECTION:33,
-	GROUP_MENU_OUTBALL:35,
+	GROUP_MENU_OUTBALL:35,GROUP_BOX_HELPER:36,
 	GROUP_MAP:34,
 
     MENU_TYPE_FIRST:0,MENU_TYPE_MAIN:1,MENU_TYPE_LIGAND:2,MENU_TYPE_COLOR:3,MENU_TYPE_DRAG:4,MENU_TYPE_MEASURE:5,
@@ -169,8 +169,9 @@ PDB = {
         ,CHEMBL:"https://www.ebi.ac.uk/chembldb/target/inspect/",GUIDETOPHARMACOLOGY:"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="
         ,SWISSLIPIDS:"http://www.swisslipids.org/#/entity/",EMMAP:"https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-"},
     DRUBDB_URL : {
-        // 'drugbank':"https://www.drugbank.ca/drugs/",
-        'drugbank':"https://vr.zhanglab.net/data/drugbank/",
+        'drugbank':SERVERURL+"/data/drugbank/",
+		// 'drugbank':"https://www.drugbank.ca/drugs/",
+        //'drugbank':"https://vr.zhanglab.net/data/drugbank/",
         'bindingdb':"http://www.bindingdb.org/uniport/"        ,
         'chembl':"https://www.ebi.ac.uk/chembldb/target/inspect/",
         'guidetopharmacology':"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="        ,

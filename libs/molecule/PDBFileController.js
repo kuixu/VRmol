@@ -772,7 +772,19 @@ PDB.controller = {
 
 
         //=============================== Drug Design =======================
-
+		//=======add randomMigration
+		 var hideBoxHelper = document.getElementById("hideBoxHelper");
+		 hideBoxHelper.addEventListener( 'click', function(e) {
+		 	if(this.checked){
+		 		if(PDB.GROUP[PDB.GROUP_BOX_HELPER]){
+					PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = true;
+				}
+		 	}else{
+		 		if(PDB.GROUP[PDB.GROUP_BOX_HELPER]){
+					PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = false;
+				}
+		 	}
+		 });
 		//=======add randomMigration
 		 var randomMigration = document.getElementById("randomMigration");
 		 randomMigration.addEventListener( 'click', function(e) {
@@ -798,7 +810,57 @@ PDB.controller = {
                 if(jsonObj.code === 1 && jsonObj.data !== undefined){
                     //生成面板
                     var rightMenuDiv = document.getElementById("rightmenu");
-                    rightMenuDiv.innerHTML="";
+                    rightMenuDiv.innerHTML="<label>Box Helper Limit</label><br/><span class=\"xyz_min_max\"><label>x:</label><input id=\"x_min\"/>~<input id=\"x_max\"/><br/><label>y:</label><input id=\"y_min\"/>~<input id=\"y_max\"/><br/><label>z:</label><input id=\"z_min\"/>~<input id=\"z_max\"/><br/></span>";
+					
+					var helperLab = PDB.tool.generateLabel(rightMenuDiv,"Box Helper Limit","");
+					
+					$("#x_min").val(w3m.global.limit.x[0]);
+					$("#x_max").val(w3m.global.limit.x[1]);
+					$("#y_min").val(w3m.global.limit.y[0]);
+					$("#y_max").val(w3m.global.limit.y[1]);
+					$("#z_min").val(w3m.global.limit.z[0]);
+					$("#z_max").val(w3m.global.limit.z[1]);
+					
+					$(".xyz_min_max input").bind('change',function(e){
+						if($(this).val()!=null&&!isNaN(Number($(this).val()))){
+							var x_min = $("#x_min").val()==""?w3m.global.limit.x[0]:Number($("#x_min").val());
+							var x_max = $("#x_max").val()==""?w3m.global.limit.x[1]:Number($("#x_max").val());
+							var y_min = $("#y_min").val()==""?w3m.global.limit.y[0]:Number($("#y_min").val());
+							var y_max = $("#y_max").val()==""?w3m.global.limit.y[1]:Number($("#y_max").val());
+							var z_min = $("#z_min").val()==""?w3m.global.limit.z[0]:Number($("#z_min").val());
+							var z_max = $("#z_max").val()==""?w3m.global.limit.z[1]:Number($("#z_max").val());							
+							var limit = {
+								x:w3m.global.limit.x,
+								y:w3m.global.limit.y,
+								z:w3m.global.limit.z
+							};							
+							if(!isNaN(x_min)){
+								limit.x[0] = isNaN(x_min);								
+							}
+							if(!isNaN(x_max)){
+								limit.x[1] = isNaN(x_max);								
+							}
+							if(!isNaN(y_min)){
+								limit.y[0] = isNaN(y_min);								
+							}
+							if(!isNaN(y_max)){
+								limit.y[1] = isNaN(y_max);								
+							}
+							if(!isNaN(z_min)){
+								limit.z[0] = isNaN(z_min);								
+							}
+							if(!isNaN(z_max)){
+								limit.z[1] = isNaN(z_max);								
+							}
+							PDB.render.clearGroupIndex(PDB.GROUP_BOX_HELPER);
+							PDB.painter.showBoxHelper(limit);
+							PDB.tool.generateDrugMigrationPath(limit);
+						}
+					});
+					
+					
+					
+					
                     var titleLab = PDB.tool.generateLabel(rightMenuDiv,"DrugBank List","");
                     var span = PDB.tool.generateSpan(rightMenuDiv,"menuSpan","rightsubmenu");
                     var bindingdb = jsonObj.data[0].bindingdb;

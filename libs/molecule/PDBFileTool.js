@@ -1236,39 +1236,56 @@ PDB.tool = {
 		link.download = filename || 'data.obj';
 		link.click();
 	},
-	generateDrugMigrationPath : function(){
-		
-		var pathScopex = w3m.global.limit.x[1]-w3m.global.limit.x[0];
-		var pathScopey = w3m.global.limit.y[1]-w3m.global.limit.y[0];
-		var pathScopez = w3m.global.limit.z[1]-w3m.global.limit.z[0];
-		//var startPos = new THREE.Vector3(-pathScope,0,0); 
-		var startPos = PDB.GeoCenterOffset;
+	generateDrugMigrationPath : function(limit){
+		var offset = PDB.GeoCenterOffset;
+		if(!limit){					
+			limit = {
+				x:w3m.global.limit.x,
+				y:w3m.global.limit.y,
+				z:w3m.global.limit.z
+			};			
+			limit.x = [limit.x[0],limit.x[1]];
+			limit.y = [limit.y[0],limit.y[1]];
+			limit.z = [limit.z[0],limit.z[1]];
+		}else{
+			var x = -(limit.x[0]+limit.x[1])/2 ;
+			var y = -(limit.y[0]+limit.y[1])/2 ;
+			var z = -(limit.z[0]+limit.z[1])/2 ;
+			offset = new THREE.Vector3(x,y,z);
+		}		
+		var pathScopex = limit.x[1]-limit.x[0];
+		var pathScopey = limit.y[1]-limit.y[0];
+		var pathScopez = limit.z[1]-limit.z[0];
 		var rotateScope = Math.PI;
 		PDB.DRUGMigrationPaths = [];
 		PDB.DRUGMigrationRotates = [];
-		for(var i=0;i<5000;i++){			
-			var pos = new THREE.Vector3(Math.random()*pathScopex+w3m.global.limit.x[0],Math.random()*pathScopey+w3m.global.limit.y[0],Math.random()*pathScopez+w3m.global.limit.z[0]);			
-			pos.len= Math.sqrt(Math.pow(pos.x - startPos.x,2)+Math.pow(pos.y - startPos.y,2)+Math.pow(pos.z - startPos.z,2));			
+		for(var i=0;i<50;i++){			
+			var pos = new THREE.Vector3(Math.random()*pathScopex+limit.x[0],Math.random()*pathScopey+limit.y[0],Math.random()*pathScopez+limit.z[0]);			
+			
+			pos.len= Math.sqrt(Math.pow(pos.x,2)+Math.pow(pos.y,2)+Math.pow(pos.z,2));			
 			PDB.DRUGMigrationPaths.push(pos);
 			var rota = new THREE.Euler( Math.random()*2*rotateScope-rotateScope, Math.random()*2*rotateScope-rotateScope, Math.random()*2*rotateScope-rotateScope, 'XYZ' );
 			PDB.DRUGMigrationRotates.push(rota);			
 		}
 		function sortPos(posA,posB){			
-			return posA.len - posB.len;
+			return posB.len - posA.len;
 		}		
 		PDB.DRUGMigrationPaths.sort(sortPos);
+		var po = PDB.GROUP[PDB.GROUP_DRUG].position;
+		var t = new THREE.Vector3(po.x-offset.x,po.y-offset.y,po.z-offset.z);
+		PDB.GROUP[PDB.GROUP_DRUG].position.copy(t);
 	},
 	migrationDrug : function(){
 		if(PDB.GROUP[PDB.GROUP_DRUG]&&PDB.GROUP[PDB.GROUP_DRUG].children.length>0){
 			if(!PDB.PathCount){
-				PDB.PathCount = 0;
+				PDB.PathCount = 0;				
 			}
-			
 			var i = PDB.PathCount%(PDB.DRUGMigrationPaths.length);
 			if(PDB.DRUGMigrationPaths.length>0){
 				PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.DRUGMigrationPaths[i]);
-				PDB.GROUP[PDB.GROUP_DRUG].rotation.set(PDB.DRUGMigrationRotates[i].x,PDB.DRUGMigrationRotates[i].y,PDB.DRUGMigrationRotates[i].z);
-			}					
+				//PDB.GROUP[PDB.GROUP_DRUG].rotation.copy(PDB.DRUGMigrationRotates[i]);
+				
+			}			
 			PDB.PathCount++;
 		}
 

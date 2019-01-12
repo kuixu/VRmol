@@ -4243,5 +4243,21 @@ PDB.painter = {
 			}	
 		}		
 	},
+	showBoxHelper:function(limit){
+		if(!limit){
+			limit = {
+				x:w3m.global.limit.x,
+				y:w3m.global.limit.y,
+				z:w3m.global.limit.z
+			};			
+		}
+		limit.x = [limit.x[0]+PDB.GeoCenterOffset.x,limit.x[1]+PDB.GeoCenterOffset.x];
+		limit.y = [limit.y[0]+PDB.GeoCenterOffset.y,limit.y[1]+PDB.GeoCenterOffset.y];
+		limit.z = [limit.z[0]+PDB.GeoCenterOffset.z,limit.z[1]+PDB.GeoCenterOffset.z];		
+		var box = new THREE.Box3(new THREE.Vector3( limit.x[0], limit.y[0], limit.z[0] ), new THREE.Vector3(limit.x[1], limit.y[1], limit.z[1] ));
+		box.setFromCenterAndSize( new THREE.Vector3((limit.x[0]+limit.x[1])/2,(limit.y[0]+limit.y[1])/2,(limit.z[0]+limit.z[1])/2), new THREE.Vector3( limit.x[1]-limit.x[0],limit.y[1]-limit.y[0], limit.z[1]-limit.z[0]) );
+		var helper = new THREE.Box3Helper( box, 0xfff100 );
+		PDB.GROUP[PDB.GROUP_BOX_HELPER].add( helper );
+	}
 	
 };
