@@ -688,9 +688,9 @@ PDB.controller = {
 
         showMutationTable.addEventListener( 'click', function() {
             if(this.checked){
-                document.getElementById("mutationTable").hidden=false;
+                document.getElementById("rightmenu").hidden=false;
             }else{
-                document.getElementById("mutationTable").hidden=true;
+                document.getElementById("rightmenu").hidden=true;
             }
         } );
 
@@ -810,6 +810,8 @@ PDB.controller = {
                 if(jsonObj.code === 1 && jsonObj.data !== undefined){
                     //生成面板
                     var rightMenuDiv = document.getElementById("rightmenu");
+                    rightMenuDiv.hidden=false;
+                    rightMenuDiv.style.overflowY ="hidden";
                     rightMenuDiv.innerHTML="<label>Box Helper Limit</label><br/><span class=\"xyz_min_max\"><label>x:</label><input id=\"x_min\"/>~<input id=\"x_max\"/><br/><label>y:</label><input id=\"y_min\"/>~<input id=\"y_max\"/><br/><label>z:</label><input id=\"z_min\"/>~<input id=\"z_max\"/><br/></span>";
 					
 					var helperLab = PDB.tool.generateLabel(rightMenuDiv,"Box Helper Limit","");

@@ -1291,8 +1291,9 @@ PDB.tool = {
 		}
 
     },showMutationTable: function(flag,text){
-        var rightMenuDiv = document.getElementById("mutationTable");
+        var rightMenuDiv = document.getElementById("rightmenu");
         rightMenuDiv.innerHTML="";
+        rightMenuDiv.style.overflowY ="scroll";
         if(flag){
             rightMenuDiv.hidden=false;
         }else {
