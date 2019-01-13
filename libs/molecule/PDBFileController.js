@@ -753,11 +753,6 @@ PDB.controller = {
             PDB.painter.showBond(PDB.BOND_TYPE_COVALENT);
         } );
 
-
-
-
-        //=============================== Conservation data =======================
-        //
         var b_load_conser = document.getElementById("b_load_conser");
         b_load_conser.addEventListener( 'click', function() {
             var chain = "A";
@@ -769,7 +764,6 @@ PDB.controller = {
                 PDB.controller.drawGeometry(PDB.config.mainMode);
             })
         } );
-
 
         //=============================== Drug Design =======================
 		//=======add randomMigration
@@ -795,6 +789,17 @@ PDB.controller = {
 		 		PDB.DRUGMOVE = false;
 		 	}
 		 });
+
+        //hide drug
+        var hideDrug = document.getElementById("b_load_drug");
+        hideDrug.addEventListener( 'click', function(e) {
+            if(this.checked){
+                PDB.GROUP[PDB.GROUP_DRUG]= true;
+            }else{
+                PDB.GROUP[PDB.GROUP_DRUG]= false;
+            }
+        });
+
 
         var b_load_drug = document.getElementById("b_load_drug");
         b_load_drug.addEventListener( 'click', function() {
