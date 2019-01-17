@@ -190,7 +190,7 @@ PDB.controller = {
 
         var loadDensityMap = document.getElementById("loadDensityMap");
         loadDensityMap.addEventListener('click',function () {
-            var url ="https://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
+            var url = SERVERURL+"/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
             //var url = "https://vr.zhanglab.net/server/api.php?taskid=13&pdbid=5ftm";
             // if(ServerType!==2){
                 // url=SERVERURL+"/data/map01.json";
