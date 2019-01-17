@@ -767,8 +767,8 @@ PDB.controller = {
 
         //=============================== Drug Design =======================
 		//=======add randomMigration
-		 var hideBoxHelper = document.getElementById("hideBoxHelper");
-		 hideBoxHelper.addEventListener( 'click', function(e) {
+		 var showBoxHelper = document.getElementById("showBoxHelper");
+        showBoxHelper.addEventListener( 'click', function(e) {
 		 	if(this.checked){
 		 		if(PDB.GROUP[PDB.GROUP_BOX_HELPER]){
 					PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = true;
@@ -791,12 +791,12 @@ PDB.controller = {
 		 });
 
         //hide drug
-        var hideDrug = document.getElementById("b_load_drug");
+        var hideDrug = document.getElementById("hideDrug");
         hideDrug.addEventListener( 'click', function(e) {
             if(this.checked){
-                PDB.GROUP[PDB.GROUP_DRUG]= true;
+                PDB.GROUP[PDB.GROUP_DRUG].visible= true;
             }else{
-                PDB.GROUP[PDB.GROUP_DRUG]= false;
+                PDB.GROUP[PDB.GROUP_DRUG].visible= false;
             }
         });
 
@@ -913,7 +913,7 @@ PDB.controller = {
 
 						//====add the random migration path and scope
 						PDB.tool.generateDrugMigrationPath();
-
+                        PDB.GROUP[PDB.GROUP_DRUG].visible = true;
                     });
                 });
                 PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUBDB_URL[dbname] + drugids[i], "");
