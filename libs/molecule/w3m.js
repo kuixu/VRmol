@@ -4652,7 +4652,7 @@ w3m.pdb = function ( text, drugname ) {
             return o.atom.main[id] || ( o.atom.het[id] || null );
         }
     };
-	if(drugname&&w3m.mol[drugname].res){
+	if(drugname && w3m.mol[drugname] !== undefined && w3m.mol[drugname].res){
 		o.id = drugname;
 	}
     /**
