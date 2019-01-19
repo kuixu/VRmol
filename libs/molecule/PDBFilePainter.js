@@ -3940,6 +3940,28 @@ PDB.painter = {
 			case PDB.HET_BALL_ROD 		: 	this.showHet_Ball_Rod(molId);		break;			
 		}
 	},
+	showRes_Ball_Rod : function(molId){
+		PDB.CONFIG = PDB.CONFIG_HIGH;
+		var addgroup;
+		
+		var w = PDB.CONFIG.stick_sphere_w;
+       
+		var group = PDB.GROUP_ONE_RES;
+        
+		var main_obj = w3m.mol[molId].atom.main;
+		
+		for ( var i_atom in main_obj) {
+			var atom = PDB.tool.getHetAtom(molId, i_atom);
+			if(atom==undefined){
+				atom = PDB.tool.getMainAtom(molId, i_atom);
+			}
+			atom.caid = atom.id;
+			if(atom.resname!=="hoh"){
+				PDB.drawer.drawSphere(PDB.GROUP_ONE_RES, atom.pos_centered, atom.color, 0.9*atom.radius, atom, addgroup, w);
+			}
+		}
+        
+    },
 	showDrugSurface : function(molId){
 		var offset = PDB.GeoCenterOffset;
         var minx = offset.x +limit.x[0],

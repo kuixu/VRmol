@@ -338,6 +338,13 @@ w3m.ajax = (function() {
         this.open('GET', url, true);
         this.send();
     };
+	io.getResidue = function(resName, fn) {
+        resName = resName.toUpperCase();
+        url      =  SERVERURL+"/data/amino_acid/"+ resName + '.pdb';
+        callback = fn;
+        this.open('GET', url, true);
+        this.send();
+    };
     io.getDrug = function(mol_id,dbname, fn) {
         id       = mol_id;
         url      =  PDB.DRUBDB_URL[dbname] + mol_id + '.pdb';
@@ -4600,7 +4607,9 @@ w3m.pdb = function ( text, drugname ) {
         type : 'pdb',
         id : '',
         //xukui add
-        drug:false,
+        drug:false,		
+		//ranx add
+		res:false,
         info : {},
         journal : [],
         atom : { main : [], het : [] },
@@ -4638,7 +4647,9 @@ w3m.pdb = function ( text, drugname ) {
             return o.atom.main[id] || ( o.atom.het[id] || null );
         }
     };
-
+	if(drugname&&w3m.mol[drugname].res){
+		o.id = drugname;
+	}
     /**
      * PDB文件解析方法
      */

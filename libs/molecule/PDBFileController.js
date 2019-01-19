@@ -268,7 +268,149 @@ PDB.controller = {
         var b_railway   = document.getElementById( "b_railway" );
         var b_sse       = document.getElementById( "b_sse" );
         var b_surface   = document.getElementById( "b_surface" );
-
+		
+		var b_replace = document.getElementById( "b_replace" );
+		
+		b_replace.addEventListener( 'click', function(e) {
+			PDB.GROUP_ONE_RES = 37;
+			//初始化
+			if(!PDB.GROUP[PDB.GROUP_ONE_RES]){
+				PDB.GROUP[PDB.GROUP_ONE_RES] = new THREE.Group();
+			}else{
+				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+			}
+			
+			
+			var chain_replace = document.getElementById( "chain_replace" );
+			
+			var groupa = "chain_"+chain_replace.value;
+			var groupb;
+			if(PDB.GROUP[groupa+"_low"]){
+				groupb = groupa+"_low";
+			}
+			
+			var residue_replace = document.getElementById( "residue_replace" );
+			//console.log();
+			
+			var allResidue = document.getElementById( "allResidue" );
+			var segmentholder = document.getElementById("segmentholder");
+			var segmentPanel = document.getElementById("segmentPanel");			
+			var resName = allResidue.value;
+			if(w3m.mol[resName]){
+				PDB.painter.showRes_Ball_Rod(resName);
+				//PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
+				segmentholder.style.display = "none";
+				segmentPanel.style.display = "none";
+				var xyz = residue_replace.selectedOptions[0].xyz;
+				var resid = residue_replace.value;
+			
+				var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
+				PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);	
+				
+				
+				
+				if(PDB.GROUP[groupa]){
+					for(var i in PDB.GROUP[groupa].children){
+						var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+						if(_resid_==resid){
+							PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);
+							//PDB.GROUP[groupa].children
+							break;
+						}
+					}
+				}
+				
+				
+				if(groupb&&PDB.GROUP[groupb]){
+					if(PDB.GROUP[groupb]){
+						for(var i in PDB.GROUP[groupb].children){
+							var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
+							if(_resid_==resid){
+								PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);
+								//PDB.GROUP[groupa].children
+								break;
+							}
+						}
+					}
+				}
+				
+				
+				
+				
+				for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
+					var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
+					 PDB.GROUP[groupa].add( obj);
+				}
+				if(groupb&&PDB.GROUP[groupb]){
+					for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
+						var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
+						 PDB.GROUP[groupb].add( obj);
+					}
+				}
+				
+				
+				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+			}else{
+				PDB.loader.loadResidue(resName, function () {									
+					PDB.painter.showRes_Ball_Rod(resName);
+					//PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
+					segmentholder.style.display = "none";
+					segmentPanel.style.display = "none";
+					var xyz = residue_replace.selectedOptions[0].xyz;
+					var resid = residue_replace.value;				
+					var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
+					PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
+					var caidpo = new THREE.Vector3(0,0,0);
+					if(PDB.GROUP[groupa]){
+						for(var i in PDB.GROUP[groupa].children){
+							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+							if(_resid_==resid){
+								caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
+								PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);								
+								break;
+							}
+						}
+					}
+					
+					
+					
+					
+					//console.log(caidpo);
+					//获取相对向量
+					var xdpo = {};
+					for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
+						var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
+						if(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].userData.presentAtom.name == 'ca'){							
+							var po = PDB.GROUP[PDB.GROUP_ONE_RES].children[i].position;
+							xdpo.x = caidpo.x - po.x;
+							xdpo.y = caidpo.y - po.y;
+							xdpo.z = caidpo.z - po.z;							
+							break;
+						}						
+						//PDB.GROUP[groupa].add( obj);
+					}
+					//console.log(xdpo);
+					for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
+						var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
+						obj.position.copy(new THREE.Vector3(obj.position.x+xdpo.x,obj.position.y+xdpo.y,obj.position.z+xdpo.z));
+						PDB.GROUP[groupa].add( obj);
+					}
+					
+					if(groupb&&PDB.GROUP[groupb]){
+						for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
+							var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
+							obj.position.copy(new THREE.Vector3(obj.position.x+xdpo.x,obj.position.y+xdpo.y,obj.position.z+xdpo.z));
+							PDB.GROUP[groupb].add( obj);
+						}
+					}
+					
+					
+					PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+				});
+			}
+			
+			
+		});
 
 		b_hide.addEventListener( 'click', function(e) {
 			//console.log(e.target.innerText);
@@ -1381,6 +1523,32 @@ PDB.controller = {
 			});
 		}
 	},
+	initReplaceResidue : function(chain){
+		var residue_replace = document.getElementById("residue_replace");		
+				
+		var atoms = w3m.mol[PDB.pdbId].atom.main;
+		for(var atomId in atoms){
+			var atom = atoms[atomId];
+			var atomName = atom[3];
+			var atomName = atom[2];
+			var residueName = atom[3];
+			var chainName = atom[4];
+			var residueID = atom[5];
+			var xyz = atom[6];
+			var b_factor = atom[7];
+			var coe = atom[8];
+			var atomType = atom[9];
+			if(chain==chainName&&atomName=='ca'){				
+				var newOption = document.createElement("option");
+				newOption.innerHTML = residueID+":"+residueName;
+				newOption.value = residueID;
+				newOption.xyz= xyz;
+				newOption.caid= atomId;				
+				residue_replace.appendChild(newOption);
+			}
+		}
+		
+	},
 	initSartAndSelect :  function(chain){
 		//init residueTypeSelect
 		var residueTypeSelect = document.getElementById("residueTypeSelect");
@@ -1434,20 +1602,40 @@ PDB.controller = {
 	initFragmentSelect : function(){
 		var scope = this;
 		var chainIDSelect = document.getElementById("chainIDSelect");
+		var chain_replace = document.getElementById("chain_replace");
 		var chainarray = Object.keys(w3m.mol[PDB.pdbId].chain);
 		chainIDSelect.innerHTML = "";
+		chain_replace.innerHTML = "";
 		for(var i in chainarray){
 			var newOption = document.createElement("option");
 			newOption.innerHTML = chainarray[i];
 			newOption.value = chainarray[i];
 			chainIDSelect.appendChild(newOption);
+			
+			var newOption1 = document.createElement("option");
+			newOption1.innerHTML = chainarray[i];
+			newOption1.value = chainarray[i];
+			chain_replace.appendChild(newOption1);
 		}
 		chainIDSelect.addEventListener( 'change', function(e) {
 			var chainName = chainIDSelect.value;
 			scope.initSartAndSelect(chainName);
 		} );
 		this.initSartAndSelect(chainarray[0]);
-
+		chain_replace.addEventListener( 'change', function(e) {
+			var chainName = chainIDSelect.value;
+			scope.initReplaceResidue(chainName);
+		} );
+		//初始化所有替换氨基酸名字
+		var allResidue = document.getElementById("allResidue");
+		for(var i in w3m.mol[PDB.pdbId].residueTypeList){
+			var resName = w3m.mol[PDB.pdbId].residueTypeList[i];
+			var newOption = document.createElement("option");
+			newOption.innerHTML = resName;
+			newOption.value = resName;
+			allResidue.appendChild(newOption);
+		}		
+		this.initReplaceResidue(chainarray[0]);
 	},
     requestRemote : function(name){
         console.log("controller.requestRemote:"+name);

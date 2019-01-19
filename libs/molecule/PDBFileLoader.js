@@ -175,6 +175,21 @@ PDB.loader = {
             callBack();
         });
     },
+	loadResidue: function ( resName,callBack) {
+        var scope = this;
+        w3m.ajax.getResidue(resName,function(text) {
+			if(!w3m.mol[resName]){
+				w3m.mol[resName] = {};
+			}
+			
+            w3m.tool.clear();
+			w3m.mol[resName].res=true;
+            w3m.pdb(text, resName);
+            
+            //回调函数
+            callBack();
+        });
+    },
     loadDocking: function ( path,dockingName,callBack) {
         var scope = this;
         w3m.ajax.getDocking(path, dockingName,function(text) {
