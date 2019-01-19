@@ -1284,10 +1284,13 @@ PDB.tool = {
 			var i = PDB.PathCount%(PDB.DRUGMigrationPaths.length);
 			if(PDB.DRUGMigrationPaths.length>0){
 				PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.DRUGMigrationPaths[i]);
-				//PDB.GROUP[PDB.GROUP_DRUG].rotation.copy(PDB.DRUGMigrationRotates[i]);
-				
-			}			
-			PDB.PathCount++;
+			}
+			//与drug位置保持同步
+			if(PDB.GROUP[PDB.GROUP_SURFACE_HET] != undefined){
+			    var po = PDB.GROUP[PDB.GROUP_DRUG].position;
+                PDB.GROUP[PDB.GROUP_SURFACE_HET].position.copy(po);
+            }
+            PDB.PathCount++;
 		}
 
     },showMutationTable: function(flag,text){

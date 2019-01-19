@@ -3948,6 +3948,7 @@ PDB.painter = {
         var maxx = offset.x +limit.x[1],
             maxy = offset.y +limit.y[1],
             maxz = offset.z +limit.z[1];
+
         // MATERIALS
         var material = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x888888, shininess: 250 } );
         // MARCHING CUBES
@@ -4008,7 +4009,11 @@ PDB.painter = {
             opacity: PDB.SURFACE_OPACITY,
             transparent: true,
         }));
+
         PDB.GROUP[PDB.GROUP_SURFACE_HET].add( mesh );
+        //移动position
+        var po = PDB.GROUP[PDB.GROUP_DRUG].position;
+        PDB.GROUP[PDB.GROUP_SURFACE_HET].position.copy(po);
         PDB.GROUP[PDB.GROUP_SURFACE_HET].visible = true;
 	},
 	//before sphere visualization 2018-08-16
