@@ -4285,6 +4285,7 @@ PDB.painter = {
 		var box = new THREE.Box3(new THREE.Vector3( limit.x[0], limit.y[0], limit.z[0] ), new THREE.Vector3(limit.x[1], limit.y[1], limit.z[1] ));
 		box.setFromCenterAndSize( new THREE.Vector3((limit.x[0]+limit.x[1])/2,(limit.y[0]+limit.y[1])/2,(limit.z[0]+limit.z[1])/2), new THREE.Vector3( limit.x[1]-limit.x[0],limit.y[1]-limit.y[0], limit.z[1]-limit.z[0]) );
 		var helper = new THREE.Box3Helper( box, 0xfff100 );
+        PDB.render.clearGroupIndex(PDB.GROUP_BOX_HELPER);
 		PDB.GROUP[PDB.GROUP_BOX_HELPER].add( helper );
 	}
 	
