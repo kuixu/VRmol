@@ -366,10 +366,23 @@ PDB.controller = {
             scope.refreshGeometryByMode(PDB.config.mainMode);
         });
 
+        var h_hide      = document.getElementById( "h_hide" );
         var h_line      = document.getElementById( "h_line" );
         var h_sphere    = document.getElementById( "h_sphere" );
         var h_stick     = document.getElementById( "h_stick" );
         var h_ballrod   = document.getElementById( "h_ballrod" );
+        h_hide.addEventListener( 'click', function(e) {
+            //console.log(e.target.innerText);
+            if(e.target.innerText=='Hide'){
+                PDB.GROUP[PDB.GROUP_HET].visible = false;
+                e.target.innerText='Show';
+            }else if(e.target.innerText=='Show'){
+                PDB.GROUP[PDB.GROUP_HET].visible = true;
+                e.target.innerText='Hide';
+            }
+
+
+        } );
         h_line.addEventListener( 'click', function() {
             PDB.render.clear(5);
             PDB.config.hetMode = PDB.HET_LINE;
