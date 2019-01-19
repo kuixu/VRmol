@@ -9,12 +9,12 @@
 
 	class DBconn{
 		var $conn=false;
-		//连接数据库
+		//connect database
 		function __construct(){
 			//$this->conn=pg_connect("host=192.168.1.105 dbname=dbppi user=postgres password=''");
 			$this->conn=pg_pconnect('host=' . PGHOST . ' port=' . PGPORT . ' dbname=' . PGDATABASE . ' user=' . PGUSER . ' password=' . PGPASSWORD);
 		}
-		//获取数据库中的多条记录
+		// get multi-line data
 		function get_rows($sql){
 			if($result = pg_query($sql)){
 				$rows=null;
@@ -34,7 +34,7 @@
 			//$this->close();
 			return false;
 		}
-		//获取单条记录
+		// get single-line data
 		function get_row($sql){
 			if($result=pg_query($sql)){
 				$row=pg_fetch_array($result);
@@ -42,7 +42,7 @@
 			}
 			return false;
 		}
-		//增删改方法1（如果改的时候没有改变原有记录就弹修改失败窗口）
+		// add change, no change with fail
 		function changeRow1($sql){
 			$result=pg_query($sql);
 			if(!$result||pg_affected_rows()==0){
@@ -52,7 +52,7 @@
 			//$this->close();
 			return true;
 		}
-		//增删改方法2（如果根本没有改，也会弹修改成功的窗口）
+		// add change, no change with success
 		function changeRow2($sql){
 			$result=pg_query($sql);
 			if(!$result){

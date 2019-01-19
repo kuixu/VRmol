@@ -404,7 +404,7 @@ function dealwithMenu(object) {
 				onMenuDown();
 			}else{
 				// var url ="http://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
-				var url = "http://vr.zhanglab.net/server/api.php?taskid=13&pdbid=5ftm";
+				var url = SERVERURL+"/server/api.php?taskid=13&pdbid=5ftm";
 				PDB.tool.ajax.get(url,function (text) {
                 //PDB.render.clear(2);
 				//生成Material 数组

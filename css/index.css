@@ -176,8 +176,8 @@ button:active {
     position: absolute;
     top: 80px;
     right: 10px;
-    width: 400px;
-    height: 800px;
+    /*width: 400px;
+    height: 800px;*/
     text-align: left;
     padding: 0;
     margin: 0;
