@@ -2981,8 +2981,10 @@ w3m.tool = {
                     var pos = new THREE.Vector3(shell[i][k][1][0] + offset.x, shell[i][k][1][1] + offset.y, shell[i][k][1][2] + offset.z);
                     var atom = w3m.tool.getMainAtomById(w3m.global.mol, shell[i][k][0]);
                     // w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].sse = 11;
-
-                    w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].arrow.push(pos);
+					if(atom.resid){
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].arrow.push(pos);
+					}
+                    
                     // sheetPots.push(pos);
                     // sheetColors.push(shell[i][k][2]);
                     // sheetIDs.push(shell[i][k][0]);
@@ -3014,7 +3016,10 @@ w3m.tool = {
                     // sheetIDs.push(shell[i][k][0]);
                     var atom = w3m.tool.getMainAtomById(w3m.global.mol,shell[i][k][0]);
                     // w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].sse = 11;
-                    w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].arrow.push(pos);
+					if(atom.resid){
+						 w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].arrow.push(pos);
+					}
+                   
                     // if(i==shell.length-2){
                         // prepp.push([shell[i][k][1][0]+offset.x,shell[i][k][1][1]+offset.y,shell[i][k][1][2]+offset.z]);
                     // }else if(i==shell.length-1){

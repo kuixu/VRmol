@@ -280,14 +280,7 @@ PDB.controller = {
 				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
 			}
 			
-			
-			var chain_replace = document.getElementById( "chain_replace" );
-			chain_replace.addEventListener('change',function(e){
-				scope.initReplaceResidue(e.value);
-			});
-			
-			
-			
+		
 			
 			
 			var groupa = "chain_"+chain_replace.value;
@@ -1643,7 +1636,7 @@ PDB.controller = {
 		} );
 		this.initSartAndSelect(chainarray[0]);
 		chain_replace.addEventListener( 'change', function(e) {
-			var chainName = chainIDSelect.value;
+			var chainName = chain_replace.value;
 			scope.initReplaceResidue(chainName);
 		} );
 		//初始化所有替换氨基酸名字
