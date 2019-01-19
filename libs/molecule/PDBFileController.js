@@ -587,7 +587,18 @@ PDB.controller = {
                         }
                     }
                     var color_mode = e.target.getAttribute('color_mode');
-                    scope.switchColorBymode(color_mode);
+                    if(color_mode !== "610"){
+                        scope.switchColorBymode(color_mode);
+                    }else{
+                        var chain = "A";
+                        var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+                        PDB.tool.ajax.get(url,function (text) {
+                            PDB.controller.clear(4,undefined);
+                            PDB.painter.showConservation(text);
+                            PDB.render.clearMain();
+                            PDB.controller.drawGeometry(PDB.config.mainMode);
+                        })
+                    }
                 } );
             }
 
@@ -751,18 +762,6 @@ PDB.controller = {
         showCovalent.addEventListener( 'click', function(event) {
             PDB.render.clearGroupIndex(PDB.GROUP_BOND);
             PDB.painter.showBond(PDB.BOND_TYPE_COVALENT);
-        } );
-
-        var b_load_conser = document.getElementById("b_load_conser");
-        b_load_conser.addEventListener( 'click', function() {
-            var chain = "A";
-            var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
-            PDB.tool.ajax.get(url,function (text) {
-                PDB.controller.clear(4,undefined);
-                PDB.painter.showConservation(text);
-                PDB.render.clearMain();
-                PDB.controller.drawGeometry(PDB.config.mainMode);
-            })
         } );
 
         //=============================== Drug Design =======================
