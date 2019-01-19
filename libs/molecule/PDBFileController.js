@@ -592,6 +592,9 @@ PDB.controller = {
                     }else{
                         var chain = "A";
                         var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+                        if(ServerType != 2){
+                            url = SERVERURL+"/data/conservation.json";
+                        }
                         PDB.tool.ajax.get(url,function (text) {
                             PDB.controller.clear(4,undefined);
                             PDB.painter.showConservation(text);
