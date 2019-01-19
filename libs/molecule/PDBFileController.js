@@ -282,6 +282,13 @@ PDB.controller = {
 			
 			
 			var chain_replace = document.getElementById( "chain_replace" );
+			chain_replace.addEventListener('change',function(e){
+				scope.initReplaceResidue(e.value);
+			});
+			
+			
+			
+			
 			
 			var groupa = "chain_"+chain_replace.value;
 			var groupb;
@@ -1538,7 +1545,7 @@ PDB.controller = {
 	},
 	initReplaceResidue : function(chain){
 		var residue_replace = document.getElementById("residue_replace");		
-				
+		residue_replace.innerHTML="";	
 		var atoms = w3m.mol[PDB.pdbId].atom.main;
 		for(var atomId in atoms){
 			var atom = atoms[atomId];
