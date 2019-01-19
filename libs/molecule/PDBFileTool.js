@@ -589,6 +589,7 @@ PDB.tool = {
     generateDocklingLink:function (parent,id,text,link,dbname) {
         var aLink = document.createElement("a");
         var node = document.createTextNode(text);
+
         aLink.appendChild(node);
         aLink.id = id;
         aLink.addEventListener( 'click', function() {
@@ -648,6 +649,9 @@ PDB.tool = {
                                 PDB.tool.generateDrugMigrationPath();
                             });
                         });
+                        //创建 BR
+                        var br = document.createElement("br");
+                        modelSpan.appendChild(br);
                     }
                 }
             });
