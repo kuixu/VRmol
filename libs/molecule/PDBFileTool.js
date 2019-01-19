@@ -637,7 +637,8 @@ PDB.tool = {
                         if (jsonObj.model_list[i] === "") {
                             continue;
                         }
-                        PDB.tool.generateButton(modelSpan, jsonObj.model_list[i], jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
+                        var text = jsonObj.model_list[i]+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+jsonObj.scores[i];
+                        PDB.tool.generateButton(modelSpan,text , jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function () {
 
                             var drugId = this.value.replace(".pdb","");
                             PDB.config.selectedDrug = drugId;

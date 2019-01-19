@@ -170,8 +170,8 @@ PDB = {
         ,CHEMBL:"https://www.ebi.ac.uk/chembldb/target/inspect/",GUIDETOPHARMACOLOGY:"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="
         ,SWISSLIPIDS:"http://www.swisslipids.org/#/entity/",EMMAP:"https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-"},
     DRUBDB_URL : {
-        'drugbank':SERVERURL+"/data/drugbank/",
-        // 'drugbank':"https://www.drugbank.ca/drugs/",
+        // 'drugbank':SERVERURL+"/data/drugbank/",
+        'drugbank':"https://www.drugbank.ca/drugs/",
         //'drugbank':SERVERURL+"/data/drugbank/",
         'bindingdb':"http://www.bindingdb.org/uniport/"        ,
         'chembl':"https://www.ebi.ac.uk/chembldb/target/inspect/",
