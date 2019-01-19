@@ -1,11 +1,12 @@
 <?php
+$server_url = 'https://inano.zhanglab.net';
 // config URL
 $outmodel = 9; 
 $mgtools  = '/home/vr/tools/mgltools_x86_64Linux2_1.5.6/bin';
 $vina     = '/home/vr/tools/autodock_vina_1_1_2_linux_x86/bin/vina';
 $pdb_url  = 'http://files.rcsb.org/view/';
-// $smol_url = 'http://vr.zhanglab.net/data/drugbank/';
 $smol_url = 'https://www.drugbank.ca/structures/small_molecule_drugs/';
+// $smol_url = $server_url.'/data/drugbank/';
 // get nequest parameter
 // $pdbid    = $_POST['pdbid'];
 // $smolid   = $_POST['smolid'];
@@ -67,15 +68,23 @@ file_put_contents($cfgfile, $configuration);
 
 $cmd = 'cd jobs/'.$dir_name.';'.$vina.' --config config >log 2>&1 ;' ;
 $cmd = $cmd.' babel '.$smolid.'_out.pdbqt '.$smolid.'_out.pdb;' ;
-$cmd = $cmd.' '.$mgtools.'/splitpdb.sh '.$smolid.'_out &';
+$cmd = $cmd.' '.$mgtools.'/splitpdb.sh '.$smolid.'_out ;';
+$cmd = $cmd." tail -10 log |head -9|awk '{print $2}' > scores &";
 // exec('cd jobs/'.$dir_name.';'.$vina.' --config config >log 2>&1 ; babel &');
 exec($cmd);
 exec('sleep 2');
 // echo '<p>'.exec("ls jobs/".$dir_name).'</p>';
-$outdir = "https://vr.zhanglab.net/server/autodock/jobs/".$dir_name;
+$outdir = $server_url."/server/autodock/jobs/".$dir_name;
 $log = $outdir.'/log';
 $target = $smolid.'_out.pdb';
 $target_url = $outdir.'/'.$target ;
+
+// score file
+$score_file = 'jobs/'.$dir_name.'/scores';
+$str = file_get_contents($score_file);
+$str_encoding = mb_convert_encoding($str, 'UTF-8', 'UTF-8,GBK,GB2312,BIG5');
+$score_arr = explode("\r\n", $str_encoding);
+
 
 // n models
 $model_list = array();
@@ -85,6 +94,6 @@ foreach (range(1, $outmodel) as $number) {
     // $model_list[] = $outdir.'/'.$name;
 }
 
-$out = array('jobid' => $dir_name, 'log' => $log, 'pdbid' => $pdbid, 'smolid' => $smolid, 'fullmodel' => $target, 'fullmodel_url' => $target_url, 'model_list' => $model_list, 'outdir' => $outdir );
+$out = array('jobid' => $dir_name, 'log' => $log, 'pdbid' => $pdbid, 'smolid' => $smolid, 'fullmodel' => $target, 'fullmodel_url' => $target_url, 'model_list' => $model_list, 'outdir' => $outdir, 'scores' => $score_arr);
 echo json_encode($out);
 ?>

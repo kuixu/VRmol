@@ -8,9 +8,9 @@ var SERVERURL = "http://localhost:8080/molwebvr";
 if(ServerType ===1){
     SERVERURL= "http://localhost/molecule_vr/web";
 }else if(ServerType ===2){
-    SERVERURL= "https://vr.zhanglab.net";
+    SERVERURL= "https://inano.zhanglab.net";
 }else if(ServerType ===3){
-    SERVERURL= "http://localhost:8080";
+    SERVERURL = "http://localhost:8080/molwebvr";
 	//SERVERURL= "http://localhost";
 }
 PDB = {
@@ -81,9 +81,10 @@ PDB = {
     tubeSSE:[],
     GeoCenterOffset:"" ,
     mutation:'{"code":1,"data":{"mutations":[{"id":"832951","v_class":"Missense_Mutation","v_type":"SNP","g_change":"g.chr11:111779667C>G","p_change":"p.E117Q","disease":"UCEC","pos":"117"},{"id":"832952","v_class":"Missense_Mutation","v_type":"SNP","g_change":"g.chr11:111781056G>A","p_change":"p.R107C","disease":"UCEC","pos":"107"},{"id":"832953","v_class":"Silent","v_type":"SNP","g_change":"g.chr11:111781108G>T","p_change":"p.L89L","disease":"UCEC","pos":"89"},{"id":"79882","v_class":"Silent","v_type":"SNP","g_change":"g.chr11:111779560G>A","p_change":"p.V152V","disease":"SKCM","pos":"152"},{"id":"118368","v_class":"Missense_Mutation","v_type":"SNP","g_change":"g.chr11:111782377A>C","p_change":"p.F24L","disease":"SKCM","pos":"24"},{"id":"390477","v_class":"Silent","v_type":"SNP","g_change":"g.chr11:111782347C>T","p_change":"p.E34E","disease":"STAD","pos":"34"},{"id":"646695","v_class":"Missense_Mutation","v_type":"SNP","g_change":"g.chr11:111779603G>A","p_change":"p.S138L","disease":"LUAD","pos":"138"}],"chains":["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X"],"pdbid":"2YGD","dataset":"tcga"},"message":"success"}',
-    MUTATION_URL: 'https://vr.zhanglab.net' + "/server/api.php?taskid=10",
-    CONSERVATION_URL: 'https://vr.zhanglab.net' + "/server/api.php?taskid=11",
-    DRUG_URL: SERVERURL + "/server/api.php?taskid=12",
+    MUTATION_URL: SERVERURL + "/server/api.php?taskid=10",
+    CONSERVATION_URL: SERVERURL + "/server/api.php?taskid=11",
+    DRUG_URL: SERVERURL + "/data/DB04464.pdb",
+    // DRUG_URL: SERVERURL + "/server/api.php?taskid=12",
     currentUrl: "data/aaa.pdb",
     remoteUrl: [SERVERURL + '/data/', 'https://files.rcsb.org/view/', 'https://www.rcsb.org/pdb/files/' ],
     drugPDBUrl: [ SERVERURL + '/data/','https://www.drugbank.ca/structures/small_molecule_drugs/DB04464.pdb'],
@@ -169,15 +170,16 @@ PDB = {
         ,CHEMBL:"https://www.ebi.ac.uk/chembldb/target/inspect/",GUIDETOPHARMACOLOGY:"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="
         ,SWISSLIPIDS:"http://www.swisslipids.org/#/entity/",EMMAP:"https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-"},
     DRUBDB_URL : {
+        'drugbank':SERVERURL+"/data/drugbank/",
+        // 'drugbank':"https://www.drugbank.ca/drugs/",
         //'drugbank':SERVERURL+"/data/drugbank/",
-		'drugbank':"https://www.drugbank.ca/drugs/",
-        //'drugbank':"https://vr.zhanglab.net/data/drugbank/",
         'bindingdb':"http://www.bindingdb.org/uniport/"        ,
         'chembl':"https://www.ebi.ac.uk/chembldb/target/inspect/",
         'guidetopharmacology':"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="        ,
         'swisslipids':"http://www.swisslipids.org/#/entity/",
         'docking':""
     },
+    DOCKING_URL: SERVERURL+"/server/autodock/autodock.php",
     // docking var
     DIMENSION:0,
     DIMENSION_X:0,

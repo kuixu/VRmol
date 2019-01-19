@@ -190,7 +190,7 @@ PDB.controller = {
 
         var loadDensityMap = document.getElementById("loadDensityMap");
         loadDensityMap.addEventListener('click',function () {
-            var url ="https://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
+            var url = SERVERURL+"/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
             //var url = "https://vr.zhanglab.net/server/api.php?taskid=13&pdbid=5ftm";
             // if(ServerType!==2){
                 // url=SERVERURL+"/data/map01.json";
@@ -587,7 +587,21 @@ PDB.controller = {
                         }
                     }
                     var color_mode = e.target.getAttribute('color_mode');
-                    scope.switchColorBymode(color_mode);
+                    if(color_mode !== "610"){
+                        scope.switchColorBymode(color_mode);
+                    }else{
+                        var chain = "A";
+                        var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+                        if(ServerType != 2){
+                            url = SERVERURL+"/data/conservation.json";
+                        }
+                        PDB.tool.ajax.get(url,function (text) {
+                            PDB.controller.clear(4,undefined);
+                            PDB.painter.showConservation(text);
+                            PDB.render.clearMain();
+                            PDB.controller.drawGeometry(PDB.config.mainMode);
+                        })
+                    }
                 } );
             }
 
@@ -688,9 +702,9 @@ PDB.controller = {
 
         showMutationTable.addEventListener( 'click', function() {
             if(this.checked){
-                document.getElementById("mutationTable").hidden=false;
+                document.getElementById("rightmenu").hidden=false;
             }else{
-                document.getElementById("mutationTable").hidden=true;
+                document.getElementById("rightmenu").hidden=true;
             }
         } );
 
@@ -753,28 +767,10 @@ PDB.controller = {
             PDB.painter.showBond(PDB.BOND_TYPE_COVALENT);
         } );
 
-
-
-
-        //=============================== Conservation data =======================
-        //
-        var b_load_conser = document.getElementById("b_load_conser");
-        b_load_conser.addEventListener( 'click', function() {
-            var chain = "A";
-            var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
-            PDB.tool.ajax.get(url,function (text) {
-                PDB.controller.clear(4,undefined);
-                PDB.painter.showConservation(text);
-                PDB.render.clearMain();
-                PDB.controller.drawGeometry(PDB.config.mainMode);
-            })
-        } );
-
-
         //=============================== Drug Design =======================
 		//=======add randomMigration
-		 var hideBoxHelper = document.getElementById("hideBoxHelper");
-		 hideBoxHelper.addEventListener( 'click', function(e) {
+		 var showBoxHelper = document.getElementById("showBoxHelper");
+        showBoxHelper.addEventListener( 'click', function(e) {
 		 	if(this.checked){
 		 		if(PDB.GROUP[PDB.GROUP_BOX_HELPER]){
 					PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = true;
@@ -796,6 +792,17 @@ PDB.controller = {
 		 	}
 		 });
 
+        //hide drug
+        var hideDrug = document.getElementById("hideDrug");
+        hideDrug.addEventListener( 'click', function(e) {
+            if(this.checked){
+                PDB.GROUP[PDB.GROUP_DRUG].visible= true;
+            }else{
+                PDB.GROUP[PDB.GROUP_DRUG].visible= false;
+            }
+        });
+
+
         var b_load_drug = document.getElementById("b_load_drug");
         b_load_drug.addEventListener( 'click', function() {
 
@@ -810,6 +817,8 @@ PDB.controller = {
                 if(jsonObj.code === 1 && jsonObj.data !== undefined){
                     //生成面板
                     var rightMenuDiv = document.getElementById("rightmenu");
+                    rightMenuDiv.hidden=false;
+                    rightMenuDiv.style.overflowY ="hidden";
                     rightMenuDiv.innerHTML="<label>Box Helper Limit</label><br/><span class=\"xyz_min_max\"><label>x:</label><input id=\"x_min\"/>~<input id=\"x_max\"/><br/><label>y:</label><input id=\"y_min\"/>~<input id=\"y_max\"/><br/><label>z:</label><input id=\"z_min\"/>~<input id=\"z_max\"/><br/></span>";
 					
 					var helperLab = PDB.tool.generateLabel(rightMenuDiv,"Box Helper Limit","");
@@ -906,7 +915,7 @@ PDB.controller = {
 
 						//====add the random migration path and scope
 						PDB.tool.generateDrugMigrationPath();
-
+                        PDB.GROUP[PDB.GROUP_DRUG].visible = true;
                     });
                 });
                 PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUBDB_URL[dbname] + drugids[i], "");

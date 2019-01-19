@@ -63,7 +63,7 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
-<script type="text/javascript" src="https://vr.zhanglab.net/server/listen/sr.min.js"></script>
+<script type="text/javascript" src="https://inano.zhanglab.net/server/listen/sr.min.js"></script>
 <!---------------------------xukui 0903 01:12------------------------------>
 <script type="x-shader/x-vertex" id="vertexshader">
     uniform float delta;
@@ -282,13 +282,15 @@
 
   <LABEL onclick="switchMenu('drugDesign')">Drug Design</LABEL><BR/>
   <span class="submenu" id="drugDesign">
-    <button class="labelPDB" name="b_load_drug" id="b_load_drug" value="Export">Load Drug</button><br/>
-	<input class="labelPDB" name="drugSurface" id="drugSurface"   type="checkbox" title="Drug Het Surface" /> 
-	<label class="label">Drug Surface</label><br/>
-	<input class="labelPDB" name="randomMigration" id="randomMigration"   type="checkbox" title="Drug Random Migration" /> 
-	<label class="label">Drug Random Migration</label>
-	<input class="labelPDB" name="hideBoxHelper" id="hideBoxHelper" type="checkbox" title="hideBoxHelper" /> 
-	<label class="label">hide BoxHelper</label>
+        <button class="labelPDB" name="b_load_drug" id="b_load_drug" value="Export">Load Drug</button><br/>
+        <input class="labelPDB" name="hideDrug" id="hideDrug" type="checkbox" value="Export" />
+        <label class="label" for="hideDrug">Hide Drug</label><br/>
+        <input class="labelPDB" name="drugSurface" id="drugSurface"   type="checkbox" title="Drug Het Surface" />
+        <label class="label" for="drugSurface">Drug Surface</label><br/>
+        <input class="labelPDB" name="randomMigration" id="randomMigration"   type="checkbox" title="Drug Random Migration" />
+	    <label class="label" for="randomMigration">Drug Random Migration</label><br/>
+		<input class="labelPDB" name="showBoxHelper" id="showBoxHelper" type="checkbox" title="hideBoxHelper" />
+		<label class="label" for="showBoxHelper">Show BoxHelper</label><br/>
   </span>
   <BR/>
 
@@ -333,10 +335,6 @@
     <span class="rightsubmenu" id="menuSpan">
     </span>
     <BR/>
-</div>
-<div id="mutationTable">
-    <span class="rightsubmenu" id="span">
-    </span>
 </div>
 <div id="menu" ></div>
 <div id="weChatMask"></div>

@@ -63,7 +63,7 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
-<script type="text/javascript" src="https://vr.zhanglab.net/server/listen/sr.min.js"></script>
+<script type="text/javascript" src="https://inano.zhanglab.net/server/listen/sr.min.js"></script>
 
 <!---------------------------xukui 0903 01:12------------------------------>
 <script type="x-shader/x-vertex" id="vertexshader">
@@ -200,9 +200,9 @@
 	<input class="updateColor" name="colorMode" id="updatecolor_BySpectrum" type="radio"  title="By Residue" color_mode="607"/>  <label class="label" for="updatecolor_BySpectrum">By Spectrum</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByChainSpectrum" type="radio"  title="By Residue" color_mode="608"/>  <label class="label" for="updatecolor_ByChainSpectrum">By Chain Spectrum</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByHydrophobicity" type="radio"  title="By Residue" color_mode="609"/>  <label class="label" for="updatecolor_ByHydrophobicity">By Hydrophobicity</label>   <BR/>
-	<input class="updateColor" name="b_load_conser" id="" type="radio"  title="By Residue" color_mode="610"/>  <label class="label" for="b_load_conser">By Conservation</label>   <BR/>
-	<button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>
-  </span>
+	<input class="updateColor" name="colorMode" id="b_load_conser" type="radio"  title="By Residue" color_mode="610"/>  <label class="label" for="b_load_conser">By Conservation</label>   <BR/>
+    <!--<button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>-->
+    </span>
     <BR/>
 
     <LABEL onclick="switchMenu('trigger')">Measure</LABEL><BR/>
@@ -286,12 +286,14 @@
     <LABEL onclick="switchMenu('drugDesign')">Drugs</LABEL><BR/>
     <span class="submenu" id="drugDesign">
         <button class="labelPDB" name="b_load_drug" id="b_load_drug" value="Export">Load Drug</button><br/>
+        <input class="labelPDB" name="hideDrug" id="hideDrug" type="checkbox" value="Export" />
+        <label class="label" for="hideDrug">Hide Drug</label><br/>
         <input class="labelPDB" name="drugSurface" id="drugSurface"   type="checkbox" title="Drug Het Surface" />
-        <label class="label">Drug Surface</label>
+        <label class="label" for="drugSurface">Drug Surface</label><br/>
         <input class="labelPDB" name="randomMigration" id="randomMigration"   type="checkbox" title="Drug Random Migration" />
-	    <label class="label">Drug Random Migration</label>
-		<input class="labelPDB" name="hideBoxHelper" id="hideBoxHelper" type="checkbox" title="hideBoxHelper" /> 
-		<label class="label">hide BoxHelper</label>
+	    <label class="label" for="randomMigration">Drug Random Migration</label><br/>
+		<input class="labelPDB" name="showBoxHelper" id="showBoxHelper" type="checkbox" title="hideBoxHelper" />
+		<label class="label" for="showBoxHelper">Show BoxHelper</label><br/>
     </span>
     <BR/>
 
@@ -336,10 +338,10 @@
     </span>
     <BR/>
 </div>
-<div id="mutationTable">
-    <span class="rightsubmenu" id="span">
-    </span>
-</div>
+<!--<div id="mutationTable">-->
+    <!--<span class="rightsubmenu" id="span">-->
+    <!--</span>-->
+<!--</div>-->
 <div id="menu" ></div>
 <div id="weChatMask"></div>
 <div id="weChatPop"></div>

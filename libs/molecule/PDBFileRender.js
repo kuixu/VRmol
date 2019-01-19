@@ -373,7 +373,8 @@ function dealwithMenu(object) {
 						PDB.painter.showMapSurface(emmap,emmap.threshold,false);
 					}else {
 						var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
-						if(surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh){
+						if(surfaceGroup !== undefined &&surfaceGroup.children!=undefined && surfaceGroup.children.length > 0
+                            && surfaceGroup.children[0] instanceof THREE.Mesh){
 							var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
 							if(mesh.material !== undefined){
 								mesh.material.wireframe = false;
@@ -387,7 +388,8 @@ function dealwithMenu(object) {
 						PDB.painter.showMapSurface(emmap,emmap.threshold,true);
 					}else {
 						var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
-						if(surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh){
+						if(surfaceGroup !== undefined &&  surfaceGroup.children != undefined && surfaceGroup.children.length > 0
+                            && surfaceGroup.children[0] instanceof THREE.Mesh){
 							var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
 							if(mesh.material !== undefined){
 								mesh.material.wireframe = true;
@@ -402,7 +404,7 @@ function dealwithMenu(object) {
 				onMenuDown();
 			}else{
 				// var url ="http://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
-				var url = "http://vr.zhanglab.net/server/api.php?taskid=13&pdbid=5ftm";
+				var url = SERVERURL+"/server/api.php?taskid=13&pdbid=5ftm";
 				PDB.tool.ajax.get(url,function (text) {
                 //PDB.render.clear(2);
 				//生成Material 数组
@@ -1724,17 +1726,17 @@ PDB.render = {
                 var groupMain = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MAIN]];
                 var groupHet = PDB.GROUP[PDB.GROUP_HET];
                 var groupMutation = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MUTATION]];
-                if(groupMain != undefined && groupMain.children.length > 0 ){
+                if(groupMain != undefined &&groupMain.children !=undefined && groupMain.children.length > 0 ){
                     for (var i =0 ; i<groupMain.children.length;i++){
                         allObjs.push(groupMain.children[i]);
                     }
                 }
-                if(groupHet!=undefined && groupHet.children.length > 0 ){
+                if(groupHet!=undefined && groupHet.children !=undefined && groupHet.children.length > 0 ){
                     for (var i =0 ; i<groupHet.children.length;i++){
                         allObjs.push(groupHet.children[i]);
                     }
                 }
-                if(groupMutation!=undefined && groupMutation.children.length > 0 ){
+                if(groupMutation!=undefined && groupMutation.children != undefined && groupMutation.children.length > 0 ){
                     for (var i =0 ; i<groupMutation.children.length;i++){
                         allObjs.push(groupMutation.children[i]);
                     }
@@ -2060,17 +2062,17 @@ PDB.render = {
 		}
     },
     clearGroup:function(group){
-        if(group != undefined && group.children.length > 0){
+        if(group != undefined &&group.children != undefined &&  group.children.length > 0){
            group.children = [];
         }
     },
     clearGroupIndex0:function(group){
-        if(PDB.GROUP[group] != undefined && PDB.GROUP[group].children.length > 0){
+        if(PDB.GROUP[group] != undefined && PDB.GROUP[group].children!= undefined && PDB.GROUP[group].children.length > 0){
             PDB.GROUP[group].children = [];
         }
     },
     clearGroupIndex:function(groupIndex){
-		if(PDB.GROUP[groupIndex] != undefined && PDB.GROUP[groupIndex].children.length > 0){
+		if(PDB.GROUP[groupIndex] != undefined && PDB.GROUP[groupIndex].children != undefined && PDB.GROUP[groupIndex].children.length > 0){
             var children = PDB.GROUP[groupIndex].children;
             for (var i = 0;i<children.length;i++){
                 if(children[i] instanceof THREE.Mesh){

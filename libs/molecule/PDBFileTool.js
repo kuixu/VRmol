@@ -589,6 +589,7 @@ PDB.tool = {
     generateDocklingLink:function (parent,id,text,link,dbname) {
         var aLink = document.createElement("a");
         var node = document.createTextNode(text);
+
         aLink.appendChild(node);
         aLink.id = id;
         aLink.addEventListener( 'click', function() {
@@ -608,7 +609,7 @@ PDB.tool = {
             PDB.DRUG_MODE_CONFIG.x_s = x_s;
             PDB.DRUG_MODE_CONFIG.y_s = y_s;
             PDB.DRUG_MODE_CONFIG.z_s = z_s;
-            var url = "https://vr.zhanglab.net/server/autodock/autodock.php?pdbid="+PDB.pdbId.toUpperCase()+"&smolid="+link.toUpperCase()
+            var url = PDB.DOCKING_URLK+"?pdbid="+PDB.pdbId.toUpperCase()+"&smolid="+link.toUpperCase()
                 +"&x_c="+PDB.DRUG_MODE_CONFIG.x_c
                 +"&y_c="+PDB.DRUG_MODE_CONFIG.y_c
                 +"&z_c="+PDB.DRUG_MODE_CONFIG.z_c
@@ -648,6 +649,9 @@ PDB.tool = {
                                 PDB.tool.generateDrugMigrationPath();
                             });
                         });
+                        //创建 BR
+                        var br = document.createElement("br");
+                        modelSpan.appendChild(br);
                     }
                 }
             });
@@ -1284,15 +1288,19 @@ PDB.tool = {
 			var i = PDB.PathCount%(PDB.DRUGMigrationPaths.length);
 			if(PDB.DRUGMigrationPaths.length>0){
 				PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.DRUGMigrationPaths[i]);
-				//PDB.GROUP[PDB.GROUP_DRUG].rotation.copy(PDB.DRUGMigrationRotates[i]);
-				
-			}			
-			PDB.PathCount++;
+			}
+			//与drug位置保持同步
+			if(PDB.GROUP[PDB.GROUP_SURFACE_HET] != undefined){
+			    var po = PDB.GROUP[PDB.GROUP_DRUG].position;
+                PDB.GROUP[PDB.GROUP_SURFACE_HET].position.copy(po);
+            }
+            PDB.PathCount++;
 		}
 
     },showMutationTable: function(flag,text){
-        var rightMenuDiv = document.getElementById("mutationTable");
+        var rightMenuDiv = document.getElementById("rightmenu");
         rightMenuDiv.innerHTML="";
+        rightMenuDiv.style.overflowY ="scroll";
         if(flag){
             rightMenuDiv.hidden=false;
         }else {
