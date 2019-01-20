@@ -300,11 +300,11 @@ w3m.ajax = (function() {
                 this.get(id, callback);
             } else {
                 url_index = 0;
-				PDB.tool.printProgress('pdb文件不存在或地址错误，请刷新。');
-				// var info = document.getElementById('info');
-				// console.log(info);
-				// info.style.display = 'block';
-				// info.innerText='pdb文件不存在或地址错误，请刷新。';
+                PDB.tool.printProgress('pdb file not found!');
+		// var info = document.getElementById('info');
+		// console.log(info);
+		// info.style.display = 'block';
+		// info.innerText='pdb file not found';
             }
         }
     };
@@ -347,7 +347,7 @@ w3m.ajax = (function() {
     };
     io.getDrug = function(mol_id,dbname, fn) {
         id       = mol_id;
-        url      =  PDB.DRUBDB_URL[dbname] + mol_id + '.pdb';
+        url      = PDB.DRUBDB_URL[dbname] + mol_id + '.pdb';
         callback = fn;
         drug     = true;
         this.open('GET', url, true);

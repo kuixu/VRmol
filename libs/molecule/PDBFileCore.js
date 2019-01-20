@@ -166,13 +166,16 @@ PDB = {
     EMMAP_CONFIG:{
         MIN_THRESHOLD:0,MAX_THRESHOLD:100,CURR_THRESHOLD:100,FIRST_EMMAP_ID:"",CURRENT_EMMAP_ID:"",MIN_SLICE:0,MAX_SLICE:100,CURR_SLICE:0,
     },
-    LINK_CONFIG:{DRUG_BANK:"https://www.drugbank.ca/drugs/",BINDINGDB:"http://www.bindingdb.org/uniport/"
-        ,CHEMBL:"https://www.ebi.ac.uk/chembldb/target/inspect/",GUIDETOPHARMACOLOGY:"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="
-        ,SWISSLIPIDS:"http://www.swisslipids.org/#/entity/",EMMAP:"https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-"},
+    LINK_CONFIG:{
+        DRUG_BANK:"https://www.drugbank.ca/drugs/",
+        BINDINGDB:"http://www.bindingdb.org/uniport/",
+        CHEMBL:"https://www.ebi.ac.uk/chembldb/target/inspect/",
+        GUIDETOPHARMACOLOGY:"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId=",
+        SWISSLIPIDS:"http://www.swisslipids.org/#/entity/",
+        EMMAP:"https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-"},
     DRUBDB_URL : {
-        // 'drugbank':SERVERURL+"/data/drugbank/",
-        'drugbank':"https://www.drugbank.ca/drugs/",
-        //'drugbank':SERVERURL+"/data/drugbank/",
+        'drugbank':SERVERURL+"/data/drugbank/",
+        //'drugbank':"https://www.drugbank.ca/drugs/",
         'bindingdb':"http://www.bindingdb.org/uniport/"        ,
         'chembl':"https://www.ebi.ac.uk/chembldb/target/inspect/",
         'guidetopharmacology':"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="        ,
@@ -197,7 +200,14 @@ PDB = {
         BINDING_DB:"bindingdb",
         CHEMBL:"chembl",
         GUIDETOPHARMACOLOGY:"guidetopharmacology",
-        SWISSLIPIDS:"swisslipids"
+        SWISSLIPIDS:"swisslipids",
+        Detail_URL:{
+            'drugbank':"https://www.drugbank.ca/drugs/",
+            'bindingdb':"http://www.bindingdb.org/uniport/"        ,
+            'chembl':"https://www.ebi.ac.uk/chembldb/target/inspect/",
+            'guidetopharmacology':"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="        ,
+            'swisslipids':"http://www.swisslipids.org/#/entity/",
+        },
     },
     SHOWSOLID : true,
     SHOWSILICE : true,

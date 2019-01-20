@@ -1073,7 +1073,7 @@ PDB.controller = {
                         PDB.GROUP[PDB.GROUP_DRUG].visible = true;
                     });
                 });
-                PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUBDB_URL[dbname] + drugids[i], "");
+                PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUG_MODE_CONFIG.Detail_URL[dbname] + drugids[i], "");
                 PDB.tool.generateDocklingLink(span, "link" + i, "docking", drugids[i], dbname);
                 span.appendChild(document.createElement("br"));
             }
