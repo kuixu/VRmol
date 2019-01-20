@@ -135,6 +135,7 @@ button:active {
 .rightsubmenu{
     margin-bottom: 0.5em;
     overflow: scroll;
+    width: 180px;
 }
 .mutationTable{
     margin-bottom: 0.5em;
