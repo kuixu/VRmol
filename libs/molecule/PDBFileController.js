@@ -269,6 +269,30 @@ PDB.controller = {
         var b_sse       = document.getElementById( "b_sse" );
         var b_surface   = document.getElementById( "b_surface" );
 		
+		
+		
+		var editResidue = document.getElementById("editResidue");	
+		var segmentholder = document.getElementById("segmentholder");
+		var closeeditResidue = document.getElementById("closeeditResidue");
+		var b_show_editResidue   = document.getElementById( "b_show_editResidue" );
+		
+
+		closeeditResidue.addEventListener( 'click', function() {
+			
+			segmentholder.style.display = "none";
+			editResidue.style.display = "none";
+		} );
+		
+		
+		
+		b_show_editResidue.addEventListener( 'click', function(e){
+			segmentholder.style.display = "block";
+			editResidue.style.display = "block";
+		});
+		
+		
+		
+		
 		var b_replace = document.getElementById( "b_replace" );
 		
 		b_replace.addEventListener( 'click', function(e) {
@@ -279,10 +303,6 @@ PDB.controller = {
 			}else{
 				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
 			}
-			
-		
-			
-			
 			var groupa = "chain_"+chain_replace.value;
 			var groupb;
 			if(PDB.GROUP[groupa+"_low"]){
@@ -294,13 +314,13 @@ PDB.controller = {
 			
 			var allResidue = document.getElementById( "allResidue" );
 			var segmentholder = document.getElementById("segmentholder");
-			var segmentPanel = document.getElementById("segmentPanel");			
+			var editResidue = document.getElementById("editResidue");			
 			var resName = allResidue.value;
 			if(w3m.mol[resName]){
 				PDB.painter.showRes_Ball_Rod(resName);
 				//PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
 				segmentholder.style.display = "none";
-				segmentPanel.style.display = "none";
+				editResidue.style.display = "none";
 				var xyz = residue_replace.selectedOptions[0].xyz;
 				var resid = residue_replace.value;
 			
@@ -355,7 +375,9 @@ PDB.controller = {
 					PDB.painter.showRes_Ball_Rod(resName);
 					//PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
 					segmentholder.style.display = "none";
-					segmentPanel.style.display = "none";
+					editResidue.style.display = "none";
+					
+					
 					var xyz = residue_replace.selectedOptions[0].xyz;
 					var resid = residue_replace.value;				
 					var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
@@ -1217,8 +1239,6 @@ PDB.controller = {
 				console.log(PDB.fragmentList);
 				PDB.painter.showFragmentsResidues();
 			}
-			
-			
         }
     },
 

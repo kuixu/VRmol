@@ -227,7 +227,9 @@
 
   <LABEL onclick="switchMenu('getSegments')">Fragment</LABEL><BR/>
   <span class="submenu" id="getSegments">
-    <button class="labelPDB" name="" id="b_show_segmenpanel" value="">Open Panel</button>
+    <button class="labelPDB" name="" id="b_show_segmenpanel" value="">Region</button>
+	<br/>
+	<button class="labelPDB" name="" id="b_show_editResidue" value="">Editing</button>
   </span>
   <BR/>
 
@@ -343,7 +345,7 @@
 <div style="width:100%;height:100%;position:absolute;z-index:999;opacity: 0.5;background:#eee;display:none" id="segmentholder"></div>
 <div style="display: none;
     width: 708px;
-    height: 561px;
+    height: 501px;
     border: 2px solid #CCC;
     position: absolute;
     top: 11%;
@@ -361,15 +363,7 @@
         <audio id="player" src="data/audios/4PYP.mp3"></audio>
     </DIV>
 	<div id="segmentContent" style="height:calc(100% - 25px);float:left;width:100%">
-		<ul style="float:left;padding:0px;margin: 10px 0px 0px 0px;">
-			<li style="margin-left:30px;list-style: none;">
-				<span style="float:left">Replace Residue</span>
-				<select id="chain_replace" style="float:left;width: 50px;margin-left: 20px;"></select>
-				<select id="residue_replace" style="float:left;width: 80px;margin-left: 10px;"></select>
-				<select id="allResidue" style="float:left;width: 70px;margin-left: 10px;"></select>
-				<button id="b_replace" style="float: left; width: 150px;    background: #ccc;    height: 37px;    line-height: 17px;    border-radius: 5px;   margin-left: 20px;">Replace Selected Residue</button>
-			</li>
-		</ul>
+		
 		<ul style="float:left;">
 			
 			<li>Select Region</li>
@@ -452,6 +446,47 @@
 		<button id="addSelected" style="width: 138px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 10px;text-align:center;">Add Selected</button>
 		<button id="Confirm_fregment" style="width: 68px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 30px;">Confirm</button>
 	</div>
+</div>
+<div style="display: none;
+    width: 350px;
+    height: 251px;
+    border: 2px solid #CCC;
+    position: absolute;
+    top: 24%;
+    left: 36%;
+    z-index: 9999;
+    background: #f7f4f4;
+    border-style: outset;
+    border-radius: 5px;
+    box-shadow: 0px 1px 0px 3px #afb2ef;" id="editResidue">
+	<div id="editResidueHeader" style="height:25px;float:left;border-bottom:1px solid #ccc;width:100%">		
+			<span style="float:right;font-size:18px;color:red;margin:2px 3px 0px 0px;cursor: pointer;" id="closeeditResidue" class="closerClass">&nbsp;X&nbsp;</span>
+			
+	</div>
+	<div id="editResidueContent" style="height:calc(100% - 25px);float:left;width:100%">
+		<div style="margin-left:30px;float:left;height:25px;width: 100%;">
+			<span>selecting Residue</span>
+		</div>
+		<ul style="float:left;padding:0px;width: 100%;margin: 10px 0px 0px 0px;">
+			<li style="margin-left:30px;list-style: none;width: 100%;height: 30px;">
+				<span style="float: left;">chain ID:</span>
+				<select id="chain_replace" style="float:left;width: 50px;margin-left: 10px;"></select>				
+			</li>
+			<li style="margin-left:30px;list-style: none;width: 100%;height: 30px;">
+				<span style="float: left;">residue ID:</span>
+				<select id="residue_replace" style="float:left;width: 80px;margin-left: 10px;"></select>	
+			</li>
+			<li style="margin-left:30px;list-style: none;width: 100%;height: 30px;">
+				<span style="float: left;">All Residues:</span><select id="allResidue" style="float:left;width: 70px;margin-left: 10px;"></select>			
+			</li>
+			<li style="margin-left:30px;list-style: none;width: 100%;height: 30px;">
+				<button id="b_replace" style="float: left;width: 80px;background: #ccc;height: 30px;line-height: 17px;border-radius: 5px;margin-left: 10px;">Replace</button>			
+			</li>
+			
+				
+		</ul>
+	</div>
+    
 </div>
 <script type="text/javascript" src="libs/molecule/index.js"></script>
 <script type="text/javascript">
