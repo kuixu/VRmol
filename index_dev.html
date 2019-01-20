@@ -314,22 +314,30 @@
   <!-- <span class="submenu" id="chainNumThreshold"> -->
     <!-- <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>--> 
   <!-- </span> -->
-  <!-- <BR/> -->
-    <LABEL onclick="switchMenu('contact')" id="contact">Contact Us</LABEL><BR/>
-    <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
-   
+    <LABEL onclick="switchMenu('contact')">Contact</LABEL><BR/>
+    <span class="submenu" id="contact">
+        <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
+    </span>
     <BR/>
+
+    <LABEL onclick="switchMenu('speech')">Speech</LABEL><BR/>
+    <span class="submenu" id="speech">
+        <input name="language" value="Chinese" type="radio" id="Chinese" onclick="getlanguage()">
+        <label for="Chinese">Chinese voice</label>
+        <br>
+        <input name="language" value="English" type="radio" id="English" onclick="getlanguage()" checked="true">
+        <label for="English">English voice</label>
+    </span>
+    <BR/>
+
+
     <LABEL id="progmsg">Progress</LABEL><BR/>
     <progress id="progress" value="0"></progress>
     <BR/>
 
     <div class="messages"></div>
     <br>
-    <input name="language" value="Chinese" type="radio" id="Chinese" onclick="getlanguage()" checked="true">
-    <label for="Chinese">Chinese voice</label>
-    <br>
-    <input name="language" value="English" type="radio" id="English" onclick="getlanguage()">
-    <label for="English">English voice</label>
+
 
 </div>
 <div id="rightmenu">

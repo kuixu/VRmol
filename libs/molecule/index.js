@@ -75,12 +75,15 @@ if ( location.search ) {
         })
     }
 
-
+    var vrModelBtn = document.getElementById("vrMode");
+    vrModelBtn.style.display = "block";
     switch (vmode){
         case "desktop":
             PDB.mode=PDB.MODE_THREE;
             break;
         case "vr":
+            var vrModelBtn = document.getElementById("vrMode");
+            vrModelBtn.style.display = "none";
             PDB.mode=PDB.MODE_VR;
             break;
         case "travel":
@@ -136,6 +139,8 @@ function voiceOperation(code) {
             break;
         case 12:
             window.location.href="index.html?vmode=vr";
+            var vrModelBtn = document.getElementById("vrMode");
+            vrModelBtn.style.display = "none";
             break;
         case 13:
             PDB.CHANGESTYLE = 6;

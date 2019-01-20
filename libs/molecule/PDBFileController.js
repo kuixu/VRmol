@@ -60,6 +60,7 @@ PDB.controller = {
         var vrWithTravel  = document.getElementById( "vrWithTravel" );
 
         threeMode.addEventListener( 'click', function(e) {
+            vrMode.style.display = "none";
             //PDB.render.changeToThreeMode(PDB.MODE_THREE,false);
             window.location.href="index.html?vmode=desktop";
         } );
@@ -74,6 +75,7 @@ PDB.controller = {
 		
 
         vrMode.addEventListener( 'click', function(e) {
+            this.style.display = "none";
             //PDB.render.changeToVrMode(PDB.MODE_VR,false);
             window.location.href="index.html?vmode=vr";
             //document.querySelector("#vrMode").checked=true;
