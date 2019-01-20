@@ -951,9 +951,9 @@ PDB.controller = {
         var hideDrug = document.getElementById("hideDrug");
         hideDrug.addEventListener( 'click', function(e) {
             if(this.checked){
-                PDB.GROUP[PDB.GROUP_DRUG].visible= true;
-            }else{
                 PDB.GROUP[PDB.GROUP_DRUG].visible= false;
+            }else{
+                PDB.GROUP[PDB.GROUP_DRUG].visible= true;
             }
         });
 
