@@ -42,6 +42,7 @@ var ProteinSurface = function (n) {
         };
     return this.initparm = function (i, n, v) {
         var u = 2.5;
+        if (i===undefined || n===undefined){return ;}
         y = i.x, x = n.x, h = i.y, z = n.y, d = i.z, l = n.z, v ? (y -= u, h -= u, d -= u, x += u, z += u, l += u) : (y -= m + u, h -= m + u, d -= m + u, x += m + u, z += m + u, l += m + u), o = -y, r = -h, t = -d, b = x - y, z - h > b && (b = z - h), l - d > b && (b = l - d), b = (c - 1) / b, c = Math.floor(c * q / b), b = q;
         var p = 180;
         c > p && (sfthresh = p / c, c = Math.floor(p), b *= sfthresh), a = Math.ceil(b * (x - y)) + 1, e = Math.ceil(b * (z - h)) + 1, s = Math.ceil(b * (l - d)) + 1, a > c && (a = c), e > c && (e = c), s > c && (s = c), this.boundingatom(v), cutRadis = m * b, f = new Array(a * e * s)
@@ -50,6 +51,7 @@ var ProteinSurface = function (n) {
             for (i ? t[s] = (A[s] + m) * b + .5 : t[s] = A[s] * b + .5, r = t[s] * t[s], g[s] = Math.floor(t[s]) + 1, M[s] = new Array(g[s] * g[s]), indx = 0, j = 0; j < g[s]; ++j)
                 for (k = 0; k < g[s]; ++k) n = j * j + k * k, n > r ? M[s][indx] = -1 : (o = Math.sqrt(r - n), M[s][indx] = Math.floor(o)), indx++
     }, this.fillvoxels = function (i) {
+        if (f===undefined) {return ;}
         for (var n = 0, o = f.length; o > n; ++n) f[n] = {
             inout: !1,
             isdone: !1,
@@ -234,6 +236,7 @@ var ProteinSurface = function (n) {
             }
         return d
     }, this.marchingcube = function (i) {
+        if(f===undefined){return ;}
         for (var n = 0, o = f.length; o > n; ++n) 1 == i ? f[n].isbound = !1 : 4 == i ? (f[n].isdone = !1, f[n].isbound && (f[n].isdone = !0), f[n].isbound = !1) : 2 == i ? f[n].isbound && f[n].isdone ? f[n].isbound = !1 : f[n].isbound && !f[n].isdone && (f[n].isdone = !0) : 3 == i && (f[n].isbound = !1);
         for (var r = new Array(a), n = 0; a > n; ++n) {
             for (var t = new Array(e), y = 0; e > y; ++y) {
