@@ -29,6 +29,7 @@ a {
     font-size: 13px;
     font-weight: bold;
     text-align: center;
+    background: #000000;
     z-index: 1;
 }
 #menu {
