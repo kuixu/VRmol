@@ -1,8 +1,9 @@
 <?php
 //echo shell_shell_exec("php -v");
 // config URL
+$babel='/home/t7910/usr/openbabel-2.4.1/build/bin/babel';
 $smolid   = 'DB04464';
-$cmd = ' babel '.$smolid.'_out.pdbqt '.$smolid.'_out.pdb;' ;
+$cmd = $babel.' '.$smolid.'_out.pdbqt '.$smolid.'_out.pdb;' ;
 echo shell_exec($cmd);
 
 $server_url = 'https://inano.zhanglab.net';
@@ -69,7 +70,7 @@ $cfgfile = 'jobs/'.$dir_name.'/config';
 file_put_contents($cfgfile, $configuration);
 
 $cmd = 'cd jobs/'.$dir_name.';'.$vina.' --config config >log 2>&1 ;' ;
-$cmd = $cmd.' babel '.$smolid.'_out.pdbqt '.$smolid.'_out.pdb;' ;
+$cmd = $cmd.' '.$babel.' '.$smolid.'_out.pdbqt '.$smolid.'_out.pdb;' ;
 $cmd = $cmd.' '.$mgtools.'/splitpdb.sh '.$smolid.'_out ;';
 $cmd = $cmd." tail -10 log |head -9|awk '{print $2}' > scores &";
 // shell_exec('cd jobs/'.$dir_name.';'.$vina.' --config config >log 2>&1 ; babel &');
