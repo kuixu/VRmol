@@ -26,7 +26,7 @@ ini_set('memory_limit', '1024M');
 		global $db;
 		$query = "select id, Variant_Classification as v_class, variant_type as v_type, Genome_Change as g_change, 
 				Protein_Change as p_change, disease ,left(uniprot_aapos, length(uniprot_aapos)-2) as pos from mu_tcga_42 
-				where swissprot_acc_id ='".$unprotac."'";
+				where swissprot_acc_id ='".$unprotac."' and Protein_Change!=''";
 		$response = $db->get_rows($query);
 		$db->close();
                 return $response;
