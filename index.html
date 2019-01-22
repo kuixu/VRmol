@@ -318,11 +318,6 @@
     <!-- <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>-->
     <!-- </span> -->
     <BR/>
-    <LABEL onclick="switchMenu('contact')">Contact</LABEL><BR/>
-    <span class="submenu" id="contact">
-        <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
-    </span>
-    <BR/>
     <LABEL onclick="switchMenu('speech')">Speech</LABEL><BR/>
     <span class="submenu" id="speech">
         <input name="language" value="Chinese" type="radio" id="Chinese" onclick="getlanguage()" >
@@ -332,6 +327,11 @@
         <label for="English">English voice</label>
     </span>
 
+    <BR/>
+    <LABEL onclick="switchMenu('contact')">Contact</LABEL><BR/>
+    <span class="submenu" id="contact">
+        <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
+    </span>
     <BR/>
     <LABEL id="progmsg">Progress</LABEL><BR/>
     <progress id="progress" value="0"></progress>
