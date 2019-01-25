@@ -711,6 +711,15 @@ PDB.tool = {
         var z = (3*formPos.z+toPos.z)/4;
         return new THREE.Vector3(x,y,z);
     },
+    isJsonString : function (str) {
+        try {
+            if (typeof JSON.parse(str) == "object") {
+                return true;
+            }
+        } catch (e) {
+        }
+        return false;
+    },
 	createDensityMapMenuForVR:function(jsonObj){
 		var color      = 0xa345;
 			limit = w3m.global.limit;
