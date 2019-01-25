@@ -54,29 +54,61 @@ four figures
 
 ### Representation
 
+iNano provide 13 different representation mode, which can be changed in "Main Structure" in the menu.
 
+![vr_menu](figs/representation_1.png)
 
+- **Dot**
 
+  ![vr_menu](figs/representation_4.png)
 
-- Dot
-- Line
-- Backbone
-- Sphere
-- Stick
-- Ball & Rod
-- Tube
-- Ribbon-flat
-- Ribbon-ellipse
-- Ribbon-rectangle
-- Ribbon-strip
-- Ribbon-raillway
-- Ribbon-SS
+- **Line**
 
-web3dmol
+  ![vr_menu](figs/representation_3.png)
 
+- **Backbone**
 
+  ![vr_menu](figs/representation_5.png)
 
-Figure
+- **Sphere**
+
+  ![vr_menu](figs/representation_6.png)
+
+- **Stick**
+
+  ![vr_menu](figs/representation_7.png)
+
+- **Ball & Rod**
+
+  ![vr_menu](figs/representation_8.png)
+
+- **Tube**
+
+  ![vr_menu](figs/representation_9.png)
+
+- **Ribbon-flat**
+
+  ![vr_menu](figs/representation_10.png)
+
+- **Ribbon-ellipse**
+
+  ![vr_menu](figs/representation_11.png)
+
+- **Ribbon-rectangle**
+
+  ![vr_menu](figs/representation_12.png)
+
+- **Ribbon-strip**
+
+  ![vr_menu](figs/representation_13.png)
+
+- **Ribbon-railway**
+
+  ![vr_menu](figs/representation_14.png)
+
+- **Ribbon-SS**
+
+  ![vr_menu](figs/representation_15.png)
 
 
 #### Ligand
@@ -121,167 +153,192 @@ Four surface style
 
 ### Speech Recognition
 
+Button for speech recognition is located at the top-left of the page.
+
+![Speech_recognition_1](figs/Speech_recognition_1.png)
+
+Steps for Speech Recognition:
+
+1. Choose a language. The default language is Chinese.
+2. Press down the button.
+3. Hold down the button while speaking the command.
+4. Release the button. The recording will finish and uploaded to server automatically.
+5. Wait a few seconds (depending on the length of recording and network conditions), after the recognition is completed, iNano will operate according to the voice command.
+
 #### Language
+
+iNano now support both English and Chinese speech recognition.  Users could first click the "Speech" item in the menu, then choose the language by clicking the option.
+
+![Speech_recognition_2](figs/Speech_recognition_2.png)
 
 #### Command List
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-| Category                              | Command                              |
-| ------------------------------------- | ------------------------------------ |
-| Visualization Mode                    | go to desktop mode                   |
-| go to virtual reality   mode          |                                      |
-| go to travel mode                     |                                      |
-| Main structure style                  | change to dot stype                  |
-| change to line stype                  |                                      |
-| change to backbone style              |                                      |
-| change to sphere style                |                                      |
-| change to stick style                 |                                      |
-| change to ball and rod   style        |                                      |
-| change to tube style                  |                                      |
-| change to second   structure style    |                                      |
-| hide main structure                   |                                      |
-| show main structure                   |                                      |
-| Ligand structure style                | change Ligand to line   stype        |
-| change Ligand to shpere   stype       |                                      |
-| change Ligand to stick   stype        |                                      |
-| change Ligand to ball and   rod stype |                                      |
-| hide ligand structure                 |                                      |
-| show ligand structure                 |                                      |
-| Other                                 | show water                           |
-| hide water                            |                                      |
-| show hydrogen bond                    |                                      |
-| hide hydrogen bond                    |                                      |
-| show mutation                         |                                      |
-| hide mutation                         |                                      |
-| Surface                               | show the surface of main   structure |
-| show transparency                     |                                      |
-| show mesh                             |                                      |
-| hide the surface of main   structure  |                                      |
-| Color                                 | color by element                     |
-| color by residue                      |                                      |
-| color by second structure             |                                      |
-| color by chain                        |                                      |
-| color by b-factor                     |                                      |
-| color by spectrum                     |                                      |
-| color by hydrophobicity               |                                      |
-| color by conservation                 |                                      |
-| Interaction                           | open dragging function               |
-| open labelling function               |                                      |
-| rotation                              |                                      |
-| rotation by x                         |                                      |
-| rotation by y                         |                                      |
-| rotation by z                         |                                      |
-| clockwise rotation                    |                                      |
-| anticlockwise rotation                |                                      |
-| move                                  |                                      |
-| move along x                          |                                      |
-| move along y                          |                                      |
-| move along z                          |                                      |
-| move forward                          |                                      |
-| move backward                         |                                      |
+<table>
+   <tr>
+      <td>Category</td>
+      <td>Command</td>
+   </tr>
+   <tr>
+      <td rowspan="3">Visualization Mode</td>
+      <td>go to desktop mode</td>
+   </tr>
+   <tr>
+      <td>go to virtual reality mode</td>
+   </tr>
+   <tr>
+      <td>go to travel mode</td>
+   </tr>
+   <tr>
+      <td rowspan="10">Main structure style</td>
+      <td>change to dot style</td>
+   </tr>
+   <tr>
+      <td>change to line style</td>
+   </tr>
+   <tr>
+      <td>change to backbone style</td>
+   </tr>
+   <tr>
+      <td>change to sphere style</td>
+   </tr>
+   <tr>
+      <td>change to stick style</td>
+   </tr>
+   <tr>
+      <td>change to ball and rod style</td>
+   </tr>
+   <tr>
+      <td>change to tube style</td>
+   </tr>
+   <tr>
+      <td>change to second structure style</td>
+   </tr>
+   <tr>
+      <td>hide main structure</td>
+   </tr>
+   <tr>
+      <td>show main structure</td>
+   </tr>
+   <tr>
+      <td rowspan="6">Ligand structure style</td>
+      <td>change Ligand to line style</td>
+   </tr>
+   <tr>
+      <td>change Ligand to sphere style</td>
+   </tr>
+   <tr>
+      <td>change Ligand to stick style</td>
+   </tr>
+   <tr>
+      <td>change Ligand to ball and rod style</td>
+   </tr>
+   <tr>
+      <td>hide ligand structure</td>
+   </tr>
+   <tr>
+      <td>show ligand structure</td>
+   </tr>
+   <tr>
+      <td rowspan="6">Other</td>
+      <td>show water </td>
+   </tr>
+   <tr>
+      <td>hide water</td>
+   </tr>
+   <tr>
+      <td>show hydrogen bond</td>
+   </tr>
+   <tr>
+      <td>hide hydrogen bond</td>
+   </tr>
+   <tr>
+      <td>show mutation</td>
+   </tr>
+   <tr>
+      <td>hide mutation</td>
+   </tr>
+   <tr>
+      <td rowspan="4">Surface</td>
+      <td>show the surface of main structure</td>
+   </tr>
+   <tr>
+      <td>show transparency</td>
+   </tr>
+   <tr>
+      <td>show mesh</td>
+   </tr>
+   <tr>
+      <td>hide the surface of main structure</td>
+   </tr>
+   <tr>
+      <td rowspan="8">Color</td>
+      <td>color by element</td>
+   </tr>
+   <tr>
+      <td>color by residue</td>
+   </tr>
+   <tr>
+      <td>color by second structure</td>
+   </tr>
+   <tr>
+      <td>color by chain</td>
+   </tr>
+   <tr>
+      <td>color by b-factor</td>
+   </tr>
+   <tr>
+      <td>color by spectrum</td>
+   </tr>
+   <tr>
+      <td>color by hydrophobicity</td>
+   </tr>
+   <tr>
+      <td>color by conservation</td>
+   </tr>
+   <tr>
+      <td rowspan="14">Interaction</td>
+      <td>open dragging function</td>
+   </tr>
+   <tr>
+      <td>open labelling function</td>
+   </tr>
+   <tr>
+      <td>rotation</td>
+   </tr>
+   <tr>
+      <td>rotation by x</td>
+   </tr>
+   <tr>
+      <td>rotation by y</td>
+   </tr>
+   <tr>
+      <td>rotation by z</td>
+   </tr>
+   <tr>
+      <td>clockwise rotation</td>
+   </tr>
+   <tr>
+      <td>anticlockwise rotation</td>
+   </tr>
+   <tr>
+      <td>move</td>
+   </tr>
+   <tr>
+      <td>move along x</td>
+   </tr>
+   <tr>
+      <td>move along y</td>
+   </tr>
+   <tr>
+      <td>move along z</td>
+   </tr>
+   <tr>
+      <td>move forward</td>
+   </tr>
+   <tr>
+      <td>move backward</td>
+   </tr>
+</table>
 
 ### Supported Devices
 
