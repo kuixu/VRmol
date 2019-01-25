@@ -208,6 +208,11 @@ PDB.controller = {
 					}
 				}
                 //生成面板
+                var isJson = PDB.tool.isJsonString(text);
+				if(!isJson){
+				    PDB.tool.printProgress("the response text is not a json string");
+				    return;
+                }
                 var jsonObj = JSON.parse(text);
                 if(jsonObj.code === 1 && jsonObj.data !== undefined){
                     PDB.tool.createDensityMapPanel(jsonObj);
@@ -247,7 +252,7 @@ PDB.controller = {
 						PDB.tool.changeDensityMapRangeValue(emmap);
 					})
                 }else{
-					alert(jsonObj.message);
+                    PDB.tool.printProgress(jsonObj.message);
 				}
             })
         });
@@ -1050,7 +1055,7 @@ PDB.controller = {
 					
 					
 					
-                    var titleLab = PDB.tool.generateLabel(rightMenuDiv,"DrugBank List","");
+                    var titleLab = PDB.tool.generateLabel(rightMenuDiv,"Drug List","");
                     var span = PDB.tool.generateSpan(rightMenuDiv,"menuSpan","rightsubmenu");
                     var bindingdb = jsonObj.data[0].bindingdb;
                     PDB.controller.LoadDrugDetails(span,PDB.DRUG_MODE_CONFIG.BINDING_DB,bindingdb);
@@ -1078,6 +1083,7 @@ PDB.controller = {
     },
     LoadDrugDetails : function (span,dbname,dbjson) {
         if(dbjson!== undefined && dbjson!== "" && dbjson!== "null") {
+
             PDB.tool.generateLabel(span, dbname, "");
             var drugids = dbjson.split(';');
             for (var i in drugids) {

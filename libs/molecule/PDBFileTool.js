@@ -632,7 +632,7 @@ PDB.tool = {
 
                     //停止移动drug
                     PDB.DRUGMOVE = false;
-                    PDB.tool.generateLabel(modelSpan, "ModelList", "");
+                    PDB.tool.generateLabel(modelSpan, "ModelList &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score", "");
                     for (var i in jsonObj.model_list) {
                         if (jsonObj.model_list[i] === "") {
                             continue;
@@ -692,7 +692,7 @@ PDB.tool = {
         progress.max=max;
     },
     printProgress: function(msg){
-        var progmsg = document.getElementById("progmsg");
+        var progmsg = document.getElementById("tip");
         progmsg.innerHTML=msg;
     },
     getValueByPercent:function (min,max,percent) {
@@ -710,6 +710,15 @@ PDB.tool = {
         var y = (3*formPos.y+toPos.y)/4;
         var z = (3*formPos.z+toPos.z)/4;
         return new THREE.Vector3(x,y,z);
+    },
+    isJsonString : function (str) {
+        try {
+            if (typeof JSON.parse(str) == "object") {
+                return true;
+            }
+        } catch (e) {
+        }
+        return false;
     },
 	createDensityMapMenuForVR:function(jsonObj){
 		var color      = 0xa345;
