@@ -632,7 +632,7 @@ PDB.tool = {
 
                     //停止移动drug
                     PDB.DRUGMOVE = false;
-                    PDB.tool.generateLabel(modelSpan, "ModelList", "");
+                    PDB.tool.generateLabel(modelSpan, "ModelList &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score", "");
                     for (var i in jsonObj.model_list) {
                         if (jsonObj.model_list[i] === "") {
                             continue;

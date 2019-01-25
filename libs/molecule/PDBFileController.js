@@ -1050,7 +1050,7 @@ PDB.controller = {
 					
 					
 					
-                    var titleLab = PDB.tool.generateLabel(rightMenuDiv,"DrugBank List","");
+                    var titleLab = PDB.tool.generateLabel(rightMenuDiv,"Drug List","");
                     var span = PDB.tool.generateSpan(rightMenuDiv,"menuSpan","rightsubmenu");
                     var bindingdb = jsonObj.data[0].bindingdb;
                     PDB.controller.LoadDrugDetails(span,PDB.DRUG_MODE_CONFIG.BINDING_DB,bindingdb);
