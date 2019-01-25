@@ -692,7 +692,7 @@ PDB.tool = {
         progress.max=max;
     },
     printProgress: function(msg){
-        var progmsg = document.getElementById("progmsg");
+        var progmsg = document.getElementById("tip");
         progmsg.innerHTML=msg;
     },
     getValueByPercent:function (min,max,percent) {
