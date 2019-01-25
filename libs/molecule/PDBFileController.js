@@ -247,7 +247,7 @@ PDB.controller = {
 						PDB.tool.changeDensityMapRangeValue(emmap);
 					})
                 }else{
-					alert(jsonObj.message);
+                    PDB.tool.printProgress(jsonObj.message);
 				}
             })
         });
