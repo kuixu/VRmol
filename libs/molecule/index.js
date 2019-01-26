@@ -120,6 +120,11 @@ PDB.controller.switchColorBymode("607");
 //PDB.trigger = PDB.TRIGGER_EVENT_DRAG;
 //PDB.selection_mode= PDB.SELECTION_DRUG;
 
+//set default voice language
+if(voiceControl !== undefined){
+    voiceControl.language="English";
+}
+
 var rotation_task_id = 0;
 
 function endRecord(){
