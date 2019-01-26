@@ -56,79 +56,113 @@ four figures
 
 iNano provide 13 different representation mode, which can be changed in "Main Structure" in the menu.
 
-![vr_menu](figs/representation_1.png)
+![vr_menu](figs/Representation_1.png)
 
 - **Dot**
 
-  ![vr_menu](figs/representation_4.png)
+  ![vr_menu](figs/Representation_4.png)
 
 - **Line**
 
-  ![vr_menu](figs/representation_3.png)
+  ![vr_menu](figs/Representation_3.png)
 
 - **Backbone**
 
-  ![vr_menu](figs/representation_5.png)
+  ![vr_menu](figs/Representation_5.png)
 
 - **Sphere**
 
-  ![vr_menu](figs/representation_6.png)
+  ![vr_menu](figs/Representation_6.png)
 
 - **Stick**
 
-  ![vr_menu](figs/representation_7.png)
+  ![vr_menu](figs/Representation_7.png)
 
 - **Ball & Rod**
 
-  ![vr_menu](figs/representation_8.png)
+  ![vr_menu](figs/Representation_8.png)
 
 - **Tube**
 
-  ![vr_menu](figs/representation_9.png)
+  ![vr_menu](figs/Representation_9.png)
 
 - **Ribbon-flat**
 
-  ![vr_menu](figs/representation_10.png)
+  ![vr_menu](figs/Representation_10.png)
 
 - **Ribbon-ellipse**
 
-  ![vr_menu](figs/representation_11.png)
+  ![vr_menu](figs/Representation_11.png)
 
 - **Ribbon-rectangle**
 
-  ![vr_menu](figs/representation_12.png)
+  ![vr_menu](figs/Representation_12.png)
 
 - **Ribbon-strip**
 
-  ![vr_menu](figs/representation_13.png)
+  ![vr_menu](figs/Representation_13.png)
 
 - **Ribbon-railway**
 
-  ![vr_menu](figs/representation_14.png)
+  ![vr_menu](figs/Representation_14.png)
 
 - **Ribbon-SS**
 
-  ![vr_menu](figs/representation_15.png)
+  ![vr_menu](figs/Representation_15.png)
 
 
 #### Ligand
 
-For ligand, iNano provides 4 styles to vis
+iNano shows ligand with main structure or separately.
+
+![vr_menu](figs/ligand_1.png)
+
+![vr_menu](figs/ligand_2.png)
+
+For ligand, iNano provides 4 styles.
+
+- **Line**
+
+  ![vr_menu](figs/ligand_3.png)
+
+- **Sphere**
+
+  ![vr_menu](figs/ligand_4.png)
+
+- **Stick**
+
+  ![vr_menu](figs/ligand_5.png)
+
+- **Ball & Rod**
+
+  ![vr_menu](figs/ligand_6.png)
 
 #### Water
 
 #### Surface
 
+iNano provides different mode and transparency for structure surfaces. Surface includes Van der Waals surface, solvent accessible surface, solvent excluded surface and molecular surface.
+
+![vr_menu](figs/surface_1.png)
+![vr_menu](figs/surface_2.png)
+![vr_menu](figs/surface_3.png)
+![vr_menu](figs/surface_4.png)
+![vr_menu](figs/surface_5.png)
+![vr_menu](figs/surface_6.png)
+![vr_menu](figs/surface_7.png)
+![vr_menu](figs/surface_8.png)
+
 ### Color Schema
 
+![vr_menu](figs/color_1.png)
+![vr_menu](figs/color_2.png)
+![vr_menu](figs/color_3.png)
+![vr_menu](figs/color_4.png)
+![vr_menu](figs/color_5.png)
+![vr_menu](figs/color_6.png)
+![vr_menu](figs/color_7.png)
+![vr_menu](figs/color_8.png)
 
-
-
-
-
-
-
-Four surface style
 
 
 ### Computing the distance in VR
