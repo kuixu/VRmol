@@ -9,13 +9,13 @@ iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
 #write.first-line-indent p { text-indent: 2em; }
 #write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
 #write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
-.typora-export .footnote-line, .typora-export p { white-space: pre-wrap; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
 @media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   .CodeMirror-sizer { margin-left: 0px !important; }
@@ -49,7 +49,7 @@ figure > table { margin: 0px !important; }
 tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
 table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
-table.md-table td { min-width: 80px; }
+table.md-table td { min-width: 32px; }
 .CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
 .CodeMirror { text-align: left; }
 .CodeMirror-placeholder { opacity: 0.3; }
@@ -80,10 +80,10 @@ blockquote > :first-child, li > :first-child { margin-top: 0px; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print { 
   body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
-  #write { margin-top: 0px; border-color: transparent !important; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
   html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid-page; }
   .typora-export #write::after { height: 0px; }
   @page { margin: 20mm 0px; }
 }
@@ -129,6 +129,7 @@ kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 
 code { text-align: left; }
 a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
 .md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
 .md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
 .MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
 .MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
@@ -157,28 +158,28 @@ iframe { max-width: 100%; width: 100%; border: none; }
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: normal;
-    src: local('Open Sans Regular'),url('file:///Users/kuixu/Library/Application%20Support/abnerworks.Typora/themes/github/400.woff') format('woff');
+    src: local('Open Sans Regular'),url('file:///Users/xukui/Library/Application%20Support/abnerworks.Typora/themes/github/400.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Open Sans';
     font-style: italic;
     font-weight: normal;
-    src: local('Open Sans Italic'),url('file:///Users/kuixu/Library/Application%20Support/abnerworks.Typora/themes/github/400i.woff') format('woff');
+    src: local('Open Sans Italic'),url('file:///Users/xukui/Library/Application%20Support/abnerworks.Typora/themes/github/400i.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: bold;
-    src: local('Open Sans Bold'),url('file:///Users/kuixu/Library/Application%20Support/abnerworks.Typora/themes/github/700.woff') format('woff');
+    src: local('Open Sans Bold'),url('file:///Users/xukui/Library/Application%20Support/abnerworks.Typora/themes/github/700.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Open Sans';
     font-style: italic;
     font-weight: bold;
-    src: local('Open Sans Bold Italic'),url('file:///Users/kuixu/Library/Application%20Support/abnerworks.Typora/themes/github/700i.woff') format('woff');
+    src: local('Open Sans Bold Italic'),url('file:///Users/xukui/Library/Application%20Support/abnerworks.Typora/themes/github/700i.woff') format('woff');
 }
 
 html {
@@ -224,7 +225,7 @@ h3:hover a.anchor,
 h4:hover a.anchor,
 h5:hover a.anchor,
 h6:hover a.anchor {
-    /*background: url("file:///Users/kuixu/Library/Application%20Support/images/modules/styleguide/para.png") no-repeat 10px center;*/
+    /*background: url("file:///Users/xukui/Library/Application%20Support/images/modules/styleguide/para.png") no-repeat 10px center;*/
     text-decoration: none;
 }
 h1 tt,
@@ -380,7 +381,7 @@ tt {
 
 code {
     background-color: #f3f4f4;
-    padding: 0 4px 2px 4px;
+    padding: 0 2px 0 2px;
 }
 
 .md-fences {
@@ -516,10 +517,189 @@ header, .context-menu, .megamenu-content, footer{
     border-color: #e5e5e5;
 }
 
- .typora-export p, .typora-export .footnote-line {white-space: normal;} 
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><h1><a name='header-n346' class='md-header-anchor '></a>Tutorial: Intro to iNano</h1><!--we can see these two websites--><!--for content, we can reference to Web3DMol at https://web3dmol.net/help.html --><p>&nbsp;</p><!--for html style, we can reference to  https://reactjs.org/tutorial/tutorial.html --><p>&nbsp;</p><p>&nbsp;</p><h2><a name='header-n354' class='md-header-anchor '></a>Before We Start the Tutorial</h2><p>Welcome to the iNano Tutorial. The following pages will take you on a brief self-guided tour of the structure visualization and integrative analysis abilities in Virtual Reality of the iNano. We will show a model with all if options in iNano during this tutorial. It will give you a deep understanding of iNano.</p><p>The tutorial is divided into two sections:</p><ul><li><a href='https://reactjs.org/tutorial/tutorial.html#setup-for-the-tutorial'>Introduction</a> will give you <strong>a starting point</strong> to follow the tutorial.</li><li><a href='https://reactjs.org/tutorial/tutorial.html#overview'>Overview</a> will teach you the fundamentals of iNano: functions and features.</li><li><a href='https://reactjs.org/tutorial/tutorial.html#adding-time-travel'>VR Mode</a> will teach you use iNano in Virtual Reality.</li><li><a href='https://reactjs.org/tutorial/tutorial.html#completing-the-game'>Desktop Mode</a> will teach you use iNano on the desktop.</li><li><a href=''>Sharing URL</a> will teach you use iNano with a sharing URL which can be embeded into your own webpage with only a single line HTML code.</li></ul><p>You don’t have to complete all of the sections at once to get the value out of this tutorial. Try to get as far as you can — even if it’s one or two sections.</p><p>It’s fine to copy and paste code as you’re following along the tutorial, but we recommend to try it by hand with VR devices. This will help you develop a muscle memory and a stronger understanding.</p><h2><a name='header-n370' class='md-header-anchor '></a>Introduction</h2><p>iNano, a for molecular structure visualization and integrative analysis. iNano connects to multi-source translational and drug data from the cloud in a fully immersive VR environment. The immersive experience of iNano improves the visualization, calculation, and editing of complex structures. iNano is web-based  system and connects to disease-related and drug databases, and thus can serve as an integrative platform to aid in structure-based translational researches and drug design. iNano is freely available at <a href='https://inano.zhanglab.net' target='_blank' class='url'>https://inano.zhanglab.net</a>.</p><ul><li>iNano enables users to explore macromolecular structures in virtual reality from a web browser.</li><li>iNano provides a cloud-based platform to access multiple resources for integrated structural studies.</li></ul><h2><a name='header-n378' class='md-header-anchor '></a>Overview</h2><p><img src='figs/fg1.png' alt='fg1' referrerPolicy='no-referrer' /></p><h2><a name='header-n380' class='md-header-anchor '></a>VR Mode </h2><p>&nbsp;</p><h3><a name='header-n382' class='md-header-anchor '></a>Menu</h3><p><img src='figs/vr_menu.png' alt='vr_menu' referrerPolicy='no-referrer' /></p><h3><a name='header-n384' class='md-header-anchor '></a>Screen shot</h3><p>four figures</p><h3><a name='header-n386' class='md-header-anchor '></a>Representation</h3><p>&nbsp;</p><p>&nbsp;</p><ul><li>Dot</li><li>Line</li><li>Backbone</li><li>Sphere</li><li>Stick</li><li>Ball &amp; Rod</li><li>Tube</li><li>Ribbon-flat</li><li>Ribbon-ellipse</li><li>Ribbon-rectangle</li><li>Ribbon-strip</li><li>Ribbon-raillway</li><li>Ribbon-SS</li></ul><p>web3dmol</p><p>&nbsp;</p><p>Figure</p><h4><a name='header-n420' class='md-header-anchor '></a>Ligand</h4><p>For ligand, iNano provides 4 styles to vis</p><h4><a name='header-n422' class='md-header-anchor '></a>Water</h4><h4><a name='header-n423' class='md-header-anchor '></a>Surface</h4><h3><a name='header-n424' class='md-header-anchor '></a>Color Schema</h3><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>Four surface style</p><h3><a name='header-n431' class='md-header-anchor '></a>Computing the distance in VR</h3><h3><a name='header-n432' class='md-header-anchor '></a>Structure Editing</h3><h3><a name='header-n433' class='md-header-anchor '></a>Fragmentation</h3><h3><a name='header-n434' class='md-header-anchor '></a>Mutating a Residue</h3><h3><a name='header-n435' class='md-header-anchor '></a>Visualize Genome Variations</h3><h3><a name='header-n436' class='md-header-anchor '></a>Drugs</h3><p><img src='figs/drug.png' alt='image-20190124155108857' referrerPolicy='no-referrer' /></p><h3><a name='header-n438' class='md-header-anchor '></a>Interactive Docking</h3><p><img src='figs/docking.png' alt='image-20190124155039841' referrerPolicy='no-referrer' /></p><h3><a name='header-n440' class='md-header-anchor '></a>Density Map</h3><h3><a name='header-n441' class='md-header-anchor '></a>Speech Recognition</h3><h4><a name='header-n442' class='md-header-anchor '></a>Language</h4><h4><a name='header-n443' class='md-header-anchor '></a>Command List</h4><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><figure><table><thead><tr><th>   Category   </th><th>   Command   </th></tr></thead><tbody><tr><td>   Visualization Mode   </td><td>   go to desktop mode   </td></tr><tr><td>   go to virtual reality   mode   </td><td>&nbsp;</td></tr><tr><td>   go to travel mode   </td><td>&nbsp;</td></tr><tr><td>   Main structure style   </td><td>   change to dot stype   </td></tr><tr><td>   change to line stype   </td><td>&nbsp;</td></tr><tr><td>   change to backbone style   </td><td>&nbsp;</td></tr><tr><td>   change to sphere style   </td><td>&nbsp;</td></tr><tr><td>   change to stick style   </td><td>&nbsp;</td></tr><tr><td>   change to ball and rod   style   </td><td>&nbsp;</td></tr><tr><td>   change to tube style   </td><td>&nbsp;</td></tr><tr><td>   change to second   structure style   </td><td>&nbsp;</td></tr><tr><td>   hide main structure   </td><td>&nbsp;</td></tr><tr><td>   show main structure   </td><td>&nbsp;</td></tr><tr><td>   Ligand structure style   </td><td>   change Ligand to line   stype   </td></tr><tr><td>   change Ligand to shpere   stype   </td><td>&nbsp;</td></tr><tr><td>   change Ligand to stick   stype   </td><td>&nbsp;</td></tr><tr><td>   change Ligand to ball and   rod stype   </td><td>&nbsp;</td></tr><tr><td>   hide ligand structure   </td><td>&nbsp;</td></tr><tr><td>   show ligand structure   </td><td>&nbsp;</td></tr><tr><td>   Other   </td><td>   show water    </td></tr><tr><td>   hide water   </td><td>&nbsp;</td></tr><tr><td>   show hydrogen bond   </td><td>&nbsp;</td></tr><tr><td>   hide hydrogen bond   </td><td>&nbsp;</td></tr><tr><td>   show mutation   </td><td>&nbsp;</td></tr><tr><td>   hide mutation   </td><td>&nbsp;</td></tr><tr><td>   Surface   </td><td>   show the surface of main   structure   </td></tr><tr><td>   show transparency   </td><td>&nbsp;</td></tr><tr><td>   show mesh   </td><td>&nbsp;</td></tr><tr><td>   hide the surface of main   structure   </td><td>&nbsp;</td></tr><tr><td>   Color   </td><td>   color by element   </td></tr><tr><td>   color by residue   </td><td>&nbsp;</td></tr><tr><td>   color by second structure   </td><td>&nbsp;</td></tr><tr><td>   color by chain   </td><td>&nbsp;</td></tr><tr><td>   color by b-factor   </td><td>&nbsp;</td></tr><tr><td>   color by spectrum   </td><td>&nbsp;</td></tr><tr><td>   color by hydrophobicity   </td><td>&nbsp;</td></tr><tr><td>   color by conservation   </td><td>&nbsp;</td></tr><tr><td>   Interaction   </td><td>   open dragging function   </td></tr><tr><td>   open labelling function   </td><td>&nbsp;</td></tr><tr><td>   rotation   </td><td>&nbsp;</td></tr><tr><td>   rotation by x   </td><td>&nbsp;</td></tr><tr><td>   rotation by y   </td><td>&nbsp;</td></tr><tr><td>   rotation by z   </td><td>&nbsp;</td></tr><tr><td>   clockwise rotation   </td><td>&nbsp;</td></tr><tr><td>   anticlockwise rotation   </td><td>&nbsp;</td></tr><tr><td>   move   </td><td>&nbsp;</td></tr><tr><td>   move along x   </td><td>&nbsp;</td></tr><tr><td>   move along y   </td><td>&nbsp;</td></tr><tr><td>   move along z   </td><td>&nbsp;</td></tr><tr><td>   move forward   </td><td>&nbsp;</td></tr><tr><td>   move backward   </td><td>&nbsp;</td></tr></tbody></table></figure><h3><a name='header-n444' class='md-header-anchor '></a>Supported Devices</h3><p>&nbsp;</p><h2><a name='header-n446' class='md-header-anchor '></a>Desktop Mode Browser Support </h2><p>&nbsp;</p><p><a href='https://threejs.org/docs/index.html#manual/en/introduction/Browser-support' target='_blank' class='url'>https://threejs.org/docs/index.html#manual/en/introduction/Browser-support</a></p><p><a href='https://caniuse.com/#feat=webgl' target='_blank' class='url'>https://caniuse.com/#feat=webgl</a></p><h2><a name='header-n450' class='md-header-anchor '></a>Sharing by URL</h2><p>&nbsp;</p></div>
+<div  id='write'  class = 'is-mac'><h1><a name='header-n0' class='md-header-anchor '></a>Tutorial: Intro to iNano</h1><!--we can see these two websites--><!--for content, we can reference to Web3DMol at https://web3dmol.net/help.html --><p>&nbsp;</p><!--for html style, we can reference to  https://reactjs.org/tutorial/tutorial.html --><p>&nbsp;</p><p>&nbsp;</p><h2><a name='header-n8' class='md-header-anchor '></a>Before We Start the Tutorial</h2><p>Welcome to the iNano Tutorial. The following pages will take you on a brief self-guided tour of the structure visualization and integrative analysis abilities in Virtual Reality of the iNano. We will show a model with all if options in iNano during this tutorial. It will give you a deep understanding of iNano.</p><p>The tutorial is divided into two sections:</p><ul><li><a href='https://reactjs.org/tutorial/tutorial.html#setup-for-the-tutorial'>Introduction</a> will give you <strong>a starting point</strong> to follow the tutorial.</li><li><a href='https://reactjs.org/tutorial/tutorial.html#overview'>Overview</a> will teach you the fundamentals of iNano: functions and features.</li><li><a href='https://reactjs.org/tutorial/tutorial.html#adding-time-travel'>VR Mode</a> will teach you use iNano in Virtual Reality.</li><li><a href='https://reactjs.org/tutorial/tutorial.html#completing-the-game'>Desktop Mode</a> will teach you use iNano on the desktop.</li><li><a href=''>Sharing URL</a> will teach you use iNano with a sharing URL which can be embeded into your own webpage with only a single line HTML code.</li></ul><p>You don’t have to complete all of the sections at once to get the value out of this tutorial. Try to get as far as you can — even if it’s one or two sections.</p><p>It’s fine to copy and paste code as you’re following along the tutorial, but we recommend to try it by hand with VR devices. This will help you develop a muscle memory and a stronger understanding.</p><h2><a name='header-n24' class='md-header-anchor '></a>Introduction</h2><p>iNano, a for molecular structure visualization and integrative analysis. iNano connects to multi-source translational and drug data from the cloud in a fully immersive VR environment. The immersive experience of iNano improves the visualization, calculation, and editing of complex structures. iNano is web-based  system and connects to disease-related and drug databases, and thus can serve as an integrative platform to aid in structure-based translational researches and drug design. iNano is freely available at <a href='https://inano.zhanglab.net' target='_blank' class='url'>https://inano.zhanglab.net</a>.</p><ul><li>iNano enables users to explore macromolecular structures in virtual reality from a web browser.</li><li>iNano provides a cloud-based platform to access multiple resources for integrated structural studies.</li></ul><h2><a name='header-n32' class='md-header-anchor '></a>Overview</h2><p><img src='figs/fg1.png' alt='fg1' referrerPolicy='no-referrer' /></p><h2><a name='header-n34' class='md-header-anchor '></a>VR Mode </h2><p>&nbsp;</p><h3><a name='header-n36' class='md-header-anchor '></a>Menu</h3><p><img src='figs/vr_menu.png' alt='vr_menu' referrerPolicy='no-referrer' /></p><h3><a name='header-n38' class='md-header-anchor '></a>Screen shot</h3><p>four figures</p><h3><a name='header-n40' class='md-header-anchor '></a>Representation</h3><p>iNano provide 13 different representation mode, which can be changed in &quot;Main Structure&quot; in the menu.</p><p><img src='figs/Representation_1.png' alt='vr_menu' referrerPolicy='no-referrer' /></p><ul><li><p><strong>Dot</strong></p><p><img src='figs/Representation_4.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Line</strong></p><p><img src='figs/Representation_3.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Backbone</strong></p><p><img src='figs/Representation_5.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Sphere</strong></p><p><img src='figs/Representation_6.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Stick</strong></p><p><img src='figs/Representation_7.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Ball &amp; Rod</strong></p><p><img src='figs/Representation_8.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Tube</strong></p><p><img src='figs/Representation_9.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Ribbon-flat</strong></p><p><img src='figs/Representation_10.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Ribbon-ellipse</strong></p><p><img src='figs/Representation_11.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Ribbon-rectangle</strong></p><p><img src='figs/Representation_12.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Ribbon-strip</strong></p><p><img src='figs/Representation_13.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Ribbon-railway</strong></p><p><img src='figs/Representation_14.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Ribbon-SS</strong></p><p><img src='figs/Representation_15.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li></ul><h4><a name='header-n84' class='md-header-anchor '></a>Ligand</h4><p>iNano shows ligand with main structure or separately.</p><p><img src='figs/ligand_1.png' alt='vr_menu' referrerPolicy='no-referrer' /></p><p><img src='figs/ligand_2.png' alt='vr_menu' referrerPolicy='no-referrer' /></p><p>For ligand, iNano provides 4 styles.</p><ul><li><p><strong>Line</strong></p><p><img src='figs/ligand_3.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Sphere</strong></p><p><img src='figs/ligand_4.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Stick</strong></p><p><img src='figs/ligand_5.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li><li><p><strong>Ball &amp; Rod</strong></p><p><img src='figs/ligand_6.png' alt='vr_menu' referrerPolicy='no-referrer' /></p></li></ul><h4><a name='header-n102' class='md-header-anchor '></a>Water</h4><h4><a name='header-n103' class='md-header-anchor '></a>Surface</h4><p>iNano provides different mode and transparency for structure surfaces. Surface includes Van der Waals surface, solvent accessible surface, solvent excluded surface and molecular surface.</p><p><img src='figs/surface_1.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/surface_2.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/surface_3.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/surface_4.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/surface_5.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/surface_6.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/surface_7.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/surface_8.png' alt='vr_menu' referrerPolicy='no-referrer' /></p><h3><a name='header-n106' class='md-header-anchor '></a>Color Schema</h3><p><img src='figs/color_1.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/color_2.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/color_3.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/color_4.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/color_5.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/color_6.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/color_7.png' alt='vr_menu' referrerPolicy='no-referrer' />
+<img src='figs/color_8.png' alt='vr_menu' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><h3><a name='header-n109' class='md-header-anchor '></a>Computing the distance in VR</h3><p>&nbsp;</p><h3><a name='header-n148' class='md-header-anchor '></a>Structure Editing</h3><h3><a name='header-n111' class='md-header-anchor '></a>Fragmentation</h3><p>&nbsp;</p><h3><a name='header-n112' class='md-header-anchor '></a>Mutating a Residue</h3><p>&nbsp;</p><p>&nbsp;</p><h3><a name='header-n113' class='md-header-anchor '></a>Visualize Genome Variations</h3><p>&nbsp;</p><h3><a name='header-n155' class='md-header-anchor '></a>Drugs</h3><p><img src='figs/drug.png' alt='image-20190124155108857' referrerPolicy='no-referrer' /></p><h3><a name='header-n116' class='md-header-anchor '></a>Interactive Docking</h3><p><img src='figs/docking.png' alt='image-20190124155039841' referrerPolicy='no-referrer' /></p><h3><a name='header-n118' class='md-header-anchor '></a>Density Map</h3><h3><a name='header-n119' class='md-header-anchor '></a>Speech Recognition</h3><p>Button for speech recognition is located at the top-left of the page.</p><p><img src='figs/Speech_recognition_1.png' alt='Speech_recognition_1' referrerPolicy='no-referrer' /></p><p>Steps for Speech Recognition:</p><ol start='' ><li>Choose a language. The default language is Chinese.</li><li>Press down the button.</li><li>Hold down the button while speaking the command.</li><li>Release the button. The recording will finish and uploaded to server automatically.</li><li>Wait a few seconds (depending on the length of recording and network conditions), after the recognition is completed, iNano will operate according to the voice command.</li></ol><h4><a name='header-n134' class='md-header-anchor '></a>Language</h4><p>iNano now support both English and Chinese speech recognition.  Users could first click the &quot;Speech&quot; item in the menu, then choose the language by clicking the option.</p><p><img src='figs/Speech_recognition_2.png' alt='Speech_recognition_2' referrerPolicy='no-referrer' /></p><h4><a name='header-n137' class='md-header-anchor '></a>Command List</h4><table>
+   <tbody><tr>
+      <td>Category</td>
+      <td>Command</td>
+   </tr>
+   <tr>
+      <td rowspan="3">Visualization Mode</td>
+      <td>go to desktop mode</td>
+   </tr>
+   <tr>
+      <td>go to virtual reality mode</td>
+   </tr>
+   <tr>
+      <td>go to travel mode</td>
+   </tr>
+   <tr>
+      <td rowspan="10">Main structure style</td>
+      <td>change to dot style</td>
+   </tr>
+   <tr>
+      <td>change to line style</td>
+   </tr>
+   <tr>
+      <td>change to backbone style</td>
+   </tr>
+   <tr>
+      <td>change to sphere style</td>
+   </tr>
+   <tr>
+      <td>change to stick style</td>
+   </tr>
+   <tr>
+      <td>change to ball and rod style</td>
+   </tr>
+   <tr>
+      <td>change to tube style</td>
+   </tr>
+   <tr>
+      <td>change to second structure style</td>
+   </tr>
+   <tr>
+      <td>hide main structure</td>
+   </tr>
+   <tr>
+      <td>show main structure</td>
+   </tr>
+   <tr>
+      <td rowspan="6">Ligand structure style</td>
+      <td>change Ligand to line style</td>
+   </tr>
+   <tr>
+      <td>change Ligand to sphere style</td>
+   </tr>
+   <tr>
+      <td>change Ligand to stick style</td>
+   </tr>
+   <tr>
+      <td>change Ligand to ball and rod style</td>
+   </tr>
+   <tr>
+      <td>hide ligand structure</td>
+   </tr>
+   <tr>
+      <td>show ligand structure</td>
+   </tr>
+   <tr>
+      <td rowspan="6">Other</td>
+      <td>show water </td>
+   </tr>
+   <tr>
+      <td>hide water</td>
+   </tr>
+   <tr>
+      <td>show hydrogen bond</td>
+   </tr>
+   <tr>
+      <td>hide hydrogen bond</td>
+   </tr>
+   <tr>
+      <td>show mutation</td>
+   </tr>
+   <tr>
+      <td>hide mutation</td>
+   </tr>
+   <tr>
+      <td rowspan="4">Surface</td>
+      <td>show the surface of main structure</td>
+   </tr>
+   <tr>
+      <td>show transparency</td>
+   </tr>
+   <tr>
+      <td>show mesh</td>
+   </tr>
+   <tr>
+      <td>hide the surface of main structure</td>
+   </tr>
+   <tr>
+      <td rowspan="8">Color</td>
+      <td>color by element</td>
+   </tr>
+   <tr>
+      <td>color by residue</td>
+   </tr>
+   <tr>
+      <td>color by second structure</td>
+   </tr>
+   <tr>
+      <td>color by chain</td>
+   </tr>
+   <tr>
+      <td>color by b-factor</td>
+   </tr>
+   <tr>
+      <td>color by spectrum</td>
+   </tr>
+   <tr>
+      <td>color by hydrophobicity</td>
+   </tr>
+   <tr>
+      <td>color by conservation</td>
+   </tr>
+   <tr>
+      <td rowspan="14">Interaction</td>
+      <td>open dragging function</td>
+   </tr>
+   <tr>
+      <td>open labelling function</td>
+   </tr>
+   <tr>
+      <td>rotation</td>
+   </tr>
+   <tr>
+      <td>rotation by x</td>
+   </tr>
+   <tr>
+      <td>rotation by y</td>
+   </tr>
+   <tr>
+      <td>rotation by z</td>
+   </tr>
+   <tr>
+      <td>clockwise rotation</td>
+   </tr>
+   <tr>
+      <td>anticlockwise rotation</td>
+   </tr>
+   <tr>
+      <td>move</td>
+   </tr>
+   <tr>
+      <td>move along x</td>
+   </tr>
+   <tr>
+      <td>move along y</td>
+   </tr>
+   <tr>
+      <td>move along z</td>
+   </tr>
+   <tr>
+      <td>move forward</td>
+   </tr>
+   <tr>
+      <td>move backward</td>
+   </tr>
+</tbody></table><h3><a name='header-n140' class='md-header-anchor '></a>Supported Devices</h3><p>&nbsp;</p><h2><a name='header-n142' class='md-header-anchor '></a>Desktop Mode Browser Support </h2><p>&nbsp;</p><p><a href='https://threejs.org/docs/index.html#manual/en/introduction/Browser-support' target='_blank' class='url'>https://threejs.org/docs/index.html#manual/en/introduction/Browser-support</a></p><p><a href='https://caniuse.com/#feat=webgl' target='_blank' class='url'>https://caniuse.com/#feat=webgl</a></p><h2><a name='header-n146' class='md-header-anchor '></a>Sharing by URL</h2><p>&nbsp;</p></div>
 </body>
 </html>
