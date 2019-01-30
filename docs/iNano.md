@@ -167,13 +167,23 @@ iNano provides different mode and transparency for structure surfaces. Surface i
 
 ### Computing the distance in VR
 
+
+
 ### Structure Editing
 
 ### Fragmentation
 
+
+
 ### Mutating a Residue
 
+
+
+
+
 ### Visualize Genome Variations
+
+
 
 ### Drugs
 
