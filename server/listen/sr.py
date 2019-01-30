@@ -345,7 +345,7 @@ except DemoError as err:
     xunfei_result = {'state': 1, 'error': err.errorinfo}
 
 print(json.dumps(baidu_result))
-print(json.dumps(xunfei_result))
+#print(json.dumps(xunfei_result))
 
 time3=time.time()
 
