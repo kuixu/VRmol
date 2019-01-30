@@ -62,6 +62,7 @@ def baidu_voice(audio,language):
         token=f.read()
     # print(token)
     result=convert(token, audio)
+    # print(result)
     return result
 
 
@@ -358,8 +359,8 @@ if xunfei_result['state']==0:
 if language=="Chinese" or language=='chinese':
     print(convert_chinese_to_instruction(combine_sentence))
 else:
-    # convert_english_to_instruction(combine_sentence)
-    print(combine_sentence)
+    print(convert_english_to_instruction(combine_sentence))
+    #print(combine_sentence)
 
 time4=time.time()
 
