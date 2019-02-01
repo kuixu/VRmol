@@ -63,7 +63,8 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
-<script type="text/javascript" src="https://inano.zhanglab.net/server/listen/sr.min.js"></script>
+<script type="text/javascript" src="https://inano.zhanglab.net/server/listen/recorder.js"></script>
+<!--<script type="text/javascript" src="https://inano.zhanglab.net/server/listen/sr.min.js"></script>-->
 
 <!---------------------------xukui 0903 01:12------------------------------>
 <script type="x-shader/x-vertex" id="vertexshader">
@@ -192,14 +193,14 @@
 
     <LABEL onclick="switchMenu('updateColorMode')">Color</LABEL><BR/>
     <span class="submenu" id="updateColorMode">
-    <input class="updateColor" name="colorMode" id="updatecolor_ByElement" type="radio" checked="checked"  title=" By Element" color_mode="601" />  <label class="label" for="updatecolor_ByElement"> By Element </label>   <BR/>
+    <input class="updateColor" name="colorMode" id="updatecolor_ByElement" type="radio" title=" By Element" color_mode="601" />  <label class="label" for="updatecolor_ByElement"> By Element </label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByResidue" type="radio"  title="By Residue" color_mode="602"/>  <label class="label" for="updatecolor_ByResidue">By Residue </label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_BySecondaryStructure" type="radio"  title="By Residue" color_mode="603"/> <label class="label" for="updatecolor_BySecondaryStructure">By Secondary Structure</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByChain" type="radio"  title="By Residue" color_mode="604"/> <label class="label" for="updatecolor_ByChain">By Chain </label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByRepresentation" type="radio"  title="By Residue" color_mode="605"/>  <label class="label" for="updatecolor_ByRepresentation">By Representation </label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByB_Factor" type="radio"  title="By Residue" color_mode="606"/>  <label class="label" for="updatecolor_ByB_Factor">By B-Factor</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_BySpectrum" type="radio"  title="By Residue" color_mode="607"/>  <label class="label" for="updatecolor_BySpectrum">By Spectrum</label>   <BR/>
-	<input class="updateColor" name="colorMode" id="updatecolor_ByChainSpectrum" type="radio"  title="By Residue" color_mode="608"/>  <label class="label" for="updatecolor_ByChainSpectrum">By Chain Spectrum</label>   <BR/>
+	<input class="updateColor" name="colorMode" id="updatecolor_ByChainSpectrum" type="radio" checked="checked"  title="By Residue" color_mode="608"/>  <label class="label" for="updatecolor_ByChainSpectrum">By Chain Spectrum</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="updatecolor_ByHydrophobicity" type="radio"  title="By Residue" color_mode="609"/>  <label class="label" for="updatecolor_ByHydrophobicity">By Hydrophobicity</label>   <BR/>
 	<input class="updateColor" name="colorMode" id="b_load_conser" type="radio"  title="By Residue" color_mode="610"/>  <label class="label" for="b_load_conser">By Conservation</label>   <BR/>
     <!--<button class="labelPDB" name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>-->
@@ -210,7 +211,7 @@
     <span class="submenu" id="trigger">
     <input class="labelPDB" name="trigger" id="triggerDistance" type="radio"  title="Distance"  />  <label class="label" for="triggerDistance"> Distance </label>   <BR/>
     <input class="labelPDB" name="trigger" id="triggerAngle" type="radio"  title="Angle" />  <label class="label" for="triggerAngle"> Angle </label>   <BR/>
-	<input class="labelPDB" name="trigger" id="isHide" type="checkbox"  title="Hide&Show" />  <label class="label" for="isHide"> isHide </label>   <BR/>
+	<input class="labelPDB" name="trigger" id="isHide" type="checkbox"  title="Hide&Show" />  <label class="label" for="isHide"> Hide </label>   <BR/>
   </span>
     <BR/>
 
