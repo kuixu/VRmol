@@ -56,86 +56,86 @@ four figures
 
 iNano provide 13 different representation mode, which can be changed in "Main Structure" in the menu.
 
-![vr_menu](figs/Representation_1.png)
+![Representation_1](figs/Representation_1.png)
 
 - **Dot**
 
-  ![vr_menu](figs/Representation_4.png)
+  ![Representation_4](figs/Representation_4.png)
 
 - **Line**
 
-  ![vr_menu](figs/Representation_3.png)
+  ![Representation_3](figs/Representation_3.png)
 
 - **Backbone**
 
-  ![vr_menu](figs/Representation_5.png)
+  ![Representation_5](figs/Representation_5.png)
 
 - **Sphere**
 
-  ![vr_menu](figs/Representation_6.png)
+  ![Representation_6](figs/Representation_6.png)
 
 - **Stick**
 
-  ![vr_menu](figs/Representation_7.png)
+  ![Representation_7](figs/Representation_7.png)
 
 - **Ball & Rod**
 
-  ![vr_menu](figs/Representation_8.png)
+  ![Representation_8](figs/Representation_8.png)
 
 - **Tube**
 
-  ![vr_menu](figs/Representation_9.png)
+  ![Representation_9](figs/Representation_9.png)
 
 - **Ribbon-flat**
 
-  ![vr_menu](figs/Representation_10.png)
+  ![Representation_10](figs/Representation_10.png)
 
 - **Ribbon-ellipse**
 
-  ![vr_menu](figs/Representation_11.png)
+  ![Representation_11](figs/Representation_11.png)
 
 - **Ribbon-rectangle**
 
-  ![vr_menu](figs/Representation_12.png)
+  ![Representation_12](figs/Representation_12.png)
 
 - **Ribbon-strip**
 
-  ![vr_menu](figs/Representation_13.png)
+  ![Representation_13](figs/Representation_13.png)
 
 - **Ribbon-railway**
 
-  ![vr_menu](figs/Representation_14.png)
+  ![Representation_14](figs/Representation_14.png)
 
 - **Ribbon-SS**
 
-  ![vr_menu](figs/Representation_15.png)
+  ![Representation_15](figs/Representation_15.png)
 
 
 #### Ligand
 
 iNano shows ligand with main structure or separately.
 
-![vr_menu](figs/ligand_1.png)
+![ligand_1](figs/ligand_1.png)
 
-![vr_menu](figs/ligand_2.png)
+![ligand_2](figs/ligand_2.png)
 
 For ligand, iNano provides 4 styles.
 
 - **Line**
 
-  ![vr_menu](figs/ligand_3.png)
+  ![ligand_3](figs/ligand_3.png)
 
 - **Sphere**
 
-  ![vr_menu](figs/ligand_4.png)
+  ![ligand_4](figs/ligand_4.png)
 
 - **Stick**
 
-  ![vr_menu](figs/ligand_5.png)
+  ![ligand_5](figs/ligand_5.png)
 
 - **Ball & Rod**
 
-  ![vr_menu](figs/ligand_6.png)
+  ![ligand_6](figs/ligand_6.png)
 
 #### Water
 
@@ -143,25 +143,25 @@ For ligand, iNano provides 4 styles.
 
 iNano provides different mode and transparency for structure surfaces. Surface includes Van der Waals surface, solvent accessible surface, solvent excluded surface and molecular surface.
 
-![vr_menu](figs/surface_1.png)
-![vr_menu](figs/surface_2.png)
-![vr_menu](figs/surface_3.png)
-![vr_menu](figs/surface_4.png)
-![vr_menu](figs/surface_5.png)
-![vr_menu](figs/surface_6.png)
-![vr_menu](figs/surface_7.png)
-![vr_menu](figs/surface_8.png)
+![surface_1](figs/surface_1.png)
+![surface_2](figs/surface_2.png)
+![surface_3](figs/surface_3.png)
+![surface_4](figs/surface_4.png)
+![surface_5](figs/surface_5.png)
+![surface_6](figs/surface_6.png)
+![surface_7](figs/surface_7.png)
+![surface_8](figs/surface_8.png)
 
 ### Color Schema
 
-![vr_menu](figs/color_1.png)
-![vr_menu](figs/color_2.png)
-![vr_menu](figs/color_3.png)
-![vr_menu](figs/color_4.png)
-![vr_menu](figs/color_5.png)
-![vr_menu](figs/color_6.png)
-![vr_menu](figs/color_7.png)
-![vr_menu](figs/color_8.png)
+![color_1](figs/color_1.png)
+![color_2](figs/color_2.png)
+![color_3](figs/color_3.png)
+![color_4](figs/color_4.png)
+![color_5](figs/color_5.png)
+![color_6](figs/color_6.png)
+![color_7](figs/color_7.png)
+![color_8](figs/color_8.png)
 
 
 
@@ -170,6 +170,22 @@ iNano provides different mode and transparency for structure surfaces. Surface i
 ### Structure Editing
 
 ### Fragmentation
+
+Fragments are segments of chains in a molecule. iNano allows users to present fragments by using different representation style in 'Region'. 
+
+<!--TODO::(xujingle@)Maybe fragment_1 need to change the annotation???-->
+
+![fragment_1](figs/fragment_1.png)
+
+Users need to choose the region and representation style in panel.
+
+![fragment_2](figs/fragment_2.png)
+
+Here is an example:
+
+![fragment_3](figs/fragment_3.png)
+
+
 
 ### Mutating a Residue
 
