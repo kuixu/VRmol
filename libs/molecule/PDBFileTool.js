@@ -1254,13 +1254,10 @@ PDB.tool = {
 		var offset = "";
 		if(!limit){					
 			limit = {
-				x:w3m.global.limit.x,
-				y:w3m.global.limit.y,
-				z:w3m.global.limit.z
+				x:PDB.limit.x,
+				y:PDB.limit.y,
+				z:PDB.limit.z
 			};			
-			limit.x = [limit.x[0],limit.x[1]];
-			limit.y = [limit.y[0],limit.y[1]];
-			limit.z = [limit.z[0],limit.z[1]];
 			offset = PDB.GeoCenterOffset;
 		}else{
 			var x = -(limit.x[0]+limit.x[1])/2 ;
@@ -1276,7 +1273,6 @@ PDB.tool = {
 		PDB.DRUGMigrationRotates = [];
 		for(var i=0;i<50;i++){			
 			var pos = new THREE.Vector3(Math.random()*pathScopex+limit.x[0],Math.random()*pathScopey+limit.y[0],Math.random()*pathScopez+limit.z[0]);			
-			
 			pos.len= Math.sqrt(Math.pow(pos.x,2)+Math.pow(pos.y,2)+Math.pow(pos.z,2));			
 			PDB.DRUGMigrationPaths.push(pos);
 			var rota = new THREE.Euler( Math.random()*2*rotateScope-rotateScope, Math.random()*2*rotateScope-rotateScope, Math.random()*2*rotateScope-rotateScope, 'XYZ' );
