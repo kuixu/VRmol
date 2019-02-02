@@ -1350,6 +1350,15 @@ PDB.tool = {
             var span = PDB.tool.generateSpan(rightMenuDiv,"span","rightsubmenu");
             span.appendChild(table);
         }
+    },showAxis : function (showFlag) {
+        if(PDB.GROUP[PDB.GROUP_AXIS] !== undefined && PDB.GROUP[PDB.GROUP_AXIS].children.length === 0){
+            var size = Math.max(PDB.limit.x[1],PDB.limit.y[1],PDB.limit.z[1])
+            var axisHelper = new THREE.AxisHelper(size);
+            PDB.GROUP[PDB.GROUP_AXIS].add(axisHelper);
+            PDB.GROUP[PDB.GROUP_AXIS].visible = showFlag;
+        }else if(PDB.GROUP[PDB.GROUP_AXIS] !== undefined && PDB.GROUP[PDB.GROUP_AXIS].children.length > 0 && showFlag){
+            PDB.GROUP[PDB.GROUP_AXIS].visible = showFlag;
+        }
     }
 
 }

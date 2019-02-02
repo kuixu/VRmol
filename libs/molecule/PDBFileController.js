@@ -176,6 +176,16 @@ PDB.controller = {
 			PDB.painter.showWater();
             scope.drawGeometry(PDB.config.hetMode);
         } );
+
+        var b_showAxis = document.getElementById("showAxis");
+
+        b_showAxis.addEventListener( 'click', function(e) {
+            if(e.target.checked){
+                PDB.tool.showAxis(true);
+            }else{
+                PDB.tool.showAxis(false);
+            }
+        } );
 		//drugSurface
 
 		var drugSurface = document.getElementById("drugSurface");
