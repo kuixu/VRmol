@@ -905,19 +905,21 @@ PDB.controller = {
         //============================rotation==========================
         //rotation
         var rotationSwitch = document.getElementById("rotationSwitch");
-        var rotationLeft = document.getElementById("rotationLeft");
-        var rotationRight = document.getElementById("rotationRight");
+        var rotationLeft = document.getElementById("rotationCounterclockwise");
+        var rotationRight = document.getElementById("rotationClockwise");
 
         rotationSwitch.addEventListener( 'click', function() {
             PDB.controller.cancelRotation();
         } );
         rotationLeft.addEventListener( 'click', function() {
+            var val = $('input[name="rotateAxis"]:checked').val();
             PDB.controller.cancelRotation();
-            PDB.controller.startRotation(2,0);
+            PDB.controller.startRotation(Number(val),1);
         } );
         rotationRight.addEventListener( 'click', function() {
+            var val = $('input[name="rotateAxis"]:checked').val();
             PDB.controller.cancelRotation();
-            PDB.controller.startRotation(2,1);
+            PDB.controller.startRotation(Number(val),0);
         } );
 
 
