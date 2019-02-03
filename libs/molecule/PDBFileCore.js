@@ -76,6 +76,7 @@ PDB = {
     TravelScale:6,
     currentType: 1,
     //tubeResidue:[],
+    label_type:100,  //100 All the models,104 By Chain 105 By Residue 106.By Atom
     cartoonsheet:0,
     isAnimate:false,
     tubeSSE:[],

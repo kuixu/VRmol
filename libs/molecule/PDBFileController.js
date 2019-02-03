@@ -690,7 +690,7 @@ PDB.controller = {
         var selResidue  = document.getElementById( "selResidue" );
 
         selModel.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_MODEL;
+            PDB.label_type = PDB.SELECTION_MODEL;
         } );
         // selMainHet.addEventListener( 'click', function() {
         //     PDB.selection_mode = PDB.SELECTION_MAIN_HET;
@@ -702,13 +702,13 @@ PDB.controller = {
         //     PDB.selection_mode = PDB.SELECTION_HET;
         // } );
         selChain.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_CHAIN;
+            PDB.label_type = PDB.SELECTION_CHAIN;
         } );
         selResidue.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_RESIDUE;
+            PDB.label_type = PDB.SELECTION_RESIDUE;
         } );
         selAtom.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_ATOM;
+            PDB.label_type = PDB.SELECTION_ATOM;
         } );
 
 

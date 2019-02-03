@@ -1759,7 +1759,7 @@ PDB.render = {
                             var atom  = INTERSECTED.userData.presentAtom;
                             var message = "";
                             var pos =  PDB.tool.getAtomInfoPosition(atom.pos_centered,camera.position);
-                            switch (PDB.selection_mode){
+                            switch (PDB.label_type){
                                 case PDB.SELECTION_MODEL:
                                     message = atom.chainname.toUpperCase() +"."
                                         + atom.resname.substring(0,1).toUpperCase()+ atom.resname.substring(1) + "."+ atom.resid
