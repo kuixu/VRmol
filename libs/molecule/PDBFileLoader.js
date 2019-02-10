@@ -70,6 +70,7 @@ PDB.loader = {
             PDB.GROUP_MAIN_INDEX.push(PDB.GROUP_MAIN);
             PDB.GROUP_HET_INDEX.push(PDB.GROUP_HET);
             PDB.GROUP_HET_INDEX.push(PDB.GROUP_WATER);
+            PDB.GROUP_HET_INDEX.push(PDB.GROUP_AXIS);
             PDB.GROUP_SURFACE_INDEX.push(PDB.GROUP_SURFACE);
             PDB.GROUP_MUTATION_INDEX.push(PDB.GROUP_MUTATION);
             //Structure
@@ -152,6 +153,7 @@ PDB.loader = {
             //Structure
             PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_MAIN);
             PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_WATER);
+            PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_AXIS);
             PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_HET);
             PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_INFO);
             PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_SURFACE);

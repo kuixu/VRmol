@@ -176,6 +176,16 @@ PDB.controller = {
 			PDB.painter.showWater();
             scope.drawGeometry(PDB.config.hetMode);
         } );
+
+        var b_showAxis = document.getElementById("showAxis");
+
+        b_showAxis.addEventListener( 'click', function(e) {
+            if(e.target.checked){
+                PDB.tool.showAxis(true);
+            }else{
+                PDB.tool.showAxis(false);
+            }
+        } );
 		//drugSurface
 
 		var drugSurface = document.getElementById("drugSurface");
@@ -680,7 +690,7 @@ PDB.controller = {
         var selResidue  = document.getElementById( "selResidue" );
 
         selModel.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_MODEL;
+            PDB.label_type = PDB.SELECTION_MODEL;
         } );
         // selMainHet.addEventListener( 'click', function() {
         //     PDB.selection_mode = PDB.SELECTION_MAIN_HET;
@@ -692,13 +702,13 @@ PDB.controller = {
         //     PDB.selection_mode = PDB.SELECTION_HET;
         // } );
         selChain.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_CHAIN;
+            PDB.label_type = PDB.SELECTION_CHAIN;
         } );
         selResidue.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_RESIDUE;
+            PDB.label_type = PDB.SELECTION_RESIDUE;
         } );
         selAtom.addEventListener( 'click', function() {
-            PDB.selection_mode = PDB.SELECTION_ATOM;
+            PDB.label_type = PDB.SELECTION_ATOM;
         } );
 
 
@@ -895,19 +905,21 @@ PDB.controller = {
         //============================rotation==========================
         //rotation
         var rotationSwitch = document.getElementById("rotationSwitch");
-        var rotationLeft = document.getElementById("rotationLeft");
-        var rotationRight = document.getElementById("rotationRight");
+        var rotationLeft = document.getElementById("rotationCounterclockwise");
+        var rotationRight = document.getElementById("rotationClockwise");
 
         rotationSwitch.addEventListener( 'click', function() {
             PDB.controller.cancelRotation();
         } );
         rotationLeft.addEventListener( 'click', function() {
+            var val = $('input[name="rotateAxis"]:checked').val();
             PDB.controller.cancelRotation();
-            PDB.controller.startRotation(2,0);
+            PDB.controller.startRotation(Number(val),1);
         } );
         rotationRight.addEventListener( 'click', function() {
+            var val = $('input[name="rotateAxis"]:checked').val();
             PDB.controller.cancelRotation();
-            PDB.controller.startRotation(2,1);
+            PDB.controller.startRotation(Number(val),0);
         } );
 
 

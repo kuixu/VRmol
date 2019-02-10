@@ -156,8 +156,9 @@
     <BR/>
     <LABEL onclick="switchMenu('showOthers')">Show Others</LABEL><BR/>
     <span class="submenu" id="showOthers">
-     <input class="labelPDB" name="mode" id="showWater"  type="checkbox" title="Show Water" />  <label class="label" for="showWater"> Show Water</label>   <BR/>
-  </span>
+        <input class="labelPDB" name="mode" id="showWater"  type="checkbox" title="Show Water" />  <label class="label" for="showWater"> Show Water</label>   <BR/>
+        <input class="labelPDB" name="mode" id="showAxis"  type="checkbox" title="Show Axis" />  <label class="label" for="showAxis"> Show Axis</label>   <BR/>
+    </span>
     <BR/>
 
     <LABEL onclick="switchMenu('surfaceStructure')">Surface</LABEL><BR/>
@@ -181,7 +182,7 @@
 
     <LABEL onclick="switchMenu('selectionMode')">Label</LABEL><BR/>
     <span class="submenu" id="selectionMode">
-  <input class="labelPDB" name="mode" id="selModel" checked="checked"  type="radio" title="All the models" />  <label class="label" for="selModel"> All the models</label>   <BR/>
+  <input class="labelPDB" name="mode" id="selModel"   type="radio" checked="checked" title="All the models" />  <label class="label" for="selModel"> All the models</label>   <BR/>
         <!--<input class="labelPDB" name="mode" id="selMainHet"    type="radio" title="Main and Het"/>   <label class="label" for="selMainHet"> Main and Het</label>    <BR/>-->
         <!--<input class="labelPDB" name="mode" id="selMain" type="radio" title="Only Main"/><label class="label" for="selMain"> Only Main </label> <BR/>
         <input class="labelPDB" name="mode" id="selHet"   type="radio" title="Only Het"/>  <label class="label" for="selHet"> Only Het </label>   <BR/>-->
@@ -253,8 +254,11 @@
     <LABEL onclick="switchMenu('rotationMenu')">Rotation</LABEL><BR/>
     <span class="submenu" id="rotationMenu">
         <button class="labelPDB" name="rotationSwitch" id="rotationSwitch" value="switch">Stop</button><BR/>
-        <button class="labelPDB" name="rotationLeft" id="rotationLeft" value="left">Left</button><BR/>
-        <button class="labelPDB" name="rotationRight" id="rotationRight" value="right">Right</button><BR/>
+        <input class="labelPDB" name="rotateAxis" id="rotateByX"  type="radio" title="Rotate By X Axis" value="1" />  <label class="label" for="rotateByX">Rotate By X Axis</label>   <BR/>
+        <input class="labelPDB" name="rotateAxis" id="rotateByY"  type="radio" title="Rotate By Y Axis" value="2" />  <label class="label" for="rotateByY">Rotate By Y Axis</label>   <BR/>
+        <input class="labelPDB" name="rotateAxis" id="rotateByZ"  type="radio" title="Rotate By Z Axis" value="3" checked />  <label class="label" for="rotateByZ">Rotate By Z Axis</label>   <BR/>
+        <button class="labelPDB" name="rotationLeft" id="rotationClockwise" value="left">Clockwise</button><BR/>
+        <button class="labelPDB" name="rotationRight" id="rotationCounterclockwise" value="right">Counterclockwise</button><BR/>
   </span>
     <BR/>
     <!-- <LABEL onclick="switchMenu('demoMenu')">Demos</LABEL><BR/> -->

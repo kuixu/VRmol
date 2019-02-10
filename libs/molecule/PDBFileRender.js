@@ -1757,10 +1757,27 @@ PDB.render = {
                         if(INTERSECTED.userData.presentAtom != undefined){
                             // PDB.painter.showAtomLabel(INTERSECTED.userData.presentAtom);
                             var atom  = INTERSECTED.userData.presentAtom;
-                            var message = atom.chainname.toUpperCase() +"."
-                                + atom.resname.substring(0,1).toUpperCase()+ atom.resname.substring(1) + "."+ atom.resid
-                                +"."+atom.name.substring(0,1).toUpperCase()+atom.name.substring(1);
+                            var message = "";
                             var pos =  PDB.tool.getAtomInfoPosition(atom.pos_centered,camera.position);
+                            switch (PDB.label_type){
+                                case PDB.SELECTION_MODEL:
+                                    message = atom.chainname.toUpperCase() +"."
+                                        + atom.resname.substring(0,1).toUpperCase()+ atom.resname.substring(1) + "."+ atom.resid
+                                        +"."+atom.name.substring(0,1).toUpperCase()+atom.name.substring(1);
+                                    break;
+                                case PDB.SELECTION_CHAIN:
+                                    message = atom.chainname.toUpperCase();
+                                    break;
+                                case PDB.SELECTION_RESIDUE:
+                                    message = atom.chainname.toUpperCase() +"."
+                                        + atom.resname.substring(0,1).toUpperCase()+ atom.resname.substring(1) + "."+ atom.resid;
+                                    break;
+                                case PDB.SELECTION_ATOM:
+                                    message = atom.chainname.toUpperCase() +"."
+                                        + atom.resname.substring(0,1).toUpperCase()+ atom.resname.substring(1) + "."+ atom.resid
+                                        +"."+atom.name.substring(0,1).toUpperCase()+atom.name.substring(1);
+                                    break;
+                            }
                             PDB.drawer.drawTextForDesktop(PDB.GROUP_INFO,pos,
                                 message,"",atom.color,180);
                         }
