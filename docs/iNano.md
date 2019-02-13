@@ -42,100 +42,102 @@ iNano, a for molecular structure visualization and integrative analysis. iNano c
 
 ## VR Mode 
 
+### Screen shot
+![Screen shot](figs/vr/screenshot.png)
+
+video
+![video](figs/vr/video-1.mp4)
 
 
 ### Menu
 
 ![vr_menu](figs/vr_menu.png)
 
-### Screen shot
 
-four figures
 
 ### Representation
 
 iNano provide 13 different representation mode, which can be changed in "Main Structure" in the menu.
 
-![Representation_1](figs/Representation_1.png)
+![Representation_1](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_1.png)
 
 - **Dot**
 
-  ![Representation_4](figs/Representation_4.png)
+  ![Representation_4](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_4.png)
 
 - **Line**
 
-  ![Representation_3](figs/Representation_3.png)
+  ![Representation_3](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_3.png)
 
 - **Backbone**
 
-  ![Representation_5](figs/Representation_5.png)
+  ![Representation_5](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_5.png)
 
 - **Sphere**
 
-  ![Representation_6](figs/Representation_6.png)
+  ![Representation_6](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_6.png)
 
 - **Stick**
 
-  ![Representation_7](figs/Representation_7.png)
+  ![Representation_7](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_7.png)
 
 - **Ball & Rod**
 
-  ![Representation_8](figs/Representation_8.png)
+  ![Representation_8](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_8.png)
 
 - **Tube**
 
-  ![Representation_9](figs/Representation_9.png)
+  ![Representation_9](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_9.png)
 
 - **Ribbon-flat**
 
-  ![Representation_10](figs/Representation_10.png)
+  ![Representation_10](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_10.png)
 
 - **Ribbon-ellipse**
 
-  ![Representation_11](figs/Representation_11.png)
+  ![Representation_11](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_11.png)
 
 - **Ribbon-rectangle**
 
-  ![Representation_12](figs/Representation_12.png)
+  ![Representation_12](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_12.png)
 
 - **Ribbon-strip**
 
-  ![Representation_13](figs/Representation_13.png)
+  ![Representation_13](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_13.png)
 
 - **Ribbon-railway**
 
-  ![Representation_14](figs/Representation_14.png)
+  ![Representation_14](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_14.png)
 
 - **Ribbon-SS**
 
-  ![Representation_15](figs/Representation_15.png)
-
+  ![Representation_15](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_15.png)
 
 #### Ligand
 
 iNano shows ligand with main structure or separately.
 
-![ligand_1](figs/ligand_1.png)
+![ligand_1](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_1.png)
 
-![ligand_2](figs/ligand_2.png)
+![ligand_2](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_2.png)
 
 For ligand, iNano provides 4 styles.
 
 - **Line**
 
-  ![ligand_3](figs/ligand_3.png)
+  ![ligand_3](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_3.png)
 
 - **Sphere**
 
-  ![ligand_4](figs/ligand_4.png)
+  ![ligand_4](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_4.png)
 
 - **Stick**
 
-  ![ligand_5](figs/ligand_5.png)
+  ![ligand_5](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_5.png)
 
 - **Ball & Rod**
 
-  ![ligand_6](figs/ligand_6.png)
+  ![ligand_6](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_6.png)
 
 #### Water
 
@@ -143,30 +145,30 @@ For ligand, iNano provides 4 styles.
 
 iNano provides different mode and transparency for structure surfaces. Surface includes Van der Waals surface, solvent accessible surface, solvent excluded surface and molecular surface.
 
-![surface_1](figs/surface_1.png)
-![surface_2](figs/surface_2.png)
-![surface_3](figs/surface_3.png)
-![surface_4](figs/surface_4.png)
-![surface_5](figs/surface_5.png)
-![surface_6](figs/surface_6.png)
-![surface_7](figs/surface_7.png)
-![surface_8](figs/surface_8.png)
+![surface_1](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_1.png)
+![surface_2](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_2.png)
+![surface_3](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_3.png)
+![surface_4](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_4.png)
+![surface_5](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_5.png)
+![surface_6](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_6.png)
+![surface_7](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_7.png)
+![surface_8](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_8.png)
 
 ### Color Schema
 
-![color_1](figs/color_1.png)
-![color_2](figs/color_2.png)
-![color_3](figs/color_3.png)
-![color_4](figs/color_4.png)
-![color_5](figs/color_5.png)
-![color_6](figs/color_6.png)
-![color_7](figs/color_7.png)
-![color_8](figs/color_8.png)
+![color_1](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_1.png)
+![color_2](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_2.png)
+![color_3](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_3.png)
+![color_4](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_4.png)
+![color_5](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_5.png)
+![color_6](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_6.png)
+![color_7](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_7.png)
+![color_8](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_8.png)
 
 
 
 ### Computing the distance in VR
-
+![vr_menu](figs/vr/distance.png)
 ### Structure Editing
 
 ### Fragmentation
@@ -190,16 +192,21 @@ Here is an example:
 ### Mutating a Residue
 
 ### Visualize Genome Variations
-
+![mutation](figs/mutation.png)
 ### Drugs
 
 ![image-20190124155108857](figs/drug.png)
 
 ### Interactive Docking
-
+![image-20190124155039841](figs/docking-results.png)
 ![image-20190124155039841](figs/docking.png)
 
 ### Density Map
+
+![density_map](figs/density_map.png)
+### Spherical View
+![image-20190124155039841](figs/vr/spherical_view1.png)
+![image-20190124155039841](figs/vr/spherical_view2.png)
 
 ### Speech Recognition
 
@@ -209,7 +216,7 @@ Button for speech recognition is located at the top-left of the page.
 
 Steps for Speech Recognition:
 
-1. Choose a language. The default language is Chinese.
+1. Choose a language. The default language is English.
 2. Press down the button.
 3. Hold down the button while speaking the command.
 4. Release the button. The recording will finish and uploaded to server automatically.
@@ -401,6 +408,120 @@ iNano now support both English and Chinese speech recognition.  Users could firs
 https://threejs.org/docs/index.html#manual/en/introduction/Browser-support
 
 https://caniuse.com/#feat=webgl
+
+
+
+### Representation
+
+iNano provide 13 different representation mode, which can be changed in "Main Structure" in the menu.
+
+![Representation_1](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_1.png)
+
+- **Dot**
+
+  ![Representation_4](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_4.png)
+
+- **Line**
+
+  ![Representation_3](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_3.png)
+
+- **Backbone**
+
+  ![Representation_5](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_5.png)
+
+- **Sphere**
+
+  ![Representation_6](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_6.png)
+
+- **Stick**
+
+  ![Representation_7](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_7.png)
+
+- **Ball & Rod**
+
+  ![Representation_8](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_8.png)
+
+- **Tube**
+
+  ![Representation_9](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_9.png)
+
+- **Ribbon-flat**
+
+  ![Representation_10](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_10.png)
+
+- **Ribbon-ellipse**
+
+  ![Representation_11](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_11.png)
+
+- **Ribbon-rectangle**
+
+  ![Representation_12](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_12.png)
+
+- **Ribbon-strip**
+
+  ![Representation_13](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_13.png)
+
+- **Ribbon-railway**
+
+  ![Representation_14](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_14.png)
+
+- **Ribbon-SS**
+
+  ![Representation_15](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/Representation_15.png)
+
+#### Ligand
+
+iNano shows ligand with main structure or separately.
+
+![ligand_1](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_1.png)
+
+![ligand_2](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_2.png)
+
+For ligand, iNano provides 4 styles.
+
+- **Line**
+
+  ![ligand_3](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_3.png)
+
+- **Sphere**
+
+  ![ligand_4](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_4.png)
+
+- **Stick**
+
+  ![ligand_5](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_5.png)
+
+- **Ball & Rod**
+
+  ![ligand_6](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/ligand_6.png)
+
+#### Water
+
+#### Surface
+
+iNano provides different mode and transparency for structure surfaces. Surface includes Van der Waals surface, solvent accessible surface, solvent excluded surface and molecular surface.
+
+![surface_1](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_1.png)
+![surface_2](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_2.png)
+![surface_3](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_3.png)
+![surface_4](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_4.png)
+![surface_5](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_5.png)
+![surface_6](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_6.png)
+![surface_7](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_7.png)
+![surface_8](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/surface_8.png)
+
+### Color Schema
+
+![color_1](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_1.png)
+![color_2](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_2.png)
+![color_3](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_3.png)
+![color_4](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_4.png)
+![color_5](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_5.png)
+![color_6](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_6.png)
+![color_7](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_7.png)
+![color_8](/Users/xukui/Documents/workspace/vr/molwebvr/docs/figs/color_8.png)
+
+
 
 ## Sharing by URL
 
