@@ -313,13 +313,33 @@ PDB.controller = {
 		var b_replace = document.getElementById( "b_replace" );
 		
 		b_replace.addEventListener( 'click', function(e) {
-			PDB.GROUP_ONE_RES = 37;
+			PDB.GROUP_ONE_RES = PDB.GROUP_COUNT+1;
+			
 			//初始化
 			if(!PDB.GROUP[PDB.GROUP_ONE_RES]){
 				PDB.GROUP[PDB.GROUP_ONE_RES] = new THREE.Group();
 			}else{
-				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+				//PDB.render.clearGroupIndex(PDB.GROUP_ONE_RES);
+				//PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+				
+				for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
+					PDB.GROUP[PDB.GROUP_ONE_RES].remove(PDB.GROUP[PDB.GROUP_ONE_RES].children[i]);
+				}
+				PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(new THREE.Vector3(0,0,0));
 			}
+			
+			
+			var representation_ = document.getElementById( "representation" );
+			
+			var representation = representation_.value;
+			
+			representation = Number(representation);
+			if(isNaN(representation)){
+				representation = PDB.SPHERE;
+			}
+			
+			var chain_replace = document.getElementById( "chain_replace" );
+			
 			var groupa = "chain_"+chain_replace.value;
 			var groupb;
 			if(PDB.GROUP[groupa+"_low"]){
@@ -334,62 +354,90 @@ PDB.controller = {
 			var editResidue = document.getElementById("editResidue");			
 			var resName = allResidue.value;
 			if(w3m.mol[resName]){
-				PDB.painter.showRes_Ball_Rod(resName);
+				
+				PDB.painter.showOneRes(representation,resName);
+				//PDB.painter.showRes_Ball_Rod(resName);
 				//PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
 				segmentholder.style.display = "none";
 				editResidue.style.display = "none";
 				var xyz = residue_replace.selectedOptions[0].xyz;
 				var resid = residue_replace.value;
-			
+			 	 			
 				var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
-				PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);	
-				
-				
-				
+				PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
+				var caidpo = new THREE.Vector3(0,0,0);
 				if(PDB.GROUP[groupa]){
+					var m = 0;
 					for(var i in PDB.GROUP[groupa].children){
-						var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
-						if(_resid_==resid){
-							PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);
-							//PDB.GROUP[groupa].children
-							break;
+						if(PDB.GROUP[groupa].children[i].type=='Group'){
+							continue;
 						}
-					}
-				}
-				
-				
-				if(groupb&&PDB.GROUP[groupb]){
-					if(PDB.GROUP[groupb]){
-						for(var i in PDB.GROUP[groupb].children){
-							var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
+						if(PDB.GROUP[groupa].children[i].userData&&PDB.GROUP[groupa].children[i].userData.presentAtom){
+							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
 							if(_resid_==resid){
-								PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);
-								//PDB.GROUP[groupa].children
-								break;
+								m++;
+								caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
+								PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);								
+								//break;
+								if(m>7){
+									break;
+								}
 							}
 						}
+						
+					}
+				}					
+				var t_group = new THREE.Group();
+				t_group.copy(PDB.GROUP[PDB.GROUP_ONE_RES]);					
+				var _0po = new THREE.Vector3(0,0,0);
+				for(var i in t_group.children){					
+					if(t_group.children[i].userData.presentAtom.name == 'ca'){
+						if(t_group.children[i].type='Line'){
+							var p = t_group.children[i].userData.presentAtom.pos_centered;
+							_0po.copy(new THREE.Vector3(p.x,p.y,p.z));
+						}else{
+							_0po.copy(t_group.children[i].position);
+						}
 					}
 				}
-				
-				
-				
-				
-				for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
-					var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
-					 PDB.GROUP[groupa].add( obj);
-				}
-				if(groupb&&PDB.GROUP[groupb]){
-					for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
-						var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
-						 PDB.GROUP[groupb].add( obj);
-					}
+				 
+				for(var i in t_group.children){
+					var obj = t_group.children[i];
+					obj.position.x = obj.position.x - _0po.x;
+					obj.position.y = obj.position.y - _0po.y;
+					obj.position.z = obj.position.z - _0po.z;
 				}
 				
-				
+				PDB.GROUP[groupa].add( t_group);					
+				t_group.position.copy(caidpo);
+				if(groupb&&PDB.GROUP[groupb]){						
+					var m = 0;
+					for(var i in PDB.GROUP[groupb].children){
+						if(PDB.GROUP[groupb].children[i].type=='Group'){
+							continue;
+						}
+						if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
+							var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
+							if(_resid_==resid){
+								m++;								
+								PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);								
+								//break;
+								if(m>7){
+									break;
+								}
+							}
+						}
+						
+					}					
+					var t_group_b = new THREE.Group();
+					t_group_b.copy(t_group);					
+					PDB.GROUP[groupb].add(t_group_b);						
+				}							
 				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
 			}else{
 				PDB.loader.loadResidue(resName, function () {									
-					PDB.painter.showRes_Ball_Rod(resName);
+					//PDB.painter.showRes_Ball_Rod(resName);
+					PDB.painter.showOneRes(representation,resName);
 					//PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
 					segmentholder.style.display = "none";
 					editResidue.style.display = "none";
@@ -401,49 +449,69 @@ PDB.controller = {
 					PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
 					var caidpo = new THREE.Vector3(0,0,0);
 					if(PDB.GROUP[groupa]){
+						var m = 0;
 						for(var i in PDB.GROUP[groupa].children){
-							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
-							if(_resid_==resid){
-								caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
-								PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);								
-								break;
+							if(PDB.GROUP[groupa].children[i].userData&&PDB.GROUP[groupa].children[i].userData.presentAtom){
+								var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+								if(_resid_==resid){
+									m++;
+									caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
+									PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);								
+									//break;
+									if(m>7){
+										break;
+									}
+								}
 							}
+							
+						}
+					}					
+					var t_group = new THREE.Group();
+					t_group.copy(PDB.GROUP[PDB.GROUP_ONE_RES]);					
+					var _0po = new THREE.Vector3(0,0,0);
+					for(var i in t_group.children){
+						if(t_group.children[i].userData.presentAtom.name == 'ca'){
+							
+							if(t_group.children[i].type='Line'){
+								var p = t_group.children[i].userData.presentAtom.pos_centered;
+								_0po.copy(new THREE.Vector3(p.x,p.y,p.z));
+							}else{
+								_0po.copy(t_group.children[i].position);
+							}
+							
+							
 						}
 					}
-					
-					
-					
-					
-					//console.log(caidpo);
-					//获取相对向量
-					var xdpo = {};
-					for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
-						var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
-						if(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].userData.presentAtom.name == 'ca'){							
-							var po = PDB.GROUP[PDB.GROUP_ONE_RES].children[i].position;
-							xdpo.x = caidpo.x - po.x;
-							xdpo.y = caidpo.y - po.y;
-							xdpo.z = caidpo.z - po.z;							
-							break;
-						}						
-						//PDB.GROUP[groupa].add( obj);
-					}
-					//console.log(xdpo);
-					for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
-						var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
-						obj.position.copy(new THREE.Vector3(obj.position.x+xdpo.x,obj.position.y+xdpo.y,obj.position.z+xdpo.z));
-						PDB.GROUP[groupa].add( obj);
+					 
+					for(var i in t_group.children){
+						var obj = t_group.children[i];
+						obj.position.x = obj.position.x - _0po.x;
+						obj.position.y = obj.position.y - _0po.y;
+						obj.position.z = obj.position.z - _0po.z;
 					}
 					
-					if(groupb&&PDB.GROUP[groupb]){
-						for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
-							var obj = PDB.GROUP[PDB.GROUP_ONE_RES].getObjectById(PDB.GROUP[PDB.GROUP_ONE_RES].children[i].id);
-							obj.position.copy(new THREE.Vector3(obj.position.x+xdpo.x,obj.position.y+xdpo.y,obj.position.z+xdpo.z));
-							PDB.GROUP[groupb].add( obj);
-						}
-					}
-					
-					
+					PDB.GROUP[groupa].add( t_group);					
+					t_group.position.copy(caidpo);
+					if(groupb&&PDB.GROUP[groupb]){						
+						var m = 0;
+						for(var i in PDB.GROUP[groupb].children){
+							if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
+								var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
+								if(_resid_==resid){
+									m++;								
+									PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);								
+									//break;
+									if(m>7){
+										break;
+									}
+								}
+							}
+							
+						}					
+						var t_group_b = new THREE.Group();
+						t_group_b.copy(t_group);					
+						PDB.GROUP[groupb].add(t_group_b);						
+					}							
 					PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
 				});
 			}

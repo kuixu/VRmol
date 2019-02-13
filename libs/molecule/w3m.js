@@ -342,6 +342,7 @@ w3m.ajax = (function() {
         resName = resName.toUpperCase();
         url      =  SERVERURL+"/data/amino_acid/"+ resName + '.pdb';
         callback = fn;
+		drug     = false;
         this.open('GET', url, true);
         this.send();
     };
@@ -558,10 +559,14 @@ w3m.tool = {
     },
     fillMain : function () {
         var that = this;
-        // mol -> fillqueue
-        for ( var i in w3m.mol ) {
-            this.mol2fillqueueMain(i);
-        }
+		if(PDB.residue&&PDB.residue!=""){
+			this.mol2fillqueueMain(PDB.residue);
+		}else{
+			 // mol -> fillqueue
+			for ( var i in w3m.mol ) {
+				this.mol2fillqueueMain(i);
+			}
+		}       
         // fillqueue -> vertex
         w3m.fillqueue_main.forEach(function (q) {
 			//console.log(q);
@@ -1632,7 +1637,14 @@ w3m.tool = {
                 }
 				if(w3m.CLENGTH == 2){
 					var atom = w3m.tool.getMainAtomById(w3m.global.mol,id);
-					w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(xyz[0]+offset.x,xyz[1]+offset.y,xyz[2]+offset.z));
+					if(PDB.residue&&PDB.residue!=""){
+						atom = w3m.tool.getMainAtomById(PDB.residue,id);
+					}
+					
+					if(atom){
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(xyz[0]+offset.x,xyz[1]+offset.y,xyz[2]+offset.z));
+					}
+					
 				}
             }
         }
@@ -1660,6 +1672,9 @@ w3m.tool = {
 			normal       = vec3.cross(binormal, tan);
         path[0][4] = vec3.cross(binormal, tan);
 		var atom = w3m.tool.getMainAtomById(w3m.global.mol,path[0][0]);
+		if(PDB.residue&&PDB.residue!=""){
+			atom = w3m.tool.getMainAtomById(PDB.residue,path[0][0]);
+		}
         frame[0] = [ path[0][0], path[0][1], path[0][2], tan, path[0][4], binormal, path[0][6] ];
 		
 		// w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(path[0][1][0]+offset.x,path[0][1][1]+offset.y,path[0][1][2]+offset.z));
@@ -1712,10 +1727,17 @@ w3m.tool = {
 				//get all data 
 				if(w3m.CLENGTH==1){
 					var atom = w3m.tool.getMainAtomById(w3m.global.mol,id);
-					w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(xyz[0]+offset.x,xyz[1]+offset.y,xyz[2]+offset.z));
-					w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].binormals.push(new THREE.Vector3(binormal[0],binormal[1],binormal[2]));
-					w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].normals.push(new THREE.Vector3(normal[0],normal[1],normal[2]));
-					w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].tangents.push(new THREE.Vector3(tan[0],tan[1],tan[2]));
+					
+					if(PDB.residue&&PDB.residue!=""){
+						atom = w3m.tool.getMainAtomById(PDB.residue,id);
+					}
+					if(atom){
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(xyz[0]+offset.x,xyz[1]+offset.y,xyz[2]+offset.z));
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].binormals.push(new THREE.Vector3(binormal[0],binormal[1],binormal[2]));
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].normals.push(new THREE.Vector3(normal[0],normal[1],normal[2]));
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].tangents.push(new THREE.Vector3(tan[0],tan[1],tan[2]));
+					}
+					
 					
 				}
 				
@@ -3128,7 +3150,13 @@ w3m.tool = {
                     //this.lineFiller( mol.getMain(atom_id_pre), mol.getMain(atom_id_cur) );
                     // xukui
 					var atom = w3m.tool.getMainAtomById(w3m.global.mol,atom_id_cur);
-					w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].lines.push([atom_id_pre, atom_id_cur]);					
+					if(PDB.residue&&PDB.residue!=""){
+						atom = w3m.tool.getMainAtomById(PDB.residue,atom_id_cur);
+					}
+					if(atom){
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].lines.push([atom_id_pre, atom_id_cur]);
+					}
+										
                     // PDB.linkedAtomIdArray.push([atom_id_pre, atom_id_cur]);
                 }
             }
@@ -3143,7 +3171,13 @@ w3m.tool = {
                     // xukui
 					
 					var atom = w3m.tool.getMainAtomById(w3m.global.mol,atom_id_2);
-					w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].lines.push([atom_id_1, atom_id_2]);
+					if(PDB.residue&&PDB.residue!=""){
+						atom = w3m.tool.getMainAtomById(PDB.residue,atom_id_2);
+					}
+					if(atom){
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].lines.push([atom_id_1, atom_id_2]);
+					}
+					
 					
                     // PDB.linkedAtomIdArray.push([atom_id_1, atom_id_2]);
                 } else {
@@ -3194,7 +3228,10 @@ w3m.tool = {
                     //xukui 
                     // backboneAtomID.push(atom_id);
 					var atom = w3m.tool.getMainAtomById(w3m.global.mol,atom_id);
-					w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].bbond.push(atom_id);
+					if(atom){
+						w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].bbond.push(atom_id);
+					}
+					
                 }
             }
 			
@@ -5221,12 +5258,19 @@ w3m.api = {
     refreshLabel : function () {
         w3m.tool.pipelineLabel();
     },
-    switchRepModeMain : function ( rep_mode ) {
-        w3m.config.rep_mode_main = rep_mode;
-        for ( var i in w3m.mol ) {
-            w3m.tool.updateMolRepMap(i);
-            w3m.config.color_mode_main == w3m.COLOR_BY_REP ? w3m.tool.updateMolColorMapMain(i) : void(0);
-        }
+    switchRepModeMain : function ( rep_mode,residue ) {
+		w3m.config.rep_mode_main = rep_mode;
+		if(residue){
+			w3m.tool.updateMolRepMap(residue);
+			w3m.config.color_mode_main == w3m.COLOR_BY_REP ? w3m.tool.updateMolColorMapMain(residue) : void(0);
+		}else{
+			for ( var i in w3m.mol ) {
+				w3m.tool.updateMolRepMap(i);
+				w3m.config.color_mode_main == w3m.COLOR_BY_REP ? w3m.tool.updateMolColorMapMain(i) : void(0);
+			}
+		}
+        
+        
         this.refreshMain();
     },
     switchRepModeHet : function ( rep_mode ) {
