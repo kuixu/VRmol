@@ -1413,21 +1413,6 @@ PDB.painter = {
 			}
 		}
 
-
-
-
-
-		// var color  = 0xa345;
-		// var radius = PDB.CONFIG.ellipse_radius;
-		// for(var i in PDB.cubeData.path){
-			// var path = PDB.cubeData.path[i];
-			// var obj =  {
-				// binormals : PDB.cubeData.binormals[i],
-				// normals   : PDB.cubeData.normals[i],
-				// tangents  : PDB.cubeData.tangents[i]
-			// };
-			// PDB.drawer.drawEllipse(PDB.GROUP_MAIN,path, color, radius,obj,path.length-1);//draw helix
-		// }
     },
 	showRibbon_EllipseByResdue : function(chainId,resid,sel,showLow,isshow){
 		showLow = (showLow == undefined?false:showLow);
@@ -1620,19 +1605,7 @@ PDB.painter = {
 	},
 	 
     showRibbon_Rectangle:function(){
-		// var color  = 0xa345;
-        // var radius = 0;
-		// for(var i in PDB.cubeData.path){
-			// var path = PDB.cubeData.path[i];
-			// var obj =  {
-				// binormals : PDB.cubeData.binormals[i],
-				// normals   : PDB.cubeData.normals[i],
-				// tangents  : PDB.cubeData.tangents[i]
-			// };
-			// PDB.drawer.drawRectangle(PDB.GROUP_MAIN,path, color, radius,obj,path.length-1);//draw helix
-		// }
-
-
+		
 		var radius = 0;
 		var chainmidppoint = {},chainmidbinormal = {},chainmidnormal = {},chainmidtangent = {};
 		var chaintemppath = [],chaintempbinormal = [],chaintempnormal = [],chaintemptangent = [];
@@ -2766,6 +2739,22 @@ PDB.painter = {
             PDB.render.clearGroupIndex(PDB.GROUP_WATER);            
         }
     },
+	showRes_Line : function(molId){ 
+		 
+		var groupindex =  PDB.GROUP_ONE_RES; 
+		var resobj 			= w3m.mol[molId].residueData['a'][1];
+		atomIdArray = resobj.lines;
+		for(var t=0;t<atomIdArray.length; t++){
+			var startAtom 	= PDB.tool.getMainAtom(molId, atomIdArray[t][0]);
+			var atom 		= PDB.tool.getMainAtom(molId, atomIdArray[t][1]);
+			var midp 		= PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);			
+            PDB.drawer.drawOneResLine(groupindex,resobj.caid, startAtom.pos_centered, midp, startAtom.color,startAtom); 
+			PDB.drawer.drawOneResLine(groupindex,resobj.caid, midp, atom.pos_centered, atom.color,atom); 
+            //geometry.vertices.push(start,end);
+		}
+		
+		
+    },
     showHet_Line : function(molId){
         this.showWater();
 		var group = PDB.GROUP_HET;
@@ -2850,6 +2839,138 @@ PDB.painter = {
 		}
         
     },
+	
+	showRes_Sphere : function(molId){
+		PDB.CONFIG = PDB.CONFIG_HIGH;
+		var addgroup;
+		
+		var w = PDB.CONFIG.stick_sphere_w;
+       
+		var group = PDB.GROUP_ONE_RES;
+        
+		var main_obj = w3m.mol[molId].atom.main;
+		
+		for ( var i_atom in main_obj) {
+			var atom = PDB.tool.getHetAtom(molId, i_atom);
+			if(atom==undefined){
+				atom = PDB.tool.getMainAtom(molId, i_atom);
+			}
+			atom.caid = atom.id;
+			if(atom.resname!=="hoh"){
+				PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, 0.9*atom.radius, atom, addgroup, w);
+			}
+		}
+        
+    },
+	showRes_Stick : function(molId){
+		// var addgroup;
+		// var w = PDB.CONFIG.stick_sphere_w;
+        
+        // var radius = 0.2;
+        // var  history ={};
+		// var group = PDB.GROUP_ONE_RES;
+		
+		// for(var i in w3m.mol[molId].connect){
+			// for(j in w3m.mol[molId].connect[i]){
+				// var startAtom = PDB.tool.getHetAtom(molId, i);
+				// if(startAtom==undefined){
+					// startAtom = PDB.tool.getMainAtom(molId, i);
+				// }
+				// var atom = PDB.tool.getHetAtom(molId,w3m.mol[molId].connect[i][j]);
+				// if(atom==undefined){
+					// atom = PDB.tool.getMainAtom(molId, i);
+				// }
+				// atom.caid = atom.id;
+				// if(history[startAtom.id]==undefined){
+					 // PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, radius+0.001, startAtom, addgroup, w);
+					 // history[startAtom.id]= 1;
+				// }
+				// if(history[atom.id]==undefined){
+					// PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, radius+0.001, atom, addgroup, w);
+					// history[atom.id]= 1;
+				// }else {
+					// //console.log("showHet_Stick: duplicate stick...atom.id:"+ atom.id);
+				// }
+				// var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
+				// PDB.drawer.drawStick(group, startAtom.pos_centered, midp, startAtom.color, radius,startAtom);
+				// PDB.drawer.drawStick(group, midp, atom.pos_centered, atom.color, radius,atom);
+			// }
+		// }
+		
+		
+		
+		 
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w; 
+		var resobj 	= w3m.mol[molId].residueData['a'][1];		
+		var lines = resobj.lines;
+		 
+        var radius = 0.2;
+        var  history ={};
+		var groupindex = PDB.GROUP_ONE_RES;
+		for(var i in lines){
+			var ids = lines[i];
+			var startAtom = PDB.tool.getMainAtom(molId, ids[0]);
+			var atom = PDB.tool.getMainAtom(molId, ids[1]);
+			startAtom.caid = resobj.caid;
+			atom.caid = resobj.caid;
+			
+			if(history[startAtom.id]===undefined){
+				PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, radius, startAtom, addgroup, w); 
+				history[startAtom.id]= 1;
+			}
+			if(history[atom.id]===undefined){
+				PDB.drawer.drawSphere(groupindex, atom.pos_centered,atom.color, radius, atom, addgroup, w); 
+				history[atom.id]= 1;
+			}			
+			var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
+			//group, start, end, color, radius, atom, addGroup
+			PDB.drawer.drawStick(groupindex, startAtom.pos_centered, midp, startAtom.color, radius, startAtom); 
+			PDB.drawer.drawStick(groupindex, midp, atom.pos_centered, atom.color, radius, atom); 
+		}       
+		
+		
+        
+    },
+	showRes_Ball_Rod : function(molId){
+		
+		var addgroup;
+		var w = PDB.CONFIG.stick_sphere_w;
+        var radius = 0.1;		 
+		var resobj 	= w3m.mol[molId].residueData['a'][1];
+		var lines = resobj.lines;
+        var  history ={};
+		var groupindex = PDB.GROUP_ONE_RES
+        for(var t=0;t<lines.length; t++){
+            var ids = lines[t];
+            var startAtom = PDB.tool.getMainAtom(molId, ids[0]);
+					
+            var atom = PDB.tool.getMainAtom(molId, ids[1]);
+			if(!startAtom.caid){
+				startAtom.caid = resobj.caid;
+				atom.caid = resobj.caid;
+			}	
+            //var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
+            if(history[startAtom.id]==undefined){
+				
+                PDB.drawer.drawSphere(groupindex, startAtom.pos_centered,  startAtom.color , startAtom.radius * 0.2, startAtom, addgroup, w);
+                //PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
+				history[startAtom.id]= 1;
+            }
+			if(history[atom.id]==undefined){
+				
+                PDB.drawer.drawSphere(groupindex, atom.pos_centered,  atom.color , atom.radius * 0.2, atom, addgroup, w);
+                //PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
+				history[atom.id]= 1;
+            }
+            var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
+            PDB.drawer.drawStick(groupindex, startAtom.pos_centered, midp,  startAtom.color , radius,startAtom);
+			//PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
+            PDB.drawer.drawStick(groupindex, midp, atom.pos_centered, atom.color , radius,atom);
+			//PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
+        }
+		
+	},
     showHet_Ball_Rod : function(molId){
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
@@ -3939,29 +4060,16 @@ PDB.painter = {
 			case PDB.HET_STICK 			: 	this.showHet_Stick(molId);			break;
 			case PDB.HET_BALL_ROD 		: 	this.showHet_Ball_Rod(molId);		break;			
 		}
-	},
-	showRes_Ball_Rod : function(molId){
-		PDB.CONFIG = PDB.CONFIG_HIGH;
-		var addgroup;
-		
-		var w = PDB.CONFIG.stick_sphere_w;
-       
-		var group = PDB.GROUP_ONE_RES;
-        
-		var main_obj = w3m.mol[molId].atom.main;
-		
-		for ( var i_atom in main_obj) {
-			var atom = PDB.tool.getHetAtom(molId, i_atom);
-			if(atom==undefined){
-				atom = PDB.tool.getMainAtom(molId, i_atom);
-			}
-			atom.caid = atom.id;
-			if(atom.resname!=="hoh"){
-				PDB.drawer.drawSphere(PDB.GROUP_ONE_RES, atom.pos_centered, atom.color, 0.9*atom.radius, atom, addgroup, w);
-			}
+	},	
+	showOneRes : function(representation,molId){
+		//representation=representation?representation:PDB.SPHERE;
+		switch(representation){
+			case PDB.LINE 			: 	this.showRes_Line(molId);			break;
+			case PDB.SPHERE 		: 	this.showRes_Sphere(molId);			break;
+			case PDB.STICK 			: 	this.showRes_Stick(molId);			break;
+			case PDB.BALL_AND_ROD 	: 	this.showRes_Ball_Rod(molId);		break;			
 		}
-        
-    },
+	},
 	showDrugSurface : function(molId){
 		var offset = PDB.GeoCenterOffset;
         var minx = offset.x +limit.x[0],
@@ -4271,7 +4379,7 @@ PDB.painter = {
 		}		
 	},
 	showBoxHelper:function(limit){
-		console.log(limit);
+		//console.log(limit);
 		if(!limit){
 			limit = {
 				x:w3m.global.limit.x,
