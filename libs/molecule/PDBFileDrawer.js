@@ -239,6 +239,17 @@ PDB.drawer = {
 		line.name = caid;
         PDB.GROUP[group].add( line );
     },
+	drawOneResLine : function(group,caid, start, end, color,atom){
+        var material = new THREE.LineBasicMaterial({
+            color: color
+        });
+        var geometry = new THREE.Geometry();
+        geometry.vertices.push(start,end);
+        var line = new THREE.Line( geometry, material );
+        line.userData = {group:group,presentAtom:atom};
+		line.name = caid;
+        PDB.GROUP[group].add( line );
+    },
     drawWholeLine : function(group, start, end, color,geometry){
         geometry.vertices.push(start,end);
         geometry.colors.push(color);

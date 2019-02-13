@@ -180,14 +180,16 @@ PDB.loader = {
 	loadResidue: function ( resName,callBack) {
         var scope = this;
         w3m.ajax.getResidue(resName,function(text) {
+			PDB.residue = resName;
 			if(!w3m.mol[resName]){
 				w3m.mol[resName] = {};
-			}
-			
+			}			
             w3m.tool.clear();
 			w3m.mol[resName].res=true;
             w3m.pdb(text, resName);
-            
+            w3m.api.switchRepModeMain(w3m.LINE,resName);
+            w3m.api.switchRepModeMain(w3m.BACKBONE,resName); 
+			PDB.residue = "";
             //回调函数
             callBack();
         });
@@ -236,19 +238,22 @@ PDB.loader = {
         return offset;
     },
     dealwithBigPDB : function(){
-        var mainAtomCount = w3m.mol[PDB.pdbId].atom['main'].length;
-        console.log("MainAtomCount:"+mainAtomCount);
-        if(mainAtomCount<2000){
-            PDB.structureSizeLevel=0;
-        }else if(mainAtomCount<5000){
-            PDB.structureSizeLevel=1;
-        }else if(mainAtomCount<10000){
-            PDB.structureSizeLevel=2;
-        }else if(mainAtomCount<30000){
-            PDB.structureSizeLevel=3;
-        }else{
-            PDB.structureSizeLevel=4;
-        }
+		if(w3m.mol[PDB.pdbId]){
+			var mainAtomCount = w3m.mol[PDB.pdbId].atom['main'].length;
+			console.log("MainAtomCount:"+mainAtomCount);
+			if(mainAtomCount<2000){
+				PDB.structureSizeLevel=0;
+			}else if(mainAtomCount<5000){
+				PDB.structureSizeLevel=1;
+			}else if(mainAtomCount<10000){
+				PDB.structureSizeLevel=2;
+			}else if(mainAtomCount<30000){
+				PDB.structureSizeLevel=3;
+			}else{
+				PDB.structureSizeLevel=4;
+			}
+		}
+        
 
         // switch(PDB.structureSizeLevel){
             // case 0:
