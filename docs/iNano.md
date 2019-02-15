@@ -61,77 +61,63 @@ iNano provide different representation modes, which can be changed in "Main Stru
 
 - **Line**
 
-  ![Representation_1](figs\vr_label\Representation_1.png)
+  ![Representation_1](figs\vrl\Representation_1.png)
 
 - **Backbone**
 
-  ![Representation_2](figs\vr_label\Representation_2.png)
+  ![Representation_2](figs\vr\Representation_2.png)
 
 - **Sphere**
 
-  ![Representation_3](figs\vr_label\Representation_3.png)
+  ![Representation_3](figs\vr\Representation_3.png)
 
 - **Stick**
 
-  ![Representation_4](figs\vr_label\Representation_4.png)
+  ![Representation_4](figs\vr\Representation_4.png)
 
 - **Ball & Rod**
 
-  ![Representation_5](figs\vr_label\Representation_5.png)
+  ![Representation_5](figs\vr\Representation_5.png)
 
 - **Tube**
 
-  ![Representation_6](figs\vr_label\Representation_6.png)
+  ![Representation_6](figs\vr\Representation_6.png)
 
 - **Ribbon-flat**
 
-  ![Representation_7](figs\vr_label\Representation_7.png)
+  ![Representation_7](figs\vr\Representation_7.png)
 
 - **Ribbon-ellipse**
 
-  ![Representation_12](figs\vr_label\Representation_12.png)
+  ![Representation_12](figs\vr\Representation_12.png)
 
 - **Ribbon-rectangle**
 
-  ![Representation_8](figs\vr_label\Representation_8.png)
+  ![Representation_8](figs\vr\Representation_8.png)
 
 - **Ribbon-strip**
 
-  ![Representation_9](figs\vr_label\Representation_9.png)
+  ![Representation_9](figs\vr\Representation_9.png)
 
 - **Ribbon-railway**
 
-  ![Representation_10](figs\vr_label\Representation_10.png)
+  ![Representation_10](figs\vr\Representation_10.png)
 
 - **Ribbon-SS**
 
-  ![Representation_11](figs\vr_label\Representation_11.png)
+  ![Representation_11](figs\vr\Representation_11.png)
 
 #### Ligand
 
 iNano shows ligand with main structure or separately.
 
-![ligand_1](figs\ligand_1.png)
+ ![ligand_ball&rod](figs\vr\ligand_ball&rod.png)
 
-![ligand_2](figs\ligand_2.png)
+ ![ligand_line](figs\vr\ligand_line.png)
 
-For ligand, iNano provides 4 styles.
+ ![ligand_sphere](figs\vr\ligand_sphere.png)
 
-- **Line**
-
-  ![ligand_3](figs\ligand_3.png)
-
-- **Sphere**
-
-  ![ligand_4](figs\ligand_4.png)
-
-- **Stick**
-
-  ![ligand_5](figs\ligand_5.png)
-
-- **Ball & Rod**
-
-  ![ligand_6](figs\ligand_6.png)
+ ![ligand_stick](figs\vr\ligand_stick.png)
 
 #### Water
 
@@ -150,15 +136,9 @@ iNano provides different mode and transparency for structure surfaces. Surface i
 
 ### Color Schema
 
-![color_1](figs\color_1.png)
-![color_2](figs\color_2.png)
-![color_3](figs\color_3.png)
-![color_4](figs\color_4.png)
-![color_5](figs\color_5.png)
-![color_6](figs\color_6.png)
-![color_7](figs\color_7.png)
-![color_8](figs\color_8.png)
-
+![color_1](figs\vr\color_1_element.png)
+![color_2](figs\vr\color_2_resi.png)
+![color_3](figs\vr\color_3_second_stru.png)
 
 
 ### Computing the distance in VR
