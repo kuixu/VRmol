@@ -8,6 +8,7 @@
 .rar
 .idea
 *.iml
+.DS_Store
 .settings/*
 /indexes/*
 /target/*
@@ -18,5 +19,9 @@ awstats-icon
 awstatsicons
 icon
 stats
+docs/.DS_Store
 data/drugbank
+data/.DS_Store
+data/figs/.DS_Store
+data/figs/vr/.DS_Store
 server/autodock/jobs

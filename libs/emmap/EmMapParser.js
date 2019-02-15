@@ -1,5 +1,6 @@
 /**
  * Created by Kui Xu on 2017/8/7.
+ * MRC/CCP4 file format http://www.ccpem.ac.uk/mrc_format/mrc2014.php
  */
 var EmMapParser;
 EmMapParser = {
@@ -21,7 +22,6 @@ EmMapParser = {
     },
     loadMap : function (mapid, type,onCallBack) {
         var scope = this;
-
         var xhr = new XMLHttpRequest();
         xhr.onload = function() {
 
@@ -33,56 +33,53 @@ EmMapParser = {
 
                 onCallBack(emmap)// showMap(emmap);
             } else {
-				if(!PDB.pptShow){
-					PDB.tool.printProgress("Error: EMD-"+mapid);
-				}
-                
-
+        				if(!PDB.pptShow){
+        					PDB.tool.printProgress("Error: EMD-"+mapid);
+        				}
                 // if ( w3m_isset(PDB.remoteUrl[++url_index]) ) {
                 //     this.get(id, callback);
                 // } else {
                 //     url_index = 0;
                 // }
             }
-
         };
         xhr.onprogress =function(e){
-			if(!PDB.pptShow){
-				if(e.lengthComputable){
-					PDB.tool.setProgressBar( e.loaded,e.total);
-					var ratio = Math.floor((e.loaded/e.total)*100)+"%";
-					var loaded = PDB.tool.toHumanByte( e.loaded);
-					var total = PDB.tool.toHumanByte( e.total);
-					PDB.tool.printProgress("Density Map: EMD-"+mapid+", size("+loaded+"/"+total+") "+ratio);
-					console.log(e.loaded);
-				}
-			}
-            
+    			if(!PDB.pptShow){
+    				if(e.lengthComputable){
+    					PDB.tool.setProgressBar( e.loaded,e.total);
+    					var ratio = Math.floor((e.loaded/e.total)*100)+"%";
+    					var loaded = PDB.tool.toHumanByte( e.loaded);
+    					var total = PDB.tool.toHumanByte( e.total);
+    					PDB.tool.printProgress("Density Map: EMD-"+mapid+", size("+loaded+"/"+total+") "+ratio);
+    					console.log(e.loaded);
+    				}
+    			}
+
         };
         xhr.onloadstart =function(e){
-			if(!PDB.pptShow){
-				PDB.tool.setProgressBar( 0,e.total);
-			}
-            
+    			if(!PDB.pptShow){
+    				PDB.tool.setProgressBar( 0,e.total);
+    			}
+
         };
         xhr.onloadend =function(e){
-			if(!PDB.pptShow){
-				PDB.tool.setProgressBar( e.loaded,e.total);
-			}            
+    			if(!PDB.pptShow){
+    				PDB.tool.setProgressBar( e.loaded,e.total);
+    			}
         };
 
         xhr.onerror =function(e){
-			if(!PDB.pptShow){
-				PDB.tool.progressBar.value =  e.loaded;
-				PDB.tool.printProgress("Error: EMD-"+mapid);
-			}
-            
+    			if(!PDB.pptShow){
+    				PDB.tool.progressBar.value =  e.loaded;
+    				PDB.tool.printProgress("Error: EMD-"+mapid);
+    			}
+
         };
 
         var url = scope.getURLByType(mapid,type);
-		if(PDB.pptShow){
-			url = SERVERURL+'/'+url;
-		}
+    		if(PDB.pptShow){
+    			url = SERVERURL+'/'+url;
+    		}
         console.log(url);
         xhr.open('GET', url);
         xhr.responseType = 'arraybuffer';
@@ -137,13 +134,13 @@ EmMapParser = {
         var min = 9999;
         var max = -9999;
         for (var i = 0; i < emmap.header.NS; i++) {
-			//if(i%4!=0) continue;
+			       //if(i%4!=0) continue;
             map[i] = new Array();
             for (var j = 0; j < emmap.header.NR; j++) {
-				//if(j%4!=0) continue;
+				          //if(j%4!=0) continue;
                 map[i][j] = new Array()
                 for (var k = 0; k < emmap.header.NC; k++) {
-					//if(k%4!=0) continue;
+					             //if(k%4!=0) continue;
                     //map[i][j][k] = mapdata[i*emmap.header.NS*emmap.header.NR+ j*emmap.header.NS+ k];
                     map[i][j][k] = mapdata[i*emmap.header.NC*emmap.header.NR+ j*emmap.header.NC+ k];
                     // if (min > map[i][j][k]) min =map[i][j][k];
@@ -151,12 +148,12 @@ EmMapParser = {
                 }
             }
         }
-		//emmap.header.NS = emmap.header.NS/2;
-		//console.log(emmap.header.NS);
-		//emmap.header.NR = emmap.header.NR/2;
-		//console.log(emmap.header.NR);
-		//emmap.header.NC = emmap.header.NC/2;
-		//console.log(emmap.header.NC);
+    		//emmap.header.NS = emmap.header.NS/2;
+    		//console.log(emmap.header.NS);
+    		//emmap.header.NR = emmap.header.NR/2;
+    		//console.log(emmap.header.NR);
+    		//emmap.header.NC = emmap.header.NC/2;
+    		//console.log(emmap.header.NC);
         emmap.id = mapid;
         emmap.data = map;
         //emmap.mapdata = mapdata;
@@ -164,7 +161,7 @@ EmMapParser = {
         emmap.threshold = (emmap.header.max-emmap.header.mean)/2;
         emmap.slice = 0;
 		var end = new Date();
-		
+
 		console.log("times(ms):"+parseInt(end-start));
         return emmap;
     }
