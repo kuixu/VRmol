@@ -837,37 +837,97 @@ PDB.controller = {
            
         } );
         //switch color  add color checkBox Listener ByClassName
-        var updateColor = document.getElementsByClassName("updateColor");
-        for(var i in updateColor){
-            if(!isNaN(Number(i))){
-                updateColor[i].addEventListener( 'click', function(e) {
-                    for(var j in updateColor){//保证显示一个复选框
-                        if(!isNaN(Number(j))){
-                            if(e.target.id!=updateColor[j].id){
-                                updateColor[j].checked = false;
-                            }
-                        }
-                    }
-                    var color_mode = e.target.getAttribute('color_mode');
-                    if(color_mode !== "610"){
-                        scope.switchColorBymode(color_mode);
-                    }else{
-                        var chain = "A";
-                        var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
-                        if(ServerType != 2){
-                            url = SERVERURL+"/data/conservation.json";
-                        }
-                        PDB.tool.ajax.get(url,function (text) {
-                            PDB.controller.clear(4,undefined);
-                            PDB.painter.showConservation(text);
-                            PDB.render.clearMain();
-                            PDB.controller.drawGeometry(PDB.config.mainMode);
-                        })
-                    }
-                } );
+	    //switch color  add color checkBox Listener ByClassName
+        var updateColorByElement = document.getElementById("updatecolor_ByElement");
+        updateColorByElement.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByResidue = document.getElementById("updatecolor_ByResidue");
+        updateColorByResidue.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorBySecondaryStructure = document.getElementById("updatecolor_BySecondaryStructure");
+        updateColorBySecondaryStructure.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByChain = document.getElementById("updatecolor_ByChain");
+        updateColorByChain.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByRepresentation = document.getElementById("updatecolor_ByRepresentation");
+        updateColorByRepresentation.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateolorByB_Factor = document.getElementById("updatecolor_ByB_Factor");
+        updateolorByB_Factor.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorBySpectrum = document.getElementById("updatecolor_BySpectrum");
+        updateColorBySpectrum.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByChainSpectrum = document.getElementById("updatecolor_ByChainSpectrum");
+        updateColorByChainSpectrum.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByHydrophobicity = document.getElementById("updatecolor_ByHydrophobicity");
+        updateColorByHydrophobicity.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByLoadConser = document.getElementById("b_load_conser");
+        updateColorByLoadConser.addEventListener('click',function (e) {
+            var chain = "A";
+            var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+            if(ServerType != 2){
+                url = SERVERURL+"/data/conservation.json";
             }
+            PDB.tool.ajax.get(url,function (text) {
+                PDB.controller.clear(4,undefined);
+                PDB.painter.showConservation(text);
+                PDB.render.clearMain();
+                PDB.controller.drawGeometry(PDB.config.mainMode);
+            })
+        });
+//         var updateColor = document.getElementsByClassName("updateColor");
+//         for(var i in updateColor){
+//             if(!isNaN(Number(i))){
+//                 updateColor[i].addEventListener( 'click', function(e) {
+//                     for(var j in updateColor){//保证显示一个复选框
+//                         if(!isNaN(Number(j))){
+//                             if(e.target.id!=updateColor[j].id){
+//                                 updateColor[j].checked = false;
+//                             }
+//                         }
+//                     }
+//                     var color_mode = e.target.getAttribute('color_mode');
+//                     if(color_mode !== "610"){
+//                         scope.switchColorBymode(color_mode);
+//                     }else{
+//                         var chain = "A";
+//                         var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+//                         if(ServerType != 2){
+//                             url = SERVERURL+"/data/conservation.json";
+//                         }
+//                         PDB.tool.ajax.get(url,function (text) {
+//                             PDB.controller.clear(4,undefined);
+//                             PDB.painter.showConservation(text);
+//                             PDB.render.clearMain();
+//                             PDB.controller.drawGeometry(PDB.config.mainMode);
+//                         })
+//                     }
+//                 } );
+//             }
 
-        }
+//         }
 
 
         // selection model
