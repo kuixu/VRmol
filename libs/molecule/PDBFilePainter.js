@@ -2779,12 +2779,15 @@ PDB.painter = {
 		
 		
     },
-    showHet_Line : function(molId){
+    showHet_Line : function(molId,isdocking){		
         this.showWater();
 		var group = PDB.GROUP_HET;
         if(w3m.mol[molId].drug){
             group = PDB.GROUP_DRUG;
-        }		
+        }
+		if(isdocking&&isdocking==true){
+			group = PDB.GROUP_DOCKING;
+		}		
         for(var i in w3m.mol[molId].connect){
             for(j in w3m.mol[molId].connect[i]){
 				var startAtom = PDB.tool.getHetAtom(molId, i);
@@ -2804,7 +2807,7 @@ PDB.painter = {
         }
     },
 
-    showHet_Sphere : function(molId){
+    showHet_Sphere : function(molId,isdocking){
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
         this.showWater();
@@ -2812,6 +2815,9 @@ PDB.painter = {
         if(w3m.mol[molId].drug){
             group = PDB.GROUP_DRUG;
         }
+		if(isdocking&&isdocking==true){
+			group = PDB.GROUP_DOCKING;
+		}
 		var main_obj = w3m.mol[molId].atom.het;
 		for ( var i_atom in main_obj) {
 			var atom = PDB.tool.getHetAtom(molId, i_atom);
@@ -2825,7 +2831,7 @@ PDB.painter = {
 		}
         
     },
-    showHet_Stick : function(molId){
+    showHet_Stick : function(molId,isdocking){
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
         this.showWater();
@@ -2834,6 +2840,9 @@ PDB.painter = {
 		var group = PDB.GROUP_HET;
 		if(w3m.mol[molId].drug){
 			group = PDB.GROUP_DRUG;
+		}
+		if(isdocking&&isdocking==true){
+			group = PDB.GROUP_DOCKING;
 		}
 		for(var i in w3m.mol[molId].connect){
 			for(j in w3m.mol[molId].connect[i]){
@@ -2864,7 +2873,7 @@ PDB.painter = {
         
     },
 	
-	showRes_Sphere : function(molId){
+	showRes_Sphere : function(molId,isdocking){
 		PDB.CONFIG = PDB.CONFIG_HIGH;
 		var addgroup;
 		
@@ -4076,13 +4085,13 @@ PDB.painter = {
 		}
 		PDB.drawer.drawTubeByTravel(allPath,allId,redius);
 	},
-	showHet : function(molId){
+	showHet : function(molId,isdocking){
 		PDB.CONFIG = PDB.CONFIG_HIGH;
 		switch(PDB.config.hetMode){
-			case PDB.HET_LINE 			: 	this.showHet_Line(molId);			break;
-			case PDB.HET_SPHERE 		: 	this.showHet_Sphere(molId);			break;
-			case PDB.HET_STICK 			: 	this.showHet_Stick(molId);			break;
-			case PDB.HET_BALL_ROD 		: 	this.showHet_Ball_Rod(molId);		break;			
+			case PDB.HET_LINE 			: 	this.showHet_Line(molId,isdocking);			break;
+			case PDB.HET_SPHERE 		: 	this.showHet_Sphere(molId,isdocking);			break;
+			case PDB.HET_STICK 			: 	this.showHet_Stick(molId,isdocking);			break;
+			case PDB.HET_BALL_ROD 		: 	this.showHet_Ball_Rod(molId,isdocking);		break;			
 		}
 	},	
 	showOneRes : function(representation,molId){

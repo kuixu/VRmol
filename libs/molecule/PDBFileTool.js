@@ -645,8 +645,9 @@ PDB.tool = {
                             PDB.DRUBDB_URL.docking=jsonObj.outdir+"/";
                             PDB.loader.loadDrug(drugId,"docking", function () {
                                 w3m.mol[drugId].drug = true;
-                                PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
-                                PDB.painter.showHet(drugId);
+                                PDB.render.clearGroupIndex(PDB.GROUP_DOCKING);
+								var docking = true;
+                                PDB.painter.showHet(drugId,docking);
                                 PDB.tool.generateDrugMigrationPath();
                             });
                         });
