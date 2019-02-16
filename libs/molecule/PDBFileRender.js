@@ -870,7 +870,7 @@ function getIntersections( controller ) {
             PDB.GROUP_MENU_DRAG,PDB.GROUP_MENU_FRAGMENT,PDB.GROUP_MENU,PDB.GROUP_MENU_LABEL,PDB.GROUP_MENU_EX_HET,
             PDB.GROUP_MENU_TRAVEL,PDB.GROUP_MENU_SURFACE,PDB.GROUP_MENU_MUTATION,PDB.GROUP_MENU_ROTATION,
             PDB.GROUP_MENU_DRUG,PDB.GROUP_MENU_HBOND,PDB.GROUP_MENU_CONSERVATION,PDB.GROUP_MENU_DENSITYMAP,
-			PDB.GROUP_MENU_DIRECTION,PDB.GROUP_MENU_OUTBALL,PDB.GROUP_KEYBOARD];
+			PDB.GROUP_MENU_DIRECTION,PDB.GROUP_MENU_EXPORT,PDB.GROUP_MENU_SPEECH,PDB.GROUP_MENU_OUTBALL,PDB.GROUP_KEYBOARD];
         for (var i = gIndexies.length -1; i >=0; i--) {
             if( !PDB.GROUP[gIndexies[i]].visible)continue;
             var tmp_inters = raycaster.intersectObjects( PDB.GROUP[gIndexies[i]].children );
@@ -1990,6 +1990,8 @@ PDB.render = {
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_MUTATION);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_ROTATION);
 		PDB.render.clearGroupIndex(PDB.GROUP_MENU_DIRECTION);
+		PDB.render.clearGroupIndex(PDB.GROUP_MENU_EXPORT);
+		PDB.render.clearGroupIndex(PDB.GROUP_MENU_SPEECH);
 		PDB.render.clearGroupIndex(PDB.GROUP_MENU_OUTBALL);
 		
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_DRUG);
@@ -2009,6 +2011,8 @@ PDB.render = {
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_MUTATION);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_ROTATION);
 		PDB.render.clearGroupIndex(PDB.GROUP_MENU_DIRECTION);
+		PDB.render.clearGroupIndex(PDB.GROUP_MENU_SPEECH);
+		PDB.render.clearGroupIndex(PDB.GROUP_MENU_EXPORT);
 		PDB.render.clearGroupIndex(PDB.GROUP_MENU_OUTBALL);
 		
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_DRUG);
@@ -2036,6 +2040,8 @@ PDB.render = {
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_MUTATION]);
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_ROTATION]);
 		menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DIRECTION]);
+		menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_EXPORT]);
+		menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_SPEECH]);
 		menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_OUTBALL]);
 		
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DRUG]);

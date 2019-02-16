@@ -225,25 +225,26 @@ PDB.painter = {
                 var mainMenu = [
                     ["Main Structure",      PDB.MENU_TYPE_MAIN],
                     ["Ligand",              PDB.MENU_TYPE_LIGAND],
-                    ["Show Others",               PDB.MENU_TYPE_EX_HET],
-                    ["Surface",              PDB.MENU_TYPE_SURFACE],
+                    ["Show Others",         PDB.MENU_TYPE_EX_HET],
+                    ["Surface",             PDB.MENU_TYPE_SURFACE],
                     ["Label",               PDB.MENU_TYPE_LABEL],
                     ["Color",               PDB.MENU_TYPE_COLOR],
                     ["Measure",             PDB.MENU_TYPE_MEASURE],
                     ["Drag",                PDB.MENU_TYPE_DRAG],
                     ["Fragment",            PDB.MENU_TYPE_FRAGMENT],
                     // ["Travel",              PDB.MENU_TYPE_TRAVEL],
-                    ["Mutation",              PDB.MENU_TYPE_MUTATION],
-                    ["Rotation",              PDB.MENU_TYPE_ROTATION],
-                    ["Bond",              PDB.MENU_TYPE_HBOND],
+                    ["Mutation",            PDB.MENU_TYPE_MUTATION],
+                    ["Transition",          PDB.MENU_TYPE_DIRECTION],
+					["Rotation",            PDB.MENU_TYPE_ROTATION],
+                    ["Bond",                PDB.MENU_TYPE_HBOND],
                     // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
-                    ["Density Map",              PDB.MENU_TYPE_DENSITYMAP],
-                    ["Drugs",              PDB.MENU_TYPE_DRUG],
-					["Move Direction",              PDB.MENU_TYPE_DIRECTION],
-					["OUT BALL SHOW",              PDB.MENU_TYPE_OUTBALL]
+                    ["Density Map",         PDB.MENU_TYPE_DENSITYMAP],
+                    ["Export",              PDB.MENU_TYPE_EXPORT],
+					["Speech",              PDB.MENU_TYPE_SPEECH],
+					["OUT BALL SHOW",       PDB.MENU_TYPE_OUTBALL]
                 ];
                 for(var i = 0; i<mainMenu.length;i++){
-                    PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x-2, y-i*0.2, z),  mainMenu[i][0], mainMenu[i][1], titleColor, 135);
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x-2, y-i*0.22, z),  mainMenu[i][0], mainMenu[i][1], titleColor, 135);
                 }
                 var info = w3m.mol[PDB.pdbId].info;
                 var infoMenu = [
@@ -441,6 +442,24 @@ PDB.painter = {
                 ];
                 for(var i = 0; i<dmMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DENSITYMAP, new THREE.Vector3(x, y-i*0.2, z),  dmMenu[i][0], dmMenu[i][1], color, 135);
+                }
+                break;
+			case PDB.MENU_TYPE_EXPORT:
+                var exportMenu =[
+                    ["Export PDB",               1 ]
+                ];
+                for(var i = 0; i<exportMenu.length;i++){
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_EXPORT, new THREE.Vector3(x, y-i*0.2, z),  exportMenu[i][0], exportMenu[i][1], color, 135);
+                }
+                break;
+			case PDB.MENU_TYPE_SPEECH:
+                var vocieMenu =[
+                    ["Voice",               1 ],
+					["Chiness Voice",       2 ],
+					["English Voice",       3 ]
+                ];
+                for(var i = 0; i<vocieMenu.length;i++){
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_SPEECH, new THREE.Vector3(x, y-i*0.2, z),  vocieMenu[i][0], vocieMenu[i][1], color, 135);
                 }
                 break;
             // case PDB.MENU_TYPE_CONSERVATION:
