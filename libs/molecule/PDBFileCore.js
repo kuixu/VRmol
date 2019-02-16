@@ -65,6 +65,7 @@ PDB = {
     MarchingCubes:"",
 	fragmentMode:"Flat",
     isShowWater: false,
+    isShowAxis: false,
 	ROTATION_START_FLAG: false,
     ROTATION_DIRECTION:1, //0 left 1 right
 	ROTATION_AXIS:1, //1 x轴旋转 2 y轴旋转 3 z轴旋转

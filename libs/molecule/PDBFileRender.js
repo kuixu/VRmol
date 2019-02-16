@@ -156,9 +156,13 @@ function dealwithMenu(object) {
             onMenuDown();
             break;
         case PDB.GROUP_MENU_HET:
-		    PDB.render.clear(5);
-            PDB.config.hetMode = curr_reptype;
-            PDB.controller.refreshGeometryByMode(curr_reptype);
+		    if(curr_reptype !== PDB.HIDE){
+				PDB.render.clear(5);
+                PDB.config.hetMode = curr_reptype;
+                PDB.controller.refreshGeometryByMode(curr_reptype);
+			}else{
+				PDB.render.clear(1);
+			}
             onMenuDown();
             break;
         case PDB.GROUP_MENU_LABEL:
@@ -173,30 +177,36 @@ function dealwithMenu(object) {
             PDB.painter.showResidueByThreeTravel();
             break;
         case PDB.GROUP_MENU_EX_HET:
-            var type = object.userData.reptype;
-            switch (type){
-                case 0:
-                    PDB.isShowWater = false;
-                    PDB.painter.showWater();
+            switch (curr_reptype){
+                case 1:
+				    if(PDB.isShowWater){
+						PDB.isShowWater = !PDB.isShowWater;
+					}else{
+						PDB.isShowWater = !PDB.isShowWater;
+                        PDB.painter.showWater();
+					}
                     break;
-                case PDB.HET_WATER:
-                    PDB.isShowWater = true;
-                    PDB.painter.showWater();
+                case 2:
+                    PDB.isShowWater = !PDB.isShowAxis;
+					PDB.tool.showAxis(PDB.isShowAxis);
                     break;
             }
             onMenuDown();
             break;
         case PDB.GROUP_MENU_COLOR:
-			if(object.userData.reptype=='Conservation'){
+			if(curr_reptype == 'Conservation'){
 				var chain = "A";
 				var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+				if(ServerType != 2){
+					url = SERVERURL+"/data/conservation.json";
+				}
 				PDB.tool.ajax.get(url,function (text) {
 					PDB.controller.clear(4,undefined);
 					PDB.painter.showConservation(text);
 					PDB.render.clearMain();
 					PDB.controller.drawGeometry(PDB.config.mainMode);
 					onMenuDown();
-				});
+				})
 			}else{
 				PDB.controller.switchColorBymode(object.userData.reptype);
 				onMenuDown();

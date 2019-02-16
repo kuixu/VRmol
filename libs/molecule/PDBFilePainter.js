@@ -327,7 +327,7 @@ PDB.painter = {
                     ["By Spectrum",         607 ],
                     ["By ChainSpectrum",    608 ],
                     ["By Hydrophobicity",   609 ],
-					["By Conservation",     610 ],
+					["By Conservation",     'Conservation' ],
 					
                 ];
                 for(var i = 0; i< colorMenu.length;i++){
@@ -363,12 +363,12 @@ PDB.painter = {
                     ["Sticks",              "Sticks"],
                     ["Ball & Rod",          "BallRod"],
                     ["Tube",                "Tube" ],
-                    ["C-FLAT",              "Flat"],
-                    ["C-ELLIPSE",           "Ellipse"],
-                    ["C-RECTANGLE",         "Rectangle"],
-                    ["C-STRIP",             "Strip"],
-                    ["C-RAILWAY",           "Railway"],
-                    ["C-SSE",               "SSE"]
+                    ["R-FLAT",              "Flat"],
+                    ["R-ELLIPSE",           "Ellipse"],
+                    ["R-RECTANGLE",         "Rectangle"],
+                    ["R-STRIP",             "Strip"],
+                    ["R-RAILWAY",           "Railway"],
+                    ["R-SS",                "SSE"]
                 ];
                 for(var i = 0; i<fragmentMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_FRAGMENT, new THREE.Vector3(x, y-i*0.2, z),  fragmentMenu[i][0], fragmentMenu[i][1], color, 135);
