@@ -269,12 +269,12 @@ PDB.painter = {
                     ["Stick",               PDB.STICK, ],
                     ["Ball Rod",            PDB.BALL_AND_ROD, ],
                     ["Tube",                PDB.TUBE, ],
-                    ["C-Flat",              PDB.RIBBON_FLAT, ],
-                    ["C-Ellipse",           PDB.RIBBON_ELLIPSE, ],
-                    ["C-Rectangle",         PDB.RIBBON_RECTANGLE, ],
-                    ["C-Strip",             PDB.RIBBON_STRIP, ],
-                    ["C-Railway",           PDB.RIBBON_RAILWAY, ],
-                    ["C-SSE",               PDB.CARTOON_SSE, ],
+                    ["R-Flat",              PDB.RIBBON_FLAT, ],
+                    ["R-Ellipse",           PDB.RIBBON_ELLIPSE, ],
+                    ["R-Rectangle",         PDB.RIBBON_RECTANGLE, ],
+                    ["R-Strip",             PDB.RIBBON_STRIP, ],
+                    ["R-Railway",           PDB.RIBBON_RAILWAY, ],
+                    ["R-SS",               PDB.CARTOON_SSE, ],
                 ];
                 for(var i = 0; i<main.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_MAIN,new THREE.Vector3(x, y-i*0.2, z),  main[i][0], main[i][1], color, 135);
