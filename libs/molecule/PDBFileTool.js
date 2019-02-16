@@ -1283,8 +1283,8 @@ PDB.tool = {
 		}		
 		PDB.DRUGMigrationPaths.sort(sortPos);
 		var po = PDB.GROUP[PDB.GROUP_DRUG].position;
-		var t = new THREE.Vector3(po.x-offset.x,po.y-offset.y,po.z-offset.z);
-		PDB.GROUP[PDB.GROUP_DRUG].position.copy(t);
+		// var t = new THREE.Vector3(po.x-offset.x,po.y-offset.y,po.z-offset.z);
+		PDB.GROUP[PDB.GROUP_DRUG].position.copy(po);
 	},
 	migrationDrug : function(){
 		if(PDB.GROUP[PDB.GROUP_DRUG]&&PDB.GROUP[PDB.GROUP_DRUG].children.length>0){
