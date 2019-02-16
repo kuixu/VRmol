@@ -136,9 +136,7 @@ iNano provides different mode and transparency for structure surfaces. Surface i
 
 ### Color Schema
 
-![color_1](figs\vr\color_1_element.png)
-![color_2](figs\vr\color_2_resi.png)
-![color_3](figs\vr\color_3_second_stru.png)
+![color_1](figs\vr\color_1_element.png) ![color_2](figs\vr\color_2_resi.png) ![color_3](figs\vr\color_3_second_stru.png)
 
 
 ### Computing the distance in VR
@@ -147,19 +145,13 @@ iNano provides different mode and transparency for structure surfaces. Surface i
 
 ### Fragmentation
 
-Fragments are segments of chains in a molecule. iNano allows users to present fragments by using different representation style in 'Region'. 
-
-<!--TODO::(xujingle@)Maybe fragment_1 need to change the annotation???-->
-
-![fragment_1](figs/fragment_1.png)
-
 Users need to choose the region and representation style in panel.
 
-![fragment_2](figs/fragment_2.png)
+![fragment_1](figs/vr/fragment_1.png)
 
 Here is an example:
 
-![fragment_3](figs/fragment_3.png)
+![fragment_2](figs/vr/fragment_2.png)
 
 
 
@@ -495,7 +487,19 @@ iNano provides different mode and transparency for structure surfaces. Surface i
 ![color_7](figs\color_7.png)
 ![color_8](figs\color_8.png)
 
+### Fragmentation
 
+Fragments are segments of chains in a molecule. iNano allows users to present fragments by using different representation style in 'Region'. 
+
+![fragment_1](D:/le_2018B/%E6%AF%95%E8%AE%BE/git/molwebvr/docs/figs/fragment_1.png)
+
+Users need to choose the region and representation style in panel.
+
+![fragment_2](D:/le_2018B/%E6%AF%95%E8%AE%BE/git/molwebvr/docs/figs/fragment_2.png)
+
+Here is an example:
+
+![fragment_3](D:/le_2018B/%E6%AF%95%E8%AE%BE/git/molwebvr/docs/figs/fragment_3.png)
 
 ## Sharing by URL
 
