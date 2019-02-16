@@ -124,15 +124,14 @@ iNano shows ligand with main structure or separately.
 #### Surface
 
 iNano provides different mode and transparency for structure surfaces. Surface includes Van der Waals surface, solvent accessible surface, solvent excluded surface and molecular surface.
+![surface_1](figs\vr\surface_1.png)
+![surface_2](figs\vr\surface_2.png)
+![surface_3](figs\vr\surface_3.png)
+![surface_4](figs\vr\surface_4.png)
+![surface_5](figs\vr\surface_5.png)
+![surface_6](figs\vr\surface_6.png)
+![surface_7](figs\vr\surface_7.png)
 
-![surface_1](figs\surface_1.png)
-![surface_2](figs\surface_2.png)
-![surface_3](figs\surface_3.png)
-![surface_4](figs\surface_4.png)
-![surface_5](figs\surface_5.png)
-![surface_6](figs\surface_6.png)
-![surface_7](figs\surface_7.png)
-![surface_8](figs\surface_8.png)
 
 ### Color Schema
 
