@@ -232,7 +232,6 @@ PDB.painter = {
                     ["Measure",             PDB.MENU_TYPE_MEASURE],
                     ["Drag",                PDB.MENU_TYPE_DRAG],
                     ["Fragment",            PDB.MENU_TYPE_FRAGMENT],
-                    // ["Travel",              PDB.MENU_TYPE_TRAVEL],
                     ["Mutation",            PDB.MENU_TYPE_MUTATION],
                     ["Transition",          PDB.MENU_TYPE_DIRECTION],
 					["Rotation",            PDB.MENU_TYPE_ROTATION],
@@ -241,7 +240,7 @@ PDB.painter = {
                     ["Density Map",         PDB.MENU_TYPE_DENSITYMAP],
                     ["Export",              PDB.MENU_TYPE_EXPORT],
 					["Speech",              PDB.MENU_TYPE_SPEECH],
-					["OUT BALL SHOW",       PDB.MENU_TYPE_OUTBALL]
+					["Spherical View",       PDB.MENU_TYPE_OUTBALL]
                 ];
                 for(var i = 0; i<mainMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x-2, y-i*0.22, z),  mainMenu[i][0], mainMenu[i][1], titleColor, 135);
@@ -275,7 +274,7 @@ PDB.painter = {
                     ["R-Rectangle",         PDB.RIBBON_RECTANGLE, ],
                     ["R-Strip",             PDB.RIBBON_STRIP, ],
                     ["R-Railway",           PDB.RIBBON_RAILWAY, ],
-                    ["R-SS",               PDB.CARTOON_SSE, ],
+                    ["R-SS",                PDB.CARTOON_SSE, ],
                 ];
                 for(var i = 0; i<main.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_MAIN,new THREE.Vector3(x, y-i*0.2, z),  main[i][0], main[i][1], color, 135);
@@ -406,8 +405,7 @@ PDB.painter = {
                     ["Hide",               1 ],
                     ["TCGA",               2 ],
                     ["CCLE",               3 ],
-                    ["ExAC",               4 ],
-                    ["DBSNP",              5 ],
+                    ["ExAC",               4 ]
                 ];
                 for(var i = 0; i<mutationMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_MUTATION, new THREE.Vector3(x, y-i*0.2, z),  mutationMenu[i][0], mutationMenu[i][1], color, 135);
@@ -2779,12 +2777,15 @@ PDB.painter = {
 		
 		
     },
-    showHet_Line : function(molId){
+    showHet_Line : function(molId,isdocking){		
         this.showWater();
 		var group = PDB.GROUP_HET;
         if(w3m.mol[molId].drug){
             group = PDB.GROUP_DRUG;
-        }		
+        }
+		if(isdocking&&isdocking==true){
+			group = PDB.GROUP_DOCKING;
+		}		
         for(var i in w3m.mol[molId].connect){
             for(j in w3m.mol[molId].connect[i]){
 				var startAtom = PDB.tool.getHetAtom(molId, i);
@@ -2804,7 +2805,7 @@ PDB.painter = {
         }
     },
 
-    showHet_Sphere : function(molId){
+    showHet_Sphere : function(molId,isdocking){
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
         this.showWater();
@@ -2812,6 +2813,9 @@ PDB.painter = {
         if(w3m.mol[molId].drug){
             group = PDB.GROUP_DRUG;
         }
+		if(isdocking&&isdocking==true){
+			group = PDB.GROUP_DOCKING;
+		}
 		var main_obj = w3m.mol[molId].atom.het;
 		for ( var i_atom in main_obj) {
 			var atom = PDB.tool.getHetAtom(molId, i_atom);
@@ -2825,7 +2829,7 @@ PDB.painter = {
 		}
         
     },
-    showHet_Stick : function(molId){
+    showHet_Stick : function(molId,isdocking){
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
         this.showWater();
@@ -2834,6 +2838,9 @@ PDB.painter = {
 		var group = PDB.GROUP_HET;
 		if(w3m.mol[molId].drug){
 			group = PDB.GROUP_DRUG;
+		}
+		if(isdocking&&isdocking==true){
+			group = PDB.GROUP_DOCKING;
 		}
 		for(var i in w3m.mol[molId].connect){
 			for(j in w3m.mol[molId].connect[i]){
@@ -2956,7 +2963,7 @@ PDB.painter = {
 		
         
     },
-	showRes_Ball_Rod : function(molId){
+	showRes_Ball_Rod : function(molId,isdocking){
 		
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
@@ -3005,7 +3012,9 @@ PDB.painter = {
         if(w3m.mol[molId].drug){
             group = PDB.GROUP_DRUG;
         }
-		
+		if(isdocking&&isdocking==true){
+			group = PDB.GROUP_DOCKING;
+		}
 		for(var i in w3m.mol[molId].connect){
 			for(j in w3m.mol[molId].connect[i]){
 				var startAtom = PDB.tool.getHetAtom(molId, i);
@@ -4076,13 +4085,13 @@ PDB.painter = {
 		}
 		PDB.drawer.drawTubeByTravel(allPath,allId,redius);
 	},
-	showHet : function(molId){
+	showHet : function(molId,isdocking){
 		PDB.CONFIG = PDB.CONFIG_HIGH;
 		switch(PDB.config.hetMode){
-			case PDB.HET_LINE 			: 	this.showHet_Line(molId);			break;
-			case PDB.HET_SPHERE 		: 	this.showHet_Sphere(molId);			break;
-			case PDB.HET_STICK 			: 	this.showHet_Stick(molId);			break;
-			case PDB.HET_BALL_ROD 		: 	this.showHet_Ball_Rod(molId);		break;			
+			case PDB.HET_LINE 			: 	this.showHet_Line(molId,isdocking);			break;
+			case PDB.HET_SPHERE 		: 	this.showHet_Sphere(molId,isdocking);			break;
+			case PDB.HET_STICK 			: 	this.showHet_Stick(molId,isdocking);			break;
+			case PDB.HET_BALL_ROD 		: 	this.showHet_Ball_Rod(molId,isdocking);		break;			
 		}
 	},	
 	showOneRes : function(representation,molId){

@@ -447,9 +447,7 @@ PDB.controller = {
 					PDB.painter.showOneRes(representation,resName);
 					//PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
 					segmentholder.style.display = "none";
-					editResidue.style.display = "none";
-					
-					
+					editResidue.style.display = "none";					
 					var xyz = residue_replace.selectedOptions[0].xyz;
 					var resid = residue_replace.value;				
 					var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
@@ -479,6 +477,74 @@ PDB.controller = {
 							
 						}
 					}
+					
+					
+					
+					//保存氨基酸更改信息   residueID = atom[5];
+					// if(!PDB.allMainToms){
+						// PDB.allMainToms ={};
+						// $.extend(PDB.allMainToms,w3m.mol[PDB.pdbId].atom['main'],true);
+					// }
+					
+					
+					
+					// for(var i in PDB.allMainToms){
+						// if(PDB.allMainToms[i][4] = chain_replace.value){
+							// if(PDB.allMainToms[i][5]==resid){
+								// splice
+							// }
+						// }
+						
+					// }
+					
+					
+					// for(var ii in w3m.mol[PDB.pdbId].replaceInfo){
+						// w3m.mol[PDB.pdbId].replaceInfo[ii]
+					// }
+					
+					
+					// var jj = -2;
+					// for(var i in allMainToms){
+						
+						// if(!w3m.mol[PDB.pdbId].replaceInfo){
+							// w3m.mol[PDB.pdbId].replaceInfo = {};
+						// }
+						// if(!w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value]){
+							// w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value] = {};
+						// }
+						// if(!w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][allMainToms[i][5]]){
+							// w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][allMainToms[i][5]] = {};
+						// }
+						// if(!w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][allMainToms[i][5]][allMainToms[i][1]]){
+							// w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][allMainToms[i][5]][allMainToms[i][1]] = {};
+						// }
+						
+						// if(allMainToms[i][4] = chain_replace.value){
+							// if(allMainToms[i][5]==resid){
+								
+								// if(jj==-2){
+									// jj = allMainToms[i][1];
+									// if(w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][resid][jj]['atomID']){
+										// jj = w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][resid][jj]['atomID'];
+									// }
+									
+								// }else{
+									// jj++;
+								// }
+								
+								
+							// }
+						// }else{
+							// if(jj>0){
+								// break;
+							// }else{
+								// continue;
+							// }
+							
+							
+						// }
+						
+					// }
 					
 					
 					
@@ -1838,6 +1904,9 @@ PDB.controller = {
 		allResidue.innerHTML = "";
 		var allres = Object.keys(w3m.structure.pair);
 		for(var i in allres){
+			if(i>19){
+				break;
+			}
 			var resName = allres[i];
 			var newOption = document.createElement("option");
 			newOption.innerHTML = resName;
