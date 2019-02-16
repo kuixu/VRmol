@@ -121,9 +121,18 @@ iNano provides different mode and transparency for structure surfaces. Surface i
         <td><img src="figs\vr\surface_6.png"></td>
     </tr>
      <tr>
+        <td><img src="figs\vr\surface_10.png"></td>
+        <td><img src="figs\vr\surface_11.png"></td>
+    </tr>
+    <tr>
         <td><img src="figs\vr\surface_7.png"></td>
+        <td><img src="figs\vr\surface_8.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\vr\surface_9.png"></td>
     </tr>
 </table>
+
 
 
 
