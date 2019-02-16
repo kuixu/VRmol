@@ -648,7 +648,7 @@ PDB.tool = {
                                 PDB.render.clearGroupIndex(PDB.GROUP_DOCKING);
 								var docking = true;
                                 PDB.painter.showHet(drugId,docking);
-                                PDB.tool.generateDrugMigrationPath();
+                                //PDB.tool.generateDrugMigrationPath();
                             });
                         });
                         //创建 BR
