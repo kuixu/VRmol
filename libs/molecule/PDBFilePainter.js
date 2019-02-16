@@ -3002,7 +3002,7 @@ PDB.painter = {
         }
 		
 	},
-    showHet_Ball_Rod : function(molId,isdocking){
+    showHet_Ball_Rod : function(molId){
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
         this.showWater();
