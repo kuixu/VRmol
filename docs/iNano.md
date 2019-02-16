@@ -58,85 +58,97 @@ video
 ### Representation
 
 iNano provide different representation modes, which can be changed in "Main Structure" in the menu.
+<table>
+    <tr>
+        <td><img src="figs\vr\Representation_1.png"></td>
+        <td><img src="figs\vr\Representation_2.png"></td>
+   </tr>
+    <tr>
+        <td><img src="figs\vr\Representation_3.png"></td>
+        <td><img src="figs\vr\Representation_4.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\vr\Representation_5.png"></td>
+        <td><img src="figs\vr\Representation_6.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\vr\Representation_7.png"></td>
+        <td><img src="figs\vr\Representation_8.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\vr\Representation_9.png"></td>
+        <td><img src="figs\vr\Representation_10.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\vr\Representation_11.png"></td>
+    </tr>
+</table>
 
-- **Line**
 
-  ![Representation_1](figs\vrl\Representation_1.png)
 
-- **Backbone**
 
-  ![Representation_2](figs\vr\Representation_2.png)
-
-- **Sphere**
-
-  ![Representation_3](figs\vr\Representation_3.png)
-
-- **Stick**
-
-  ![Representation_4](figs\vr\Representation_4.png)
-
-- **Ball & Rod**
-
-  ![Representation_5](figs\vr\Representation_5.png)
-
-- **Tube**
-
-  ![Representation_6](figs\vr\Representation_6.png)
-
-- **Ribbon-flat**
-
-  ![Representation_7](figs\vr\Representation_7.png)
-
-- **Ribbon-ellipse**
-
-  ![Representation_12](figs\vr\Representation_12.png)
-
-- **Ribbon-rectangle**
-
-  ![Representation_8](figs\vr\Representation_8.png)
-
-- **Ribbon-strip**
-
-  ![Representation_9](figs\vr\Representation_9.png)
-
-- **Ribbon-railway**
-
-  ![Representation_10](figs\vr\Representation_10.png)
-
-- **Ribbon-SS**
-
-  ![Representation_11](figs\vr\Representation_11.png)
 
 #### Ligand
 
-iNano shows ligand with main structure or separately.
-
- ![ligand_ball&rod](figs\vr\ligand_ball&rod.png)
-
- ![ligand_line](figs\vr\ligand_line.png)
-
- ![ligand_sphere](figs\vr\ligand_sphere.png)
-
- ![ligand_stick](figs\vr\ligand_stick.png)
+iNano shows ligand with main structure or separately. 
+<table>
+    <tr>
+        <td><img src="figs\vr\ligand_ball&rod.png"></td>
+        <td><img src="figs\vr\ligand_line.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\vr\ligand_sphere.png"></td>
+        <td><img src="figs\vr\ligand_stick.png"></td>
+    </tr>
+</table>
 
 #### Water
 
 #### Surface
 
 iNano provides different mode and transparency for structure surfaces. Surface includes Van der Waals surface, solvent accessible surface, solvent excluded surface and molecular surface.
-![surface_1](figs\vr\surface_1.png)
-![surface_2](figs\vr\surface_2.png)
-![surface_3](figs\vr\surface_3.png)
-![surface_4](figs\vr\surface_4.png)
-![surface_5](figs\vr\surface_5.png)
-![surface_6](figs\vr\surface_6.png)
-![surface_7](figs\vr\surface_7.png)
+<table>
+    <tr>
+        <td><img src="figs\vr\surface_1.png"></td>
+        <td><img src="figs\vr\surface_2.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\vr\surface_3.png"></td>
+        <td><img src="figs\vr\surface_4.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\vr\surface_5.png"></td>
+        <td><img src="figs\vr\surface_6.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\vr\surface_7.png"></td>
+    </tr>
+</table>
+
 
 
 ### Color Schema
 
-![color_1](figs\vr\color_1_element.png) ![color_2](figs\vr\color_2_resi.png) ![color_3](figs\vr\color_3_second_stru.png)
-
+<table>
+    <tr>
+        <td><img src="figs\vr\color_1.png"></td>
+        <td><img src="figs\vr\color_2.png"></td>
+        <td><img src="figs\vr\color_3.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\vr\color_4.png"></td>
+        <td><img src="figs\vr\color_5.png"></td>
+        <td><img src="figs\vr\color_6.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\vr\color_7.png"></td>
+        <td><img src="figs\vr\color_8.png"></td>
+        <td><img src="figs\vr\color_9.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\vr\color_10.png"></td>
+    </tr>
+</table>
 
 ### Computing the distance in VR
 ![vr_menu](figs/vr/distance.png)
@@ -382,57 +394,35 @@ iNano provide 13 different representation mode, which can be changed in "Main St
 
 ![Representation_1](figs\Representation_1.png)
 
-- **Dot**
-
-  ![Representation_4](figs\Representation_4.png)
-
-- **Line**
-
-  ![Representation_3](figs\Representation_3.png)
-
-- **Backbone**
-
-  ![Representation_5](figs\Representation_5.png)
-
-- **Sphere**
-
-  ![Representation_6](figs\Representation_6.png)
-
-- **Stick**
-
-  ![Representation_7](figs\Representation_7.png)
-
-- **Ball & Rod**
-
-  ![Representation_8](figs\Representation_8.png)
-
-- **Tube**
-
-  ![Representation_9](figs\Representation_9.png)
-
-- **Ribbon-flat**
-
-  ![Representation_10](figs\Representation_10.png)
-
-- **Ribbon-ellipse**
-
-  ![Representation_11](figs\Representation_11.png)
-
-- **Ribbon-rectangle**
-
-  ![Representation_12](figs\Representation_12.png)
-
-- **Ribbon-strip**
-
-  ![Representation_13](figs\Representation_13.png)
-
-- **Ribbon-railway**
-
-  ![Representation_14](figs\Representation_14.png)
-
-- **Ribbon-SS**
-
-  ![Representation_15](figs\Representation_15.png)
+<table>
+    <tr>
+        <td><img src="figs\Representation_3.png"></td>
+        <td><img src="figs\Representation_4.png"></td>
+   </tr>
+    <tr>
+        <td><img src="figs\Representation_5.png"></td>
+        <td><img src="figs\Representation_6.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\Representation_7.png"></td>
+        <td><img src="figs\Representation_8.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\Representation_9.png"></td>
+        <td><img src="figs\Representation_10.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\Representation_11.png"></td>
+        <td><img src="figs\Representation_12.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\Representation_13.png"></td>
+        <td><img src="figs\Representation_14.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\Representation_15.png"></td>
+    </tr>
+</table>
 
 #### Ligand
 
@@ -443,22 +433,16 @@ iNano shows ligand with main structure or separately.
 ![ligand_2](figs\ligand_2.png)
 
 For ligand, iNano provides 4 styles.
-
-- **Line**
-
-  ![ligand_3](figs\ligand_3.png)
-
-- **Sphere**
-
-  ![ligand_4](figs\ligand_4.png)
-
-- **Stick**
-
-  ![ligand_5](figs\ligand_5.png)
-
-- **Ball & Rod**
-
-  ![ligand_6](figs\ligand_6.png)
+<table>
+    <tr>
+        <td><img src="figs\ligand_3.png"></td>
+        <td><img src="figs\ligand_4.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\ligand_5.png"></td>
+        <td><img src="figs\ligand_6.png"></td>
+    </tr>
+</table>
 
 #### Water
 
@@ -466,39 +450,60 @@ For ligand, iNano provides 4 styles.
 
 iNano provides different mode and transparency for structure surfaces. Surface includes Van der Waals surface, solvent accessible surface, solvent excluded surface and molecular surface.
 
-![surface_1](figs\surface_1.png)
-![surface_2](figs\surface_2.png)
-![surface_3](figs\surface_3.png)
-![surface_4](figs\surface_4.png)
-![surface_5](figs\surface_5.png)
-![surface_6](figs\surface_6.png)
-![surface_7](figs\surface_7.png)
-![surface_8](figs\surface_8.png)
+<img src="figs\surface_1.png">
+
+<table>
+    <tr>
+        <td><img src="figs\surface_3.png"></td>
+        <td><img src="figs\surface_4.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\surface_5.png"></td>
+        <td><img src="figs\surface_6.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\surface_7.png"></td>
+        <td><img src="figs\surface_8.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\surface_2.png"></td>
+    </tr>
+</table>
+
 
 ### Color Schema
 
-![color_1](figs\color_1.png)
-![color_2](figs\color_2.png)
-![color_3](figs\color_3.png)
-![color_4](figs\color_4.png)
-![color_5](figs\color_5.png)
-![color_6](figs\color_6.png)
-![color_7](figs\color_7.png)
-![color_8](figs\color_8.png)
+<table>
+    <tr>
+        <td><img src="figs\color_1.png"></td>
+        <td><img src="figs\color_2.png"></td>
+        <td><img src="figs\color_3.png"></td>
+    </tr>
+    <tr>
+        <td><img src="figs\color_4.png"></td>
+        <td><img src="figs\color_5.png"></td>
+        <td><img src="figs\color_6.png"></td>
+    </tr>
+     <tr>
+        <td><img src="figs\color_7.png"></td>
+        <td><img src="figs\color_8.png"></td>
+        <td><img src="figs\color_9.png"></td>
+    </tr>
+</table>
 
 ### Fragmentation
 
 Fragments are segments of chains in a molecule. iNano allows users to present fragments by using different representation style in 'Region'. 
 
-![fragment_1](D:/le_2018B/%E6%AF%95%E8%AE%BE/git/molwebvr/docs/figs/fragment_1.png)
+![fragment_1](figs/fragment_1.png)
 
 Users need to choose the region and representation style in panel.
 
-![fragment_2](D:/le_2018B/%E6%AF%95%E8%AE%BE/git/molwebvr/docs/figs/fragment_2.png)
+![fragment_2](figs/fragment_2.png)
 
 Here is an example:
 
-![fragment_3](D:/le_2018B/%E6%AF%95%E8%AE%BE/git/molwebvr/docs/figs/fragment_3.png)
+![fragment_3](figs/fragment_3.png)
 
 ## Sharing by URL
 
