@@ -2871,7 +2871,7 @@ PDB.painter = {
         
     },
 	
-	showRes_Sphere : function(molId,isdocking){
+	showRes_Sphere : function(molId){
 		PDB.CONFIG = PDB.CONFIG_HIGH;
 		var addgroup;
 		
@@ -2963,7 +2963,7 @@ PDB.painter = {
 		
         
     },
-	showRes_Ball_Rod : function(molId){
+	showRes_Ball_Rod : function(molId,isdocking){
 		
 		var addgroup;
 		var w = PDB.CONFIG.stick_sphere_w;
@@ -3012,7 +3012,9 @@ PDB.painter = {
         if(w3m.mol[molId].drug){
             group = PDB.GROUP_DRUG;
         }
-		
+		if(isdocking&&isdocking==true){
+			group = PDB.GROUP_DOCKING;
+		}
 		for(var i in w3m.mol[molId].connect){
 			for(j in w3m.mol[molId].connect[i]){
 				var startAtom = PDB.tool.getHetAtom(molId, i);
