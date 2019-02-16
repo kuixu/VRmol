@@ -225,25 +225,26 @@ PDB.painter = {
                 var mainMenu = [
                     ["Main Structure",      PDB.MENU_TYPE_MAIN],
                     ["Ligand",              PDB.MENU_TYPE_LIGAND],
-                    ["Water",               PDB.MENU_TYPE_EX_HET],
+                    ["Show Others",         PDB.MENU_TYPE_EX_HET],
+                    ["Surface",             PDB.MENU_TYPE_SURFACE],
                     ["Label",               PDB.MENU_TYPE_LABEL],
                     ["Color",               PDB.MENU_TYPE_COLOR],
                     ["Measure",             PDB.MENU_TYPE_MEASURE],
                     ["Drag",                PDB.MENU_TYPE_DRAG],
                     ["Fragment",            PDB.MENU_TYPE_FRAGMENT],
-                    ["Travel",              PDB.MENU_TYPE_TRAVEL],
-                    ["Surface",              PDB.MENU_TYPE_SURFACE],
-                    ["Mutation",              PDB.MENU_TYPE_MUTATION],
-                    ["Rotation",              PDB.MENU_TYPE_ROTATION],
-                    ["Bond",              PDB.MENU_TYPE_HBOND],
+                    // ["Travel",              PDB.MENU_TYPE_TRAVEL],
+                    ["Mutation",            PDB.MENU_TYPE_MUTATION],
+                    ["Transition",          PDB.MENU_TYPE_DIRECTION],
+					["Rotation",            PDB.MENU_TYPE_ROTATION],
+                    ["Bond",                PDB.MENU_TYPE_HBOND],
                     // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
-                    ["Density Map",              PDB.MENU_TYPE_DENSITYMAP],
-                    ["Drug Design",              PDB.MENU_TYPE_DRUG],
-					["Move Direction",              PDB.MENU_TYPE_DIRECTION],
-					["OUT BALL SHOW",              PDB.MENU_TYPE_OUTBALL]
+                    ["Density Map",         PDB.MENU_TYPE_DENSITYMAP],
+                    ["Export",              PDB.MENU_TYPE_EXPORT],
+					["Speech",              PDB.MENU_TYPE_SPEECH],
+					["OUT BALL SHOW",       PDB.MENU_TYPE_OUTBALL]
                 ];
                 for(var i = 0; i<mainMenu.length;i++){
-                    PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x-2, y-i*0.2, z),  mainMenu[i][0], mainMenu[i][1], titleColor, 135);
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x-2, y-i*0.22, z),  mainMenu[i][0], mainMenu[i][1], titleColor, 135);
                 }
                 var info = w3m.mol[PDB.pdbId].info;
                 var infoMenu = [
@@ -257,7 +258,7 @@ PDB.painter = {
                     ["Doi : "+info.doi],
                 ];
                 for(var i = 0; i<infoMenu.length;i++){
-                    PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x+2.3, y-i*0.2, z),  infoMenu[i][0], "", infoColor, 135);
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x+3, y-i*0.2, z),  infoMenu[i][0], "", infoColor, 135);
                 }
                 break;
             case PDB.MENU_TYPE_MAIN:
@@ -269,12 +270,12 @@ PDB.painter = {
                     ["Stick",               PDB.STICK, ],
                     ["Ball Rod",            PDB.BALL_AND_ROD, ],
                     ["Tube",                PDB.TUBE, ],
-                    ["C-Flat",              PDB.RIBBON_FLAT, ],
-                    ["C-Ellipse",           PDB.RIBBON_ELLIPSE, ],
-                    ["C-Rectangle",         PDB.RIBBON_RECTANGLE, ],
-                    ["C-Strip",             PDB.RIBBON_STRIP, ],
-                    ["C-Railway",           PDB.RIBBON_RAILWAY, ],
-                    ["C-SSE",               PDB.CARTOON_SSE, ],
+                    ["R-Flat",              PDB.RIBBON_FLAT, ],
+                    ["R-Ellipse",           PDB.RIBBON_ELLIPSE, ],
+                    ["R-Rectangle",         PDB.RIBBON_RECTANGLE, ],
+                    ["R-Strip",             PDB.RIBBON_STRIP, ],
+                    ["R-Railway",           PDB.RIBBON_RAILWAY, ],
+                    ["R-SS",               PDB.CARTOON_SSE, ],
                 ];
                 for(var i = 0; i<main.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_MAIN,new THREE.Vector3(x, y-i*0.2, z),  main[i][0], main[i][1], color, 135);
@@ -283,7 +284,9 @@ PDB.painter = {
 
                 break;
             case PDB.MENU_TYPE_LIGAND:
-                var het =[["Line",          PDB.HET_LINE, ],
+                var het =[
+				    ["Hide",                PDB.HIDE, ], 
+				    ["Line",                PDB.HET_LINE, ],
                     ["Sphere",              PDB.HET_SPHERE, ],
                     ["Stick",               PDB.HET_STICK, ],
                     ["Ball Rod",            PDB.HET_BALL_ROD, ]
@@ -293,8 +296,9 @@ PDB.painter = {
                 }
                 break;
             case PDB.MENU_TYPE_EX_HET:
-                var exWater =[["Hide",       0 ],
-                    ["Water",                PDB.HET_WATER ],
+                var exWater =[
+                    ["Show/Hide Water",                1 ],
+					["Show/Hide Axis",                 2 ]
                 ];
                 for(var i = 0; i<exWater.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_EX_HET,new THREE.Vector3(x, y-i*0.2, z),  exWater[i][0], exWater[i][1], color, 135);
@@ -302,7 +306,7 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_LABEL:
                 var label =[
-                    ["Model",               PDB.SELECTION_MODEL, ],
+                    ["By Models",               PDB.SELECTION_MODEL, ],
                     ["By Chain",            PDB.SELECTION_CHAIN, ],
                     ["By Residue",          PDB.SELECTION_RESIDUE, ],
                     ["By Atom",             PDB.SELECTION_ATOM, ]
@@ -314,16 +318,16 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_COLOR:
                 var colorMenu =[
-                    ["Element",          601],
-                    ["Residue",          602],
-                    ["Second Stru.",     603 ],
-                    ["Chain",            604 ],
-                    ["Representat.",     605 ],
-                    ["B-Factor",         606 ],
-                    ["Spectrum",         607 ],
-                    ["ChainSpectrum",    608 ],
-                    ["Hydrophobicity",   609 ],
-					["Conservation",   "Conservation" ],
+                    ["By Element",          601],
+                    ["By Residue",          602],
+                    ["By Second Stru.",     603 ],
+                    ["By Chain",            604 ],
+                    ["By Representat.",     605 ],
+                    ["By B-Factor",         606 ],
+                    ["By Spectrum",         607 ],
+                    ["By ChainSpectrum",    608 ],
+                    ["By Hydrophobicity",   609 ],
+					["By Conservation",     'Conservation' ],
 					
                 ];
                 for(var i = 0; i< colorMenu.length;i++){
@@ -332,10 +336,8 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_DRAG:
                 var dragMenu =[
-                    //["All the models",                PDB.SELECTION_MODEL],
-                    //["Main and Het",              PDB.SELECTION_MAIN_HET],
                     ["Reset Position",               0 ],
-                    ["Drag Het",             PDB.SELECTION_HET ],
+                    ["Drag Ligand",             PDB.SELECTION_HET ],
                     ["Drag Chain",           PDB.SELECTION_CHAIN ],
 					["Drag Residue",         PDB.SELECTION_RESIDUE ],
                     ["Drag Drug",            PDB.SELECTION_DRUG ]
@@ -355,45 +357,45 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_FRAGMENT:
                 var fragmentMenu =[
-                    ["Line",                "Line", ],
+                    ["Line",                "Line"],
                     ["Backbone",            "Backbone"],
-                    ["Sphere",              "Sphere", ],
-                    ["Sticks",              "Sticks", ],
-                    ["Ball & Rod",          "BallRod", ],
-                    ["Tube",                "Tube", ],
-                    ["C-FLAT",              "Flat"],
-                    ["C-ELLIPSE",           "Ellipse"],
-                    ["C-RECTANGLE",         "Rectangle"],
-                    ["C-STRIP",             "Strip"],
-                    ["C-RAILWAY",           "Railway"],
-                    ["C-SSE",               "SSE"]
+                    ["Sphere",              "Sphere"],
+                    ["Sticks",              "Sticks"],
+                    ["Ball & Rod",          "BallRod"],
+                    ["Tube",                "Tube" ],
+                    ["R-FLAT",              "Flat"],
+                    ["R-ELLIPSE",           "Ellipse"],
+                    ["R-RECTANGLE",         "Rectangle"],
+                    ["R-STRIP",             "Strip"],
+                    ["R-RAILWAY",           "Railway"],
+                    ["R-SS",                "SSE"]
                 ];
                 for(var i = 0; i<fragmentMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_FRAGMENT, new THREE.Vector3(x, y-i*0.2, z),  fragmentMenu[i][0], fragmentMenu[i][1], color, 135);
                 }
                 break;
-            case PDB.MENU_TYPE_TRAVEL:
-                var travelMenu =[
-                    ["Travel",               "Travel" ]
-                ];
-                for(var i = 0; i<travelMenu.length;i++){
-                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_TRAVEL, new THREE.Vector3(x, y-i*0.2, z),  travelMenu[i][0], travelMenu[i][1], color, 135);
-                }
-                break;
+            // case PDB.MENU_TYPE_TRAVEL:
+                // var travelMenu =[
+                    // ["Travel",               "Travel" ]
+                // ];
+                // for(var i = 0; i<travelMenu.length;i++){
+                    // PDB.drawer.drawTextKB(PDB.GROUP_MENU_TRAVEL, new THREE.Vector3(x, y-i*0.2, z),  travelMenu[i][0], travelMenu[i][1], color, 135);
+                // }
+                // break;
             case PDB.MENU_TYPE_SURFACE:
                 var surfaceMenu =[
-                    ["Hide",               0 ],
-                    ["Van der Waals",               1 ],
-                    ["Solvent excluded",               2 ],
-                    ["Solvent accessible",               3 ],
-                    ["Molecular",               4 ],
+                    ["Hide",                      0 ],
+                    ["Van der Waals",             1 ],
+                    ["Solvent excluded",          2 ],
+                    ["Solvent accessible",        3 ],
+                    ["Molecular",                 4 ],
                     ["Opacity 1.0",               5 ],
                     ["Opacity 0.9",               6 ],
                     ["Opacity 0.8",               7 ],
                     ["Opacity 0.7",               8 ],
                     ["Opacity 0.6",               9 ],
                     ["Opacity 0.5",               10 ],
-                    ["Wireframe",               11 ]
+                    ["Wireframe",                 11 ]
                 ];
                 for(var i = 0; i<surfaceMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_SURFACE, new THREE.Vector3(x, y-i*0.2, z),  surfaceMenu[i][0], surfaceMenu[i][1], color, 135);
@@ -404,7 +406,8 @@ PDB.painter = {
                     ["Hide",               1 ],
                     ["TCGA",               2 ],
                     ["CCLE",               3 ],
-                    ["ExAC",               4 ]
+                    ["ExAC",               4 ],
+                    ["DBSNP",              5 ],
                 ];
                 for(var i = 0; i<mutationMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_MUTATION, new THREE.Vector3(x, y-i*0.2, z),  mutationMenu[i][0], mutationMenu[i][1], color, 135);
@@ -412,9 +415,9 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_ROTATION:
                 var rotationMenu =[
-                    ["Rotation the x axis",               1 ],
-					["Rotation the y axis",               2 ],
-					["Rotation the z axis",               3 ]
+                    ["Rotate by x axis",               1 ],
+					["Rotate by y axis",               2 ],
+					["Rotate by z axis",               3 ]
                 ];
                 for(var i = 0; i<rotationMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_ROTATION, new THREE.Vector3(x, y-i*0.2, z),  rotationMenu[i][0], rotationMenu[i][1], color, 135);
@@ -422,7 +425,10 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_DRUG:
                 var drugMenu =[
-                    ["Load Drug",               1 ]
+                    ["Hide Drug",               1 ],
+                    ["Load Drug",               2 ],
+                    ["Drug Random Migration",   3 ],
+                    ["Show/Hide Box Helper",    4 ],
                 ];
                 for(var i = 0; i<drugMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DRUG, new THREE.Vector3(x, y-i*0.2, z),  drugMenu[i][0], drugMenu[i][1], color, 135);
@@ -436,6 +442,24 @@ PDB.painter = {
                 ];
                 for(var i = 0; i<dmMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_DENSITYMAP, new THREE.Vector3(x, y-i*0.2, z),  dmMenu[i][0], dmMenu[i][1], color, 135);
+                }
+                break;
+			case PDB.MENU_TYPE_EXPORT:
+                var exportMenu =[
+                    ["Export PDB",               1 ]
+                ];
+                for(var i = 0; i<exportMenu.length;i++){
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_EXPORT, new THREE.Vector3(x, y-i*0.2, z),  exportMenu[i][0], exportMenu[i][1], color, 135);
+                }
+                break;
+			case PDB.MENU_TYPE_SPEECH:
+                var vocieMenu =[
+                    ["Voice",               1 ],
+					["Chiness Voice",       2 ],
+					["English Voice",       3 ]
+                ];
+                for(var i = 0; i<vocieMenu.length;i++){
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_SPEECH, new THREE.Vector3(x, y-i*0.2, z),  vocieMenu[i][0], vocieMenu[i][1], color, 135);
                 }
                 break;
             // case PDB.MENU_TYPE_CONSERVATION:

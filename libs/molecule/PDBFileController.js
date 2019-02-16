@@ -356,6 +356,8 @@ PDB.controller = {
 			if(w3m.mol[resName]){
 				
 				PDB.painter.showOneRes(representation,resName);
+				
+				//mesh.userData = {group:group,presentAtom:atom};
 				//PDB.painter.showRes_Ball_Rod(resName);
 				//PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
 				segmentholder.style.display = "none";
@@ -366,17 +368,21 @@ PDB.controller = {
 				var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
 				PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
 				var caidpo = new THREE.Vector3(0,0,0);
+				var reReplaceAtom = {};
 				if(PDB.GROUP[groupa]){
 					var m = 0;
 					for(var i in PDB.GROUP[groupa].children){
-						if(PDB.GROUP[groupa].children[i].type=='Group'){
-							continue;
-						}
+						// if(PDB.GROUP[groupa].children[i].type=='Group'){
+							// continue;
+						// }
 						if(PDB.GROUP[groupa].children[i].userData&&PDB.GROUP[groupa].children[i].userData.presentAtom){
 							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
 							if(_resid_==resid){
 								m++;
 								caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
+								if(m==1){
+									$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
+								}
 								PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);								
 								//break;
 								if(m>7){
@@ -407,15 +413,15 @@ PDB.controller = {
 					obj.position.y = obj.position.y - _0po.y;
 					obj.position.z = obj.position.z - _0po.z;
 				}
-				
+				t_group.userData = {group:groupa,presentAtom:reReplaceAtom};
 				PDB.GROUP[groupa].add( t_group);					
 				t_group.position.copy(caidpo);
 				if(groupb&&PDB.GROUP[groupb]){						
 					var m = 0;
 					for(var i in PDB.GROUP[groupb].children){
-						if(PDB.GROUP[groupb].children[i].type=='Group'){
-							continue;
-						}
+						// if(PDB.GROUP[groupb].children[i].type=='Group'){
+							// continue;
+						// }
 						if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
 							var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
 							if(_resid_==resid){
@@ -430,7 +436,8 @@ PDB.controller = {
 						
 					}					
 					var t_group_b = new THREE.Group();
-					t_group_b.copy(t_group);					
+					t_group_b.copy(t_group);	
+					t_group_b.userData = {group:groupa,presentAtom:reReplaceAtom};
 					PDB.GROUP[groupb].add(t_group_b);						
 				}							
 				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
@@ -448,6 +455,7 @@ PDB.controller = {
 					var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
 					PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
 					var caidpo = new THREE.Vector3(0,0,0);
+					var reReplaceAtom = {};
 					if(PDB.GROUP[groupa]){
 						var m = 0;
 						for(var i in PDB.GROUP[groupa].children){
@@ -456,7 +464,12 @@ PDB.controller = {
 								if(_resid_==resid){
 									m++;
 									caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
-									PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);								
+									if(m==1){
+										$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
+									}									
+									
+									PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);
+									//console.log(reReplaceAtom);
 									//break;
 									if(m>7){
 										break;
@@ -465,7 +478,17 @@ PDB.controller = {
 							}
 							
 						}
-					}					
+					}
+					
+					
+					
+					// var atomObj = {id: atomID, name: atomName, resname:residueName,
+            // chainname:chainName, resid: residueID, pos: pos,
+            // pos_centered:pos_centered, bfactor:b_factor,coe:coe,
+            // type:atomType, radius :radius,color: color};
+					reReplaceAtom.resname = resName;
+					
+						
 					var t_group = new THREE.Group();
 					t_group.copy(PDB.GROUP[PDB.GROUP_ONE_RES]);					
 					var _0po = new THREE.Vector3(0,0,0);
@@ -490,6 +513,7 @@ PDB.controller = {
 						obj.position.z = obj.position.z - _0po.z;
 					}
 					
+					t_group.userData = {group:groupa,presentAtom:reReplaceAtom};
 					PDB.GROUP[groupa].add( t_group);					
 					t_group.position.copy(caidpo);
 					if(groupb&&PDB.GROUP[groupb]){						
@@ -509,7 +533,8 @@ PDB.controller = {
 							
 						}					
 						var t_group_b = new THREE.Group();
-						t_group_b.copy(t_group);					
+						t_group_b.copy(t_group);
+						t_group_b.userData = {group:groupa,presentAtom:reReplaceAtom};						
 						PDB.GROUP[groupb].add(t_group_b);						
 					}							
 					PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
@@ -1808,9 +1833,12 @@ PDB.controller = {
 			scope.initReplaceResidue(chainName);
 		} );
 		//初始化所有替换氨基酸名字
+		//console.log('初始化所有替换氨基酸名字');
 		var allResidue = document.getElementById("allResidue");
-		for(var i in w3m.mol[PDB.pdbId].residueTypeList){
-			var resName = w3m.mol[PDB.pdbId].residueTypeList[i];
+		allResidue.innerHTML = "";
+		var allres = Object.keys(w3m.structure.pair);
+		for(var i in allres){
+			var resName = allres[i];
 			var newOption = document.createElement("option");
 			newOption.innerHTML = resName;
 			newOption.value = resName;
