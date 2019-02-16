@@ -1175,6 +1175,25 @@ PDB.tool = {
 		}
 		
 	},
+	freshOneVector: function(vector,angle){
+		
+		if(angle.x&&angle.x!=0){
+			var axis = new THREE.Vector3(1,0,0);		
+			vector = PDB.tool.rotateAboutWorldAxis(vector,axis,angle.x);
+		}
+		
+		if(angle.y&&angle.y!=0){
+			var axis = new THREE.Vector3(0,1,0);		
+			vector = PDB.tool.rotateAboutWorldAxis(vector,axis,angle.y);
+		}
+		
+		if(angle.z&&angle.z!=0){
+			var axis = new THREE.Vector3(0,0,1);		
+			vector = PDB.tool.rotateAboutWorldAxis(vector,axis,angle.z);
+		}		
+		return vector;
+		
+	},
 	getVectorLength: function(vector){
 		return Math.sqrt(Math.pow(vector.x,2)+Math.pow(vector.y,2)+Math.pow(vector.z,2));
 	},
@@ -1293,8 +1312,10 @@ PDB.tool = {
 				PDB.PathCount = 0;				
 			}
 			var i = PDB.PathCount%(PDB.DRUGMigrationPaths.length);
-			if(PDB.DRUGMigrationPaths.length>0){
-				PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.DRUGMigrationPaths[i]);
+			if(PDB.DRUGMigrationPaths.length>0){ 
+				var pos = new THREE.Vector3(PDB.DRUGMigrationPaths[i].x+PDB.rotateAxis.x,PDB.DRUGMigrationPaths[i].y+PDB.rotateAxis.y,PDB.DRUGMigrationPaths[i].z+PDB.rotateAxis.z,);;
+				pos = PDB.tool.freshOneVector(pos,PDB.rotateAxisAngle);
+				PDB.GROUP[PDB.GROUP_DRUG].position.copy(pos);
 			}
 			//与drug位置保持同步
 			if(PDB.GROUP[PDB.GROUP_SURFACE_HET] != undefined){

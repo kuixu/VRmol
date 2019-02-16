@@ -217,7 +217,7 @@ PDB.painter = {
         var y = 2;
         var z = limit.z[1]  + PDB.GeoCenterOffset.z ;
         x = x*0.02;
-        z = z*0.02;
+        z = z*0.022;
 
         var pos=[];
         switch(type){
