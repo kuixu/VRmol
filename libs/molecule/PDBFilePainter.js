@@ -232,7 +232,6 @@ PDB.painter = {
                     ["Measure",             PDB.MENU_TYPE_MEASURE],
                     ["Drag",                PDB.MENU_TYPE_DRAG],
                     ["Fragment",            PDB.MENU_TYPE_FRAGMENT],
-                    // ["Travel",              PDB.MENU_TYPE_TRAVEL],
                     ["Mutation",            PDB.MENU_TYPE_MUTATION],
                     ["Transition",          PDB.MENU_TYPE_DIRECTION],
 					["Rotation",            PDB.MENU_TYPE_ROTATION],
@@ -241,7 +240,7 @@ PDB.painter = {
                     ["Density Map",         PDB.MENU_TYPE_DENSITYMAP],
                     ["Export",              PDB.MENU_TYPE_EXPORT],
 					["Speech",              PDB.MENU_TYPE_SPEECH],
-					["OUT BALL SHOW",       PDB.MENU_TYPE_OUTBALL]
+					["Spherical View",       PDB.MENU_TYPE_OUTBALL]
                 ];
                 for(var i = 0; i<mainMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU,new THREE.Vector3(x-2, y-i*0.22, z),  mainMenu[i][0], mainMenu[i][1], titleColor, 135);
@@ -275,7 +274,7 @@ PDB.painter = {
                     ["R-Rectangle",         PDB.RIBBON_RECTANGLE, ],
                     ["R-Strip",             PDB.RIBBON_STRIP, ],
                     ["R-Railway",           PDB.RIBBON_RAILWAY, ],
-                    ["R-SS",               PDB.CARTOON_SSE, ],
+                    ["R-SS",                PDB.CARTOON_SSE, ],
                 ];
                 for(var i = 0; i<main.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_MAIN,new THREE.Vector3(x, y-i*0.2, z),  main[i][0], main[i][1], color, 135);
@@ -406,8 +405,7 @@ PDB.painter = {
                     ["Hide",               1 ],
                     ["TCGA",               2 ],
                     ["CCLE",               3 ],
-                    ["ExAC",               4 ],
-                    ["DBSNP",              5 ],
+                    ["ExAC",               4 ]
                 ];
                 for(var i = 0; i<mutationMenu.length;i++){
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_MUTATION, new THREE.Vector3(x, y-i*0.2, z),  mutationMenu[i][0], mutationMenu[i][1], color, 135);

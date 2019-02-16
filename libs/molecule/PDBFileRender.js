@@ -362,11 +362,28 @@ function dealwithMenu(object) {
             PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
             break;
         case PDB.GROUP_MENU_DRUG:
-            var type = object.userData.reptype;
-            PDB.loader.loadDrug("DB04464",PDB.DRUG_MODE_CONFIG.DRUG_BANK,function () {
-                PDB.painter.showHet('DB04464');
-                onMenuDown();
-            });
+			switch(curr_reptype){
+				case 1:
+				    PDB.GROUP[PDB.GROUP_DRUG].visible=false;
+				    break;
+				case 2:
+				    PDB.loader.loadDrug("DB04464",PDB.DRUG_MODE_CONFIG.DRUG_BANK,function () {
+						PDB.painter.showHet('DB04464');
+					});
+				    break;
+				case 3:
+				    PDB.DRUGMOVE = true;
+		 		    PDB.drugMoveTime = new Date();
+				    break;
+                case 4:
+				    if(PDB.GROUP[PDB.GROUP_BOX_HELPER] !== undefined && PDB.GROUP[PDB.GROUP_BOX_HELPER].visible){
+						PDB.GROUP[PDB.GROUP_BOX_HELPER].visible=false;
+					}else if(PDB.GROUP[PDB.GROUP_BOX_HELPER] !== undefined && !PDB.GROUP[PDB.GROUP_BOX_HELPER].visible){
+						PDB.GROUP[PDB.GROUP_BOX_HELPER].visible=true;
+					}
+				    break;					
+			}
+            onMenuDown();
             break;
         case PDB.GROUP_MENU_DENSITYMAP:
             var type = object.userData.reptype;
