@@ -1695,6 +1695,16 @@ PDB.render = {
                 // vrEffect.render( scene, camera );
             // }
             //camera.updateProjectionMatrix();
+			
+			if(PDB.DRUGMOVE){
+				var now = new Date();
+				//console.log(PDB.drugMoveTime - now);
+				if(PDB.drugMoveTime - now<-2000){
+					PDB.tool.migrationDrug();
+					PDB.drugMoveTime = new Date();				
+				}			
+				
+			}
 			renderer.render( scene, camera );
 			//statsVR.msEnd();
 
