@@ -238,6 +238,7 @@ PDB.painter = {
                     ["Bond",                PDB.MENU_TYPE_HBOND],
                     // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
                     ["Density Map",         PDB.MENU_TYPE_DENSITYMAP],
+	            ["Drugs",              PDB.MENU_TYPE_DRUG],
                     ["Export",              PDB.MENU_TYPE_EXPORT],
 					["Speech",              PDB.MENU_TYPE_SPEECH],
 					["Spherical View",       PDB.MENU_TYPE_OUTBALL]
