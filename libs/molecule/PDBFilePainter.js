@@ -232,7 +232,7 @@ PDB.painter = {
                     ["Measure",             PDB.MENU_TYPE_MEASURE],
                     ["Drag",                PDB.MENU_TYPE_DRAG],
                     ["Fragment",            PDB.MENU_TYPE_FRAGMENT],
-	            ["EDITING",            PDB.MENU_TYPE_EDITING],		
+	            ["Editing",            PDB.MENU_TYPE_EDITING],		
                     ["Mutation",            PDB.MENU_TYPE_MUTATION],
                     ["Transition",          PDB.MENU_TYPE_DIRECTION],
 					["Rotation",            PDB.MENU_TYPE_ROTATION],
