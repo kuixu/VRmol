@@ -232,6 +232,7 @@ PDB.painter = {
                     ["Measure",             PDB.MENU_TYPE_MEASURE],
                     ["Drag",                PDB.MENU_TYPE_DRAG],
                     ["Fragment",            PDB.MENU_TYPE_FRAGMENT],
+	            ["EDITING",            PDB.MENU_TYPE_EDITING],		
                     ["Mutation",            PDB.MENU_TYPE_MUTATION],
                     ["Transition",          PDB.MENU_TYPE_DIRECTION],
 					["Rotation",            PDB.MENU_TYPE_ROTATION],
@@ -374,6 +375,33 @@ PDB.painter = {
                     PDB.drawer.drawTextKB(PDB.GROUP_MENU_FRAGMENT, new THREE.Vector3(x, y-i*0.2, z),  fragmentMenu[i][0], fragmentMenu[i][1], color, 135);
                 }
                 break;
+	    case PDB.MENU_TYPE_EDITING:
+                var editMenu =[
+                    ["ala",            "ala"],
+                    ["gly",            "gly"],
+                    ["ile",            "ile"],
+                    ["leu",            "leu"],
+                    ["pro",            "pro"],
+                    ["val",            "val"],
+                    ["phe",            "phe"],
+                    ["trp",            "trp"],
+                    ["tyr",            "tyr"],
+                    ["asp",            "asp"],
+                    ["glu",            "glu"],
+                    ["arg",            "arg"],
+                    ["his",            "his"],
+                    ["lys",            "lys"],
+                    ["ser",            "ser"],
+                    ["thr",            "thr"],
+                    ["cys",            "cys"],
+                    ["met",            "met"],
+                    ["asn",            "asn"],
+                    ["gln",            "gln"]                   
+                ];
+                for(var i = 0; i<editMenu.length;i++){
+                    PDB.drawer.drawTextKB(PDB.GROUP_MENU_EDITING, new THREE.Vector3(x, y-i*0.2, z),  editMenu[i][0], editMenu[i][1], color, 135);
+                }
+                break; 		
             // case PDB.MENU_TYPE_TRAVEL:
                 // var travelMenu =[
                     // ["Travel",               "Travel" ]
