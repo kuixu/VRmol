@@ -2,7 +2,7 @@
  * Created by Kui Xu on 2017/6/27.
  */
 var PDB ;
-var ServerType = 0;
+var ServerType = 2;
 
 var SERVERURL = "http://localhost:8080/molwebvr";
 if(ServerType ===1){
