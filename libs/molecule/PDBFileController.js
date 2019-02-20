@@ -1217,6 +1217,10 @@ PDB.controller = {
             }
         });
 
+        var hideDrugPanel = document.getElementById("hideDrugPanel");
+        hideDrugPanel.addEventListener( 'click', function(e) {
+           PDB.render.clear(6);
+        });
 
         var b_load_drug = document.getElementById("b_load_drug");
         b_load_drug.addEventListener( 'click', function() {

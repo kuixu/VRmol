@@ -2196,6 +2196,8 @@ PDB.render = {
 			    //clear destiny map structure and menu panel.
                 PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
 				PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+				break;
+            case 6:
                 var rightMenu = document.getElementById("rightmenu");
                 if(rightMenu){
                     rightMenu.innerHTML="";
