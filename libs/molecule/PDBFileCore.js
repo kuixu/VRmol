@@ -8,7 +8,7 @@ var SERVERURL = "http://localhost:8080/molwebvr";
 if(ServerType ===1){
     SERVERURL= "http://localhost/molecule_vr/web";
 }else if(ServerType ===2){
-    SERVERURL= "https://inano.zhanglab.net";
+    SERVERURL= "https://vrmol.net";
 }else if(ServerType ===3){
     SERVERURL = "http://localhost:8080/molwebvr";
 	//SERVERURL= "http://localhost";

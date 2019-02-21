@@ -6,7 +6,7 @@ $smolid   = 'DB04464';
 $cmd = $babel.' '.$smolid.'_out.pdbqt '.$smolid.'_out.pdb;' ;
 echo shell_exec($cmd);
 
-$server_url = 'https://inano.zhanglab.net';
+$server_url = 'https://vrmol.net';
 $mgtools    = '/home/vr/tools/mgltools_x86_64Linux2_1.5.6/bin';
 $vina       = '/home/vr/tools/autodock_vina_1_1_2_linux_x86/bin/vina';
 $pdb_url    = 'http://files.rcsb.org/view/';
