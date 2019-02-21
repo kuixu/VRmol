@@ -35,7 +35,7 @@ function endRecording() {
                 base64Data = reader.result.replace(/^data:audio\/\wav+;base64,/, "")
                 $.ajax({
                         method: "POST",
-                        url: "lservice.php",
+                        url: "server/listen/lservice.php",
                         data: {
                             lang: voiceControl.language,
                             audio: base64Data,
