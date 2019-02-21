@@ -1,7 +1,7 @@
 var voiceControl={
     recorder:null,
     voice:null,
-    language:"Chinese",
+    language:"English",
     debug:false,
 }
 
