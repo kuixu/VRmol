@@ -26,3 +26,5 @@ data/.DS_Store
 data/figs/.DS_Store
 data/figs/vr/.DS_Store
 server/autodock/jobs
+server/listen1/__pycache__
+server/listen2/__pycache__
