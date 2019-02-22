@@ -1,53 +1,53 @@
-ÇĞ»»Îª×ÀÃæÄ£Ê½,go to desktop mode,11
-ÇĞ»»ÎªĞéÄâÏÖÊµÄ£Ê½,go to virtual reality mode,12
-ÇĞ»»ÎªåÛÓÎÄ£Ê½,go to travel mode,13
-ÇĞ»»Ö÷½á¹¹ÎªÏß·ç¸ñ,change to line style,20
-ÇĞ»»Ö÷½á¹¹Îªµã·ç¸ñ,change to dot style,21
-ÇĞ»»Ö÷½á¹¹ÎªÖ÷Á´·ç¸ñ,change to backbone style,22
-ÇĞ»»Ö÷½á¹¹ÎªÇò·ç¸ñ,change to sphere style,23
-ÇĞ»»Ö÷½á¹¹Îª¹÷·ç¸ñ,change to stick style,24
-ÇĞ»»Ö÷½á¹¹ÎªÇò¹÷·ç¸ñ,change to ball and rod style,25
-ÇĞ»»Ö÷½á¹¹Îª¸ÖË¿·ç¸ñ,change to tube style,26
-ÇĞ»»Ö÷½á¹¹Îª¶ş¼¶½á¹¹·ç¸ñ,change to second structure style,27
-Òş²ØÖ÷½á¹¹,hide main structure,28
-ÏÔÊ¾Ö÷½á¹¹,show main structure,29
-ÇĞ»»ÅäÌå½á¹¹ÎªÏß·ç¸ñ,change ligand to line style,31
-ÇĞ»»ÅäÌå½á¹¹ÎªÇò·ç¸ñ,change ligand to shpere style,32
-ÇĞ»»ÅäÌå½á¹¹Îª¹÷·ç¸ñ,change ligand to stick style,33
-ÇĞ»»ÅäÌå½á¹¹ÎªÇò¹÷·ç¸ñ,change ligand to ball and rod style,34
-Òş²ØÅäÌå,hide ligand structure,35
-ÏÔÊ¾ÅäÌå,show ligand structure,36
-ÏÔÊ¾Ë®·Ö×Ó,show water ,41
-Òş²ØË®·Ö×Ó,hide water,42
-ÏÔÊ¾Çâ¼ü,show hydrogen bond,43
-Òş²ØÇâ¼ü,hide hydrogen bond,44
-ÏÔÊ¾Í»±ä,show mutation,45
-Òş²ØÍ»±ä,hide mutation,46
-±íÃæÍ¸Ã÷,show transparency,51
-±íÃæÍø¸ñ,show mesh,52
-Òş²Ø±íÃæ,hide the surface,53
-ÏÔÊ¾±íÃæ,show the surface,54
-°´ÕÕÔªËØ×ÅÉ«,color by element,61
-°´ÕÕ°±»ùËá×ÅÉ«,color by residue,62
-°´ÕÕ¶ş¼¶½á¹¹×ÅÉ«,color by second structure,63
-°´ÕÕÁ´×ÅÉ«,color by chain,64
-°´ÕÕBÒò×Ó×ÅÉ«,color by b-factor,65
-°´ÕÕÆ××ÅÉ«,color by spectrum,66
-°´ÕÕÊèË®ĞÔ×ÅÉ«,color by hydrophobicity,67
-°´ÕÕ±£ÊØĞÔ×ÅÉ«,color by conservation,68
-ÇĞ»»ÎªÍÏ×§,open dragging function,71
-ÇĞ»»Îª±êÇ©,open labeling function,72
-Ğı×ª,rotation,73
-ºáÖáĞı×ª,rotation by x,741
-×İÖáĞı×ª,rotation by y,742
-ÊúÖáĞı×ª,rotation by z,743
-Ë³Ê±ÕëĞı×ª,clockwise rotation,751
-ÄæÊ±ÕëĞı×ª,anticlockwise rotation,752
-ÒÆ¶¯,move,76
-ºáÖáÒÆ¶¯,move along x,771
-×İÖáÒÆ¶¯,move along y,772
-ÊúÖáÒÆ¶¯,move along z,773
-ÕıÏòÒÆ¶¯,move forward,781
-·´ÏòÒÆ¶¯,move backward,782
-Í£Ö¹Ğı×ª,stop rotation,701
-Í£Ö¹ÒÆ¶¯,stop move,702
+ï»¿åˆ‡æ¢ä¸ºæ¡Œé¢æ¨¡å¼,go to desktop mode,11
+åˆ‡æ¢ä¸ºè™šæ‹Ÿç°å®æ¨¡å¼,go to virtual reality mode,12
+åˆ‡æ¢ä¸ºé¨æ¸¸æ¨¡å¼,go to travel mode,13
+åˆ‡æ¢ä¸»ç»“æ„ä¸ºçº¿é£æ ¼,change to line style,20
+åˆ‡æ¢ä¸»ç»“æ„ä¸ºç‚¹é£æ ¼,change to dot style,21
+åˆ‡æ¢ä¸»ç»“æ„ä¸ºä¸»é“¾é£æ ¼,change to backbone style,22
+åˆ‡æ¢ä¸»ç»“æ„ä¸ºçƒé£æ ¼,change to sphere style,23
+åˆ‡æ¢ä¸»ç»“æ„ä¸ºæ£é£æ ¼,change to stick style,24
+åˆ‡æ¢ä¸»ç»“æ„ä¸ºçƒæ£é£æ ¼,change to ball and rod style,25
+åˆ‡æ¢ä¸»ç»“æ„ä¸ºé’¢ä¸é£æ ¼,change to tube style,26
+åˆ‡æ¢ä¸»ç»“æ„ä¸ºäºŒçº§ç»“æ„é£æ ¼,change to second structure style,27
+éšè—ä¸»ç»“æ„,hide main structure,28
+æ˜¾ç¤ºä¸»ç»“æ„,show main structure,29
+åˆ‡æ¢é…ä½“ç»“æ„ä¸ºçº¿é£æ ¼,change ligand to line style,31
+åˆ‡æ¢é…ä½“ç»“æ„ä¸ºçƒé£æ ¼,change ligand to shpere style,32
+åˆ‡æ¢é…ä½“ç»“æ„ä¸ºæ£é£æ ¼,change ligand to stick style,33
+åˆ‡æ¢é…ä½“ç»“æ„ä¸ºçƒæ£é£æ ¼,change ligand to ball and rod style,34
+éšè—é…ä½“,hide ligand structure,35
+æ˜¾ç¤ºé…ä½“,show ligand structure,36
+æ˜¾ç¤ºæ°´åˆ†å­,show water ,41
+éšè—æ°´åˆ†å­,hide water,42
+æ˜¾ç¤ºæ°¢é”®,show hydrogen bond,43
+éšè—æ°¢é”®,hide hydrogen bond,44
+æ˜¾ç¤ºçªå˜,show mutation,45
+éšè—çªå˜,hide mutation,46
+è¡¨é¢é€æ˜,show transparency,51
+è¡¨é¢ç½‘æ ¼,show mesh,52
+éšè—è¡¨é¢,hide the surface,53
+æ˜¾ç¤ºè¡¨é¢,show the surface,54
+æŒ‰ç…§å…ƒç´ ç€è‰²,color by element,61
+æŒ‰ç…§æ°¨åŸºé…¸ç€è‰²,color by residue,62
+æŒ‰ç…§äºŒçº§ç»“æ„ç€è‰²,color by second structure,63
+æŒ‰ç…§é“¾ç€è‰²,color by chain,64
+æŒ‰ç…§Bå› å­ç€è‰²,color by b-factor,65
+æŒ‰ç…§è°±ç€è‰²,color by spectrum,66
+æŒ‰ç…§ç–æ°´æ€§ç€è‰²,color by hydrophobicity,67
+æŒ‰ç…§ä¿å®ˆæ€§ç€è‰²,color by conservation,68
+åˆ‡æ¢ä¸ºæ‹–æ‹½,open dragging function,71
+åˆ‡æ¢ä¸ºæ ‡ç­¾,open labeling function,72
+æ—‹è½¬,rotation,73
+æ¨ªè½´æ—‹è½¬,rotation by x,741
+çºµè½´æ—‹è½¬,rotation by y,742
+ç«–è½´æ—‹è½¬,rotation by z,743
+é¡ºæ—¶é’ˆæ—‹è½¬,clockwise rotation,751
+é€†æ—¶é’ˆæ—‹è½¬,anticlockwise rotation,752
+ç§»åŠ¨,move,76
+æ¨ªè½´ç§»åŠ¨,move along x,771
+çºµè½´ç§»åŠ¨,move along y,772
+ç«–è½´ç§»åŠ¨,move along z,773
+æ­£å‘ç§»åŠ¨,move forward,781
+åå‘ç§»åŠ¨,move backward,782
+åœæ­¢æ—‹è½¬,stop rotation,701
+åœæ­¢ç§»åŠ¨,stop move,702
