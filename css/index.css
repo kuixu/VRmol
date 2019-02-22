@@ -88,7 +88,7 @@ button:active {
     z-index: 1;
 }
 .search_text{
-    width: 160px;
+    width: 60px;
     padding: 15px 0 15px 10px;
     font-size: 14px;
     font-family: Montserrat, sans-serif;

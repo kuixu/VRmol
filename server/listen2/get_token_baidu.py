@@ -51,6 +51,6 @@ def get_baidu_token():
     token=fetch_token()
     with open('static-data/token.txt','w') as f:
         f.write(token)
-    with open('../speak/token.txt','w') as f:
-        f.write(token)
+    #with open('../speak/token.txt','w') as f:
+    #    f.write(token)
     # print(token)

@@ -1158,29 +1158,29 @@ PDB.controller = {
         // }
 
         //bond event register
-        var hideBond   = document.getElementById( "hideBond" );
-        hideBond.addEventListener( 'click', function(event) {
-            PDB.render.clearGroupIndex(PDB.GROUP_BOND);
-        } );
+        //var hideBond   = document.getElementById( "hideBond" );
+        //hideBond.addEventListener( 'click', function(event) {
+        //    PDB.render.clearGroupIndex(PDB.GROUP_BOND);
+        //} );
 
 
-        var showHBond   = document.getElementById( "showHBond" );
-        showHBond.addEventListener( 'click', function(event) {
-            PDB.render.clearGroupIndex(PDB.GROUP_BOND);
-            PDB.painter.showBond(PDB.BOND_TYPE_HBOND);
-        } );
+        //var showHBond   = document.getElementById( "showHBond" );
+        //showHBond.addEventListener( 'click', function(event) {
+        //    PDB.render.clearGroupIndex(PDB.GROUP_BOND);
+        //    PDB.painter.showBond(PDB.BOND_TYPE_HBOND);
+        //} );
 
-        var showSSBond   = document.getElementById( "showSSBond" );
-        showSSBond.addEventListener( 'click', function(event) {
-            PDB.render.clearGroupIndex(PDB.GROUP_BOND);
-            PDB.painter.showBond(PDB.BOND_TYPE_SSBOND);
-        } );
+        //var showSSBond   = document.getElementById( "showSSBond" );
+        //showSSBond.addEventListener( 'click', function(event) {
+        //    PDB.render.clearGroupIndex(PDB.GROUP_BOND);
+        //    PDB.painter.showBond(PDB.BOND_TYPE_SSBOND);
+        //} );
 
-        var showCovalent   = document.getElementById( "showCovalent" );
-        showCovalent.addEventListener( 'click', function(event) {
-            PDB.render.clearGroupIndex(PDB.GROUP_BOND);
-            PDB.painter.showBond(PDB.BOND_TYPE_COVALENT);
-        } );
+        //var showCovalent   = document.getElementById( "showCovalent" );
+        //showCovalent.addEventListener( 'click', function(event) {
+        //    PDB.render.clearGroupIndex(PDB.GROUP_BOND);
+        //    PDB.painter.showBond(PDB.BOND_TYPE_COVALENT);
+        //} );
 
         //=============================== Drug Design =======================
 		//=======add randomMigration

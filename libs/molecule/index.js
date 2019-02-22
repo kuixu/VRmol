@@ -128,7 +128,7 @@ if(voiceControl !== undefined){
 var rotation_task_id = 0;
 
 function endRecord(){
-    p=endrecording();
+    p=endRecording();
     p.then(
         result => voiceOperation(result), // shows "done!" after 1 second
         error => alert(error) // doesn't run
@@ -136,7 +136,7 @@ function endRecord(){
     // console.log(a)
 }
 
-//声音操作
+//voice to operate structure
 function voiceOperation(code) {
     switch (parseInt(code)) {
         case 11:

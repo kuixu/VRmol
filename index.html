@@ -62,7 +62,7 @@
 <!--exporter-->
 <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
 <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
-<script type="text/javascript" src="https://vrmol.net/server/listen/recorder.js"></script>
+<script type="text/javascript" src="server/listen/recorder.js"></script>
 <!--<script type="text/javascript" src="https://vrmol.net/server/listen/sr.min.js"></script>-->
 
 <!---------------------------xukui 0903 01:12------------------------------>
@@ -107,15 +107,16 @@
 
     </a>
     <a class="input-file input-fileup">
-        <button class="test" onmousedown="startRecording()" onmouseup="endRecording()">Voice</button>
+        <button class="test" onmousedown="startRecording()" onmouseup="endRecord()">Voice</button>
     </a>
+    <a class="messages"></a>
 </div>
 <div id="topmenu" class="panel">
     <LABEL onclick="switchMenu('structureMode')">Vis-Mode</LABEL><BR/>
     <span class="submenu" id="structureMode">
         <button id="threeMode">Desktop</button><BR/>
         <button id="threeWithTravel">Desktop Travel</button><BR/>
-        <button id="vrMode">VR</button><BR/>
+        <!--<button id="vrMode">VR</button><BR/>-->
         <button id="vrWithTravel">VR Travel</button><BR/> 
         <input class="labelPDB" id="isLow"  name="" type="checkbox" title="isLow" checked/> 
 	<label class="label" for="isLow"> Spherical View </label><BR/>
@@ -265,14 +266,14 @@
     <!-- <input class="labelPDB" name="mode" id="showDemo" checked="checked"  type="checkbox" title="Show Demo" />  <label class="label" for="showDemo"> Show Demo</label>   <BR/> -->
     <!-- </span> -->
     <!-- <BR/> -->
-    <LABEL onclick="switchMenu('bondMenu')">Bond</LABEL><BR/>
+    <!--<LABEL onclick="switchMenu('bondMenu')">Bond</LABEL><BR/>
     <span class="submenu" id="bondMenu">
         <button class="labelPDB" name="hideBond" id="hideBond"  title="Hide Bond">Hide Bond</button>   <BR/>
         <button class="labelPDB" name="showHBond" id="showHBond"  title="Show HBond">Show HBond</button>   <BR/>
         <button class="labelPDB" name="showSSBond" id="showSSBond"  title="Show SSBond">Show SSBond</button>   <BR/>
         <button class="labelPDB" name="showCovalent" id="showCovalent"  title="Show Covalent">Show Covalent</button>   <BR/>
   </span>
-    <BR/>
+    <BR/>-->
     <LABEL onclick="switchMenu('eCloud')">Density Map</LABEL><BR/>
     <span class="submenu" id="eCloud">
       <!-- <label class="label"> Step Option </label><BR/> -->
@@ -327,6 +328,7 @@
     <span class="submenu" id="speech">
         <input name="language" value="English" type="radio" id="English" onclick="getlanguage()" checked="true">
         <label for="English">English voice</label>
+        <br>
         <input name="language" value="Chinese" type="radio" id="Chinese" onclick="getlanguage()" >
         <label for="Chinese">Chinese voice</label>
         <br>
@@ -340,7 +342,7 @@
         <a class="labelPDB" href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
     </span>
     <BR/>
-    <LABEL id="progmsg">Log</LABEL><BR/>
+    <LABEL id="progmsg"></LABEL><BR/>
     <LABEL id="tip"></LABEL><br>
     <progress id="progress" value="0"></progress>
     <BR/>
@@ -378,9 +380,6 @@
 			<span style="float:right;font-size:18px;color:red;margin:2px 3px 0px 0px;cursor: pointer;" id="closesegment" class="closerClass">&nbsp;X&nbsp;</span>
 			
 	</div>
-    <DIV>
-        <audio id="player" src="data/audios/4PYP.mp3"></audio>
-    </DIV>
 	<div id="segmentContent" style="height:calc(100% - 25px);float:left;width:100%">
 		<ul style="float:left;">
 			

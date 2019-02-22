@@ -270,7 +270,7 @@ language = sys.argv[1]
 f = open('static-data/x.base64', 'r')
 audiostr = f.readlines()[0].strip()
 
-csv_file = csv.reader(open('static-data/command.csv'))
+csv_file = csv.reader(open('static-data/command.csv', encoding='utf-8'))
 command = []
 for i in csv_file:
     command.append(i)

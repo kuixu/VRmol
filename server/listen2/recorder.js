@@ -24,6 +24,7 @@ function startRecording() {
 
 // 停止录音，并传送至后台处理，获取对应的指令编号
 function endRecording() {
+    return new Promise(function(res){
     function toBackend(record) {
         // 文件转成base64传输
         var reader = new FileReader();
@@ -48,8 +49,10 @@ function endRecording() {
                         xunfei = JSON.parse(data['xunfei']);
                         if (baidu['state'] == 0) {
                             baiduMessage = baidu['data'];
+                            $(".messages").html("Op: "+baiduMessage);
                         } else {
                             baiduMessage = baidu['error']['err_msg'];
+                            $(".messages").html("ERR: "+baiduMessage);
                         }
                         if (xunfei['state'] == 0) {
                             xunfeiMessage = xunfei['data'];
@@ -64,8 +67,6 @@ function endRecording() {
                                 '<br /> xunfei:' + xunfeiMessage +
                                 '<br /> caozuo:' + data['caozuo']
                             );
-                        } else {
-                            $(".messages").html("done");
                         }
                         resolve(data['caozuo']);
                     })
@@ -83,15 +84,11 @@ function endRecording() {
     $(".messages").html("loading~");
     toBackend(voiceControl.voice.blob).then(function callback_for_vr(value) {
         console.log(value);
-        // *****************************************************************************************
-        //
-        // TODO(xujingle 2018-11-30)::添加对于VR的操作？
-        // value 为得到的命令编码值
-        //
-        //
-        // ******************************************************************************************
+        // return operation code to front-end
+        res(value);
         }
     );
+    });
 }
 
 // 修改语言设置
