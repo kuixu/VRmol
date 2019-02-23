@@ -481,6 +481,9 @@ function dealwithMenu(object) {
 							PDB.EMMAP.FIRST_ID = data[0];
 						}
 						var mapserver = "map-local";
+						if(PDB.DEBUG_MODE == 1){
+							mapserver = "map-local";
+						}
 						PDB.controller.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver,function (emmap) {
 							// PDB.render.clearStructure();
 							if(type === 1) {

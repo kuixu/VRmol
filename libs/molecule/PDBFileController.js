@@ -227,10 +227,10 @@ PDB.controller = {
                 if(jsonObj.code === 1 && jsonObj.data !== undefined){
                     PDB.tool.createDensityMapPanel(jsonObj);
 					
-					var mapserver = "map-local";
-					//if(ServerType!==2){
-					//    mapserver = "map-local";
-					//}
+					var mapserver = "map";
+					if(PDB.DEBUG_MODE == 1){
+                        mapserver = "map-local";
+                    }
 					scope.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver,function (emmap) {
 						var middleSlice = Math.floor((PDB.EMMAP.MIN_SLICE+PDB.EMMAP.MAX_SLICE)/2);
 						// PDB.painter.showMapSurface(emmap,emmap.threshold,false);
@@ -1360,9 +1360,9 @@ PDB.controller = {
         if(e.keyCode == 13){
             var input = document.getElementById("load_text");
             var mapserver = "map";
-            //if(ServerType!==2){
-            //    mapserver = "map-local";
-            //}
+           if(PDB.DEBUG_MODE == 1){
+				mapserver = "map-local";
+			}
             EmMapParser.loadMap(input.value, mapserver,function (emmap) {
                 console.log("NC:"+emmap.header.NC);
                 console.log("NR:"+emmap.header.NR);

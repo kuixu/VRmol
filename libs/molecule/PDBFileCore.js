@@ -14,7 +14,7 @@ if(ServerType ===1){
 	//SERVERURL= "http://localhost";
 }
 PDB = {
-    
+    DEBUG_MODE:1, 
 	bigmodel:19,//显示球外结构
 	smallmodel:20,//隐藏球外结构
 	loadType:19,//球外显示模式	

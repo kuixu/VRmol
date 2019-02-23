@@ -87,6 +87,7 @@ PDB.loader = {
             PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_SLICE);
             PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_BOND);
 			PDB.GROUP_STRUCTURE_INDEX.push(PDB.GROUP_MAP);
+			
             //回调函数
             callBack();
         });

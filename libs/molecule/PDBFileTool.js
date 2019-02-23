@@ -771,8 +771,8 @@ PDB.tool = {
 				PDB.tool.generateButton(menuSpan,data[i],data[i],"rightLabelPDB").addEventListener( 'click', function() {
                     var mapId = this.value;
                     //PDB.render.clear(2);
-                    var mapserver = "map-local";
-                    if(ServerType!==2){
+                    var mapserver = "map";
+                    if(PDB.DEBUG_MODE == 1){
                         mapserver = "map-local";
                     }
 					console.log('-----------------'+mapId);
@@ -811,6 +811,7 @@ PDB.tool = {
                     });
                 } );
                 PDB.tool.generateALink(menuSpan,"mapLink"+i,"Detail",PDB.LINK_CONFIG.EMMAP+data[i],"");
+				menuSpan.appendChild(document.createElement("br"));
             }
             menuSpan1.innerHTML='<input class="labelPDB" id="solidMap" name="mapType" checked="checked"   type="radio" title="Map Type"/>  <label class="label"  for="solidMap"> Solid </label>   <BR/>'+
                 '<input class="labelPDB" id="surfaceMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label"  for="surfaceMap"> Surface </label>   <BR/>'+
