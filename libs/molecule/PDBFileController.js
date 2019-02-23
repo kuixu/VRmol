@@ -204,9 +204,9 @@ PDB.controller = {
         loadDensityMap.addEventListener('click',function () {
             var url = SERVERURL+"/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
             //var url = "https://vr.zhanglab.net/server/api.php?taskid=13&pdbid=5ftm";
-            // if(ServerType!==2){
-                // url=SERVERURL+"/data/map01.json";
-            // }
+            if(ServerType!==2){
+                url=SERVERURL+"/data/map01.json";
+            }
             PDB.tool.ajax.get(url,function (text) {
                 //PDB.render.clear(2);
 				//生成Material 数组

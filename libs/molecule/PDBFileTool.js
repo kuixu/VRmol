@@ -1380,6 +1380,193 @@ PDB.tool = {
         }else if(PDB.GROUP[PDB.GROUP_AXIS] !== undefined && PDB.GROUP[PDB.GROUP_AXIS].children.length > 0){
             PDB.GROUP[PDB.GROUP_AXIS].visible=showFlag;
         }
-    }
-
+    },editingReplace:function(chainReplae,residueReplace,allResidue){
+        PDB.GROUP_ONE_RES = PDB.GROUP_COUNT+1;
+			
+		//初始化
+		if(!PDB.GROUP[PDB.GROUP_ONE_RES]){
+			PDB.GROUP[PDB.GROUP_ONE_RES] = new THREE.Group();
+		}else{
+			for(var i in PDB.GROUP[PDB.GROUP_ONE_RES].children){
+				PDB.GROUP[PDB.GROUP_ONE_RES].remove(PDB.GROUP[PDB.GROUP_ONE_RES].children[i]);
+			}
+			PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(new THREE.Vector3(0,0,0));
+		}
+		
+		var representation = PDB.SPHERE;
+		
+		representation = Number(representation);
+		if(isNaN(representation)){
+			representation = PDB.SPHERE;
+		}
+		
+		var groupa = "chain_"+chainReplae;
+		var groupb;
+		if(PDB.GROUP[groupa+"_low"]){
+			groupb = groupa+"_low";
+		}
+				
+		var resName = allResidue;
+		if(w3m.mol[resName]){
+			
+			PDB.painter.showOneRes(representation,resName);
+			var xyz = residue_replace.selectedOptions[0].xyz;
+			var resid = residue_replace.value;
+						
+			var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
+			PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
+			var caidpo = new THREE.Vector3(0,0,0);
+			var reReplaceAtom = {};
+			if(PDB.GROUP[groupa]){
+				var m = 0;
+				for(var i in PDB.GROUP[groupa].children){
+					if(PDB.GROUP[groupa].children[i].userData&&PDB.GROUP[groupa].children[i].userData.presentAtom){
+						var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+						if(_resid_==resid){
+							m++;
+							caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
+							if(m==1){
+								$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
+							}
+							PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);								
+							//break;
+							if(m>7){
+								break;
+							}
+						}
+					}
+					
+				}
+			}					
+			var t_group = new THREE.Group();
+			t_group.copy(PDB.GROUP[PDB.GROUP_ONE_RES]);					
+			var _0po = new THREE.Vector3(0,0,0);
+			for(var i in t_group.children){					
+				if(t_group.children[i].userData.presentAtom.name == 'ca'){
+					if(t_group.children[i].type='Line'){
+						var p = t_group.children[i].userData.presentAtom.pos_centered;
+						_0po.copy(new THREE.Vector3(p.x,p.y,p.z));
+					}else{
+						_0po.copy(t_group.children[i].position);
+					}
+				}
+			}
+			 
+			for(var i in t_group.children){
+				var obj = t_group.children[i];
+				obj.position.x = obj.position.x - _0po.x;
+				obj.position.y = obj.position.y - _0po.y;
+				obj.position.z = obj.position.z - _0po.z;
+			}
+			t_group.userData = {group:groupa,presentAtom:reReplaceAtom};
+			PDB.GROUP[groupa].add( t_group);					
+			t_group.position.copy(caidpo);
+			if(groupb&&PDB.GROUP[groupb]){						
+				var m = 0;
+				for(var i in PDB.GROUP[groupb].children){
+					if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
+						var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
+						if(_resid_==resid){
+							m++;								
+							PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);								
+							//break;
+							if(m>7){
+								break;
+							}
+						}
+					}
+					
+				}					
+				var t_group_b = new THREE.Group();
+				t_group_b.copy(t_group);	
+				t_group_b.userData = {group:groupa,presentAtom:reReplaceAtom};
+				PDB.GROUP[groupb].add(t_group_b);						
+			}							
+			PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+		}else{
+			PDB.loader.loadResidue(resName, function () {	
+				PDB.painter.showOneRes(representation,resName);				
+				var xyz = residue_replace.selectedOptions[0].xyz;
+				var resid = residue_replace.value;				
+				var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
+				PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
+				var caidpo = new THREE.Vector3(0,0,0);
+				var reReplaceAtom = {};
+				if(PDB.GROUP[groupa]){
+					var m = 0;
+					for(var i in PDB.GROUP[groupa].children){
+						if(PDB.GROUP[groupa].children[i].userData&&PDB.GROUP[groupa].children[i].userData.presentAtom){
+							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+							if(_resid_==resid){
+								m++;
+								caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
+								if(m==1){
+									$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
+								}									
+								
+								PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);
+								if(m>7){
+									break;
+								}
+							}
+						}
+						
+					}
+				}
+			
+				reReplaceAtom.resname = resName;
+				
+					
+				var t_group = new THREE.Group();
+				t_group.copy(PDB.GROUP[PDB.GROUP_ONE_RES]);					
+				var _0po = new THREE.Vector3(0,0,0);
+				for(var i in t_group.children){
+					if(t_group.children[i].userData.presentAtom.name == 'ca'){
+						
+						if(t_group.children[i].type='Line'){
+							var p = t_group.children[i].userData.presentAtom.pos_centered;
+							_0po.copy(new THREE.Vector3(p.x,p.y,p.z));
+						}else{
+							_0po.copy(t_group.children[i].position);
+						}
+						
+						
+					}
+				}
+				 
+				for(var i in t_group.children){
+					var obj = t_group.children[i];
+					obj.position.x = obj.position.x - _0po.x;
+					obj.position.y = obj.position.y - _0po.y;
+					obj.position.z = obj.position.z - _0po.z;
+				}
+				
+				t_group.userData = {group:groupa,presentAtom:reReplaceAtom};
+				PDB.GROUP[groupa].add( t_group);					
+				t_group.position.copy(caidpo);
+				if(groupb&&PDB.GROUP[groupb]){						
+					var m = 0;
+					for(var i in PDB.GROUP[groupb].children){
+						if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
+							var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
+							if(_resid_==resid){
+								m++;								
+								PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);								
+								//break;
+								if(m>7){
+									break;
+								}
+							}
+						}
+						
+					}					
+					var t_group_b = new THREE.Group();
+					t_group_b.copy(t_group);
+					t_group_b.userData = {group:groupa,presentAtom:reReplaceAtom};						
+					PDB.GROUP[groupb].add(t_group_b);						
+				}							
+				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+			});
+		}
+	}
 }

@@ -167,7 +167,7 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_LABEL:
             PDB.trigger = PDB.TRIGGER_EVENT_LABEL;
-            PDB.selection_mode = object.userData.reptype;
+            PDB.selection_mode = curr_reptype;
             onMenuDown();
             break;
         case PDB.GROUP_MENU_TRAVEL:
@@ -229,10 +229,27 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_FRAGMENT:
             PDB.selection_mode = PDB.SELECTION_RESIDUE;
-			// console.log(object.userData);
-            PDB.controller.switchFragmentByMode(object.userData.reptype);
+            PDB.controller.switchFragmentByMode(curr_reptype);
             onMenuDown();
             break;
+		case PDB.GROUP_MENU_EDITING:
+		    var lastResidueId=0;
+			var chain = "a";
+			var atoms = w3m.mol[PDB.pdbId].atom.main;
+			for(var atomId in atoms){
+				var atom = atoms[atomId];
+				var atomName = atom[2];
+				var residueName = atom[3];
+				var chainName = atom[4];
+				var residueID = atom[5];
+				if(chain==chainName&&atomName=='ca'){				
+					lastResidueId = residueID;
+				}
+			}
+			
+			PDB.tool.editingReplace(chain,lastResidueId,curr_reptype);
+			onMenuDown();
+            break;		
         case PDB.GROUP_MENU_SURFACE:
 		    PDB.render.clear(5); 
             var type = object.userData.reptype;
@@ -2036,13 +2053,13 @@ PDB.render = {
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_DRAG);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_FRAGMENT);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_EDITING);
-	PDB.render.clearGroupIndex(PDB.GROUP_MENU_SURFACE);
+	    PDB.render.clearGroupIndex(PDB.GROUP_MENU_SURFACE);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_MUTATION);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_ROTATION);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_DIRECTION);
-	PDB.render.clearGroupIndex(PDB.GROUP_MENU_EXPORT);
-	PDB.render.clearGroupIndex(PDB.GROUP_MENU_SPEECH);
-	PDB.render.clearGroupIndex(PDB.GROUP_MENU_OUTBALL);
+	    PDB.render.clearGroupIndex(PDB.GROUP_MENU_EXPORT);
+	    PDB.render.clearGroupIndex(PDB.GROUP_MENU_SPEECH);
+	    PDB.render.clearGroupIndex(PDB.GROUP_MENU_OUTBALL);
 		
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_DRUG);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_DENSITYMAP);
@@ -2060,10 +2077,10 @@ PDB.render = {
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_SURFACE);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_MUTATION);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_ROTATION);
-	PDB.render.clearGroupIndex(PDB.GROUP_MENU_DIRECTION);
-	PDB.render.clearGroupIndex(PDB.GROUP_MENU_SPEECH);
-	PDB.render.clearGroupIndex(PDB.GROUP_MENU_EXPORT);
-	PDB.render.clearGroupIndex(PDB.GROUP_MENU_OUTBALL);
+	    PDB.render.clearGroupIndex(PDB.GROUP_MENU_DIRECTION);
+	    PDB.render.clearGroupIndex(PDB.GROUP_MENU_SPEECH);
+	    PDB.render.clearGroupIndex(PDB.GROUP_MENU_EXPORT);
+	    PDB.render.clearGroupIndex(PDB.GROUP_MENU_OUTBALL);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_EDITING);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_DRUG);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_DENSITYMAP);
@@ -2089,11 +2106,11 @@ PDB.render = {
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_SURFACE]);
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_MUTATION]);
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_ROTATION]);
-	menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DIRECTION]);
-	menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_EXPORT]);
-	menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_SPEECH]);
-	menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_OUTBALL]);
-	menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_EDITING]);
+	    menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DIRECTION]);
+	    menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_EXPORT]);
+	    menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_SPEECH]);
+	    menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_OUTBALL]);
+	    menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_EDITING]);
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DRUG]);
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DENSITYMAP]);
         menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_CONSERVATION]);
