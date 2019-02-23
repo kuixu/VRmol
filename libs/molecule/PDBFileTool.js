@@ -1585,7 +1585,7 @@ PDB.tool = {
 		return selectResidueId;
 	},
 	updateAllEditResInfo : function (reReplaceAtom,_0po,resName,resid,chain_name) {
-		console.log(_0po);
+		//console.log(_0po);
 		//初始化索引信息
 		if(!PDB.allMainToms){
 			PDB.allMainToms ={};						
@@ -1669,7 +1669,16 @@ PDB.tool = {
 				}
 				nowresID = atom[5];
 			}else{
-				continue;
+				if(editStartState!="-"){
+					if(nowresID&&nowresID != atom[5]&&nowresID!="-"){
+						if(!PDB.allMainToms[atom[4]][atom[5]]['state']){
+							PDB.allMainToms[atom[4]][atom[5]]['state'] = 'justID';
+						}
+						PDB.allMainToms[atom[4]][atom[5]].endAtomID = PDB.allMainToms[atom[4]][atom[5]].endAtomID + Number(editStartState);
+						PDB.allMainToms[atom[4]][atom[5]].startAtomID = PDB.allMainToms[atom[4]][atom[5]].startAtomID + Number(editStartState);
+					}
+				}
+				nowresID = atom[5];
 			}
 		}
 	},

@@ -509,7 +509,6 @@ PDB.controller = {
 								}
 							}
 							
-							
 						}					
 						var t_group_b = new THREE.Group();
 						t_group_b.copy(t_group);

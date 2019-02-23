@@ -4872,13 +4872,14 @@ w3m.pdb = function ( text, drugname ) {
 			
 			if(PDB.allMainToms[chain_id][residue_id]){
 				var state = PDB.allMainToms[chain_id][residue_id]['state'];				
-				if(state == 'editRes'){					
+				if(state == 'editRes'){
+					var nowEndID = w3m.structure.enum[residue_name].length+PDB.allMainToms[chain_id][residue_id].startAtomID-1;
 					if(!PDB.allMainToms[chain_id][residue_id].tempID){
 						PDB.allMainToms[chain_id][residue_id].tempID = PDB.allMainToms[chain_id][residue_id].startAtomID;						
-					}else if(PDB.allMainToms[chain_id][residue_id].tempID<w3m.structure.enum[residue_name].length){
+					}else if(PDB.allMainToms[chain_id][residue_id].tempID < nowEndID){
 						PDB.allMainToms[chain_id][residue_id].tempID++;						
 					}
-					if(PDB.allMainToms[chain_id][residue_id].tempID == w3m.structure.enum[residue_name].length){
+					if(PDB.allMainToms[chain_id][residue_id].tempID == nowEndID){
 						var _t_ = "";
 						var atoms = PDB.allMainToms[chain_id][residue_id].atoms;
 						var sss_ = new Array(atoms.length);
@@ -4940,7 +4941,9 @@ w3m.pdb = function ( text, drugname ) {
 							_t_ = _t_ + sss_[i]+"\n";;
 							
 						}
-						_t_ = _t_.substring(0,_t_.length-1);						
+						_t_ = _t_.substring(0,_t_.length-1);
+						console.log(_t_);
+						PDB.allMainToms[chain_id][residue_id].tempID = undefined;						
 						return _t_;
 						
 					}else{

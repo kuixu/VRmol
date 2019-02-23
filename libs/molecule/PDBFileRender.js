@@ -2172,6 +2172,7 @@ PDB.render = {
 		for(var i = 0;i<PDB.GROUP_MAIN_INDEX.length;i++){
 			this.clearGroupIndex(PDB.GROUP_MAIN_INDEX[i]);
 		}
+		PDB.allMainToms = undefined;
     },
     clearGroup:function(group){
         if(group != undefined &&group.children != undefined &&  group.children.length > 0){
@@ -2224,6 +2225,7 @@ PDB.render = {
                 for(var i in PDB.GROUP_STRUCTURE_INDEX){
                     PDB.render.clearGroupIndex(PDB.GROUP_STRUCTURE_INDEX[i]);
                 }
+				PDB.allMainToms = undefined;
                 PDB.TravelGeometry="";
 
                 if(scene !== undefined && scene.children.length > 0){
