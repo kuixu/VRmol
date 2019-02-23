@@ -290,24 +290,36 @@ function dealwithMenu(object) {
                     break;
                 case 2:
                     mutationType = 2;
-                    PDB.tool.ajax.get("http://files.rcsb.org/view/1mbs.pdb",function (text) {
-                        PDB.controller.clear(4,undefined);
-                        PDB.painter.showMutation(PDB.mutation);
-                    });
+					var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=tcga";
+					if(ServerType !== 2){
+						url = SERVERURL+"/data/mutation.json";
+					}
+					PDB.tool.ajax.get(url,function (text) {
+						PDB.controller.clear(4,undefined);
+						PDB.painter.showMutation(text);
+					})
                     break;
                 case 3:
                     mutationType = 3;
-                    PDB.tool.ajax.get("http://files.rcsb.org/view/1mbs.pdb",function (text) {
-                        PDB.controller.clear(4,undefined);
-                        PDB.painter.showMutation(PDB.mutation);
-                    });
+                    var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=ccle";
+					if(ServerType !== 2){
+						url = SERVERURL+"/data/mutation.json";
+					}
+					PDB.tool.ajax.get(url,function (text) {
+						PDB.controller.clear(4,undefined);
+						PDB.painter.showMutation(text);
+					})
                     break;
                 case 4:
                     mutationType = 4;
-                    PDB.tool.ajax.get("http://files.rcsb.org/view/1mbs.pdb",function (text) {
-                        PDB.controller.clear(4,undefined);
-                        PDB.painter.showMutation(PDB.mutation);
-                    });
+                   var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=exac";
+					if(ServerType !== 2){
+						url = SERVERURL+"/data/mutation.json";
+					}
+					PDB.tool.ajax.get(url,function (text) {
+						PDB.controller.clear(4,undefined);
+						PDB.painter.showMutation(text);
+					})
                     break;
             }
             onMenuDown();
