@@ -1881,7 +1881,7 @@ PDB.render = {
             controls.update();
         }
         //mutation effect
-        if(PDB.GROUP[PDB.GROUP_MUTATION] !== undefined && PDB.GROUP[PDB.GROUP_MUTATION].children.length > 0){
+        if(PDB.GROUP[PDB.GROUP_MUTATION] !== undefined && PDB.SHOW_MUTATION_WHEN_SWITCH_VR_MENU===1 && PDB.GROUP[PDB.GROUP_MUTATION].children.length > 0){
             var time = Date.now();
             if(time - tmpTime >= 500){
                 PDB.GROUP[PDB.GROUP_MUTATION].visible = !PDB.GROUP[PDB.GROUP_MUTATION].visible;
@@ -2057,6 +2057,7 @@ PDB.render = {
         // }
     },
     hideMenu : function(){
+		PDB.SHOW_MUTATION_WHEN_SWITCH_VR_MENU=1;
         PDB.render.clearGroupIndex(PDB.GROUP_MENU);
         PDB.render.clearGroupIndex(PDB.GROUP_KEYBOARD);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_MAIN);
@@ -2086,6 +2087,7 @@ PDB.render = {
 
     },
     hideSubMenu : function(){
+		PDB.SHOW_MUTATION_WHEN_SWITCH_VR_MENU=1;
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_MAIN);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_HET);
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_LABEL);
@@ -2109,6 +2111,7 @@ PDB.render = {
         PDB.render.clearGroupIndex(PDB.GROUP_MENU_FRAGMENT);
     },
     showMenu : function(){
+		PDB.SHOW_MUTATION_WHEN_SWITCH_VR_MENU=0;
         PDB.painter.showKeyboard();
         PDB.painter.showMenu(PDB.MENU_TYPE_FIRST);
         menu_panel = new THREE.Object3D();
