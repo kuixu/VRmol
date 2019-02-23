@@ -374,21 +374,13 @@ PDB.controller = {
 					for(var i in PDB.GROUP[groupa].children){
 						if(PDB.GROUP[groupa].children[i].userData&&PDB.GROUP[groupa].children[i].userData.presentAtom){
 							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
-							var _chainname_ = PDB.GROUP[groupa].children[i].userData.presentAtom.chainname;
 							var _atomName_ = PDB.GROUP[groupa].children[i].userData.presentAtom.name;
-							if(_resid_==resid&&_chainname_==chain_replace.value&&_atomName_=='ca'){
-								if(hasFoud){
-									break;
+							if(_resid_== resid){								
+								if(_atomName_=='ca'){
+									caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
+									$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
 								}
-								hasFoud = true;
-								caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
-								$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
 								PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);
-								
-							}else{
-								if(hasFoud){
-									break;
-								}
 							}
 						}
 						
@@ -426,15 +418,10 @@ PDB.controller = {
 						// if(PDB.GROUP[groupb].children[i].type=='Group'){
 							// continue;
 						// }
-						if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
-							var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
-							if(_resid_==resid){
-								m++;								
+						if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){							
+							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+							if(_resid_==resid){																
 								PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);								
-								//break;
-								if(m>7){
-									break;
-								}
 							}
 						}
 						
@@ -515,17 +502,13 @@ PDB.controller = {
 					if(groupb&&PDB.GROUP[groupb]){						
 						var m = 0;
 						for(var i in PDB.GROUP[groupb].children){
-							if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
-								var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
-								if(_resid_==resid){
-									m++;								
+							if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){							
+								var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+								if(_resid_==resid){																
 									PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);								
-									//break;
-									if(m>7){
-										break;
-									}
 								}
 							}
+							
 							
 						}					
 						var t_group_b = new THREE.Group();
