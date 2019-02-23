@@ -337,6 +337,7 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_DRAG:
                 var dragMenu =[
+				    ["Exit this mode",               "exit" ], 
                     ["Reset Position",               0 ],
                     ["Drag Ligand",             PDB.SELECTION_HET ],
                     ["Drag Chain",           PDB.SELECTION_CHAIN ],
@@ -358,6 +359,7 @@ PDB.painter = {
                 break;
             case PDB.MENU_TYPE_FRAGMENT:
                 var fragmentMenu =[
+                    ["Exit this mode",                "exit"],
                     ["Line",                "Line"],
                     ["Backbone",            "Backbone"],
                     ["Sphere",              "Sphere"],
@@ -377,6 +379,7 @@ PDB.painter = {
                 break;
 	    case PDB.MENU_TYPE_EDITING:
                 var editMenu =[
+				    ["Exit this mode",                "exit"],
                     ["ala",            "ala"],
                     ["gly",            "gly"],
                     ["ile",            "ile"],
@@ -454,7 +457,7 @@ PDB.painter = {
                 var drugMenu =[
                     ["Hide Drug",               1 ],
                     ["Load Drug",               2 ],
-                    ["Drug Random Migration",   3 ],
+                    ["Drug Docking",   3 ],
                     ["Show/Hide Box Helper",    4 ],
                 ];
                 for(var i = 0; i<drugMenu.length;i++){

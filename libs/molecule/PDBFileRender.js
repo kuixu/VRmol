@@ -220,34 +220,31 @@ function dealwithMenu(object) {
             break;
         case PDB.GROUP_MENU_DRAG:
             var type = object.userData.reptype;
-            if(type !== 0){
-                PDB.controller.switchDragByMode(object.userData.reptype);
-            }else {
+			if(curr_reptype === "exit"){
+				PDB.trigger = PDB.TRIGGER_EVENT_LABEL;
+			}else if(type === 0){
                 PDB.tool.backToInitialPositionForVr();
+            }else {
+                PDB.controller.switchDragByMode(object.userData.reptype);
             }
             onMenuDown();
             break;
         case PDB.GROUP_MENU_FRAGMENT:
-            PDB.selection_mode = PDB.SELECTION_RESIDUE;
-            PDB.controller.switchFragmentByMode(curr_reptype);
+		    if(curr_reptype !== "exit"){
+				PDB.selection_mode = PDB.SELECTION_RESIDUE;
+                PDB.controller.switchFragmentByMode(curr_reptype);
+			}else{
+				PDB.trigger = PDB.TRIGGER_EVENT_LABEL;
+			}
             onMenuDown();
             break;
 		case PDB.GROUP_MENU_EDITING:
-		    var lastResidueId=0;
-			var chain = "a";
-			var atoms = w3m.mol[PDB.pdbId].atom.main;
-			for(var atomId in atoms){
-				var atom = atoms[atomId];
-				var atomName = atom[2];
-				var residueName = atom[3];
-				var chainName = atom[4];
-				var residueID = atom[5];
-				if(chain==chainName&&atomName=='ca'){				
-					lastResidueId = residueID;
-				}
+		    if(curr_reptype !== "exit"){
+				PDB.controller.switchEditingByMode(curr_reptype);
+			}else{
+				PDB.trigger = PDB.TRIGGER_EVENT_LABEL;
 			}
-			
-			PDB.tool.editingReplace(chain,lastResidueId,curr_reptype);
+		    
 			onMenuDown();
             break;		
         case PDB.GROUP_MENU_SURFACE:
@@ -627,7 +624,9 @@ function onTriggerDown( event ) {
                     if(PDB.trigger === PDB.TRIGGER_EVENT_FRAGMENT){
 						// console.log(object);
                         PDB.fragmentArray.push(object);
-                    }
+                    }else if(PDB.trigger === PDB.TRIGGER_EVENT_EDITING){
+						PDB.editingArray.push(object);
+					}
                 }
                 break;
             case PDB.SELECTION_ATOM:
@@ -786,7 +785,21 @@ function onTriggerUp( event ) {
                 PDB.fragmentArray = [];
             }
             break;
-
+        case PDB.TRIGGER_EVENT_EDITING:
+		    var controller = event.target;
+            if ( controller.userData.selected !== undefined ) {
+                var object = controller.userData.selected;
+                PDB.tool.colorIntersectObjectBlue(object,0);
+                PDB.GROUP[PDB.GROUP_MAIN].add( object );
+                controller.userData.selected = undefined;
+            }
+			if(PDB.editingArray.length === 1){
+                var atom = PDB.editingArray[0].userData.presentAtom;
+                var residueId = PDB.tool.getResidueId(atom);
+				PDB.tool.editingReplace("a",residueId,atom.pos_curr,PDB.fragmentMode);
+                PDB.editingArray = [];
+            }
+            break; 		
         case PDB.TRIGGER_EVENT_LABEL:
 
             break;

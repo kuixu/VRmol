@@ -1381,7 +1381,7 @@ PDB.tool = {
         }else if(PDB.GROUP[PDB.GROUP_AXIS] !== undefined && PDB.GROUP[PDB.GROUP_AXIS].children.length > 0){
             PDB.GROUP[PDB.GROUP_AXIS].visible=showFlag;
         }
-    },editingReplace:function(chainReplae,residueReplace,allResidue){
+    },editingReplace:function(chainReplae,residueId,pos,allResidue){
         PDB.GROUP_ONE_RES = PDB.GROUP_COUNT+1;
 			
 		//初始化
@@ -1411,9 +1411,8 @@ PDB.tool = {
 		if(w3m.mol[resName]){
 			
 			PDB.painter.showOneRes(representation,resName);
-			var xyz = residue_replace.selectedOptions[0].xyz;
-			var resid = residue_replace.value;
-						
+			var resid = residueId;
+			var xyz = pos;			
 			var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
 			PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
 			var caidpo = new THREE.Vector3(0,0,0);
@@ -1486,9 +1485,9 @@ PDB.tool = {
 			PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
 		}else{
 			PDB.loader.loadResidue(resName, function () {	
-				PDB.painter.showOneRes(representation,resName);				
-				var xyz = residue_replace.selectedOptions[0].xyz;
-				var resid = residue_replace.value;				
+				PDB.painter.showOneRes(representation,resName);		
+                var resid = residueId;
+			    var xyz = pos;						
 				var t = new THREE.Vector3(xyz[0],xyz[1],xyz[2]);			
 				PDB.GROUP[PDB.GROUP_ONE_RES].position.copy(t);					
 				var caidpo = new THREE.Vector3(0,0,0);
@@ -1569,5 +1568,20 @@ PDB.tool = {
 				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
 			});
 		}
+	},getResidueId:function(selectAtom){
+		var selectResidueId=0;
+		var chain = "a";
+		var atoms = w3m.mol[PDB.pdbId].atom.main;
+		for(var atomId in atoms){
+			var atom = atoms[atomId];
+			var atomName = atom[2];
+			var residueName = atom[3];
+			var chainName = atom[4];
+			var residueID = atom[5];
+			if(chain==chainName&&atomName=='ca'&& selectAtom.id==atom[1]){				
+				selectResidueId = residueID;
+			}
+		}
+		return selectResidueId;
 	}
 }

@@ -50,6 +50,7 @@ PDB = {
     distanceArray:[],
     fragmentList:{},
 	fragmentArray:[],
+	editingArray:[],
     isShowKeyboard:false,
     selection_mode:105,
     selection_mode_pre:105,
@@ -150,7 +151,7 @@ PDB = {
     LABEL_CHAIN_ID : 741, LABEL_CHAIN_AND_RESIDUE : 742, LABEL_CHAIN_AND_RESIDUE_ID : 743, LABEL_MIX : 744,
     LABEL_OCCUPANCY : 751, LABEL_B_FACTOR : 752, LABEL_VDW_RADIUS : 753,
     TRIGGER_EVENT_DRAG:1,TRIGGER_EVENT_DISTANCE:2,TRIGGER_EVENT_ANGLE:3,TRIGGER_EVENT_ATOM:4,TRIGGER_EVENT_FRAGMENT:5,
-    TRIGGER_EVENT_LABEL:6,
+    TRIGGER_EVENT_LABEL:6,TRIGGER_EVENT_EDITING:7,
 	CONFIG_LOW:{
         sphere_width:8,sphere_height:4,stick_sphere_w:4,ballrod_sphere_w:4, water_sphere_w: 8, stick_radius:3,retangle_height:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
 		flat_HIGH:0.001,flat_width:1,strip_radius:0.2,strip_ex:9,tubesegment:5,defaultColor:0xa345,

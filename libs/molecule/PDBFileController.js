@@ -1419,6 +1419,12 @@ PDB.controller = {
         PDB.fragmentMode = mode;
 		// console.log(mode);
     },
+    switchEditingByMode :function (mode) {
+        PDB.trigger = PDB.TRIGGER_EVENT_EDITING;
+        PDB.selection_mode = PDB.SELECTION_RESIDUE;
+        PDB.fragmentMode = mode;
+		// console.log(mode);
+    },
     fragmentPainter : function(startId,endId,selectedMode){
 		var reptype = 0;
         var selectRadius = 0;
