@@ -1583,5 +1583,134 @@ PDB.tool = {
 			}
 		}
 		return selectResidueId;
+	},
+	updateAllEditResInfo : function (reReplaceAtom,_0po,resName,resid,chain_name) {
+		console.log(_0po);
+		//初始化索引信息
+		if(!PDB.allMainToms){
+			PDB.allMainToms ={};						
+			var resN = "-";
+			var tempChainID = "-";
+			var atomNum = {};
+			for(var i in w3m.mol[PDB.pdbId].atom['main']){
+				var atom = w3m.mol[PDB.pdbId].atom['main'][i];
+				if(!PDB.allMainToms[atom[4]]){
+					PDB.allMainToms[atom[4]] = {};
+				}
+				if(!PDB.allMainToms[atom[4]][atom[5]]){
+					PDB.allMainToms[atom[4]][atom[5]] = {startAtomID:Number(i)};								
+				}else{
+					tempChainID = atom[4];
+				}
+				if(resN != atom[5]&&resN != "-"){								
+					PDB.allMainToms[tempChainID][resN].endAtomID = Number(i)-1;
+					atomNum[atom[4]] = 1;
+				}else{
+					atomNum[atom[4]]++;
+				}							
+				resN = atom[5];
+			}
+			for(var i in PDB.allMainToms){
+				var keys = Object.keys(PDB.allMainToms[i]);
+				PDB.allMainToms[i][keys[keys.length-1]].endAtomID = PDB.allMainToms[i][keys[keys.length-1]].startAtomID+atomNum[i]-1;
+			}
+			
+		}
+		var editStartState = '-';
+		var nowresID = "-";
+		for(var i in w3m.mol[PDB.pdbId].atom['main']){
+			var atom = w3m.mol[PDB.pdbId].atom['main'][i];						
+			if(chain_name==atom[4]){
+				if(atom[5]==resid){								
+					if(editStartState=="-"){
+						editStartState = w3m.structure.enum[resName].length - w3m.structure.enum[atom[3]].length; 								
+						//editStartState = true;
+						PDB.allMainToms[atom[4]][atom[5]]['state'] = 'editRes';
+						PDB.allMainToms[atom[4]][atom[5]]['atoms'] = [];
+						var offset = PDB.GeoCenterOffset;		
+						
+						var xc = {
+							x:reReplaceAtom.pos.x - _0po.x,
+							y:reReplaceAtom.pos.y - _0po.y,
+							z:reReplaceAtom.pos.z - _0po.z
+						}; 
+						
+						var a = PDB.allMainToms[atom[4]][atom[5]].startAtomID;
+						for(var jj in w3m.mol[resName].atom['main']){										
+							var editato = w3m.mol[resName].atom['main'][jj];
+							var tempAtom = {};
+							$.extend(tempAtom,editato,true);
+							tempAtom[6][0] = tempAtom[6][0] + xc.x;
+							tempAtom[6][1] = tempAtom[6][1] + xc.y;
+							tempAtom[6][2] = tempAtom[6][2] + xc.z;
+							tempAtom[4] = chain_name;
+							tempAtom[1] = a;
+							PDB.allMainToms[atom[4]][atom[5]]['atoms'].push(tempAtom);									
+							a++;									
+						}
+						PDB.allMainToms[atom[4]][atom[5]].endAtomID = a-1;
+					}else{
+													
+						continue;
+					}
+					nowresID = atom[5];
+				}else{
+					if(editStartState!="-"){
+						if(nowresID&&nowresID != atom[5]&&nowresID!="-"){
+							if(!PDB.allMainToms[atom[4]][atom[5]]['state']){
+								PDB.allMainToms[atom[4]][atom[5]]['state'] = 'justID';
+							}
+							PDB.allMainToms[atom[4]][atom[5]].endAtomID = PDB.allMainToms[atom[4]][atom[5]].endAtomID + Number(editStartState);
+							PDB.allMainToms[atom[4]][atom[5]].startAtomID = PDB.allMainToms[atom[4]][atom[5]].startAtomID + Number(editStartState);
+						}else{																	
+							continue;
+						}
+					}
+				}
+				nowresID = atom[5];
+			}else{
+				continue;
+			}
+		}
+	},
+	clearTempAtomId : function(){
+		for(var chain_id in PDB.allMainToms){
+			for(var residue_id in PDB.allMainToms[chain_id]){
+				PDB.allMainToms[chain_id][residue_id].tempID = undefined;
+			}
+		}
+		
+	},
+	replacePos : function (strObj, pos, replacetext){
+		var str = strObj.substr(0, pos-1) + replacetext + strObj.substring(pos, strObj.length-1);
+		return str;
+	},
+	replacePosByStartEnd : function (strObj, start,end, replacetext){
+		var len = end - strObj.length;
+		if(strObj.length<end){
+			for(var i = 0;i<len;i++){
+				strObj = strObj + " ";
+			}
+		}		
+		var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length-1);
+		return str;
+	},
+	fillSpace : function (str,length,dir){
+		dir = dir?dir:"qian"
+		str = str+"";
+		if(str.length>length){
+			return "";
+		}else{
+			var t_len = str.length;
+			for(var i = 0;i<length-t_len;i++){
+				if(dir=='hou'){
+					str = str+" ";
+				}else{
+					str = " "+str;
+				}				
+			}
+			return str;
+		}
+		
 	}
 }
