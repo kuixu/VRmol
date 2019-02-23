@@ -65,42 +65,10 @@
 <script type="text/javascript" src="server/listen/recorder.js"></script>
 <!--<script type="text/javascript" src="https://vrmol.net/server/listen/sr.min.js"></script>-->
 
-<!---------------------------xukui 0903 01:12------------------------------>
-<script type="x-shader/x-vertex" id="vertexshader">
-    uniform float delta;
-    attribute float opacity;
-    attribute vec3 customColor;
-    varying float vOpacity;
-    varying vec3 vCustomColor;
-    varying vec3 vUv;
-    void main()
-    {
-        vUv = position;
-        vOpacity = opacity;
-        vCustomColor = customColor;
-        vec3 p = position;
-        vec4 modelViewPosition = modelViewMatrix * vec4(p, 1.0);
-        gl_Position = projectionMatrix * modelViewPosition;
-    }
-</script>
-
-<script type="x-shader/x-fragment" id="fragmentshader">
-    uniform float delta;
-    varying float vOpacity;
-    varying vec3 vUv;
-    varying vec3 vCustomColor;
-    void main() {
-        float r = vCustomColor.r;
-        float g = vCustomColor.g;
-        float b = vCustomColor.b;
-        vec3 rgb = vec3(r, g, b);
-        gl_FragColor = vec4(rgb,vOpacity );
-    }
-</script>
 <div id="container"></div>
 <div id="info" class="panel"><strong>VRmol</strong> by <a href="http://www.zhanglab.net" target="_blank">ZhangLab</a></div>
 <div id="searchDiv" class="panel">
-    <input type="text" name="search_text" class="search_text" id="search_text" placeholder="INPUT PDB ID" onkeydown="PDB.controller.onKeyDown(event)"/>
+    <input type="text" name="search_text" class="search_text" id="search_text" placeholder="PDB ID" onkeydown="PDB.controller.onKeyDown(event)"/>
     <input type="button" class="search_button" id="search_button" value="Search">
     <a class="input-file input-fileup">
         + Upload<input size="100" type="file" name="file" id="upload_button">
@@ -363,24 +331,13 @@
 <div id="menu" ></div>
 <div id="weChatMask"></div>
 <div id="weChatPop"></div>
-<div style="width:100%;height:100%;position:absolute;z-index:999;opacity: 0.5;background:#eee;display:none" id="segmentholder"></div>
-<div style="display: none;
-    width: 708px;
-    height: 501px;
-    border: 2px solid #CCC;
-    position: absolute;
-    top: 11%;
-    left: 24%;
-    z-index: 9999;
-    background: #f7f4f4;
-    border-style: outset;
-    border-radius: 5px;
-    box-shadow: 0px 1px 0px 3px #afb2ef;" id="segmentPanel">
-	<div id="segmentHeader" style="height:25px;float:left;border-bottom:1px solid #ccc;width:100%">		
-			<span style="float:right;font-size:18px;color:red;margin:2px 3px 0px 0px;cursor: pointer;" id="closesegment" class="closerClass">&nbsp;X&nbsp;</span>
+<div id="segmentholder"></div>
+<div id="segmentPanel">
+	<div id="segmentHeader">		
+			<span id="closesegment" class="closerClass">&nbsp;X&nbsp;</span>
 			
 	</div>
-	<div id="segmentContent" style="height:calc(100% - 25px);float:left;width:100%">
+	<div id="segmentContent">
 		<ul style="float:left;">
 			
 			<li>Select Region</li>
@@ -464,18 +421,7 @@
 		<button id="Confirm_fregment" style="width: 68px;height: 25px;font-size: 16px;color: #fff;background: #6c7fc3;border-radius: 5px; float: left;margin: 6px 10px 0px 30px;">Confirm</button>
 	</div>
 </div>
-<div style="display: none;
-    width: 350px;
-    height: 251px;
-    border: 2px solid #CCC;
-    position: absolute;
-    top: 24%;
-    left: 36%;
-    z-index: 9999;
-    background: #f7f4f4;
-    border-style: outset;
-    border-radius: 5px;
-    box-shadow: 0px 1px 0px 3px #afb2ef;" id="editResidue">
+<div id="editResidue">
 	<div id="editResidueHeader" style="height:25px;float:left;border-bottom:1px solid #ccc;width:100%">		
 			<span style="float:right;font-size:18px;color:red;margin:2px 3px 0px 0px;cursor: pointer;" id="closeeditResidue" class="closerClass">&nbsp;X&nbsp;</span>
 
@@ -516,48 +462,7 @@
 <button id="vrMode" style="left: calc(50% - 90px); width: 80px; text-decoration: none; position: absolute; bottom: 20px; padding: 12px 6px; border: 1px solid rgb(255, 255, 255); border-radius: 4px; background: rgba(0, 0, 0, 0.1); color: rgb(255, 255, 255); font: 13px sans-serif; text-align: center; opacity: 0.5; outline: none; z-index: 999;">VR Mode</button><BR/>
 <script type="text/javascript" src="libs/molecule/index.js"></script>
 <script type="text/javascript">
-    <!-- menu -->
-    if (document.getElementById){ //DynamicDrive.com change
-        document.write('<style type="text/css">\n');
-        document.write('.submenu{display: none;}\n');
-        document.write('</style>\n');
-        switchMenu("mainStructure");
-    }
-    function switchRightMenu(obj){
-        if(document.getElementById){
-            var el = document.getElementById(obj);
-            var ar = document.getElementById("rightmenu").getElementsByTagName("span"); //DynamicDrive.com change
-            if(el.style.display != "block"){ //DynamicDrive.com change
-                for (var i=0; i<ar.length; i++){
-                    if (ar[i].className=="rightsubmenu") //DynamicDrive.com change
-                        ar[i].style.display = "none";
-                }
-                el.style.display = "block";
-            }else{
-                el.style.display = "none";
-            }
-        }
-    }
-
-    function switchMenu(obj){
-        if(document.getElementById){
-            var el = document.getElementById(obj);
-            var ar = document.getElementById("topmenu").getElementsByTagName("span"); //DynamicDrive.com change
-            if(el.style.display != "block"){ //DynamicDrive.com change
-                for (var i=0; i<ar.length; i++){
-                    if (ar[i].className=="submenu") //DynamicDrive.com change
-                        ar[i].style.display = "none";
-                }
-                el.style.display = "block";
-            }else{
-                el.style.display = "none";
-            }
-        }
-    }
-    var worker = new Worker('libs/fileutils/export.js');
-    (function(){
-
-    })()
+    
 </script>
 </body>
 </html>
