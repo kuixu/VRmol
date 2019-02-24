@@ -1,5 +1,8 @@
 #!/bin/bash
-
+#
+# Created by Kui XU on 2018/09/08.
+# mail: xukui.cs@gmail.com
+#
 if [ $# -gt 0 ];then
   proteinFile=$1
 
@@ -31,7 +34,7 @@ if [ $# -gt 0 ];then
 
 echo "LOOKS_LIKE_PDBQT = $LOOKS_LIKE_PDBQT";
 
-  # I'd like to have more rigorous testing in place to distinguish between pdb 
+  # I'd like to have more rigorous testing in place to distinguish between pdb
   # and pdbqt, but I'll start with this.
   if [[ $IS_PDBQT != true ]]; then
 

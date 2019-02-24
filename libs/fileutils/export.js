@@ -1,3 +1,7 @@
+/**
+ * Created by Kui Xu on 2017/8/7.
+ * mail: xukui.cs@gmail.com
+ */
 importScripts('debugout.js');
 self.addEventListener('message', function(e) {
   var data = e.data;

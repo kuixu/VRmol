@@ -1,5 +1,6 @@
 /**
  * Created by Kui Xu on 2017/6/27.
+ * mail: xukui.cs@gmail.com
  */
 var PDB ;
 var ServerType = 2;
@@ -15,10 +16,10 @@ if(ServerType ===1){
 }
 PDB = {
 	SHOW_MUTATION_WHEN_SWITCH_VR_MENU:0,
-    DEBUG_MODE:0, 
+    DEBUG_MODE:0,
 	bigmodel:19,//显示球外结构
 	smallmodel:20,//隐藏球外结构
-	loadType:19,//球外显示模式	
+	loadType:19,//球外显示模式
 	map_step:2,//默认是4，有三个选项4，2，1
     map_surface_show:0,//0 不是，1是
 	//旋转的角度计量
@@ -26,20 +27,20 @@ PDB = {
 	nowRotateAngle:0,
 	rotateAxis:{x:0,y:0,z:0},
 	rotateAxisAngle:{x:0,y:0,z:0},
-	zTemp : 0,	
+	zTemp : 0,
 	//residue绘画的三种模式：undefined,0-->没有生成Group,1-->生成并正常显示,2-->对相应的group进行hide 模式
 	residueGroup_undefined:0,
 	residueGroup_show:1,
 	residueGroup_hide:2,
-	residueGroup_low:3,	
+	residueGroup_low:3,
 	residueGroupObject:{},
-	initVRShowThreshold:35,//VR模式初始的距离	
+	initVRShowThreshold:35,//VR模式初始的距离
 	initDesktopShowThreshold:1000,//Desktop模式初始的距离
 	cameraPosition:{//camera的位置
 		x:0,
 		y:0,
 		z:300
-	},	
+	},
 	initChainNumThreshold:5,//小于等于2使用SSE显示，大于2的使用PDB.line显示
     structureSizeLevel:0,
 	pptShow:false,
@@ -119,7 +120,7 @@ PDB = {
     MENU_TYPE_FRAGMENT:6,MENU_TYPE_LABEL:7,MENU_TYPE_EX_HET:8,MENU_TYPE_TRAVEL:9,MENU_TYPE_SURFACE:10,MENU_TYPE_MUTATION:11,
     MENU_TYPE_ROTATION:12,MENU_TYPE_DRUG:13,MENU_TYPE_HBOND:14,MENU_TYPE_CONSERVATION:15,MENU_TYPE_DENSITYMAP:16,MENU_TYPE_DIRECTION:17,
     MENU_TYPE_CURRENT:1,MENU_TYPE_OUTBALL:18,MENU_TYPE_OUTSHOW:19,MENU_TYPE_OUTHIDE:20,MENU_TYPE_EXPORT:21,MENU_TYPE_SPEECH:22,
-    MENU_TYPE_EDITING:23,	
+    MENU_TYPE_EDITING:23,
     // Fill Mode ( fmode ) 蛋白质、核酸的展示方式
     HIDE : 0,  LINE : 1, DOT : 2,BACKBONE : 3,  SPHERE: 4,STICK : 5, BALL_AND_ROD : 6,
     TUBE : 7,  RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11,
@@ -159,8 +160,8 @@ PDB = {
 		railway_radius:0.1,railway_gui:9,tube_radius:0.2,startSegmentSurfaceID:0,
         endSegmentSurfaceID:0
 	},
-	
-	
+
+
 	CONFIG_HIGH:{
         sphere_width:20,sphere_height:20,stick_sphere_w:12,ballrod_sphere_w:12, water_sphere_w: 16, stick_radius:15,retangle_height:0.2,retangle_width:1,ellipse_radius:0.21,ellipse_radius_multiple:5,
 		flat_HIGH:0.001,flat_width:1,strip_radius:0.2,strip_ex:9,tubesegment:15,defaultColor:0xa345,

@@ -2,7 +2,6 @@ var w3m_crossline = function(fn) { return fn.toString().split('\n').slice(1,-1).
 
 /* === Static Resource === */
 
-/* URL 远程分子pdb文件请求路径*/
 w3m.url = [ 'https://files.rcsb.org/view/', 'https://www.rcsb.org/pdb/files/' ];
 //w3m.url = [ 'http://localhost:8080/molecule_vr/'];
 
@@ -14,7 +13,7 @@ w3m.dict = {
     special_element : ['fe','cu','co','zn','mn','k','na','ca','mg','al','i'],
     label : ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',"'",'-','.','Å','π','°',"'",'"','²'],
     label_st : {},
-    // 
+    //
     hydrophobicity : {
         arg : 0.00, lys : 0.06, asn : 0.11, asp : 0.11, gln : 0.11,
         glu : 0.11, his : 0.14, pro : 0.32, tyr : 0.35, trp : 0.40,
@@ -112,8 +111,8 @@ void main() {
             vec3 ambient  = light_ambient;
             vec3 diffuse  = light_color * max(dot(L, N), 0.0);
             vec3 specular = length(_normal) == 0.0 ? vec3(0.0) : light_color * pow(max(dot(H, N), 0.0), material_shininess);
-            vec3 light = material_k[0] * ambient + 
-                         material_k[1] * diffuse + 
+            vec3 light = material_k[0] * ambient +
+                         material_k[1] * diffuse +
                          material_k[2] * specular;
             gl_FragColor = vec4(light * vec3(_color), _color.a);
         } else {
@@ -829,17 +828,17 @@ w3m.rgb = {
 w3m.color = {
     // By Atom
     element : {
-        c  : 101, o  : 102, n  : 103, s  : 104, h  : 105,  p  : 106, 
-        fe : 107, cu : 108, co : 109, zn : 110, mn : 111,  i  : 112, 
+        c  : 101, o  : 102, n  : 103, s  : 104, h  : 105,  p  : 106,
+        fe : 107, cu : 108, co : 109, zn : 110, mn : 111,  i  : 112,
         na : 113, k  : 114, ca : 115, mg : 116, al : 117, cl  : 118
     },
     // By Residue
     residue : {
-        ala : 201, gly : 202, ile : 203, leu : 204, pro : 205, 
-        val : 206, phe : 207, trp : 208, tyr : 209, ser : 210, 
-        thr : 211, cys : 212, met : 213, asn : 214, gln : 215, 
-        asp : 216, glu : 217, arg : 218, his : 219, lys : 220, 
-        a   : 221, c   : 222, g   : 223, u   : 224, 
+        ala : 201, gly : 202, ile : 203, leu : 204, pro : 205,
+        val : 206, phe : 207, trp : 208, tyr : 209, ser : 210,
+        thr : 211, cys : 212, met : 213, asn : 214, gln : 215,
+        asp : 216, glu : 217, arg : 218, his : 219, lys : 220,
+        a   : 221, c   : 222, g   : 223, u   : 224,
         da  : 225, dc  : 226, dg  : 227, dt  : 228
     },
     // By Secondary Structure
@@ -848,7 +847,7 @@ w3m.color = {
     },
     // By Chain
     chain : {
-        a : 401, b : 402, c : 403, d : 404, e : 405, f : 406, g : 407, 
+        a : 401, b : 402, c : 403, d : 404, e : 405, f : 406, g : 407,
         h : 408, i : 409, j : 410, k : 411, l : 412, m : 413, n : 414,
         o : 415, p : 416, q : 417,          r : 418, s : 419, t : 420,
         u : 421, v : 422, w : 423,          x : 424, y : 425, z : 426,
@@ -863,9 +862,9 @@ w3m.color = {
     },
     // By Rep
     rep : {
-        hide    : 0, 
-        dot     : 701, line   : 702, backbone : 703, tube  : 704, 
-        cartoon : 705, putty  : 706, cube     : 707, strip : 708, railway  : 709, ribbon : 710, arrow : 711, 
+        hide    : 0,
+        dot     : 701, line   : 702, backbone : 703, tube  : 704,
+        cartoon : 705, putty  : 706, cube     : 707, strip : 708, railway  : 709, ribbon : 710, arrow : 711,
         stick   : 712, sphere : 713, ball_and_rod : 714
     }
 }

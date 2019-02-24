@@ -1,13 +1,17 @@
 <?php
-	define('PGHOST','192.168.1.200');
-	define('PGPORT',5432);
-	define('PGDATABASE','btcppi');
-	define('PGUSER', 'postgres');
-	define('PGPASSWORD', '');
-	define('PGCLIENTENCODING','UNICODE');
-	define('ERROR_ON_CONNECT_FAILED','Sorry, can not connect the database server now!');
+//
+// Created by Kui XU on 2017/08/08.
+// mail: xukui.cs@gmail.com
+//
+define('PGHOST','192.168.1.200');
+define('PGPORT',5432);
+define('PGDATABASE','btcppi');
+define('PGUSER', 'postgres');
+define('PGPASSWORD', '');
+define('PGCLIENTENCODING','UNICODE');
+define('ERROR_ON_CONNECT_FAILED','Sorry, can not connect the database server now!');
 
-	class DBconn{
+class DBconn{
 		var $conn=false;
 		//connect database
 		function __construct(){
@@ -19,8 +23,8 @@
 			if($result = pg_query($sql)){
 				$rows=null;
 				while ($row = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-					$rows[] = $row;	
-				}	
+					$rows[] = $row;
+				}
 				pg_free_result($result);
 				//$this->close();
 				return $rows;
@@ -62,7 +66,7 @@
 			//$this->close();
 			return true;
 		}
-		//关闭数据库
+		//close db
 		function close(){
 			if($this->conn){
 				pg_close($this->conn);
