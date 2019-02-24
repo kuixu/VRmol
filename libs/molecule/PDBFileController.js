@@ -140,6 +140,7 @@ PDB.controller = {
             if (PDB.isShowSurface == PDB.config.openSurface) {
               scope.drawGeometry(PDB.config.surfaceMode);
             }
+<<<<<<< HEAD
             scope.initFragmentSelect();
             if (!PDB.isAnimate) {
               PDB.render.animate();
@@ -251,6 +252,121 @@ PDB.controller = {
                 break;
               case 2:
                 PDB.painter.showMapSurface(emmap, emmap.threshold, true);
+=======
+            scope.requestRemote(input.value);
+        } );
+
+        //=============================== Mode for structure =======================
+        //showing mode
+        var vrMode     = document.getElementById( "vrMode" );
+        var threeMode     = document.getElementById( "threeMode" );
+        var threeWithTravel  = document.getElementById( "threeWithTravel" );
+        var vrWithTravel  = document.getElementById( "vrWithTravel" );
+
+        threeMode.addEventListener( 'click', function(e) {
+            vrMode.style.display = "none";
+            //PDB.render.changeToThreeMode(PDB.MODE_THREE,false);
+            window.location.href="index.html?vmode=desktop";
+        } );
+
+        threeWithTravel.addEventListener( 'click', function(e) {
+            PDB.CHANGESTYLE = 6;
+            PDB.render.clearStructure();
+            PDB.render.changeToThreeMode(PDB.MODE_TRAVEL_THREE,true);
+            PDB.painter.showResidueByThreeTravel();
+
+        } );
+		
+
+        vrMode.addEventListener( 'click', function(e) {
+            this.style.display = "none";
+            //PDB.render.changeToVrMode(PDB.MODE_VR,false);
+            window.location.href="index.html?vmode=vr";
+            //document.querySelector("#vrMode").checked=true;
+            //document.querySelector("#vrMode").checked=true;
+        } );
+
+        vrWithTravel.addEventListener( 'click', function(e) {
+            PDB.render.changeToVrMode(PDB.MODE_TRAVEL_VR,true);
+            PDB.painter.showResidueByThreeTravel();
+        } );
+
+        //upload button
+        var b_upload = document.getElementById("upload_button");
+
+        b_upload.addEventListener( 'change', function() {
+            if(this.files.length > 0){
+                var file = this.files[0];
+                if(file.name.endsWith("gz")){
+                    w3m.file.getArrayBuffer(file,function (response) {
+                        var mapId = file.name.split(".")[0];
+                        PDB.controller.emmapLoadFromFile(response,"gz",function (emmap) {
+                            PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                            PDB.render.clear(2);
+                            PDB.EMMAP.TYPE = 1;
+                            if(emmap){
+                                switch (PDB.EMMAP.TYPE){
+                                    case 0:
+                                        PDB.painter.showMapSolid(emmap,emmap.threshold);
+                                        break;
+                                    case 1:
+                                        PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+                                        break;
+                                    case 2:
+                                        PDB.painter.showMapSurface(emmap,emmap.threshold,true);
+                                }
+                            }
+                        });
+                    })
+                }else if(file.name.endsWith("mrc")){
+                    w3m.file.getArrayBuffer(file,function (response) {
+                        var mapId = file.name.split(".")[0];
+                        PDB.controller.emmapLoadFromFile(response,"mrc",function (emmap) {
+                            PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                            PDB.render.clear(2);
+                            PDB.EMMAP.TYPE = 1;
+                            if(emmap){
+                                switch (PDB.EMMAP.TYPE){
+                                    case 0:
+                                        PDB.painter.showMapSolid(emmap,emmap.threshold);
+                                        break;
+                                    case 1:
+                                        PDB.painter.showMapSurface(emmap,emmap.threshold,false);
+                                        break;
+                                    case 2:
+                                        PDB.painter.showMapSurface(emmap,emmap.threshold,true);
+                                }
+                            }
+                        });
+                    })
+                }else{
+                    console.log("PDB id: "+name);
+                    PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+                    scope.clear(2,-1);
+                    PDB.loader.clear();
+                    PDB.loader.loadFromDisk(file,function () {
+                        //赋值
+                        var input = document.getElementById("search_text");
+                        input.value = PDB.pdbId;
+                        scope.drawGeometry(PDB.config.mainMode);
+                        scope.drawGeometry(PDB.config.hetMode);
+                        if(PDB.isShowSurface==PDB.config.openSurface){
+                            scope.drawGeometry(PDB.config.surfaceMode);
+                        }
+                        scope.initFragmentSelect();
+                        if(!PDB.isAnimate){
+                            PDB.render.animate();
+                            PDB.isAnimate=true;
+                        }
+                        if( PDB.TravelMode){
+                            PDB.CHANGESTYLE = 6;
+                            PDB.render.clearStructure();
+                            PDB.render.changeToThreeMode(PDB.MODE_TRAVEL_THREE,true);
+                            PDB.painter.showResidueByThreeTravel();
+                        }
+                    });
+                }
+>>>>>>> a0f1ec32b22bfca5a71cf7ad68a7fd5a0afce7b7
             }
 
             PDB.tool.changeDensityMapRangeValue(emmap);
@@ -288,7 +404,444 @@ PDB.controller = {
     var b_show_editResidue = document.getElementById("b_show_editResidue");
 
 
+<<<<<<< HEAD
     closeeditResidue.addEventListener('click', function() {
+=======
+        } );
+        h_line.addEventListener( 'click', function() {
+            PDB.render.clear(5);
+            PDB.config.hetMode = PDB.HET_LINE;
+            scope.refreshGeometryByMode(PDB.config.hetMode);
+        } );
+        h_sphere.addEventListener( 'click', function() {
+            PDB.render.clear(5);
+            PDB.config.hetMode = PDB.HET_SPHERE;
+            scope.refreshGeometryByMode(PDB.config.hetMode);
+        } );
+        h_stick.addEventListener( 'click', function() {
+            PDB.render.clear(5);
+            PDB.config.hetMode = PDB.HET_STICK;
+            scope.refreshGeometryByMode(PDB.config.hetMode);
+        } );
+        h_ballrod.addEventListener( 'click', function() {
+            PDB.render.clear(5);
+            PDB.config.hetMode = PDB.HET_BALL_ROD;
+            scope.refreshGeometryByMode(PDB.config.hetMode);
+        } );
+
+        //surface menu
+        var surfaceVDW      = document.getElementById( "surfaceVDW" );
+        var surfaceSE    = document.getElementById( "surfaceSE" );
+        var surfaceSA     = document.getElementById( "surfaceSA" );
+        var surfaceM   = document.getElementById( "surfaceM" );
+        var surfaceN   = document.getElementById( "surfaceN" );
+        surfaceVDW.addEventListener( 'click', function() {
+            PDB.render.clear(5);
+			PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            scope.refreshSurface(PDB.config.surfaceMode,1,PDB.SURFACE_OPACITY,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceSE.addEventListener( 'click', function() {
+            PDB.render.clear(5);
+			PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            scope.refreshSurface(PDB.config.surfaceMode,2,PDB.SURFACE_OPACITY,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceSA.addEventListener( 'click', function() {
+            PDB.render.clear(5);
+			PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            scope.refreshSurface(PDB.config.surfaceMode,3,PDB.SURFACE_OPACITY,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceM.addEventListener( 'click', function() {
+            PDB.render.clear(5);
+			PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            scope.refreshSurface(PDB.config.surfaceMode,4,PDB.SURFACE_OPACITY,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceN.addEventListener( 'click', function(event) {
+            PDB.render.clear(5);
+			PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+            PDB.SURFACE_TYPE = 0;
+            PDB.GROUP[PDB.GROUP_SURFACE].visible = false;
+        } );
+
+        var surfaceOpacity1      = document.getElementById( "surfaceOpacity1" );
+        var surfaceOpacity2    = document.getElementById( "surfaceOpacity2" );
+        var surfaceOpacity3     = document.getElementById( "surfaceOpacity3" );
+        var surfaceOpacity4   = document.getElementById( "surfaceOpacity4" );
+        var surfaceOpacity5   = document.getElementById( "surfaceOpacity5" );
+        var surfaceOpacity6   = document.getElementById( "surfaceOpacity6" );
+        surfaceOpacity1.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
+            scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,1.0,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceOpacity2.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
+            scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.9,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceOpacity3.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
+            scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.8,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceOpacity4.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
+            scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.7,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceOpacity5.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
+            scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.6,PDB.SURFACE_WIREFRAME);
+        } );
+        surfaceOpacity6.addEventListener( 'click', function() {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
+            scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,0.5,PDB.SURFACE_WIREFRAME);
+        } );
+
+
+        var wireFrame   = document.getElementById( "wireFrame" );
+        wireFrame.addEventListener( 'click', function(event) {
+			var surfaceGroup = PDB.GROUP[PDB.GROUP_SURFACE];
+			if(surfaceGroup === undefined ||(surfaceGroup !== undefined && surfaceGroup.children.length === 0 )){
+				return;
+			}
+            if(event.target.checked !== undefined){
+                scope.refreshSurface(PDB.config.surfaceMode,PDB.SURFACE_TYPE,PDB.SURFACE_OPACITY,event.target.checked);
+            }
+        } );
+        //surface menu
+
+        // selection model
+        var selModel    = document.getElementById( "selModel" );
+        // var selMainHet  = document.getElementById( "selMainHet" );
+        // var selMain     = document.getElementById( "selMain" );
+        // var selHet      = document.getElementById( "selHet" );
+        var selChain    = document.getElementById( "selChain" );
+        var selAtom     = document.getElementById( "selAtom" );
+        var selResidue  = document.getElementById( "selResidue" );
+
+        selModel.addEventListener( 'click', function() {
+            PDB.label_type = PDB.SELECTION_MODEL;
+        } );
+        // selMainHet.addEventListener( 'click', function() {
+        //     PDB.selection_mode = PDB.SELECTION_MAIN_HET;
+        // } );
+        // selMain.addEventListener( 'click', function() {
+        //     PDB.selection_mode = PDB.SELECTION_MAIN;
+        // } );
+        // selHet.addEventListener( 'click', function() {
+        //     PDB.selection_mode = PDB.SELECTION_HET;
+        // } );
+        selChain.addEventListener( 'click', function() {
+            PDB.label_type = PDB.SELECTION_CHAIN;
+        } );
+        selResidue.addEventListener( 'click', function() {
+            PDB.label_type = PDB.SELECTION_RESIDUE;
+        } );
+        selAtom.addEventListener( 'click', function() {
+            PDB.label_type = PDB.SELECTION_ATOM;
+        } );
+
+
+
+        //=============================== EXPORT =======================
+        //
+        var b_export_scene = document.getElementById("b_export_scene");
+        b_export_scene.addEventListener( 'click', function() {
+            //console.log(document.getElementById( "exportType" ).value);
+			
+			PDB.render.exportToObj(document.getElementById( "exportType" ).value);
+
+
+            // worker.addEventListener('message', function(e) {
+            //    console.log(e.data);
+            // }, false);
+
+
+            // var exporter = new THREE.OBJExporter();
+            // var result = exporter.parse( scene );
+            // console.log(result.length);
+            // var f = PDB.pdbId+".obj";
+
+            // worker.postMessage({'cmd': 'start', 'msg': 'Hi', 'filename':f,'data':result});
+        } );
+		var b_export_pdb = document.getElementById("b_export_pdb");
+		 b_export_pdb.addEventListener( 'click', function(e) {			
+			w3m.ajax.get(PDB.pdbId, function(text) {			
+				//w3m.tool.clear();
+				PDB.exportPdb = true;
+				w3m.config.rep_mode_main = PDB.config.mainMode;
+				w3m.config.rep_mode_het = PDB.config.hetMode;
+				w3m.pdb(text);
+			});
+		 });
+         //=============================== trigger =======================
+        //
+        //trigger mode
+        var distance     = document.getElementById( "triggerDistance" );
+        var angle     = document.getElementById( "triggerAngle" );
+		var isHide     = document.getElementById( "isHide" );
+        distance.addEventListener( 'click', function(e) {
+            PDB.selection_mode = PDB.SELECTION_ATOM;
+            PDB.trigger = PDB.TRIGGER_EVENT_DISTANCE;
+        } );
+
+        angle.addEventListener( 'click', function(e) {
+            PDB.selection_mode = PDB.SELECTION_ATOM;
+            PDB.trigger = PDB.TRIGGER_EVENT_ANGLE;
+        } );
+		
+		isHide.addEventListener( 'click', function(e) {
+			if(e.target.checked){
+				PDB.GROUP[PDB.GROUP_MAIN].visible = false;
+			}else{
+				PDB.GROUP[PDB.GROUP_MAIN].visible = true;
+			}
+           
+        } );
+        //switch color  add color checkBox Listener ByClassName
+	    //switch color  add color checkBox Listener ByClassName
+        var updateColorByElement = document.getElementById("updatecolor_ByElement");
+        updateColorByElement.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByResidue = document.getElementById("updatecolor_ByResidue");
+        updateColorByResidue.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorBySecondaryStructure = document.getElementById("updatecolor_BySecondaryStructure");
+        updateColorBySecondaryStructure.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByChain = document.getElementById("updatecolor_ByChain");
+        updateColorByChain.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByRepresentation = document.getElementById("updatecolor_ByRepresentation");
+        updateColorByRepresentation.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateolorByB_Factor = document.getElementById("updatecolor_ByB_Factor");
+        updateolorByB_Factor.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorBySpectrum = document.getElementById("updatecolor_BySpectrum");
+        updateColorBySpectrum.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByChainSpectrum = document.getElementById("updatecolor_ByChainSpectrum");
+        updateColorByChainSpectrum.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByHydrophobicity = document.getElementById("updatecolor_ByHydrophobicity");
+        updateColorByHydrophobicity.addEventListener('click',function (e) {
+            var color_mode = e.target.getAttribute('color_mode');
+            scope.switchColorBymode(color_mode);
+        });
+        var updateColorByLoadConser = document.getElementById("b_load_conser");
+        updateColorByLoadConser.addEventListener('click',function (e) {
+            var chain = "A";
+            var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+            if(ServerType != 2){
+                url = SERVERURL+"/data/conservation.json";
+            }
+            PDB.tool.ajax.get(url,function (text) {
+                PDB.controller.clear(4,undefined);
+                PDB.painter.showConservation(text);
+                PDB.render.clearMain();
+                PDB.controller.drawGeometry(PDB.config.mainMode);
+            })
+        });
+//         var updateColor = document.getElementsByClassName("updateColor");
+//         for(var i in updateColor){
+//             if(!isNaN(Number(i))){
+//                 updateColor[i].addEventListener( 'click', function(e) {
+//                     for(var j in updateColor){//保证显示一个复选框
+//                         if(!isNaN(Number(j))){
+//                             if(e.target.id!=updateColor[j].id){
+//                                 updateColor[j].checked = false;
+//                             }
+//                         }
+//                     }
+//                     var color_mode = e.target.getAttribute('color_mode');
+//                     if(color_mode !== "610"){
+//                         scope.switchColorBymode(color_mode);
+//                     }else{
+//                         var chain = "A";
+//                         var url = PDB.CONSERVATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&chain="+chain;
+//                         if(ServerType != 2){
+//                             url = SERVERURL+"/data/conservation.json";
+//                         }
+//                         PDB.tool.ajax.get(url,function (text) {
+//                             PDB.controller.clear(4,undefined);
+//                             PDB.painter.showConservation(text);
+//                             PDB.render.clearMain();
+//                             PDB.controller.drawGeometry(PDB.config.mainMode);
+//                         })
+//                     }
+//                 } );
+//             }
+
+//         }
+
+
+        // selection model
+        // var dragModel    = document.getElementById( "dragModel" );
+        // var dragMainHet  = document.getElementById( "dragMainHet" );
+        // var dragMain     = document.getElementById( "dragMain" );
+		var dragReset      = document.getElementById( "dragReset" );
+        var dragHet      = document.getElementById( "dragHet" );
+        var dragChain    = document.getElementById( "dragChain" );
+
+        // dragModel.addEventListener( 'click', function() {
+        //     PDB.selection_mode = PDB.SELECTION_MODEL;
+        // } );
+        // dragMainHet.addEventListener( 'click', function() {
+        //     PDB.selection_mode = PDB.SELECTION_MAIN_HET;
+        // } );
+        // dragMain.addEventListener( 'click', function() {
+        //     PDB.selection_mode = PDB.SELECTION_MAIN;
+        // } );
+		dragReset.addEventListener( 'click', function() {
+            PDB.tool.backToInitialPositonForDesktop();
+        } );
+        dragHet.addEventListener( 'click', function() {
+			PDB.controller.switchDragByMode(PDB.SELECTION_HET);
+        } );
+        dragChain.addEventListener( 'click', function() {
+			PDB.controller.switchDragByMode(PDB.SELECTION_CHAIN);
+        } );
+
+
+
+        //get segment panel
+		var closer = document.getElementById("closesegment");
+		var segmentholder = document.getElementById("segmentholder");
+		var segmentPanel = document.getElementById("segmentPanel");
+		var b_show_segmenpanel = document.getElementById("b_show_segmenpanel");
+
+		b_show_segmenpanel.addEventListener( 'click', function() {
+			segmentholder.style.display = "block";
+			segmentPanel.style.display = "block";
+		} );
+
+		closer.addEventListener( 'click', function() {
+			segmentholder.style.display = "none";
+			segmentPanel.style.display = "none";
+		} );
+
+        //============================Mutation==========================
+		//mutation
+        var mutationTCGA = document.getElementById("mutationTCGA");
+        var mutationCCLE = document.getElementById("mutationCCLE");
+        var mutationExAC = document.getElementById("mutationExAC");
+        var mutationNone = document.getElementById("mutationNone");
+        var dbSNP = document.getElementById("dbSNP");
+        var showMutationTable = document.getElementById("showMutationTable");
+
+        mutationTCGA.addEventListener( 'click', function() {
+            var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=tcga";
+            if(PDB.DEBUG_MODE == 1){
+                url = SERVERURL+"/data/mutation.json";
+            }
+            PDB.tool.ajax.get(url,function (text) {
+                PDB.controller.clear(4,undefined);
+                PDB.painter.showMutation(text);
+                PDB.tool.showMutationTable(false,text);
+            })
+        } );
+        mutationCCLE.addEventListener( 'click', function() {
+            var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=ccle";
+            PDB.tool.ajax.get(url,function (text) {
+                PDB.controller.clear(4,undefined);
+                PDB.painter.showMutation(text);
+            })
+        } );
+        mutationExAC.addEventListener( 'click', function() {
+            var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=exac";
+            PDB.tool.ajax.get(url,function (text) {
+                PDB.controller.clear(4,undefined);
+                PDB.painter.showMutation(text);
+            })
+        } );
+
+         dbSNP.addEventListener( 'click', function() {
+            var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=dbsnp";
+            PDB.tool.ajax.get(url,function (text) {
+                PDB.controller.clear(4,undefined);
+                PDB.painter.showMutation(text);
+            })
+        } );
+
+        mutationNone.addEventListener( 'click', function() {
+            PDB.controller.clear(4,undefined);
+        } );
+
+        showMutationTable.addEventListener( 'click', function() {
+            if(this.checked){
+                document.getElementById("rightmenu").hidden=false;
+            }else{
+                document.getElementById("rightmenu").hidden=true;
+            }
+        } );
+
+        //============================rotation==========================
+        //rotation
+        var rotationSwitch = document.getElementById("rotationSwitch");
+        var rotationLeft = document.getElementById("rotationCounterclockwise");
+        var rotationRight = document.getElementById("rotationClockwise");
+
+        rotationSwitch.addEventListener( 'click', function() {
+            PDB.controller.cancelRotation();
+        } );
+        rotationLeft.addEventListener( 'click', function() {
+            var val = $('input[name="rotateAxis"]:checked').val();
+            PDB.controller.cancelRotation();
+            PDB.controller.startRotation(Number(val),1);
+        } );
+        rotationRight.addEventListener( 'click', function() {
+            var val = $('input[name="rotateAxis"]:checked').val();
+            PDB.controller.cancelRotation();
+            PDB.controller.startRotation(Number(val),0);
+        } );
+
+
+        // var showDemo   = document.getElementById( "showDemo" );
+        // showDemo.addEventListener( 'click', function(event) {
+            // if(event.target.checked !== undefined){
+                // PDB.DEMO.FLAG =  event.target.checked;
+                // if(PDB.DEMO.FLAG){
+                    // PDB.DEMO.ID = self.setInterval(PDB.render.showDemo,21);
+                // }else{
+                    // window.clearInterval(PDB.DEMO.ID);
+                // }
+            // }
+        // } );
+        // if(PDB.DEMO.FLAG){
+            // PDB.DEMO.ID = self.setInterval(PDB.render.showDemo,21);
+        // }
+>>>>>>> a0f1ec32b22bfca5a71cf7ad68a7fd5a0afce7b7
 
       segmentholder.style.display = "none";
       editResidue.style.display = "none";
@@ -1556,12 +2109,60 @@ PDB.controller = {
               }
             }
 
+<<<<<<< HEAD
           }
         }
         for (var i in obj) {
           if (obj[i] == 1) {
             html = html + "<span id=\"" + "sse_" + i + "\" class=\"fragment\" attr=\"\">" + str[i] + "<span class=\"fragmentdel\">X</span>&nbsp;</span>";
           }
+=======
+        return loadType;
+    },
+    drawGeometry : function(type){
+		if(w3m.mol[PDB.pdbId]==undefined) return;
+		var scope = this;
+        console.log("sta: "+type+": "+new Date());
+        if(type>=PDB.HET){
+			PDB.painter.showHet(PDB.pdbId);
+		}else{
+			if(PDB.CHANGESTYLE!=1&&PDB.CHANGESTYLE!=0&&PDB.CHANGESTYLE!=6){
+				//进入根据氨基酸（issel）是否选中来判断颜色
+				PDB.painter.showAllResiduesBySelect();
+			}else if(PDB.CHANGESTYLE==1){//有fragment的时候
+				PDB.painter.showFragmentsResidues();
+
+			}else if(PDB.CHANGESTYLE==0){			 //无任何模式下
+				PDB.painter.showAllResidues(type);
+			}
+		}
+        console.log("end: "+type+": "+new Date());
+
+    },
+    refreshGeometryByMode : function(type){
+        //console.log("controller.refreshGeometryByMode");
+		PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
+        //默认都显示
+        var loadType = this.getLoadType(type);
+        var scope = this;
+        // Main structure
+        if(type < PDB.HET){
+            PDB.GROUP[PDB.GROUP_HET].visible=true;
+            this.clear(0,loadType);
+            scope.drawGeometry(type);
+
+        }else{
+            this.clear(1,loadType);
+            scope.drawGeometry(type);
+        }
+    },
+    refreshSurface : function(structureType,surfaceType,opacity,wireframe){
+        console.log("Present Surface:" + structureType );
+        var scope = this;
+        var changeSurfaceType = false;
+        if(surfaceType !== undefined && surfaceType !== PDB.SURFACE_TYPE){
+            changeSurfaceType = true;
+>>>>>>> a0f1ec32b22bfca5a71cf7ad68a7fd5a0afce7b7
         }
         break;
       case PDB.DRAWSTYLE_RESIDUETYPE:
