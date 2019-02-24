@@ -136,7 +136,7 @@ PDB.controller = {
                         });
                     })
                 }else{
-                    console.log("controller.requestRemote"+name);
+                    console.log("PDB id: "+name);
                     PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
                     scope.clear(2,-1);
                     PDB.loader.clear();
@@ -993,7 +993,7 @@ PDB.controller = {
 
         mutationTCGA.addEventListener( 'click', function() {
             var url = PDB.MUTATION_URL+"&pdbid="+PDB.pdbId.toUpperCase()+"&ds=tcga";
-            if(ServerType !== 2){
+            if(PDB.DEBUG_MODE == 1){
                 url = SERVERURL+"/data/mutation.json";
             }
             PDB.tool.ajax.get(url,function (text) {
@@ -1936,7 +1936,7 @@ PDB.controller = {
 
     },
     refreshGeometryByMode : function(type){
-        console.log("controller.refreshGeometryByMode");
+        //console.log("controller.refreshGeometryByMode");
 		PDB.CHANGESTYLE = 0;//切换mode，放弃fragment
         //默认都显示
         var loadType = this.getLoadType(type);
@@ -1953,7 +1953,7 @@ PDB.controller = {
         }
     },
     refreshSurface : function(structureType,surfaceType,opacity,wireframe){
-        console.log("controller.refreshSurface:" + structureType );
+        console.log("Present Surface:" + structureType );
         var scope = this;
         var changeSurfaceType = false;
         if(surfaceType !== undefined && surfaceType !== PDB.SURFACE_TYPE){

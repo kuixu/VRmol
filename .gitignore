@@ -20,6 +20,8 @@ awstatsicons
 icon
 cgi-bin
 stats
+docs
+vrmol.docs
 docs/.DS_Store
 data/drugbank
 data/.DS_Store
@@ -28,3 +30,6 @@ data/figs/vr/.DS_Store
 server/autodock/jobs
 server/listen1/__pycache__
 server/listen2/__pycache__
+server/listen2/voice
+server/listen2/result.log
+server/listen2/static-data/x.base64

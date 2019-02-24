@@ -92,7 +92,6 @@ function onThumbpadDown(event){
 	
 	switch (action){
 		case 0:
-
 			break;
 		case 1:
 			id =self.setInterval("PDB.painter.near()",20);
@@ -1155,7 +1154,6 @@ PDB.render = {
         scene.background = new THREE.Color( 0x000000 );
         scene.add( camera );
         document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-        console.log("lightType:"+lightType);
 
         this.addLightsByType(lightType);
 
