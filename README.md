@@ -68,3 +68,6 @@ Present structure (PDB code:`1DDB`) with `Tube` style and show its Van der Waals
   - Download the code into the apache server web directory
   - Set `SERVERURL` as your URL (like http://localhost) at libs/molecule/PDBCore.js
   
+## Release Versions
+
+  - [v0.1](https://github.com/barrykui/VRmol/tree/VRmol-v0.1) 
