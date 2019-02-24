@@ -17,19 +17,18 @@ from urllib.parse import urlencode
 class DemoError(Exception):
     # pass
     def __init__(self, ErrorInfo):
-        super().__init__(self)  # 初始化父类
+        super().__init__(self)  # init super class
         self.errorinfo = ErrorInfo
 
 
 def baidu_voice(audio, language):
-    FORMAT = 'wav'  # 文件格式：文件后缀只支持 pcm/wav/amr
+    FORMAT = 'wav'  # only support pcm/wav/amr
     if language == 'Chinese' or language == 'chinese':
         DEV_PID = 1536
     else:
         DEV_PID = 1737
-    # DEV_PID = 1536;  # 根据文档填写PID，选择语言及识别模型：1536表示识别普通话，使用搜索模型.1737 english
     CUID = '123456jwefjoefjoej';
-    RATE = 16000;  # 采样率：固定值
+    RATE = 16000;  # sampling rate
     ASR_URL = 'http://vop.baidu.com/server_api'
 
     def convert(token, audio):
@@ -48,7 +47,7 @@ def baidu_voice(audio, language):
         req = Request(ASR_URL, post_data.encode('utf-8'))
         req.add_header('Content-Type', 'application/json')
 
-        # 判断是否翻译成功，取出文本
+        # Get the text from response
         try:
             f = urlopen(req)
             result_str = f.read()
@@ -74,13 +73,13 @@ def baidu_voice(audio, language):
 
 def xunfei_voice(audio, language):
     url = 'http://api.xfyun.cn/v1/service/v1/iat'
-    api_key = '905183e09e5f792c4cdf4e24cf8a8a4d'  # api key在这里
-    x_appid = '5be15d7d'  # appid在这里
+    api_key = '905183e09e5f792c4cdf4e24cf8a8a4d'  # api key
+    x_appid = '5be15d7d'  # appid
     if language == 'Chinese' or language == 'chinese':
         lang = "sms16k"
     else:
         lang = "sms-en16k"
-    param = {"engine_type": lang, "aue": "raw"}  # 普通话(sms16k),普通话(sms8k),英语(sms-en8k),英语(sms-en16k)
+    param = {"engine_type": lang, "aue": "raw"}  
     x_time = int(int(round(time.time() * 1000)) / 1000)
 
     # get checksum
@@ -121,7 +120,7 @@ class SimCilin:
         self.cilin_path = 'static-data/cilin.txt'
         self.sem_dict = self.load_semantic()
 
-    # 加载词林
+    # Loading the Cilin semantic dictionary
     def load_semantic(self):
         sem_dict = {}
         for line in codecs.open(self.cilin_path, encoding='utf-8'):
@@ -138,7 +137,7 @@ class SimCilin:
             sem_dict[word] = sem_type.split(';')
         return sem_dict
 
-    # 基于计算编码相似度
+    # Calculate the similarity between two sem
     def compute_sem(self, sem1, sem2):
         def search(sem_list1, sem_list2):
             for i in range(6):
@@ -164,7 +163,7 @@ class SimCilin:
             else:
                 return 0.5
 
-    # 计算词语之间的相似度,取各种编码组合可能最大值
+    # Calculat the similarity between words, choose the max simiarity in different sems.
     def compute_word_sim(self, word1, word2):
         if (word1 == word2):
             return 1
@@ -176,7 +175,7 @@ class SimCilin:
         else:
             return 0
 
-    # 基于词相似度计算句子相似度
+    # Calculate the sentence similarity.
     def distance(self, text1, text2):
         # print(text1,text2)
         words1 = [word.word for word in pseg.cut(text1) if word.flag[0] not in ['u', 'x', 'w']]
@@ -264,7 +263,7 @@ def convert_english_to_instruction(sentence, command):
     return find_max(command_score)
 
 
-# set for Chinese(只在php调用python脚本时使用，python单独运行时需注释掉)
+# set for Chinese
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 language = sys.argv[1]
 f = open('static-data/x.base64', 'r')
@@ -315,7 +314,6 @@ print(json.dumps(baidu_result))
 print(json.dumps({'state': 1, 'error': 'no xunfei'}))  # (xunfei_result))
 if ('score' in baidu_result.keys()):
     print(baidu_result['score'][1])
-    # 确定的操作值
 else:
     print(0)
 
@@ -324,7 +322,7 @@ import base64
 import datetime
 import random
 
-nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')  # 现在
+nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')  
 randomNum = random.randint(10, 99)
 file = "voice/" + nowTime + '_' + str(randomNum) + ".wav"
 

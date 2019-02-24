@@ -14,22 +14,22 @@ class DemoError(Exception):
 # flags
 API_KEY = 'NgawfS7s6NzVeFreXyYHWU6H'
 SECRET_KEY = 'uvdyW57F7gCa817kmut4MGo9LTaPHBZw'
-FORMAT = 'wav'  # 文件格式：文件后缀只支持 pcm/wav/amr
+FORMAT = 'wav'  # file format：baidu only support pcm/wav/amr
 CUID = '123456jwefjoefjoej'
-RATE = 16000  # 采样率：固定值
+RATE = 16000  
 ASR_URL = 'http://vop.baidu.com/server_api'
 TOKEN_URL = 'http://openapi.baidu.com/oauth/2.0/token'
 
 def fetch_token():
-    # 生成token请求
+    # set a request
     params = {'grant_type': 'client_credentials', 'client_id': API_KEY, 'client_secret': SECRET_KEY}
     post_data = urlencode(params)
     post_data = post_data.encode('utf-8')
 
-    # 请求token
+    # request for token
     req = Request(TOKEN_URL, post_data)
 
-    # 处理结果，提取access_token
+    # get access_token from reponse
     try:
         f = urlopen(req)
         result_str = f.read()

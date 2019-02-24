@@ -9,7 +9,7 @@ var voiceControl={
 //    Control functions
 // *************************
 
-// 开始录音  
+// start recording
 function startRecording() {
     if (voiceControl.recorder) {
         voiceControl.recorder.clear();
@@ -22,17 +22,16 @@ function startRecording() {
     });
 }
 
-// 停止录音，并传送至后台处理，获取对应的指令编号
+// End recording,sends the recording to backend server, gets the corresponding instruction.
 function endRecording() {
     return new Promise(function(res){
     function toBackend(record) {
-        // 文件转成base64传输
+        // Encoding data to base64
         var reader = new FileReader();
         reader.readAsDataURL(record);
-        // 文件转换成功后加载
         return new Promise(function(resolve) {
             reader.onload = function() {
-                // 读取转出的DATAURL，去掉DATAURL的首部，留下base64内容
+                // Get the DATAURL from encoding data, only save base64 content
                 base64Data = reader.result.replace(/^data:audio\/\wav+;base64,/, "")
                 $.ajax({
                         method: "POST",
@@ -82,16 +81,18 @@ function endRecording() {
         voiceControl.recorder.clear();
     }
     $(".messages").html("loading~");
-    toBackend(voiceControl.voice.blob).then(function callback_for_vr(value) {
-        console.log(value);
-        // return operation code to front-end
-        res(value);
-        }
-    );
+    if(voiceControl.voice){
+        toBackend(voiceControl.voice.blob).then(function callback_for_vr(value) {
+            console.log(value);
+            // return operation code to front-end
+            res(value);
+            }
+        );
+    }
     });
 }
 
-// 修改语言设置
+// Change the language.
 function getlanguage() {
     voiceControl.language = $('input[name="language"]:checked').val();
 }
@@ -99,9 +100,9 @@ function getlanguage() {
 // *************************
 //     recording part
 // ************************* 
-// 加载音频库
+// Loading recording part
 (function(window) {
-    //兼容  
+    // For compatible  
     window.URL = window.URL || window.webkitURL;
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
@@ -111,52 +112,50 @@ function getlanguage() {
         config.sampleRate = config.sampleRate || 16000; //采样率(1/6 44100)  
 
 
-        //创建一个音频环境对象  
+        // Set an audio context object. 
         audioContext = window.AudioContext || window.webkitAudioContext;
         var context = new audioContext();
 
-        //将声音输入这个对像  
+        // Put the input voice stream to the object. 
         var audioInput = context.createMediaStreamSource(stream);
 
-        //设置音量节点  
+        // Set the volume. 
         var volume = context.createGain();
         audioInput.connect(volume);
 
         context.onstatechange = function() {
             console.log("state", context.state);
         }
-        //创建缓存，用来缓存声音  
-        var bufferSize = 4096;
-        // 创建声音的缓存节点，createScriptProcessor方法的  
-        // 第二个和第三个参数指的是输入和输出都是双声道。  
+        // Set buffer to save voice
+        var bufferSize = 4096; 
         var recorder = context.createScriptProcessor(bufferSize, 2, 2);
 
         var audioData = {
-            size: 0 //录音文件长度  
+            size: 0   
                 ,
-            buffer: [] //录音缓存  
+            buffer: []  
                 ,
-            inputSampleRate: context.sampleRate //输入采样率  
+            inputSampleRate: context.sampleRate 
                 ,
-            inputSampleBits: 16 //输入采样数位 8, 16  
+            inputSampleBits: 16 //Could choose 8 or 16  
                 ,
-            outputSampleRate: config.sampleRate //输出采样率  
+            outputSampleRate: config.sampleRate 
                 ,
-            oututSampleBits: config.sampleBits //输出采样数位 8, 16  
+            oututSampleBits: config.sampleBits //Could choose 8 or 16  
                 ,
             input: function(data) {
                 this.buffer.push(new Float32Array(data));
                 this.size += data.length;
             },
-            compress: function() { //合并压缩  
-                //合并  
+            compress: function() { // Merge and compression  
+                // Merge 
                 var data = new Float32Array(this.size);
                 var offset = 0;
                 for (var i = 0; i < this.buffer.length; i++) {
                     data.set(this.buffer[i], offset);
                     offset += this.buffer[i].length;
                 }
-                //压缩  
+                // Compress
                 var compression = parseInt(this.inputSampleRate / this.outputSampleRate);
                 var length = data.length / compression;
                 var result = new Float32Array(length);
@@ -177,7 +176,7 @@ function getlanguage() {
                 var buffer = new ArrayBuffer(44 + dataLength);
                 var data = new DataView(buffer);
 
-                var channelCount = 1; //单声道  
+                var channelCount = 1; // Only one channel. 
                 var offset = 0;
 
                 var writeString = function(str) {
@@ -186,46 +185,46 @@ function getlanguage() {
                     }
                 };
 
-                // 资源交换文件标识符   
+                // Resource exchange file identifier   
                 writeString('RIFF');
                 offset += 4;
-                // 下个地址开始到文件尾总字节数,即文件大小-8   
+                // The total number of bytes from the beginning of the next address to the end of the file.  
                 data.setUint32(offset, 36 + dataLength, true);
                 offset += 4;
-                // WAV文件标志  
+                // WAV 
                 writeString('WAVE');
                 offset += 4;
-                // 波形格式标志   
+                // Waveform format  
                 writeString('fmt ');
                 offset += 4;
-                // 过滤字节,一般为 0x10 = 16   
+                // Filter bytes, usually 0x10 = 16   
                 data.setUint32(offset, 16, true);
                 offset += 4;
-                // 格式类别 (PCM形式采样数据)   
+                // Format category (sampled data in PCM format)   
                 data.setUint16(offset, 1, true);
                 offset += 2;
-                // 通道数   
+                // channel Count   
                 data.setUint16(offset, channelCount, true);
                 offset += 2;
-                // 采样率,每秒样本数,表示每个通道的播放速度   
+                // sample Rate   
                 data.setUint32(offset, sampleRate, true);
                 offset += 4;
-                // 波形数据传输率 (每秒平均字节数) 单声道×每秒数据位数×每样本数据位/8   
+                // Waveform data transmission rate   
                 data.setUint32(offset, channelCount * sampleRate * (sampleBits / 8), true);
                 offset += 4;
-                // 快数据调整数 采样一次占用字节数 单声道×每样本的数据位数/8   
+                // Bytes for one sampling
                 data.setUint16(offset, channelCount * (sampleBits / 8), true);
                 offset += 2;
-                // 每样本数据位数   
+                // sample Bits   
                 data.setUint16(offset, sampleBits, true);
                 offset += 2;
-                // 数据标识符   
+                // data   
                 writeString('data');
                 offset += 4;
-                // 采样数据总数,即数据总大小-44   
+                // dataLength  
                 data.setUint32(offset, dataLength, true);
                 offset += 4;
-                // 写入采样数据   
+                // write data   
                 if (sampleBits === 8) {
                     for (var i = 0; i < bytes.length; i++, offset++) {
                         var s = Math.max(-1, Math.min(1, bytes[i]));
@@ -246,21 +245,19 @@ function getlanguage() {
             }
         };
 
-        //开始录音  
+        // start recording  
         this.start = function() {
             audioInput.connect(recorder);
             recorder.connect(context.destination);
         };
 
-        //停止  
+        // stop recording 
         this.stop = function() {
             recorder.disconnect();
-            //清理缓存音频
-            // console.log("stoped", audioData.buffer.length)
             return audioData.buffer.length;
         };
 
-        //获取音频文件  
+        // Get blob object. 
         this.getBlob = function() {
             var time = this.stop();
             return {
@@ -274,35 +271,33 @@ function getlanguage() {
             audioData.size = 0;
         }
 
-        //回放  
+        // Play the recording 
         this.play = function(audio, blob) {
             blob = blob || this.getBlob().blob;
             audio.src = window.URL.createObjectURL(blob);
         };
 
-
-
-        //音频采集  
+  
         recorder.onaudioprocess = function(e) {
             audioData.input(e.inputBuffer.getChannelData(0));
             //record(e.inputBuffer.getChannelData(0));  
         };
 
     };
-    //抛出异常  
+    // Throw the error  
     HZRecorder.throwError = function(message) {
         console.error(message);
     };
-    //是否支持录音  
+    // Support recording or not 
     HZRecorder.canRecording = !!navigator.getUserMedia;
-    //获取录音机  
+    // Get the recorder  
     HZRecorder.get = function(callback, config) {
         HZRecorder.throwError = config && config.error || HZRecorder.throwError;
         if (callback) {
             if (navigator.getUserMedia) {
                 navigator.getUserMedia({
                         audio: true
-                    } //只启用音频  
+                    }   
                     ,
                     function(stream) {
                         var rec = new HZRecorder(stream, config);
