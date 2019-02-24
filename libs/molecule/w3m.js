@@ -3159,7 +3159,7 @@ w3m.tool = {
       link.push([a, a + 1]);
       link_circle_o2.push([a, a + 1]);
     }
-    link.push(  //获取到两个相连的原子[4 * seg + 5, 0]);
+    link.push([4 * seg + 5, 0]);
     link_circle_o2.push([4 * seg + 4, 2 * seg + 4]);
     link_rectangle.push([2 * seg + 3, 4 * seg + 5], [4 * seg + 5, 0]);
     // handle
