@@ -370,24 +370,17 @@ PDB.controller = {
 				var caidpo = new THREE.Vector3(0,0,0);
 				var reReplaceAtom = {};
 				if(PDB.GROUP[groupa]){
-					var m = 0;
+					var hasFoud = false;
 					for(var i in PDB.GROUP[groupa].children){
-						// if(PDB.GROUP[groupa].children[i].type=='Group'){
-							// continue;
-						// }
 						if(PDB.GROUP[groupa].children[i].userData&&PDB.GROUP[groupa].children[i].userData.presentAtom){
 							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
-							if(_resid_==resid){
-								m++;
-								caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
-								if(m==1){
+							var _atomName_ = PDB.GROUP[groupa].children[i].userData.presentAtom.name;
+							if(_resid_== resid){								
+								if(_atomName_=='ca'){
+									caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
 									$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
 								}
-								PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);								
-								//break;
-								if(m>7){
-									break;
-								}
+								PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);
 							}
 						}
 						
@@ -396,11 +389,14 @@ PDB.controller = {
 				var t_group = new THREE.Group();
 				t_group.copy(PDB.GROUP[PDB.GROUP_ONE_RES]);					
 				var _0po = new THREE.Vector3(0,0,0);
+				var sjpo = new THREE.Vector3(0,0,0);
 				for(var i in t_group.children){					
 					if(t_group.children[i].userData.presentAtom.name == 'ca'){
+						sjpo.copy(t_group.children[i].userData.presentAtom.pos);
 						if(t_group.children[i].type='Line'){
 							var p = t_group.children[i].userData.presentAtom.pos_centered;
 							_0po.copy(new THREE.Vector3(p.x,p.y,p.z));
+							
 						}else{
 							_0po.copy(t_group.children[i].position);
 						}
@@ -422,15 +418,10 @@ PDB.controller = {
 						// if(PDB.GROUP[groupb].children[i].type=='Group'){
 							// continue;
 						// }
-						if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
-							var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
-							if(_resid_==resid){
-								m++;								
+						if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){							
+							var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+							if(_resid_==resid){																
 								PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);								
-								//break;
-								if(m>7){
-									break;
-								}
 							}
 						}
 						
@@ -441,6 +432,7 @@ PDB.controller = {
 					PDB.GROUP[groupb].add(t_group_b);						
 				}							
 				PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+				PDB.tool.updateAllEditResInfo(reReplaceAtom,sjpo,resName,resid,chain_replace.value);
 			}else{
 				PDB.loader.loadResidue(resName, function () {									
 					//PDB.painter.showRes_Ball_Rod(resName);
@@ -455,21 +447,23 @@ PDB.controller = {
 					var caidpo = new THREE.Vector3(0,0,0);
 					var reReplaceAtom = {};
 					if(PDB.GROUP[groupa]){
-						var m = 0;
+						var hasFoud = false;
 						for(var i in PDB.GROUP[groupa].children){
 							if(PDB.GROUP[groupa].children[i].userData&&PDB.GROUP[groupa].children[i].userData.presentAtom){
 								var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
-								if(_resid_==resid){
-									m++;
+								var _chainname_ = PDB.GROUP[groupa].children[i].userData.presentAtom.chainname;
+								var _atomName_ = PDB.GROUP[groupa].children[i].userData.presentAtom.name;
+								if(_resid_==resid&&_chainname_==chain_replace.value&&_atomName_=='ca'){
+									if(hasFoud){
+										break;
+									}
+									hasFoud = true;
 									caidpo.copy(PDB.GROUP[groupa].children[i].userData.presentAtom.pos_centered);
-									if(m==1){
-										$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
-									}									
-									
+									$.extend(reReplaceAtom,PDB.GROUP[groupa].children[i].userData.presentAtom,true);
 									PDB.GROUP[groupa].remove(PDB.GROUP[groupa].children[i]);
-									//console.log(reReplaceAtom);
-									//break;
-									if(m>7){
+									
+								}else{
+									if(hasFoud){
 										break;
 									}
 								}
@@ -478,89 +472,14 @@ PDB.controller = {
 						}
 					}
 					
-					
-					
-					//保存氨基酸更改信息   residueID = atom[5];
-					// if(!PDB.allMainToms){
-						// PDB.allMainToms ={};
-						// $.extend(PDB.allMainToms,w3m.mol[PDB.pdbId].atom['main'],true);
-					// }
-					
-					
-					
-					// for(var i in PDB.allMainToms){
-						// if(PDB.allMainToms[i][4] = chain_replace.value){
-							// if(PDB.allMainToms[i][5]==resid){
-								// splice
-							// }
-						// }
-						
-					// }
-					
-					
-					// for(var ii in w3m.mol[PDB.pdbId].replaceInfo){
-						// w3m.mol[PDB.pdbId].replaceInfo[ii]
-					// }
-					
-					
-					// var jj = -2;
-					// for(var i in allMainToms){
-						
-						// if(!w3m.mol[PDB.pdbId].replaceInfo){
-							// w3m.mol[PDB.pdbId].replaceInfo = {};
-						// }
-						// if(!w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value]){
-							// w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value] = {};
-						// }
-						// if(!w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][allMainToms[i][5]]){
-							// w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][allMainToms[i][5]] = {};
-						// }
-						// if(!w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][allMainToms[i][5]][allMainToms[i][1]]){
-							// w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][allMainToms[i][5]][allMainToms[i][1]] = {};
-						// }
-						
-						// if(allMainToms[i][4] = chain_replace.value){
-							// if(allMainToms[i][5]==resid){
-								
-								// if(jj==-2){
-									// jj = allMainToms[i][1];
-									// if(w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][resid][jj]['atomID']){
-										// jj = w3m.mol[PDB.pdbId].replaceInfo[chain_replace.value][resid][jj]['atomID'];
-									// }
-									
-								// }else{
-									// jj++;
-								// }
-								
-								
-							// }
-						// }else{
-							// if(jj>0){
-								// break;
-							// }else{
-								// continue;
-							// }
-							
-							
-						// }
-						
-					// }
-					
-					
-					
-					// var atomObj = {id: atomID, name: atomName, resname:residueName,
-            // chainname:chainName, resid: residueID, pos: pos,
-            // pos_centered:pos_centered, bfactor:b_factor,coe:coe,
-            // type:atomType, radius :radius,color: color};
 					reReplaceAtom.resname = resName;
-					
-						
 					var t_group = new THREE.Group();
 					t_group.copy(PDB.GROUP[PDB.GROUP_ONE_RES]);					
 					var _0po = new THREE.Vector3(0,0,0);
+					var sjpo = new THREE.Vector3(0,0,0);
 					for(var i in t_group.children){
 						if(t_group.children[i].userData.presentAtom.name == 'ca'){
-							
+							sjpo.copy(t_group.children[i].userData.presentAtom.pos);
 							if(t_group.children[i].type='Line'){
 								var p = t_group.children[i].userData.presentAtom.pos_centered;
 								_0po.copy(new THREE.Vector3(p.x,p.y,p.z));
@@ -570,30 +489,23 @@ PDB.controller = {
 							
 							
 						}
-					}
-					 
+					}					 
 					for(var i in t_group.children){
 						var obj = t_group.children[i];
 						obj.position.x = obj.position.x - _0po.x;
 						obj.position.y = obj.position.y - _0po.y;
 						obj.position.z = obj.position.z - _0po.z;
-					}
-					
+					}					
 					t_group.userData = {group:groupa,presentAtom:reReplaceAtom};
 					PDB.GROUP[groupa].add( t_group);					
 					t_group.position.copy(caidpo);
 					if(groupb&&PDB.GROUP[groupb]){						
 						var m = 0;
 						for(var i in PDB.GROUP[groupb].children){
-							if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){
-								var _resid_ = PDB.GROUP[groupb].children[i].userData.presentAtom.resid;
-								if(_resid_==resid){
-									m++;								
+							if(PDB.GROUP[groupb].children[i].userData&&PDB.GROUP[groupb].children[i].userData.presentAtom){							
+								var _resid_ = PDB.GROUP[groupa].children[i].userData.presentAtom.resid;
+								if(_resid_==resid){																
 									PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);								
-									//break;
-									if(m>7){
-										break;
-									}
 								}
 							}
 							
@@ -603,7 +515,11 @@ PDB.controller = {
 						t_group_b.userData = {group:groupa,presentAtom:reReplaceAtom};						
 						PDB.GROUP[groupb].add(t_group_b);						
 					}							
-					PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
+					PDB.GROUP[PDB.GROUP_ONE_RES].children = [];					
+					//保存氨基酸更改信息   residueID = atom[5];
+					
+					PDB.tool.updateAllEditResInfo(reReplaceAtom,sjpo,resName,resid,chain_replace.value);
+					
 				});
 			}
 			
