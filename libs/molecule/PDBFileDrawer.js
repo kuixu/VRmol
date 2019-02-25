@@ -3,13 +3,7 @@
  * mail: xukui.cs@gmail.com
  */
 PDB.drawer = {
-  /**
-   * 绘画Label
-   * @param group
-   * @param pos
-   * @param color
-   * @param name
-   */
+
   drawLabel: function(group, pos, color, name) {
     var scope = this;
     var text = document.createElement('div');
@@ -99,7 +93,6 @@ PDB.drawer = {
       });
       var mesh = new THREE.Mesh(geometry, material);
       mesh.name = text;
-      //生成文字的mesh后，对GROUP的位置和朝向进行修改
       var dir = new THREE.Vector3(0, 0, 0);
       camera.getWorldDirection(dir);
       mesh.userData = {
@@ -128,7 +121,6 @@ PDB.drawer = {
       });
       var mesh = new THREE.Mesh(geometry, material);
       mesh.name = text;
-      //生成文字的mesh后，对GROUP的位置和朝向进行修改
       var dir = new THREE.Vector3(0, 0, 0);
       camera.getWorldDirection(dir);
       mesh.userData = {
@@ -142,15 +134,7 @@ PDB.drawer = {
 
     });
   },
-  /**
-   * 绘画键盘
-   * @param group
-   * @param pos
-   * @param text
-   * @param type
-   * @param color
-   * @param angle
-   */
+ 
   drawTextKB: function(group, pos, text, type, color, angle) {
     // load font
     var loader = new THREE.FontLoader();
@@ -498,9 +482,7 @@ PDB.drawer = {
       return mesh;
     }
   },
-  /**
-   * 这种绘制的方式代价太大，其实可以直接用threejs自带的cylinder
-   */
+ 
   drawCylinder0: function(group, start, end, color, radius) {
     var path = [];
     path.push(start);
@@ -669,7 +651,7 @@ PDB.drawer = {
     var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
     // var materials = [];
     // var verticesIdsAndmaterialId = {};
-    // var materialsId = {};//material存放在materials哪个位置{colorId:materials_key}
+    // var materialsId = {};
     // for(var i in geometry.vertices){
     // var id = 0
     // if(i<4){
@@ -948,7 +930,7 @@ PDB.drawer = {
       //边
       var materials = [];
       var verticesIdsAndmaterialId = {};
-      var materialsId = {}; //material存放在materials哪个位置{colorId:materials_key}
+      var materialsId = {}; 
       for (var i in geometry.vertices) {
 
         var id = ids[i];
