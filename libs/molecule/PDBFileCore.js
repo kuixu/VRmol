@@ -5,43 +5,39 @@
 var PDB ;
 var ServerType = 2;
 
-var SERVERURL = "http://localhost:8080/molwebvr";
+var SERVERURL = "http://localhost:8080/vrmol";
 if(ServerType ===1){
-    SERVERURL= "http://localhost/molecule_vr/web";
+    SERVERURL= "http://localhost/";
 }else if(ServerType ===2){
     SERVERURL= "https://vrmol.net";
-}else if(ServerType ===3){
-    SERVERURL = "http://localhost:8080/molwebvr";
-	//SERVERURL= "http://localhost";
 }
 PDB = {
 	SHOW_MUTATION_WHEN_SWITCH_VR_MENU:0,
     DEBUG_MODE:0,
-	bigmodel:19,//显示球外结构
-	smallmodel:20,//隐藏球外结构
-	loadType:19,//球外显示模式
-	map_step:2,//默认是4，有三个选项4，2，1
-    map_surface_show:0,//0 不是，1是
-	//旋转的角度计量
+	bigmodel:19,//show out of sphericcal view
+	smallmodel:20,//hide out of sphericcal view
+	loadType:19,//out of sphericcal view
+	map_step:2,//default:4, 4,2,1
+    map_surface_show:0,//0,no; 1,yes
 	rotateAngleThreshold:0.005,
 	nowRotateAngle:0,
 	rotateAxis:{x:0,y:0,z:0},
 	rotateAxisAngle:{x:0,y:0,z:0},
 	zTemp : 0,
-	//residue绘画的三种模式：undefined,0-->没有生成Group,1-->生成并正常显示,2-->对相应的group进行hide 模式
+	//residue drawing style：undefined,0-->no group, 1-->generate and show, 2-->hide group
 	residueGroup_undefined:0,
 	residueGroup_show:1,
 	residueGroup_hide:2,
 	residueGroup_low:3,
 	residueGroupObject:{},
-	initVRShowThreshold:35,//VR模式初始的距离
-	initDesktopShowThreshold:1000,//Desktop模式初始的距离
-	cameraPosition:{//camera的位置
+	initVRShowThreshold:35,//VR init distance
+	initDesktopShowThreshold:1000,//Desktop distance
+	cameraPosition:{//camera position
 		x:0,
 		y:0,
 		z:300
 	},
-	initChainNumThreshold:5,//小于等于2使用SSE显示，大于2的使用PDB.line显示
+	initChainNumThreshold:5,//<=2 SSE, >2 line
     structureSizeLevel:0,
 	pptShow:false,
 	panelShow:1,
@@ -56,7 +52,7 @@ PDB = {
     isShowKeyboard:false,
     selection_mode:105,
     selection_mode_pre:105,
-    //pdb文件vr下的ID
+    //pdb id in VR
     pdbVrId:"",
     trigger:6,
     //Travel the tube
@@ -71,10 +67,10 @@ PDB = {
     isShowAxis: false,
 	ROTATION_START_FLAG: false,
     ROTATION_DIRECTION:1, //0 left 1 right
-	ROTATION_AXIS:1, //1 x轴旋转 2 y轴旋转 3 z轴旋转
-    ROTATION_TASK_ID:0,//旋转任务ID
-	MOVE_DIRECTION:2, //1 正向  2 负向
-	MOVE_AXIS:3, //1 y轴  2 x轴 3 z轴
+	ROTATION_AXIS:1, //1 x, 2 y, 3 z
+    ROTATION_TASK_ID:0,//taskID
+	MOVE_DIRECTION:2, //1 +  2 -
+	MOVE_AXIS:3, //1 y,  2 x, 3 z
     MOVE_TASK_ID:0,
 	PLANE:{a:0,b:0,c:0,d:0},
     TravelScale:6,
@@ -121,13 +117,13 @@ PDB = {
     MENU_TYPE_ROTATION:12,MENU_TYPE_DRUG:13,MENU_TYPE_HBOND:14,MENU_TYPE_CONSERVATION:15,MENU_TYPE_DENSITYMAP:16,MENU_TYPE_DIRECTION:17,
     MENU_TYPE_CURRENT:1,MENU_TYPE_OUTBALL:18,MENU_TYPE_OUTSHOW:19,MENU_TYPE_OUTHIDE:20,MENU_TYPE_EXPORT:21,MENU_TYPE_SPEECH:22,
     MENU_TYPE_EDITING:23,
-    // Fill Mode ( fmode ) 蛋白质、核酸的展示方式
+    // representation Mode 
     HIDE : 0,  LINE : 1, DOT : 2,BACKBONE : 3,  SPHERE: 4,STICK : 5, BALL_AND_ROD : 6,
     TUBE : 7,  RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11,
     RIBBON_RAILWAY:12, CARTOON_SSE:13, SURFACE:14,
     HET:50, HET_LINE:51, HET_SPHERE:52, HET_STICK:53, HET_BALL_ROD:54,HET_WATER:55,HET_IRON:56,
 
-	CHANGESTYLE:0,// 0-->无选中模式(default),1-->fragment,2-->chain,3-->sseType,4-->residueType,5--> travel+three（ranx add 7 selected style）3-->residue
+	CHANGESTYLE:0,// 0-->(default),1-->fragment,2-->chain,3-->sseType,4-->residueType,5--> travel+three（ranx add 7 selected style）3-->residue
 	DRAWSTYLE_DEFAULT:0,DRAWSTYLE_FRAGMENT:1,DRAWSTYLE_CHAIN:2,DRAWSTYLE_SSETYPE:3,DRAWSTYLE_RESIDUETYPE:4,DRAWSTYLE_TRAVELTHREE:5,
 
 
