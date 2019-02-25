@@ -209,7 +209,7 @@ PDB.loader = {
     y = -(limit.y[0] + limit.y[1]) / 2;
     z = -(limit.z[0] + limit.z[1]) / 2;
     PDB.limit = {};
-    $.extend(true, PDB.limit, limit); //拷贝w3m的limit全局变量  //ranx
+    $.extend(true, PDB.limit, limit); //copy from w3m.limit
     var offset = new THREE.Vector3(x, y, z);
     PDB.GeoCenterOffset = offset;
     PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = false;
