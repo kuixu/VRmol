@@ -3,12 +3,11 @@ var w3m_crossline = function(fn) { return fn.toString().split('\n').slice(1,-1).
 /* === Static Resource === */
 
 w3m.url = [ 'https://files.rcsb.org/view/', 'https://www.rcsb.org/pdb/files/' ];
-//w3m.url = [ 'http://localhost:8080/molecule_vr/'];
 
 /* Dict */
 w3m.dict = {
     amino_acid : ['ala','gly','ile','leu','pro','val','phe','trp','tyr','asp','glu','arg','his','lys','ser','thr','cys','met','asn','gln'], //氨基酸-判断chainType
-    nucleic_acid : ['a','da','c','dc','g','dg','u','dt'],//核酸-判断chainType
+    nucleic_acid : ['a','da','c','dc','g','dg','u','dt'],
     cap_last : [ 'da', 'dc', 'dg', 'dt' ],
     special_element : ['fe','cu','co','zn','mn','k','na','ca','mg','al','i'],
     label : ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',"'",'-','.','Å','π','°',"'",'"','²'],
