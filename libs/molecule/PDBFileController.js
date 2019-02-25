@@ -134,7 +134,6 @@ PDB.controller = {
           scope.clear(2, -1);
           PDB.loader.clear();
           PDB.loader.loadFromDisk(file, function() {
-            //赋值
             var input = document.getElementById("search_text");
             input.value = PDB.pdbId;
             scope.drawGeometry(PDB.config.mainMode);
@@ -470,8 +469,6 @@ PDB.controller = {
               } else {
                 _0po.copy(t_group.children[i].position);
               }
-
-
             }
           }
           for (var i in t_group.children) {
@@ -495,7 +492,6 @@ PDB.controller = {
                   PDB.GROUP[groupb].remove(PDB.GROUP[groupb].children[i]);
                 }
               }
-
             }
             var t_group_b = new THREE.Group();
             t_group_b.copy(t_group);
@@ -507,7 +503,6 @@ PDB.controller = {
           }
           PDB.GROUP[PDB.GROUP_ONE_RES].children = [];
           PDB.tool.updateAllEditResInfo(reReplaceAtom, sjpo, resName, resid, chain_replace.value);
-
         });
       }
     });
@@ -1496,8 +1491,7 @@ PDB.controller = {
           for (var i in temp[chainid]) {
             if (!temp[chainid][i].issel) {
               issel = false;
-              break;//切换mode，放弃fragment
-    //默认都显示
+              break;
             }
           }
           if (issel) {
