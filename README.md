@@ -71,3 +71,13 @@ Present structure (PDB code:`1DDB`) with `Tube` style and show its Van der Waals
 ## Release Versions
   - [Releases](https://github.com/barrykui/VRmol/releases)
   - [v0.1](https://github.com/barrykui/VRmol/tree/v0.1)
+
+## Acknowledgments
+
+VRmol is developed based on [three.js](https://threejs.org) and [WebVR](https://webvr.rocks/), and we would like to express our special thanks to those open-source projects below.
+  - [Web3DMol](https://web3dmol.net) 
+  - [GLmol.js](https://github.com/barrykui/VRmol/tree/VRmol-v0.1) 
+  - [Chroma.js](https://github.com/gka/chroma.js) - for color handling
+  - [gunzip.min.js](https://github.com/imaya/zlib.js) - for decompress EM map files
+  - [AutoDock vina](http://vina.scripts.edu)
+  
