@@ -1220,13 +1220,11 @@ PDB.painter = {
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
     atom.caid = resobj.caid;
     if (residueData[chainId][Number(resid) - 1] == undefined) {
-
       var groupindex = showLow ? ("chain_" + atom.chainname + "_low") : ("chain_" + atom.chainname);
       if (residueData[chainId][resid].path.length > 0) {
         PDB.drawer.drawSphere(groupindex, residueData[chainId][resid].path[0], sel ? atom.color : color, radius, atom, addgroup, w);
         PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
       }
-
     }
 
     var color = new THREE.Color('#CCC');
@@ -1246,11 +1244,9 @@ PDB.painter = {
     if (residueData[chainId][Number(resid) + 1] == undefined && (path.length - 1) > 0) {
       //var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chainId][resid].laid);
       var groupindex = showLow ? ("chain_" + atom.chainname + "_low") : ("chain_" + atom.chainname);
-
       PDB.drawer.drawSphere(groupindex, path[path.length - 1], sel ? atom.color : color, radius, atom, addgroup, w);
       PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
     }
-
   },
   showTubeByResdueHEAD: function(chainId, resid, sel, showLow, isshow) {
     showLow = (showLow == undefined ? false : showLow);
@@ -1344,8 +1340,6 @@ PDB.painter = {
             // tempbinormal.push(PDB.cubeData.binormals[i][j-1]);
             // tempnormal.push(PDB.cubeData.normals[i][j-1]);
             // temptangent.push(PDB.cubeData.tangents[i][j-1]);
-
-
             temppath.push(path[j]);
             tempbinormal.push(PDB.cubeData.binormals[i][j]);
             tempnormal.push(PDB.cubeData.normals[i][j]);
@@ -1353,11 +1347,8 @@ PDB.painter = {
           }
           preid = ids[j];
         }
-
-
       }
     }
-
   },
   showRibbon_FlatByResdue: function(chainId, resid, sel, showLow, isshow) {
     showLow = (showLow == undefined ? false : showLow);
@@ -1414,7 +1405,6 @@ PDB.painter = {
           binormals: b
         }
       }
-
     }
     var radius = 0;
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
@@ -1453,8 +1443,6 @@ PDB.painter = {
         temptangent.push(PDB.cubeData.tangents[i][j]);
         if (pid != preid) {
           if (j != 0) {
-
-
             var color = PDB.tool.getColorByIndex(preid, 'main');
             var obj = {
               binormals: tempbinormal,
@@ -1472,11 +1460,8 @@ PDB.painter = {
           }
           preid = ids[j];
         }
-
-
       }
     }
-
   },
   showRibbon_EllipseByResdue: function(chainId, resid, sel, showLow, isshow) {
     showLow = (showLow == undefined ? false : showLow);
@@ -1532,7 +1517,6 @@ PDB.painter = {
           binormals: b
         }
       }
-
     }
     //console.log(cubedataObj);
     var radius = PDB.CONFIG.ellipse_radius;
@@ -1599,7 +1583,6 @@ PDB.painter = {
           binormals: b
         }
       }
-
     }
 
 
@@ -1619,7 +1602,6 @@ PDB.painter = {
     cubedataObj.tangents = resobj.tangents.slice((resobj.tangents.length / 2) - 1, resobj.tangents.length);
     cubedataObj.normals = resobj.normals.slice((resobj.normals.length / 2) - 1, resobj.normals.length);
     cubedataObj.binormals = resobj.binormals.slice((resobj.binormals.length / 2) - 1, resobj.binormals.length);
-
 
     if (showLow) {
       cubedataObj.tangents = [cubedataObj.tangents[0], cubedataObj.tangents[Math.floor(cubedataObj.tangents.length / 4)], cubedataObj.tangents[Math.floor(cubedataObj.tangents.length / 2)], cubedataObj.tangents[Math.floor(cubedataObj.tangents.length * 3 / 4)], cubedataObj.tangents[cubedataObj.tangents.length - 1]];
@@ -1657,7 +1639,6 @@ PDB.painter = {
           binormals: b
         }
       }
-
     }
 
     var color = new THREE.Color('#CCC');
@@ -1717,7 +1698,6 @@ PDB.painter = {
         tempbinormal.push(PDB.cubeData.binormals[i][j]);
         tempnormal.push(PDB.cubeData.normals[i][j]);
         temptangent.push(PDB.cubeData.tangents[i][j]);
-
       }
     }
   },
@@ -1775,7 +1755,6 @@ PDB.painter = {
           binormals: b
         }
       }
-
     }
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
     var groupindex = "chain_" + atom.chainname + (showLow ? '_low' : '');
@@ -1831,10 +1810,8 @@ PDB.painter = {
         tempbinormal.push(PDB.cubeData.binormals[i][j]);
         tempnormal.push(PDB.cubeData.normals[i][j]);
         temptangent.push(PDB.cubeData.tangents[i][j]);
-
       }
     }
-
   },
   showRibbon_StripByResdue: function(chainId, resid, sel, showLow, isshow) {
     showLow = (showLow == undefined ? false : showLow);
@@ -1890,10 +1867,6 @@ PDB.painter = {
           binormals: b
         }
       }
-
-
-
-
     }
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
     var groupindex = "chain_" + atom.chainname + (showLow ? '_low' : '');
@@ -1914,7 +1887,6 @@ PDB.painter = {
     // };
     // PDB.drawer.drawRailway(PDB.GROUP_MAIN,path, color, radius,obj,path.length-1);//draw helix
     // }
-
 
     var radius = PDB.CONFIG.railway_radius;
     var chainmidppoint = {},
@@ -1963,7 +1935,6 @@ PDB.painter = {
         tempbinormal.push(PDB.cubeData.binormals[i][j]);
         tempnormal.push(PDB.cubeData.normals[i][j]);
         temptangent.push(PDB.cubeData.tangents[i][j]);
-
       }
     }
   },
@@ -2022,9 +1993,6 @@ PDB.painter = {
           binormals: b
         }
       }
-
-
-
     }
     var radius = PDB.CONFIG.railway_radius;
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
@@ -2053,7 +2021,6 @@ PDB.painter = {
       var points = PDB.arrowArray[i];
       drawArrow(PDB.GROUP_MAIN, points, color, 1);
     }
-
   },
 
   showCartoon_SSE: function() {
@@ -2229,8 +2196,6 @@ PDB.painter = {
         preid = ids[j];
       }
     }
-
-
   },
 
   showCartoon_SSEByStartEnd: function(startId, endId, islected) {
@@ -2342,7 +2307,6 @@ PDB.painter = {
         } else if (j == ids.length - 1 || (j != 0 && preid == pid && j != (ids.length - 1) && ids[j] == endId && ids[j + 1] != endId)) {
           if (j < ids.length - 1) {
             paths.push(pathss[j + 1]);
-
           }
           var color;
           if (islected) {
@@ -2489,13 +2453,9 @@ PDB.painter = {
     var groupindex = "chain_" + atom.chainname + (showLow ? '_low' : '');
     PDB.drawer.drawArrowByPaths(groupindex, arrow, sel ? atom.color : color, [resobj.caid]);
     PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
-
   },
   showCartoon_SSEByResdue: function(chainId, resid, sel, showLow, isshow) {
-
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
-
-
     //HELIX : 150, HELIX_HEAD : 1500, HELIX_BODY : 1501, HELIX_FOOT : 1502,
     // SHEET : 151, SHEET_HEAD : 1510, SHEET_BODY : 1511, SHEET_FOOT : 1512,
     // LOOP  : 152, LOOP_HEAD  : 1520, LOOP_BODY  : 1521, LOOP_FOOT  : 1522,
@@ -2558,27 +2518,18 @@ PDB.painter = {
       shininess: 250
     });
     // MARCHING CUBES
-
-
     var MarchingCubes = new THREE.MarchingCubes(resolution, material, true, true);
     MarchingCubes.position.set(0, 0, 0);
     MarchingCubes.scale.set(scale, scale, scale);
-
-
     MarchingCubes.isolation = 500;
-
     MarchingCubes.enableUvs = false;
     MarchingCubes.enableColors = false;
-
 
     //updateCubes( effect, time, numBlobs, false, false,false );
     MarchingCubes.material.color.setHSL(hue, saturation, lightness);
     // =======================================
-
     // fill the field with some metaballs
-
     var i, ballx, bally, ballz, subtract, strength;
-
 
     for (var i in w3m.mol) {
       var main_obj = w3m.mol[i].atom.main;
@@ -2606,7 +2557,6 @@ PDB.painter = {
     }
     PDB.GROUP[PDB.GROUP_MAIN].add(MarchingCubes);
     PDB.GROUP[PDB.GROUP_HET].visible = false;
-
   },
   showSurface1: function() {
     var maxedge = PDB.tool.MaxEdge();
@@ -2648,7 +2598,6 @@ PDB.painter = {
     }
     console.log(atoms.length);
     //====================================
-
     var ps = ProteinSurface({
       min: {
         x: minx,
@@ -2738,7 +2687,6 @@ PDB.painter = {
     }
     console.log(Object.keys(atoms).length);
     //====================================
-
     var ps = ProteinSurface({
       min: {
         x: minx,
@@ -2835,7 +2783,6 @@ PDB.painter = {
     }
     console.log(Object.keys(atoms).length);
     //====================================
-
     var ps = ProteinSurface({
       min: {
         x: minx,
@@ -2899,7 +2846,6 @@ PDB.painter = {
     }
   },
   showRes_Line: function(molId) {
-
     var groupindex = PDB.GROUP_ONE_RES;
     var resobj = w3m.mol[molId].residueData['a'][1];
     atomIdArray = resobj.lines;
@@ -2992,9 +2938,7 @@ PDB.painter = {
         if (history[atom.id] == undefined) {
           PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, radius + 0.001, atom, addgroup, w);
           history[atom.id] = 1;
-        } else {
-          //console.log("showHet_Stick: duplicate stick...atom.id:"+ atom.id);
-        }
+        } 
         var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
         PDB.drawer.drawStick(group, startAtom.pos_centered, midp, startAtom.color, radius, startAtom);
         PDB.drawer.drawStick(group, midp, atom.pos_centered, atom.color, radius, atom);
@@ -3068,13 +3012,11 @@ PDB.painter = {
       }
       //var groupindex = "chain_"+atom.chainname+(showLow?'_low':'');
       if (history[startAtom.id] == undefined) {
-
         PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom, addgroup, w);
         //PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
         history[startAtom.id] = 1;
       }
       if (history[atom.id] == undefined) {
-
         PDB.drawer.drawSphere(groupindex, atom.pos_centered, atom.color, atom.radius * 0.2, atom, addgroup, w);
         //PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length-1].visible = isshow;
         history[atom.id] = 1;
@@ -3325,12 +3267,10 @@ PDB.painter = {
               } else {
                 color = PDB.tool.getColorByIndex(preid, 'main');
                 PDB.drawer['draw' + selectMode](groupindex, temppath, color, selectedRadius, obj, temppath.length - 1, [preid]);
-
               }
 
             } else {
               color = defaultNoneSelectedColor;
-
               if (unselectMode === "Sphere") {
                 if (!isShowNonTube_unselect) {
                   PDB.painter.showSphereByStartEnd(1, startId, false);
@@ -3502,16 +3442,12 @@ PDB.painter = {
           colors[n] = color.r;
           colors[n + 1] = color.g;
           colors[n + 2] = color.b;
-
         }
       }
     }
     var end = new Date();
     console.log("MapSolid: " + end + "  position, color is ready!");
-
     PDB.drawer.drawMapPoints(PDB.GROUP_MAP, positions, colors, alphas, Number(emmap.header.NS));
-
-
     console.log("MapSolid time(ms):" + (new Date() - start));
   },
   showMapSolid2: function(emmap, threshold) {
@@ -3544,9 +3480,7 @@ PDB.painter = {
       colors[n] = color.r;
       colors[n + 1] = color.g;
       colors[n + 2] = color.b;
-
       //}
-
     }
     console.log("map: " + new Date() + "  position, color is ready!");
     PDB.drawer.drawMapPoints(PDB.GROUP_MAP, positions, colors, alphas);
@@ -3584,7 +3518,6 @@ PDB.painter = {
         for (var k = 0; k < emmap.header.NS; k++) {
 
           var v = emmap.data[i][j][k];
-
           if (v < threshold) continue;
           var per = Math.floor(((v - emmap.header.min) / (1.0 * di)) * 99);
           color = array[per];
@@ -3641,9 +3574,7 @@ PDB.painter = {
           numblobs = numblobs + 1;
           var per = Math.floor(((v - emmap.header.min) / (1.0 * di)) * 99);
           //color = array[per];
-
           var vec = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
-
           var xyz = vec;
           //var color = array[per];
           var atomSu = {
@@ -3662,11 +3593,8 @@ PDB.painter = {
 
     subtract = 12;
     strength = 1.2 / ((Math.sqrt(numblobs) - 1) / 4 + 1);
-
-    // }
-    // console.log(Object.keys(atoms).length);
+   
     //====================================
-
     var ps = ProteinSurface({
       min: {
         x: minx,
@@ -3734,8 +3662,6 @@ PDB.painter = {
     });
     // MARCHING CUBES
     var atoms = {};
-
-
     var numblobs = 0;
     var scale = chroma.scale(['green', 'red']);
     var array = [];
@@ -3758,7 +3684,6 @@ PDB.painter = {
           color = array[per];
 
           var vec = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
-
           var xyz = vec;
           var color = array[per];
           var atomSu = {
@@ -3944,9 +3869,7 @@ PDB.painter = {
       for (var resid in residueData[chain]) {
         PDB.painter.showResidue(chain, resid, PDB.config.mainMode, residueData[chain][resid].issel);
       }
-
     }
-
   },
   //before sphere visualization 2018-08-16
   showAllResidues0: function(type) {
@@ -4009,12 +3932,9 @@ PDB.painter = {
               PDB.residueGroupObject[chain][resid] = PDB.residueGroup_hide;
               PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = false;
             }
-
           }
         }
-
       }
-
       PDB.tool.bindAllChainEvent(type, chainNum);
     }
   },
@@ -4085,14 +4005,11 @@ PDB.painter = {
                 PDB.CONFIG = PDB.CONFIG_HIGH;
                 PDB.painter.showResidue(chain, resid, type, true, false, true);
               }
-
-
             } else if (PDB.loadType == PDB.smallmodel) {
               PDB.CONFIG = PDB.CONFIG_HIGH;
               PDB.painter.showResidue(chain, resid, type, true);
               PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;
             }
-
           } else {
 
             if (PDB.loadType == PDB.bigmodel) {
@@ -4167,7 +4084,6 @@ PDB.painter = {
         PDB.painter.showSurface(fragmentList[fKey].start.faid, fragmentList[fKey].end.laid, true);
       }
     }
-
   },
   showResidueByThreeTravel: function() {
     var redius = PDB.CONFIG.tube_radius;
@@ -4263,10 +4179,8 @@ PDB.painter = {
       };
       atoms[atom.id] = atomSu;
     }
-    // }
-    // console.log(Object.keys(atoms).length);
+   
     //====================================
-
     var ps = ProteinSurface({
       min: {
         x: minx,
@@ -4351,7 +4265,6 @@ PDB.painter = {
                 }
               }
             }
-
           } else {
             if (PDB.residueGroupObject[chain][resid] == PDB.residueGroup_show) {
               // var atom = PDB.tool.getMainAtom(PDB.pdbId, residueData[chain][resid].caid);
@@ -4365,7 +4278,6 @@ PDB.painter = {
               }
             }
           }
-
         }
       } else {
 
@@ -4402,7 +4314,6 @@ PDB.painter = {
               }
             }
           }
-
         }
       }
     }
@@ -4436,9 +4347,7 @@ PDB.painter = {
                   meshs[i].visible = true;
                 }
               }
-
               PDB.residueGroupObject[chain][resid].v = PDB.residueGroup_show;
-
             }
           } else if (PDB.loadType == PDB.smallmodel) {
             if (PDB.residueGroupObject[chain][resid].v == PDB.residueGroup_undefined) {
