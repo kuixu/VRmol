@@ -465,7 +465,6 @@ function dealwithMenu(object) {
         var url = SERVERURL + "/server/api.php?taskid=13&pdbid=5ftm";
         PDB.tool.ajax.get(url, function(text) {
           //PDB.render.clear(2);
-          //生成Material 数组
           PDB.MATERIALLIST = [];
           if (PDB.MATERIALLIST.length == 0) {
             for (var i = 1000; i < 1100; i++) {
@@ -477,7 +476,6 @@ function dealwithMenu(object) {
               PDB.MATERIALLIST.push(material);
             }
           }
-          //生成面板
           var jsonObj = JSON.parse(text);
           if (jsonObj.code === 1 && jsonObj.data !== undefined) {
 
@@ -657,7 +655,6 @@ function onTriggerDown(event) {
       case PDB.SELECTION_OBJECT:
         objectTrans(controller, object);
         break;
-
     }
 
     // ================================ Deal with Trigger mode ===
@@ -667,7 +664,6 @@ function onTriggerDown(event) {
         break;
     }
   }
-
 }
 
 function onTriggerUp(event) {
@@ -696,13 +692,10 @@ function onTriggerUp(event) {
 
   }
 
-
-  //
   var controller = event.target;
   if (controller.userData !== undefined && controller.userData.selected !== undefined) {
     var intersections = controller.userData.selected;
     var object = intersections;
-
     //var aaa = getIntersections( controller );
     //console.log(aaa[0].pos);
     // var pos = undefined;
@@ -710,22 +703,13 @@ function onTriggerUp(event) {
     // var intersection = intersections[ 0 ];
     // var pos = intersection.pos;
     // }
-
     objectDeTrans(controller, object);
     controller.userData.selected = undefined;
   }
 
 
-
-
-
-
-
-
-
   switch (PDB.trigger) {
     case PDB.GROUP_MENU_DRAG:
-
       break;
     case PDB.TRIGGER_EVENT_DISTANCE:
       if (PDB.distanceArray.length === 2) {
@@ -810,13 +794,8 @@ function onTriggerUp(event) {
       }
       break;
     case PDB.TRIGGER_EVENT_LABEL:
-
       break;
-
-
   }
-
-
 }
 
 function objectTrans(controller, object) {
@@ -930,7 +909,6 @@ function objectDeTrans(controller, object) {
         } else if (object.userData["type"] == 'normal') {
           ot_index = groupindex + '_low';
         }
-
         PDB.GROUP[ot_index].matrix.premultiply(controller.matrixWorld);
         PDB.GROUP[ot_index].matrix.decompose(PDB.GROUP[ot_index].position, PDB.GROUP[ot_index].quaternion, PDB.GROUP[ot_index].scale);
         PDB.tool.colorIntersectObjectBlue(PDB.GROUP[ot_index], 0);
@@ -1089,9 +1067,7 @@ function getIntersections(controller) {
                 "pos": point
               });
             }
-
           }
-
         }
         break;
       case PDB.SELECTION_OBJECT:
@@ -1135,16 +1111,13 @@ function intersectObjects(controller) {
           PDB.tool.colorIntersectObjectRed(PDB.GROUP[ot_index], 1);
         }
       }
-
       var object = intersection.object;
       intersected.push(object);
       PDB.tool.colorIntersectObjectRed(object, 1);
     }
-
   } else {
     line.scale.z = 10;
   }
-
 }
 
 function cleanIntersected() {
@@ -1165,7 +1138,6 @@ function cleanIntersected() {
     }
     //PDB.render.clearGroupIndex(PDB.GROUP_INFO);
   }
-
 }
 
 function onDocumentMouseMove(event) {
@@ -1194,13 +1166,11 @@ PDB.render = {
 
     this.addLightsByType(lightType);
 
-
     for (var i = 0; i < PDB.GROUP_COUNT; i++) {
       PDB.GROUP[i] = new THREE.Group();
       PDB.GROUP[i].userData["group"] = i;
       scene.add(PDB.GROUP[i]);
     }
-
     renderer = new THREE.WebGLRenderer({
       antialias: true
     });
@@ -1212,7 +1182,6 @@ PDB.render = {
     container.appendChild(renderer.domElement);
     //renderer.vr.enabled = true;
     //renderer.vr.standing = true;
-
 
     if (controlsType == 0) {
       controls = new THREE.TrackballControls(camera, renderer.domElement);
@@ -1230,7 +1199,6 @@ PDB.render = {
     } else {
       controls = new THREE.OrbitControls(camera, renderer.domElement);
     }
-
 
     window.addEventListener('resize', this.onWindowResize, false);
   },
@@ -1250,10 +1218,8 @@ PDB.render = {
     }
 
     this.addLightsByType(lightType);
-
     container = document.createElement('div');
     document.body.appendChild(container);
-
     renderer = new THREE.WebGLRenderer({
       antialias: true
     });
@@ -1311,7 +1277,6 @@ PDB.render = {
 
     controller1.add(line.clone());
     // controller2.add( line.clone() );
-
     raycaster = new THREE.Raycaster();
 
     WEBVR.getVRDisplay(function(display) {
@@ -1475,15 +1440,12 @@ PDB.render = {
     });
 
     raycaster = new THREE.Raycaster();
-    //
     window.addEventListener('resize', onWindowResize, false);
-
     function onWindowResize() {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     }
-
   },
   changeToThreeMode: function(mode, travelMode) {
     var scope = this;
@@ -1496,7 +1458,7 @@ PDB.render = {
     scene.background = new THREE.Color(0x000000);
     scene.add(camera);
     console.log("lightType:" + lightType);
-    //render
+   
     scope.clearRender();
     scope.generateRender();
     //all the group position back the initial location
@@ -1527,12 +1489,10 @@ PDB.render = {
       PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
       PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
     }
-
   },
   changeToThreeMode0: function(mode, travelMode) {
     var scope = this;
     if (PDB.mode !== mode) {
-
       PDB.mode = mode;
       PDB.TravelMode = travelMode;
       scope.removeCamera(scene);
@@ -1541,7 +1501,7 @@ PDB.render = {
       scene.background = new THREE.Color(0x000000);
       scene.add(camera);
       console.log("lightType:" + lightType);
-      //render
+     
       scope.clearRender();
       scope.generateRender();
       //all the group position back the initial location
@@ -1583,7 +1543,6 @@ PDB.render = {
       scope.removeCamera(scene);
 
       scope.initVR();
-
       if (PDB.TravelMode === true) {
         // PDB.controller.refreshGeometryByMode(PDB.TUBE);
         scope.openTrackMode();
@@ -1597,7 +1556,6 @@ PDB.render = {
 
     PDB.parent = new THREE.Object3D();
     scene.add(PDB.parent);
-
     splineCamera = new THREE.PerspectiveCamera(84, window.innerWidth / window.innerHeight, 0.01, 1000);
     PDB.parent.add(splineCamera);
 
@@ -1620,7 +1578,6 @@ PDB.render = {
       pos.multiplyScalar(PDB.TravelScale);
 
       // interpolation
-
       var segments = PDB.TravelGeometry.tangents.length;
       var pickt = t * segments;
       var pick = Math.floor(pickt);
@@ -1636,7 +1593,6 @@ PDB.render = {
 
       var dir = PDB.TravelGeometry.parameters.path.getTangentAt(t);
       var offset = 5;
-
       normal.copy(binormal).cross(dir);
 
       // we move on a offset on its binormal
@@ -1752,12 +1708,10 @@ PDB.render = {
         normal.copy(binormal).cross(dir);
 
         // we move on a offset on its binormal
-
         pos.add(normal.clone().multiplyScalar(offset));
 
         PDB.parent.position.copy(pos);
         //cameraEye.position.copy( pos );
-
         // using arclength for stablization in look ahead
 
         var lookAt = PDB.TravelGeometry.parameters.path.getPointAt((t + 5 / PDB.TravelGeometry.parameters.path.getLength()) % 1).multiplyScalar(PDB.TravelScale);
@@ -1779,7 +1733,6 @@ PDB.render = {
 
         //renderer.render( scene, splineCamera );
         camera = splineCamera;
-
         //
         //camera.position.copy(pos);
         //renderer.render( scene, camera );
@@ -1798,7 +1751,6 @@ PDB.render = {
           PDB.tool.migrationDrug();
           PDB.drugMoveTime = new Date();
         }
-
       }
       renderer.render(scene, camera);
       //statsVR.msEnd();
@@ -1813,7 +1765,6 @@ PDB.render = {
         pos.multiplyScalar(PDB.TravelScale);
 
         // interpolation
-
         var segments = PDB.TravelGeometry.tangents.length;
         var pickt = t * segments;
         var pick = Math.floor(pickt);
@@ -1833,7 +1784,6 @@ PDB.render = {
         normal.copy(binormal).cross(dir);
 
         // we move on a offset on its binormal
-
         pos.add(normal.clone().multiplyScalar(offset));
 
         splineCamera.position.copy(pos);
@@ -1842,7 +1792,6 @@ PDB.render = {
         // using arclength for stablization in look ahead
 
         var lookAt = PDB.TravelGeometry.parameters.path.getPointAt((t + 5 / PDB.TravelGeometry.parameters.path.getLength()) % 1).multiplyScalar(PDB.TravelScale);
-
         // camera orientation 2 - up orientation via normal
 
         //if ( ! params.lookAhead ) lookAt.copy( pos ).add( dir );
@@ -2074,7 +2023,7 @@ PDB.render = {
     //
     var offset = camera.position;
     var movenlength = Math.sqrt(Math.pow(offset.x - PDB.offset.x, 2) + Math.pow(offset.y - PDB.offset.y, 2) + Math.pow(offset.z - PDB.offset.z, 2));
-    if (movenlength > 0.01) { //0.01值可以调整，以适应不同的眼镜移动灵敏度
+    if (movenlength > 0.01) { //0.01, speci
       var vec = {
         x: offset.x - PDB.offset.x,
         y: offset.y - PDB.offset.y,
@@ -2083,10 +2032,7 @@ PDB.render = {
       PDB.tool.getRealVectorForRepeatPainter(vec);
     }
     PDB.offset = offset.clone();
-
-
     //====add the random  migration path and scope of drug
-
     if (PDB.DRUGMOVE) {
       var now = new Date();
       //console.log(PDB.drugMoveTime - now);
@@ -2094,15 +2040,12 @@ PDB.render = {
         PDB.tool.migrationDrug();
         PDB.drugMoveTime = new Date();
       }
-
     }
-
   },
   onWindowResize: function() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-
     // zwd
     // if (PDB.VRMode) {
     //     vrEffect.setSize( window.innerWidth, window.innerHeight );
@@ -2129,7 +2072,6 @@ PDB.render = {
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_EXPORT);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_SPEECH);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_OUTBALL);
-
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_DRUG);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_DENSITYMAP);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_CONSERVATION);
@@ -2186,7 +2128,6 @@ PDB.render = {
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_DENSITYMAP]);
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_CONSERVATION]);
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_HBOND]);
-
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_HET]);
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_COLOR]);
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_MEASURE]);
@@ -2195,9 +2136,7 @@ PDB.render = {
     menu_panel.add(PDB.GROUP[PDB.GROUP_INPUT]);
 
     menu_panel.position.set(0, 0, -3);
-
     showMenu = true;
-
     PDB.render.hideStructure();
   },
   hideStructure: function() {
@@ -2371,10 +2310,7 @@ PDB.render = {
 
   },
   exportToObj: function(type) {
-
-
     var exporter = new THREE.OBJExporter();
-
     switch (type) {
       case 'MainStructure':
         var residueData = w3m.mol[PDB.pdbId].residueData;
@@ -2383,7 +2319,6 @@ PDB.render = {
           var output = exporter.parse(PDB.GROUP['chain_' + chain]);
           PDB.tool.saveString(output, PDB.pdbId + '_' + chain + '.obj');
         }
-
         //delete t_group;
         break;
       case 'Map':
@@ -2397,8 +2332,6 @@ PDB.render = {
           var output = exporter.parse(PDB.GROUP[PDB.GROUP_HET]);
           PDB.tool.saveString(output, 'het.obj');
         }
-
-
         break;
     }
 
