@@ -295,9 +295,9 @@ except DemoError as err:
                 score = convert_english_to_instruction(sentence, command)
             baidu_result = {'state': 0, 'data': sentence, 'score': score}
         except DemoError as err:
-            baidu_result = {'state': 1, 'error': err.errorinfo}
+            baidu_result = {'state': 1, 'error': err.errorinfo, 'score':[1, 0]}
     else:
-        baidu_result = {'state': 1, 'error': err.errorinfo}
+        baidu_result = {'state': 1, 'error': err.errorinfo, 'score':[1, 0]}
 ############################################################################3
 # try:
 #     sentence = xunfei_voice(audiostr, language)
@@ -310,13 +310,9 @@ except DemoError as err:
 # except DemoError as err:
 #     xunfei_result = {'state': 1, 'error': err.errorinfo}
 #############################################################################
-print(json.dumps(baidu_result))
-print(json.dumps({'state': 1, 'error': 'no xunfei'}))  # (xunfei_result))
-if ('score' in baidu_result.keys()):
-    print(baidu_result['score'][1])
-else:
-    print(0)
+#print(json.dumps({'state': 1, 'error': 'no xunfei'}))  # (xunfei_result))
 
+print(json.dumps(baidu_result))
 # save the audio
 import base64
 import datetime
@@ -333,7 +329,7 @@ fout.write(ori_data)
 fout.close()
 
 ##log the results
-if ('score' in baidu_result.keys()):
+if (baidu_result['score'][1]>0):
     import logging
     logging.basicConfig(level=logging.INFO, filename='result.log', filemode='a', format='%(message)s')
     logging.info(file + "-" + baidu_result['data'] + "-" + baidu_result['score'][1])
