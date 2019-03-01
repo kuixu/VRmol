@@ -184,7 +184,7 @@ PDB = {
         'swisslipids':"http://www.swisslipids.org/#/entity/",
         'docking':""
     },
-    DOCKING_URL: SERVERURL+"/server/autodock/autodock.php",
+    DOCKING_URL: API_URL +"/server/autodock/autodock.php",
     // docking var
     DIMENSION:0,
     DIMENSION_X:0,

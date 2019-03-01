@@ -1,4 +1,4 @@
-<?php
+<?php header('Access-Control-Allow-Origin: *'); 
 //
 // Created by Kui XU on 2018/09/08.
 // mail: xukui.cs@gmail.com
