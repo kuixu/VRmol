@@ -63,11 +63,17 @@ Present structure (PDB code:`1DDB`) with `Tube` style and show its Van der Waals
 <iframe src="https://vrmol.net/index.html?id=1dfb&panelShow=0&mainMode=7&showSurface=1&surfaceOpc=0.5&surfaceType=1"  />
 ```
 
-## Deploy VRmol in local
+## Deploy VRmol at your own server
 
   - Download the code into the apache server web directory
-  - Set `SERVERURL` as your URL (like http://localhost) at libs/molecule/PDBCore.js
-  
+  - Set `SERVERURL` as your URL (like https://example.com) at libs/molecule/PDBCore.js
+  - Start the Speech Recognition service by run:
+    ```python
+    python3 server/listen/sr.py
+    ```
+   
+
+
 ## Release Versions
   - [Releases](https://github.com/barrykui/VRmol/releases)
   - [v0.1](https://github.com/barrykui/VRmol/tree/v0.1)
