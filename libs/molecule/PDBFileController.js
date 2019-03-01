@@ -194,7 +194,7 @@ PDB.controller = {
 
     var loadDensityMap = document.getElementById("loadDensityMap");
     loadDensityMap.addEventListener('click', function() {
-      var url = SERVERURL + "/server/api.php?taskid=13&pdbid=" + PDB.pdbId.toUpperCase();
+      var url = API_URL + "/server/api.php?taskid=13&pdbid=" + PDB.pdbId.toUpperCase();
       if (ServerType !== 2) {
         url = SERVERURL + "/data/map01.json";
       }
@@ -1068,7 +1068,7 @@ PDB.controller = {
     var b_load_drug = document.getElementById("b_load_drug");
     b_load_drug.addEventListener('click', function() {
 
-      var url = SERVERURL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
+      var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
       if (ServerType !== 2) {
         url = SERVERURL + "/data/drug.json";
       }

@@ -8,13 +8,13 @@ EmMapParser = {
   getURLByType: function(mapid, type) {
     switch (type) {
       case "ccp4":
-        return 'http://ipr.pdbj.org/edmap/ccp4/' + mapid.toLowerCase() + '.ccp4.gz';
+        return 'https://ipr.pdbj.org/edmap/ccp4/' + mapid.toLowerCase() + '.ccp4.gz';
         break;
       case "ccp4-local":
         return 'http://localhost/ccp4/data/' + mapid.toLowerCase() + '.ccp4.gz';
         break;
       case "map":
-        return 'http://ftp.wwpdb.org/pub/emdb/structures/EMD-' + mapid.toLowerCase() + '/map/emd_' + mapid.toLowerCase() + '.map.gz';
+        return 'https://ftp.wwpdb.org/pub/emdb/structures/EMD-' + mapid.toLowerCase() + '/map/emd_' + mapid.toLowerCase() + '.map.gz';
         break;
       case "map-local":
         return 'data/emd_' + mapid.toLowerCase() + '.map.gz';
