@@ -1,0 +1,53 @@
+﻿切换为桌面模式,go to desktop mode,11
+切换为虚拟现实模式,go to virtual reality mode,12
+切换为遨游模式,go to travel mode,13
+切换主结构为线风格,change to line style,20
+切换主结构为点风格,change to dot style,21
+切换主结构为主链风格,change to backbone style,22
+切换主结构为球风格,change to sphere style,23
+切换主结构为棍风格,change to stick style,24
+切换主结构为球棍风格,change to ball and rod style,25
+切换主结构为钢丝风格,change to tube style,26
+切换主结构为二级结构风格,change to second structure style,27
+隐藏主结构,hide main structure,28
+显示主结构,show main structure,29
+切换配体结构为线风格,change ligand to line style,31
+切换配体结构为球风格,change ligand to shpere style,32
+切换配体结构为棍风格,change ligand to stick style,33
+切换配体结构为球棍风格,change ligand to ball and rod style,34
+隐藏配体,hide ligand structure,35
+显示配体,show ligand structure,36
+显示水分子,show water ,41
+隐藏水分子,hide water,42
+显示氢键,show hydrogen bond,43
+隐藏氢键,hide hydrogen bond,44
+显示突变,show mutation,45
+隐藏突变,hide mutation,46
+表面透明,show transparency,51
+表面网格,show mesh,52
+隐藏表面,hide the surface,53
+显示表面,show the surface,54
+按照元素着色,color by element,61
+按照氨基酸着色,color by residue,62
+按照二级结构着色,color by second structure,63
+按照链着色,color by chain,64
+按照B因子着色,color by b-factor,65
+按照谱着色,color by spectrum,66
+按照疏水性着色,color by hydrophobicity,67
+按照保守性着色,color by conservation,68
+切换为拖拽,open dragging function,71
+切换为标签,open labeling function,72
+旋转,rotation,73
+横轴旋转,rotation by x,741
+纵轴旋转,rotation by y,742
+竖轴旋转,rotation by z,743
+顺时针旋转,clockwise rotation,751
+逆时针旋转,anticlockwise rotation,752
+移动,move,76
+横轴移动,move along x,771
+纵轴移动,move along y,772
+竖轴移动,move along z,773
+正向移动,move forward,781
+反向移动,move backward,782
+停止旋转,stop rotation,701
+停止移动,stop move,702
