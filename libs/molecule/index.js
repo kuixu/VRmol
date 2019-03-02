@@ -6,7 +6,7 @@ if (document.getElementById) {
   document.write('<style type="text/css">\n');
   document.write('.submenu{display: none;}\n');
   document.write('</style>\n');
-  switchMenu("mainStructure");
+  //switchMenu("mainStructure");
 }
 
 function switchRightMenu(obj) {

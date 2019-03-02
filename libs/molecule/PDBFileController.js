@@ -48,9 +48,10 @@ PDB.controller = {
     //=============================== Mode for structure =======================
     //showing mode
     var vrMode = document.getElementById("vrMode");
+    var vrMode2 = document.getElementById("vrMode2");
     var threeMode = document.getElementById("threeMode");
     var threeWithTravel = document.getElementById("threeWithTravel");
-    var vrWithTravel = document.getElementById("vrWithTravel");
+    //var vrWithTravel = document.getElementById("vrWithTravel");
 
     threeMode.addEventListener('click', function(e) {
       vrMode.style.display = "none";
@@ -74,11 +75,17 @@ PDB.controller = {
       //document.querySelector("#vrMode").checked=true;
       //document.querySelector("#vrMode").checked=true;
     });
-
-    vrWithTravel.addEventListener('click', function(e) {
-      PDB.render.changeToVrMode(PDB.MODE_TRAVEL_VR, true);
-      PDB.painter.showResidueByThreeTravel();
+    vrMode2.addEventListener('click', function(e) {
+      this.style.display = "none";
+      window.location.href = "index.html?vmode=vr";
     });
+
+    //vrWithTravel.addEventListener('click', function(e) {
+    //  PDB.render.changeToVrMode(PDB.MODE_TRAVEL_VR, true);
+    //  PDB.painter.showResidueByThreeTravel();
+    //});
+
+    //=============================== Mode for structure =======================
 
     //upload button
     var b_upload = document.getElementById("upload_button");

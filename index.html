@@ -54,7 +54,7 @@
   <script type="text/javascript" src="js/controls/OrbitControls.js"></script>
   <script type="text/javascript" src="js/controls/VRControls.js"></script>
   <script type="text/javascript" src="js/controllers/VRController.js"></script>
-  <script type="text/javascript" src="js/renderers/CSS2DRenderer.js"></script>
+  <!-- <script type="text/javascript" src="js/renderers/CSS2DRenderer.js"></script>-->
   <script type="text/javascript" src="js/effects/VREffect.js"></script>
   <script type="text/javascript" src="js/utils/SceneUtils.js"></script>
   <script type="text/javascript" src="js/vr/WebVR.js"></script>
@@ -65,12 +65,12 @@
   <!-- where curves formulas are defined -->
   <!--<script type="text/javascript" src="js/libs/stats.min.js"></script>
   <script type="text/javascript" src="js/libs/dat.gui.min.js"></script>-->
-  <!-- import by convex-->
+  <!-- import by convex
   <script type="text/javascript" src="js/QuickHull.js"></script>
   <script type="text/javascript" src="js/geometries/ConvexGeometry.js"></script>
-  <script type="text/javascript" src="js/Detector.js"></script>
+  <script type="text/javascript" src="js/Detector.js"></script> -->
   <!-- import from three for surface-->
-  <script type="text/javascript" src="js/MarchingCubes.js"></script>
+  <!-- <script type="text/javascript" src="js/MarchingCubes.js"></script>-->
   <!--import EmMapParser-->
   <script type="text/javascript" src="libs/emmap/gunzip.min.js"></script>
   <script type="text/javascript" src="libs/emmap/chroma.min.js"></script>
@@ -103,8 +103,8 @@
     <span class="submenu" id="structureMode">
       <button id="threeMode">Desktop</button><BR />
       <button id="threeWithTravel">Desktop Travel</button><BR />
-      <!--<button id="vrMode">VR</button><BR/>-->
-      <button id="vrWithTravel">VR Travel</button><BR />
+      <button id="vrMode2">VR</button><BR/>
+      <!-- <button id="vrWithTravel">VR Travel</button><BR /> -->
       <input id="isLow" name="" type="checkbox" title="isLow" checked />
       <label class="label" for="isLow"> Spherical View </label><BR />
       <!--<input id="threeMode" name="modeStr" checked="checked"   type="radio" title="Three Mode"/>  <label class="label" for="threeMode"> Three </label>   <BR/>-->
@@ -155,7 +155,7 @@
       <input id="surfaceN" name="surfaceType" type="radio" title="nothing" /> <label class="label" for="surfaceN"> Hide </label> <BR />
       <input id="surfaceVDW" name="surfaceType" type="radio" title="Van der Waals surface" /> <label class="label" for="surfaceVDW">Van der Waals</label> <BR />
       <input id="surfaceSE" name="surfaceType" type="radio" title="solvent excluded surface" /> <label class="label" for="surfaceSE">Solvent excluded</label> <BR />
-      <input id="surfaceSA" name="surfaceType" type="radio" title="solvent accessible surface" /><label class="label" for="surfaceSA">Solvent accessible</label> <BR />
+      <input id="surfaceSA" name="surfaceType" type="radio" title="solvent accessible surface" /> <label class="label" for="surfaceSA">Solvent accessible</label> <BR />
       <input id="surfaceM" name="surfaceType" type="radio" title="molecular surface" /> <label class="label" for="surfaceM">Molecular</label> <BR />
       <hr class="line">
       <input id="surfaceOpacity1" name="surfaceOpacity" type="radio" title="opacity 1.0" /> <label class="label" for="surfaceOpacity1">1.0</label> <BR />
@@ -296,16 +296,16 @@
     </span>
     <!-- <LABEL onclick="switchMenu('chainNumThreshold')">ChainNumThreshold</LABEL><BR/> -->
     <!-- <span class="submenu" id="chainNumThreshold"> -->
-    <!-- <!--<button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>-->
+    <!-- <button class="labelPDB chainSelected" name="chainName" id="chain_a">a</button>-->
     <!-- </span> -->
     <BR />
     <LABEL onclick="switchMenu('speech')">Speech</LABEL><BR />
     <span class="submenu" id="speech">
       <input name="language" value="English" type="radio" id="English" onclick="getlanguage()" checked="true">
-      <label for="English">English voice</label>
+      <label for="English">English</label>
       <br>
       <input name="language" value="Chinese" type="radio" id="Chinese" onclick="getlanguage()">
-      <label for="Chinese">Chinese voice</label>
+      <label for="Chinese">Chinese</label>
       <br>
     </span>
     <BR />
@@ -315,7 +315,7 @@
       <br>
       <a href="https://github.com/barrykui/VRmol" target="_blank">Code</a>
       <br>
-      <a href="mailto:xuk16@mails.tsinghua.edu.cn">Email</a>
+      <a href="mailto:xuk16@mails.tsinghua.edu.cn?Subject=VRmol">Email</a>
       <br>
     </span>
     <BR />
