@@ -66,12 +66,13 @@ Present structure (PDB code:`1DDB`) with `Tube` style and show its Van der Waals
 ## Deploy VRmol at your own server
 
   - Download the code into the apache server web directory
-  - Set `SERVERURL` as your URL (like https://example.com) at libs/molecule/PDBCore.js
+  - Set `SERVERURL` as your URL (like https://example.com) at `libs/molecule/PDBCore.js`
   - Start the Speech Recognition service by run:
     ```python
     python3 server/listen/sr.py
     ```
-   
+
+> If you deploy VRmol in your local server with a prefix URL `http://localhost` or you do not have a setting of `https`, you should delete the `.htaccess` file. While without setting `https`, you would not access the Speech Recognition function.
 
 
 ## Release Versions
