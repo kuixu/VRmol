@@ -1825,6 +1825,9 @@ w3m.tool = {
       n = w3m.config.smooth_segment % 2 ? w3m.config.smooth_segment + 1 : w3m.config.smooth_segment,
       k = w3m.config.smooth_curvature,
       len = path.length;
+	  if(len==0){
+		  return;
+	  }
     /* xyz, color & tan */
     // 0
     path[0][3] = math.polysum([k, -k / 4], [vec3.point(path[0][1], path[1][1]), vec3.point(path[0][1], path[2][1])]);
@@ -2018,7 +2021,11 @@ w3m.tool = {
     // 	var xyz = path[i][1];
     // 	PDB.backboneArray.push({x:xyz[0],y:xyz[1],z:xyz[2]});
     // }
+	
     var len = path.length;
+	if(len==0){
+		return;
+	}
     // 0
     var tan = vec3.unit(vec3.point(path[0][1], path[1][1]));
     frame.push([path[0][0], path[0][1], path[0][2], tan]);
@@ -2849,6 +2856,9 @@ w3m.tool = {
     });
     // fill
     var len = frame.length;
+	if(len==0){
+		return;
+	}
     // link
     var link = [];
     for (var i = 0; i < seg - 1; i++) {
@@ -4643,6 +4653,9 @@ w3m.tool = {
       var seg = w3m.config.smooth_segment % 2 ? w3m.config.smooth_segment + 1 : w3m.config.smooth_segment,
         offset = 0;
       for (var ii = part_start; ii <= part_stop; ii++) {
+		  if(!w3m.structure.normal[mol.residue[chain_id][ii]]){
+			 continue; 
+		  }
         var residue = chain[ii],
           residue_name = mol.residue[chain_id][ii],
           normal_index = seg * offset + seg / 2,
