@@ -13,13 +13,13 @@ if(ServerType ===1){
 }
 var API_URL = "https://inano.life.tsinghua.edu.cn";
 PDB = {
-	SHOW_MUTATION_WHEN_SWITCH_VR_MENU:0,
-    DEBUG_MODE:0,
+
+        DEBUG_MODE:0,
 	bigmodel:19,//show out of sphericcal view
 	smallmodel:20,//hide out of sphericcal view
 	loadType:19,//out of sphericcal view
 	map_step:2,//default:4, 4,2,1
-    map_surface_show:0,//0,no; 1,yes
+        map_surface_show:0,//0,no; 1,yes
 	rotateAngleThreshold:0.005,
 	nowRotateAngle:0,
 	rotateAxis:{x:0,y:0,z:0},
@@ -84,6 +84,7 @@ PDB = {
     GeoCenterOffset:"" ,
     mutation:'{"code":1,"data":{"mutations":[{"id":"832951","v_class":"Missense_Mutation","v_type":"SNP","g_change":"g.chr11:111779667C>G","p_change":"p.E117Q","disease":"UCEC","pos":"117"},{"id":"832952","v_class":"Missense_Mutation","v_type":"SNP","g_change":"g.chr11:111781056G>A","p_change":"p.R107C","disease":"UCEC","pos":"107"},{"id":"832953","v_class":"Silent","v_type":"SNP","g_change":"g.chr11:111781108G>T","p_change":"p.L89L","disease":"UCEC","pos":"89"},{"id":"79882","v_class":"Silent","v_type":"SNP","g_change":"g.chr11:111779560G>A","p_change":"p.V152V","disease":"SKCM","pos":"152"},{"id":"118368","v_class":"Missense_Mutation","v_type":"SNP","g_change":"g.chr11:111782377A>C","p_change":"p.F24L","disease":"SKCM","pos":"24"},{"id":"390477","v_class":"Silent","v_type":"SNP","g_change":"g.chr11:111782347C>T","p_change":"p.E34E","disease":"STAD","pos":"34"},{"id":"646695","v_class":"Missense_Mutation","v_type":"SNP","g_change":"g.chr11:111779603G>A","p_change":"p.S138L","disease":"LUAD","pos":"138"}],"chains":["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X"],"pdbid":"2YGD","dataset":"tcga"},"message":"success"}',
     MUTATION_URL: API_URL + "/server/api.php?taskid=10",
+    SHOW_MUTATION_WHEN_SWITCH_VR_MENU:1,
     CONSERVATION_URL: API_URL + "/server/api.php?taskid=11",
     DRUG_URL: SERVERURL + "/data/DB04464.pdb",
     // DRUG_URL: API_URL + "/server/api.php?taskid=12",
