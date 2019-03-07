@@ -1374,7 +1374,7 @@ PDB.painter = {
       cubedataObj.binormals = [cubedataObj.binormals[0], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 4)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 2)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length * 3 / 4)], cubedataObj.binormals[cubedataObj.binormals.length - 1]];
     } else if (!showLow && PDB.loadType == PDB.bigmodel) {
 
-      if (PDB.structureSizeLevel == 3) {
+      if (PDB.structureSizeLevel >= 3) {
         var t = [];
         var n = [];
         var b = [];
@@ -1389,22 +1389,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } else if (PDB.structureSizeLevel == 4) {
-        var t = [];
-        var n = [];
-        var b = [];
-        for (var i = 0; i < cubedataObj.tangents.length; i++) {
-          if (i % 4 != 0) continue;
-          t.push(cubedataObj.tangents[i]);
-          n.push(cubedataObj.normals[i]);
-          b.push(cubedataObj.binormals[i]);
-        }
-        cubedataObj = {
-          tangents: t,
-          normals: n,
-          binormals: b
-        }
-      }
+      } 
     }
     var radius = 0;
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
@@ -1486,7 +1471,7 @@ PDB.painter = {
       cubedataObj.normals = [cubedataObj.normals[0], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 4)], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 2)], cubedataObj.normals[Math.floor(cubedataObj.normals.length * 3 / 4)], cubedataObj.normals[cubedataObj.normals.length - 1]];
       cubedataObj.binormals = [cubedataObj.binormals[0], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 4)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 2)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length * 3 / 4)], cubedataObj.binormals[cubedataObj.binormals.length - 1]];
     } else if (!showLow && PDB.loadType == PDB.bigmodel) {
-      if (PDB.structureSizeLevel == 3) {
+      if (PDB.structureSizeLevel >= 3) {
         var t = [];
         var n = [];
         var b = [];
@@ -1501,22 +1486,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } else if (PDB.structureSizeLevel == 4) {
-        var t = [];
-        var n = [];
-        var b = [];
-        for (var i = 0; i < cubedataObj.tangents.length; i++) {
-          if (i % 4 != 0) continue;
-          t.push(cubedataObj.tangents[i]);
-          n.push(cubedataObj.normals[i]);
-          b.push(cubedataObj.binormals[i]);
-        }
-        cubedataObj = {
-          tangents: t,
-          normals: n,
-          binormals: b
-        }
-      }
+      } 
     }
     //console.log(cubedataObj);
     var radius = PDB.CONFIG.ellipse_radius;
@@ -1552,7 +1522,7 @@ PDB.painter = {
       cubedataObj.normals = [cubedataObj.normals[0], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 4)], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 2)], cubedataObj.normals[Math.floor(cubedataObj.normals.length * 3 / 4)], cubedataObj.normals[cubedataObj.normals.length - 1]];
       cubedataObj.binormals = [cubedataObj.binormals[0], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 4)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 2)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length * 3 / 4)], cubedataObj.binormals[cubedataObj.binormals.length - 1]];
     } else if (!showLow && PDB.loadType == PDB.bigmodel) {
-      if (PDB.structureSizeLevel == 3) {
+      if (PDB.structureSizeLevel >= 3) {
         var t = [];
         var n = [];
         var b = [];
@@ -1567,22 +1537,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } else if (PDB.structureSizeLevel == 4) {
-        var t = [];
-        var n = [];
-        var b = [];
-        for (var i = 0; i < cubedataObj.tangents.length; i++) {
-          if (i % 4 != 0) continue;
-          t.push(cubedataObj.tangents[i]);
-          n.push(cubedataObj.normals[i]);
-          b.push(cubedataObj.binormals[i]);
-        }
-        cubedataObj = {
-          tangents: t,
-          normals: n,
-          binormals: b
-        }
-      }
+      } 
     }
 
 
@@ -1608,7 +1563,7 @@ PDB.painter = {
       cubedataObj.normals = [cubedataObj.normals[0], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 4)], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 2)], cubedataObj.normals[Math.floor(cubedataObj.normals.length * 3 / 4)], cubedataObj.normals[cubedataObj.normals.length - 1]];
       cubedataObj.binormals = [cubedataObj.binormals[0], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 4)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 2)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length * 3 / 4)], cubedataObj.binormals[cubedataObj.binormals.length - 1]];
     } else if (!showLow && PDB.loadType == PDB.bigmodel) {
-      if (PDB.structureSizeLevel == 3) {
+      if (PDB.structureSizeLevel >= 3) {
         var t = [];
         var n = [];
         var b = [];
@@ -1623,22 +1578,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } else if (PDB.structureSizeLevel == 4) {
-        var t = [];
-        var n = [];
-        var b = [];
-        for (var i = 0; i < cubedataObj.tangents.length; i++) {
-          if (i % 4 != 0) continue;
-          t.push(cubedataObj.tangents[i]);
-          n.push(cubedataObj.normals[i]);
-          b.push(cubedataObj.binormals[i]);
-        }
-        cubedataObj = {
-          tangents: t,
-          normals: n,
-          binormals: b
-        }
-      }
+      } 
     }
 
     var color = new THREE.Color('#CCC');
@@ -1724,7 +1664,7 @@ PDB.painter = {
       cubedataObj.normals = [cubedataObj.normals[0], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 4)], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 2)], cubedataObj.normals[Math.floor(cubedataObj.normals.length * 3 / 4)], cubedataObj.normals[cubedataObj.normals.length - 1]];
       cubedataObj.binormals = [cubedataObj.binormals[0], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 4)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 2)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length * 3 / 4)], cubedataObj.binormals[cubedataObj.binormals.length - 1]];
     } else if (!showLow && PDB.loadType == PDB.bigmodel) {
-      if (PDB.structureSizeLevel == 3) {
+      if (PDB.structureSizeLevel >= 3) {
         var t = [];
         var n = [];
         var b = [];
@@ -1739,22 +1679,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } else if (PDB.structureSizeLevel == 4) {
-        var t = [];
-        var n = [];
-        var b = [];
-        for (var i = 0; i < cubedataObj.tangents.length; i++) {
-          if (i % 4 != 0) continue;
-          t.push(cubedataObj.tangents[i]);
-          n.push(cubedataObj.normals[i]);
-          b.push(cubedataObj.binormals[i]);
-        }
-        cubedataObj = {
-          tangents: t,
-          normals: n,
-          binormals: b
-        }
-      }
+      } 
     }
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
     var groupindex = "chain_" + atom.chainname + (showLow ? '_low' : '');
@@ -1836,27 +1761,12 @@ PDB.painter = {
       cubedataObj.normals = [cubedataObj.normals[0], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 4)], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 2)], cubedataObj.normals[Math.floor(cubedataObj.normals.length * 3 / 4)], cubedataObj.normals[cubedataObj.normals.length - 1]];
       cubedataObj.binormals = [cubedataObj.binormals[0], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 4)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 2)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length * 3 / 4)], cubedataObj.binormals[cubedataObj.binormals.length - 1]];
     } else if (!showLow && PDB.loadType == PDB.bigmodel) {
-      if (PDB.structureSizeLevel == 3) {
+      if (PDB.structureSizeLevel >= 3) {
         var t = [];
         var n = [];
         var b = [];
         for (var i = 0; i < cubedataObj.tangents.length; i++) {
           if (i % 2 != 0) continue;
-          t.push(cubedataObj.tangents[i]);
-          n.push(cubedataObj.normals[i]);
-          b.push(cubedataObj.binormals[i]);
-        }
-        cubedataObj = {
-          tangents: t,
-          normals: n,
-          binormals: b
-        }
-      } else if (PDB.structureSizeLevel == 4) {
-        var t = [];
-        var n = [];
-        var b = [];
-        for (var i = 0; i < cubedataObj.tangents.length; i++) {
-          if (i % 4 != 0) continue;
           t.push(cubedataObj.tangents[i]);
           n.push(cubedataObj.normals[i]);
           b.push(cubedataObj.binormals[i]);
@@ -1962,27 +1872,12 @@ PDB.painter = {
       cubedataObj.normals = [cubedataObj.normals[0], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 4)], cubedataObj.normals[Math.floor(cubedataObj.normals.length / 2)], cubedataObj.normals[Math.floor(cubedataObj.normals.length * 3 / 4)], cubedataObj.normals[cubedataObj.normals.length - 1]];
       cubedataObj.binormals = [cubedataObj.binormals[0], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 4)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length / 2)], cubedataObj.binormals[Math.floor(cubedataObj.binormals.length * 3 / 4)], cubedataObj.binormals[cubedataObj.binormals.length - 1]];
     } else if (!showLow && PDB.loadType == PDB.bigmodel) {
-      if (PDB.structureSizeLevel == 3) {
+      if (PDB.structureSizeLevel >= 3) {
         var t = [];
         var n = [];
         var b = [];
         for (var i = 0; i < cubedataObj.tangents.length; i++) {
           if (i % 2 != 0) continue;
-          t.push(cubedataObj.tangents[i]);
-          n.push(cubedataObj.normals[i]);
-          b.push(cubedataObj.binormals[i]);
-        }
-        cubedataObj = {
-          tangents: t,
-          normals: n,
-          binormals: b
-        }
-      } else if (PDB.structureSizeLevel == 4) {
-        var t = [];
-        var n = [];
-        var b = [];
-        for (var i = 0; i < cubedataObj.tangents.length; i++) {
-          if (i % 4 != 0) continue;
           t.push(cubedataObj.tangents[i]);
           n.push(cubedataObj.normals[i]);
           b.push(cubedataObj.binormals[i]);
@@ -3980,6 +3875,10 @@ PDB.painter = {
 
           length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
           // console.log('length:',length);
+		   // console.log(resid);
+		  // if(resid==314){
+			  // console.log(resid);
+		  // }
           PDB.residueGroupObject[chain][resid].len = length;
           if (length < showLengthThreshold) {
             if (PDB.loadType == PDB.bigmodel) {
@@ -4329,6 +4228,9 @@ PDB.painter = {
       for (var resid in residueData[chain]) {
 
         var caid = residueData[chain][resid].caid;
+		if(!PDB.residueGroupObject[chain]){
+			continue;
+		}
         var length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
         PDB.residueGroupObject[chain][resid].len = length;
         if (PDB.residueGroupObject[chain][resid].len < showLengthThreshold) {
