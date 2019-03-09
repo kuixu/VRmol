@@ -1101,6 +1101,22 @@ PDB.tool = {
     maxSlice.innerHTML = PDB.EMMAP.MAX_SLICE;
     var currSlice = document.getElementById("currSlice");
     currSlice.innerHTML = PDB.EMMAP.MIN_SLICE;
+
+    //设置默认map 模式
+    var solidMap = document.getElementById("solidMap");
+    var surfaceMap = document.getElementById("surfaceMap");
+    var meshMap = document.getElementById("meshMap");
+    switch (PDB.EMMAP.TYPE){
+        case 0:
+          solidMap.checked = "checked";
+          break;
+        case 1:
+            surfaceMap.checked = "checked";
+            break;
+        case 2:
+            meshMap.checked = "checked";
+            break;
+    }
   },
   initChainNameFlag: function(chainName, isNomal, chainNum) {
     // console.log(chainNum);

@@ -96,23 +96,70 @@ PDB.controller = {
         if (file.name.endsWith("gz")) {
           w3m.file.getArrayBuffer(file, function(response) {
             var mapId = file.name.split(".")[0];
-            PDB.controller.emmapLoadFromFile(response, "gz", function(emmap) {
-              PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
-              PDB.render.clear(2);
-              PDB.EMMAP.TYPE = 1;
-              if (emmap) {
-                switch (PDB.EMMAP.TYPE) {
-                  case 0:
-                    PDB.painter.showMapSolid(emmap, emmap.threshold);
-                    break;
-                  case 1:
-                    PDB.painter.showMapSurface(emmap, emmap.threshold, false);
-                    break;
-                  case 2:
-                    PDB.painter.showMapSurface(emmap, emmap.threshold, true);
+            var url = API_URL + "/server/api.php?taskid=13&pdbid=" + PDB.pdbId.toUpperCase();
+            if (ServerType !== 2) {
+                url = SERVERURL + "/data/map01.json";
+            }
+
+            PDB.tool.ajax.get(url, function(text) {
+                //PDB.render.clear(2);
+                PDB.MATERIALLIST = [];
+                if (PDB.MATERIALLIST.length == 0) {
+                    for (var i = 1000; i < 1100; i++) {
+                        var material = new THREE.MeshPhongMaterial({
+                            color: new THREE.Color(w3m.rgb[i][0], w3m.rgb[i][1], w3m.rgb[i][2]),
+                            wireframe: false,
+                            side: THREE.DoubleSide
+                        });
+                        PDB.MATERIALLIST.push(material);
+                    }
                 }
-              }
-            });
+                var isJson = PDB.tool.isJsonString(text);
+                if (!isJson) {
+                    PDB.tool.printProgress("the response text is not a json string");
+                    return;
+                }
+                var jsonObj = JSON.parse(text);
+                if (jsonObj.code === 1 && jsonObj.data !== undefined) {
+                    PDB.controller.emmapLoadFromFile(response, "gz", function(emmap) {
+                        PDB.tool.createDensityMapPanel(jsonObj);
+                        var dimension = document.getElementById("dimension");
+                        PDB.DIMENSION = Number(dimension.value);
+                        switch (PDB.DIMENSION) {
+                            case PDB.DIMENSION_X:
+                                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
+                                break;
+                            case PDB.DIMENSION_Y:
+                                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
+                                break;
+                            case PDB.DIMENSION_Z:
+                                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
+                                break;
+                        }
+                        PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                        PDB.render.clear(2);
+                        PDB.EMMAP.TYPE = 1;
+                        if (emmap) {
+                            switch (PDB.EMMAP.TYPE) {
+                                case 0:
+                                    PDB.painter.showMapSolid(emmap, emmap.threshold);
+                                    PDB.map_surface_show = 0;
+                                    break;
+                                case 1:
+                                    PDB.painter.showMapSurface(emmap, emmap.threshold, false);
+                                    PDB.map_surface_show = 1;
+                                    break;
+                                case 2:
+                                    PDB.painter.showMapSurface(emmap, emmap.threshold, true);
+                                    PDB.map_surface_show = 1;
+                            }
+                        }
+                        PDB.tool.changeDensityMapRangeValue(emmap);
+                    });
+                } else {
+                    PDB.tool.printProgress(jsonObj.message);
+                }
+            })
           })
         } else if (file.name.endsWith("mrc")) {
           w3m.file.getArrayBuffer(file, function(response) {
@@ -120,7 +167,7 @@ PDB.controller = {
             PDB.controller.emmapLoadFromFile(response, "mrc", function(emmap) {
               PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
               PDB.render.clear(2);
-              PDB.EMMAP.TYPE = 1;
+              PDB.EMMAP.TYPE = 0;
               if (emmap) {
                 switch (PDB.EMMAP.TYPE) {
                   case 0:
