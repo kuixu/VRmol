@@ -63,7 +63,7 @@ Present structure (PDB code:`1DDB`) with `Tube` style and show its Van der Waals
 <iframe src="https://vrmol.net/index.html?id=1dfb&panelShow=0&mainMode=7&showSurface=1&surfaceOpc=0.5&surfaceType=1"  />
 ```
 
-## Deploy VRmol at your own server
+## Deploy VRmol on your own server
 
   - Download the code into the apache server web directory
   - Set `SERVERURL` as your URL (like https://example.com) at `libs/molecule/PDBCore.js`
@@ -74,6 +74,10 @@ Present structure (PDB code:`1DDB`) with `Tube` style and show its Van der Waals
 
 > If you deploy VRmol in your local server with a prefix URL `http://localhost` or you do not have a setting of `https`, you should delete the `.htaccess` file. While without setting `https`, you would not access the Speech Recognition function.
 
+Server Tools
+  - Linux/Windows/macOS [Apache](https://httpd.apache.org/)
+  - Integretive tool for Linux [LAMP](https://github.com/teddysun/lamp)
+  - Integretive tool for Windowns [WAMP](http://www.wampserver.com/en/)
 
 ## Release Versions
   - [Releases](https://github.com/barrykui/VRmol/releases)
