@@ -39,6 +39,7 @@ VRmol provides two modes:
 ## Framework
 
 The framework of VRmol.
+
 <img src="models/framework.png" width=50%>
 
 ## Screenshot
@@ -113,5 +114,5 @@ VRmol is developed based on [three.js](https://threejs.org) and [WebVR](https://
   - [GLmol.js](https://github.com/biochem-fan/GLmol) - for calculating surface 
   - [Chroma.js](https://github.com/gka/chroma.js) - for color handling
   - [gunzip.min.js](https://github.com/imaya/zlib.js) - for decompress EM map files
-  - [AutoDock vina](http://vina.scripts.edu)
+  - [AutoDock vina](http://vina.scripts.edu)- for Docking Drugs in VR scene
 
