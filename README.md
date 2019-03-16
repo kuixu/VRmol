@@ -13,16 +13,39 @@ VRmol provides two modes:
 - [**VR Mode**](https://vrmol.net/docs/#header-n5340) will guide you to experience VRmol in Virtual Reality environment.
 - [**Desktop Mode**](https://vrmol.net/docs/#header-n5609) will guide you to experience VRmol on the desktop.
 
+### Video Tutorials
+
+- [**Entering VR Scene**](https://vrmol.net/docs/#header-n59) 
+- [**Loading Structure**](https://vrmol.net/docs/#header-n72) 
+- [**Measurement**](https://vrmol.net/docs/#header-n227) 
+- [**Drag Structure elements**](https://vrmol.net/docs/#header-n237) 
+- [**Structure Editing**](https://vrmol.net/docs/#header-n251) 
+- [**Genome Variations**](https://vrmol.net/docs/#header-n259) 
+- [**Interactive Docking**](https://vrmol.net/docs/#header-n267) 
+- [**Entering VR Scene**](https://vrmol.net/docs/#header-n59) 
+- [**Fragmentation  in Desktop mode**](https://vrmol.net/docs/#header-n459)
+- [**Structure Editing  in Desktop mode**](https://vrmol.net/docs/#header-n468)
+- [**Genome Variations  in Desktop mode**](https://vrmol.net/docs/#header-n476)
+- [**Interactive Docking in Desktop mode**](https://vrmol.net/docs/#header-n489)
+
 
 
 ## VR Device requirements
 
  VR devices such as HTC Vive, Oculus Rift, and Microsoft Mix Reality are well-supported by VRmol. More details can be seen at [documentation](https://vrmol.net/docs/#header-n5342).
 
+
+
+## Framework
+
+The framework of VRmol.
+<img src="models/framework.png" width=50%>
+
 ## Screenshot
 
 A screenshot of structure visualization with stereo view.
-![Screen shot](models/screenshot.png)
+<img src="models/screenshot.png" width=80%>
+
 
 
 ## Sharing by URL
@@ -91,4 +114,4 @@ VRmol is developed based on [three.js](https://threejs.org) and [WebVR](https://
   - [Chroma.js](https://github.com/gka/chroma.js) - for color handling
   - [gunzip.min.js](https://github.com/imaya/zlib.js) - for decompress EM map files
   - [AutoDock vina](http://vina.scripts.edu)
-  
+
