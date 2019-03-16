@@ -11,7 +11,7 @@ if(ServerType ===1){
 }else if(ServerType ===2){
     SERVERURL= "https://vrmol.net";
 }
-var API_URL = "https://inano.life.tsinghua.edu.cn";
+var API_URL = "https://vrmol.life.tsinghua.edu.cn";
 PDB = {
 
         DEBUG_MODE:0,
