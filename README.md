@@ -2,7 +2,7 @@
 
 ## Introduction
 
-We leverage the most cutting-edge computational technologies to develop a virtual reality (VR) system - VRmol - that provides the visualization and analysis of macromolecule structures in an infinite virtual environment on the web. VRmol is natively built with WebVR technology, providing all structural analysis functions in a fully immersive, inspiring virtual environment. It is convenient to use, runs on internet and requires no software downloading and installation. And by connecting to a number of cloud-based genomic and drug databases, it provides an integrative platform to perform advanced structural and translational research. It can be freely accessed online by typing [https://VRmol.net](https://VRmol.net?from=github) in local browser. 
+We leverage the most cutting-edge computational technologies to develop a virtual reality (VR) system - VRmol - that provides the visualization and analysis of macromolecule structures in an infinite virtual environment on the web. VRmol is natively built with WebVR technology, providing all structural analysis functions in a fully immersive, inspiring virtual environment. It is convenient to use, runs on internet and requires no software downloading and installation. And by connecting to a number of cloud-based genomic and drug databases, it provides an integrative platform to perform advanced structural and translational research. It can be freely accessed online by typing [https://VRmol.net](https://VRmol.net?from=github) in VR-supported browser. 
 
 
 ## Documentation
@@ -21,7 +21,7 @@ VRmol provides two modes:
 - [**Drag Structure elements**](https://vrmol.net/docs/#header-n237) 
 - [**Structure Editing**](https://vrmol.net/docs/#header-n251) 
 - [**Genome Variations**](https://vrmol.net/docs/#header-n259) 
-- [**Interactive Docking**](https://vrmol.net/docs/#header-n267) 
+- [**Interactive Docking**](https://vrmol.net/docs/#header-n267) supported
 - [**Entering VR Scene**](https://vrmol.net/docs/#header-n59) 
 - [**Fragmentation  in Desktop mode**](https://vrmol.net/docs/#header-n459)
 - [**Structure Editing  in Desktop mode**](https://vrmol.net/docs/#header-n468)
