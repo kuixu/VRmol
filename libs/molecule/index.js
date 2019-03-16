@@ -98,12 +98,7 @@ if (location.search) {
     PDB.isShowSurface = showSurface;
   }
 
-  if (!isNaN(colorMode)) {
-    w3m.config.color_mode_main = colorMode;
-    for (var i in w3m.mol) {
-      w3m.tool.updateMolColorMap(i);
-    }
-  }
+
   if (rotation == 0) {
     PDB.ROTATION_DIRECTION = 0;
     PDB.ROTATION_START_FLAG = true;
@@ -167,7 +162,10 @@ PDB.controller.requestRemote(PDB.pdbId);
 PDB.controller.switchColorBymode("607");
 //PDB.trigger = PDB.TRIGGER_EVENT_DRAG;
 //PDB.selection_mode= PDB.SELECTION_DRUG;
-
+//
+if (!isNaN(colorMode)) {
+    PDB.controller.switchColorBymode(colorMode);
+}
 //set default voice language
 if (voiceControl !== undefined) {
   voiceControl.language = "English";
