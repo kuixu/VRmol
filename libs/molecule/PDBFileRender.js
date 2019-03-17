@@ -2022,6 +2022,9 @@ PDB.render = {
     }
     //
     var offset = camera.position;
+	if(!PDB.offset){
+		PDB.offset = offset.clone();
+	}
     var movenlength = Math.sqrt(Math.pow(offset.x - PDB.offset.x, 2) + Math.pow(offset.y - PDB.offset.y, 2) + Math.pow(offset.z - PDB.offset.z, 2));
     if (movenlength > 0.01) { //0.01, speci
       var vec = {

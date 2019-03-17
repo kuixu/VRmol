@@ -80,7 +80,7 @@ if (location.search) {
 	 //fragment = fragment.replace(/\]/g,'}');
 	  //fragment = fragment.replace(/\[/g,'{');
 	  fragment = eval("(["+fragment+"])");
-	  console.log(fragment); 
+	  //console.log(fragment); 
   }
   
   if (PDB.panelShow == PDB.config.panelOpen) {

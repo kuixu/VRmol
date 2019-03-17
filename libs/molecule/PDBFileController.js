@@ -1376,7 +1376,7 @@ PDB.controller = {
         PDB.fragmentList = {
           0: obj
         };
-        console.log(PDB.fragmentList);
+        //console.log(PDB.fragmentList);
         PDB.painter.showFragmentsResidues();
       }
     }
@@ -1614,6 +1614,7 @@ PDB.controller = {
         }
         break;
     }
+	//console.log(html);
     p_seletedPanel.innerHTML = html;
     this.bindSelectedAndDeleteSpan();
   },
@@ -1838,7 +1839,10 @@ PDB.controller = {
     PDB.loader.load(name, function() {
       //PDB.painter.generateGroupPosition();
 	  PDB.tool.initFragmentInfo();
-	  console.log(PDB.fragmentList);
+	  //console.log(PDB.fragmentList);
+	  if(PDB.fragmentList&&Object.keys(PDB.fragmentList).length>0){
+		  PDB.controller.initSelectedPanel(PDB.DRAWSTYLE_FRAGMENT);
+	  }
       scope.drawGeometry(PDB.config.mainMode);
       scope.drawGeometry(PDB.config.hetMode);
       if (PDB.isShowSurface == PDB.config.openSurface) {

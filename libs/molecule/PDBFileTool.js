@@ -1842,7 +1842,7 @@ PDB.tool = {
 				PDB.fragmentList[ii] = obj;
 				ii++;
 		  }
-		  console.log(PDB.fragmentList[ii]);
+		  //console.log(PDB.fragmentList[ii]);
 	  }
 	  
   }
