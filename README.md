@@ -76,15 +76,21 @@ The options and their data types supported in VRmol are shown in the table below
 
 ### Examples for API 
 
-Present structure (PDB code:`1MBS`) with `Ball & Rod` style and hide the menu panel.
+
+  1. Present structure (PDB code:`1MBS`) with `Ball & Rod` style and hide the menu panel.  [Try it](https://vrmol.net/index.html?id=1mbs&panelShow=0&mainMode=6)
 ```html
 <iframe src="https://vrmol.net/index.html?id=1mbs&panelShow=0&mainMode=6" />
 ```
 
 
-Present structure (PDB code:`1DDB`) with `Tube` style and show its Van der Waals surface with transparency (0.5), and hide the menu panel.
+  2. Present structure (PDB code:`1DDB`) with `Tube` style and show its Van der Waals surface with transparency (0.5), and hide the menu panel. [Try it](https://vrmol.net/index.html?id=1dfb&panelShow=0&mainMode=7&showSurface=1&surfaceOpc=0.5&surfaceType=1)
 ```html
 <iframe src="https://vrmol.net/index.html?id=1dfb&panelShow=0&mainMode=7&showSurface=1&surfaceOpc=0.5&surfaceType=1"  />
+```
+
+  3. Present structure (PDB code:`1F5X`) with the 7th residue labeled with `Ball & Rod` style in VR mode. [Try it](https://vrmol.net/?id=1f5x&fragment=['a',7,6]&vmode=vr)
+```html
+<iframe src="https://vrmol.net/?id=1f5x&fragment=['a',7,6]&vmode=vr"  />
 ```
 
 ## Deploy VRmol on your own server
