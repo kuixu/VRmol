@@ -57,7 +57,7 @@ if (location.search) {
     var k_v_array = k_v.split('=');
     kv[k_v_array[0]] = decodeURIComponent(k_v_array[1]);
   });
-  var surfaceOpc, surfaceType, surfaceMode, showSurface, colorMode, rotation, travel, tcga, vmode;
+  var surfaceOpc, surfaceType, surfaceMode, showSurface, colorMode, rotation, travel, tcga, vmode,fragment;
   w3m_isset(kv.id) ? PDB.pdbId = kv.id : void(0);
   w3m_isset(kv.panelShow) ? PDB.panelShow = parseInt(kv.panelShow) : void(0);
   w3m_isset(kv.mainMode) ? PDB.config.mainMode = parseInt(kv.mainMode) : void(0);
@@ -75,7 +75,14 @@ if (location.search) {
   w3m_isset(kv.tcga) ? tcga = parseInt(kv.tcga) : void(0);
 
   w3m_isset(kv.vmode) ? vmode = kv.vmode : "vr";
-
+  w3m_isset(kv.fragment) ? fragment = kv.fragment : "nofragment";
+  if(fragment){
+	 //fragment = fragment.replace(/\]/g,'}');
+	  //fragment = fragment.replace(/\[/g,'{');
+	  fragment = eval("(["+fragment+"])");
+	  //console.log(fragment); 
+  }
+  
   if (PDB.panelShow == PDB.config.panelOpen) {
     var panels = document.getElementsByClassName("panel");
     panels.searchDiv.style.display = 'block';
