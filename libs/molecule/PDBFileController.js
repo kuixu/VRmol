@@ -1814,7 +1814,15 @@ PDB.controller = {
       PDB.residueGroupObject = {};
     }
     // console.log(PDB.residueGroupObject);
-    PDB.CHANGESTYLE = 0; //切换mode，放弃fragment
+	// if(){
+		
+	// }
+	if(fragment){
+		PDB.CHANGESTYLE = PDB.DRAWSTYLE_FRAGMENT; //切换mode,fragment mode
+	}else{
+		PDB.CHANGESTYLE = PDB.DRAWSTYLE_DEFAULT; //切换mode，放弃fragment
+	}
+    
     var scope = this;
     var input = document.getElementById("search_text");
     input.value = name;
@@ -1829,6 +1837,8 @@ PDB.controller = {
     //PDB.currentType = -1;
     PDB.loader.load(name, function() {
       //PDB.painter.generateGroupPosition();
+	  PDB.tool.initFragmentInfo();
+	  console.log(PDB.fragmentList);
       scope.drawGeometry(PDB.config.mainMode);
       scope.drawGeometry(PDB.config.hetMode);
       if (PDB.isShowSurface == PDB.config.openSurface) {
@@ -1916,12 +1926,12 @@ PDB.controller = {
     if (type >= PDB.HET) {
       PDB.painter.showHet(PDB.pdbId);
     } else {
-      if (PDB.CHANGESTYLE != 1 && PDB.CHANGESTYLE != 0 && PDB.CHANGESTYLE != 6) {
+      if (PDB.CHANGESTYLE != PDB.DRAWSTYLE_FRAGMENT && PDB.CHANGESTYLE != PDB.DRAWSTYLE_DEFAULT && PDB.CHANGESTYLE != 6) {
         PDB.painter.showAllResiduesBySelect();
-      } else if (PDB.CHANGESTYLE == 1) { // has fragment
+      } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_FRAGMENT) { // has fragment
         PDB.painter.showFragmentsResidues();
 
-      } else if (PDB.CHANGESTYLE == 0) { //no style
+      } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_DEFAULT) { //no style
         PDB.painter.showAllResidues(type);
       }
     }

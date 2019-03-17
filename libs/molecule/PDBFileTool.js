@@ -1802,5 +1802,48 @@ PDB.tool = {
       return str;
     }
 
+  },
+  initFragmentInfo:function(){
+	  PDB.fragmentList = {};
+	  var ii = 0;
+	  if(fragment){
+		  for(var i in fragment){
+			  var frag = fragment[i];
+			  if(frag.length<2){
+				  continue;				  
+			  }
+			  if(frag.length==2){
+				  continue;		
+			  }
+			  var start,end,reptype;
+			  if(frag.length==4&&frag[1]!=frag[2]){
+				  if(frag[2]<frag[1]){
+					  var te = frag[2];
+					  frag[2] = frag[1];
+					  frag[1] = te;
+				  }
+				  start   = w3m.mol[PDB.pdbId].residueData[frag[0]][frag[1]];
+				  end     = w3m.mol[PDB.pdbId].residueData[frag[0]][frag[2]];
+				  reptype = frag[3];
+			  }else if(frag.length==3){
+				  
+				  start   = w3m.mol[PDB.pdbId].residueData[frag[0]][frag[1]];
+				  end     = w3m.mol[PDB.pdbId].residueData[frag[0]][frag[1]];
+				  reptype = frag[2];
+				  
+			  }
+			  
+			  var obj = {
+				  start: start,
+				  end: end,
+				  issel: true,
+				  reptype: reptype
+				};
+				PDB.fragmentList[ii] = obj;
+				ii++;
+		  }
+		  console.log(PDB.fragmentList[ii]);
+	  }
+	  
   }
 }
