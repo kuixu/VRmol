@@ -21,7 +21,7 @@ VRmol provides two modes:
 - [**Drag Structure elements**](https://vrmol.net/docs/#header-n237) 
 - [**Structure Editing**](https://vrmol.net/docs/#header-n251) 
 - [**Genome Variations**](https://vrmol.net/docs/#header-n259) 
-- [**Interactive Docking**](https://vrmol.net/docs/#header-n267) supported
+- [**Interactive Docking**](https://vrmol.net/docs/#header-n267) 
 - [**Entering VR Scene**](https://vrmol.net/docs/#header-n59) 
 - [**Fragmentation  in Desktop mode**](https://vrmol.net/docs/#header-n459)
 - [**Structure Editing  in Desktop mode**](https://vrmol.net/docs/#header-n468)
