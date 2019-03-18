@@ -72,6 +72,8 @@ The options and their data types supported in VRmol are shown in the table below
 |surfaceType|Integer|Van der Waals surface:1, solvent excluded surface:2, solvent accessible surface:3, molecular surface:4|Surface type|
 |colorMode|Integer|Element:601, Residue:602, Secondary Structure:603, Chain:604, Representation:605, B-Factor:606", "Spectrum:607, Chain Spectrum:608, Hydrophobicity:609|Color schemes|
 |travel|Integer|Show:1,Hide:0|Enter travel mode or not|
+|vmode|String|desktop,vr|Visualization Mode|
+|fragment|String|['a', 7, 6]|Fragmentation, label the 7th residue with `Ball & Rod` style|
 
 
 ### Examples for API 
