@@ -115,6 +115,23 @@ Server Tools
   - [Releases](https://github.com/barrykui/VRmol/releases)
   - [v0.1](https://github.com/barrykui/VRmol/tree/v0.1)
 
+## Citation
+
+```
+@article {Xu589366,
+	author = {Xu, Kui and Liu, Nan and Xu, Jingle and Guo, Chunlong and Zhao, Lingyun and Wang, Hong-wei and Zhang, Qiangfeng Cliff},
+	title = {VRmol: an Integrative Cloud-Based Virtual Reality System to Explore Macromolecular Structure},
+	elocation-id = {589366},
+	year = {2019},
+	doi = {10.1101/589366},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2019/03/27/589366.1},
+	eprint = {https://www.biorxiv.org/content/early/2019/03/27/589366.1.full.pdf},
+	journal = {bioRxiv}
+}
+
+```
+
 ## Acknowledgments
 
 VRmol is developed based on [three.js](https://threejs.org) and [WebVR](https://webvr.rocks/), and we would like to express our special thanks to those open-source projects below.
