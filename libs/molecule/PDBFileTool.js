@@ -11,9 +11,11 @@ PDB.tool = {
       return defaultVal;
     }
   },
+	
   midPoint: function(point1, point2) {
     return new THREE.Vector3((point1.x + point2.x) / 2, (point1.y + point2.y) / 2, (point1.z + point2.z) / 2);
   },
+	
   MaxEdge: function() {
     var limit = w3m.global.limit;
     var xedge = limit.x[1] - limit.x[0];
@@ -22,6 +24,7 @@ PDB.tool = {
     var medge = xedge > yedge ? xedge : yedge;
     return medge > zedge ? medge : zedge;
   },
+	
   getMainAtom: function(molid, id) {
     var scope = this;
     var atom = w3m.mol[molid].atom.main[id];
@@ -30,6 +33,7 @@ PDB.tool = {
     }
     return undefined;
   },
+	
   // before sphere visualization 2018-08-16
   rotation0: function(groupIndexs, type) {
     if (type === 0) {
@@ -52,6 +56,7 @@ PDB.tool = {
       })
     }
   },
+	
   getMainResAtomsByAtom: function(atom) {
     var key = atom.chainname + "_" + atom.resid;
     var molid = PDB.pdbId;
@@ -86,6 +91,7 @@ PDB.tool = {
     }
     return atoms;
   },
+	
   getMainChainAtomsByAtom: function(atom) {
     var key = atom.chainname;
     var molid = PDB.pdbId;
@@ -120,6 +126,7 @@ PDB.tool = {
     }
     return atoms;
   },
+	
   getHetAtom: function(molid, id) {
     var scope = this;
     var atom = w3m.mol[molid].atom.het[id];
@@ -130,6 +137,7 @@ PDB.tool = {
     }
     return undefined;
   },
+	
   getAtomById: function(molid, atom, structure) {
     var scope = this;
     var atomID = atom[1];
@@ -141,11 +149,7 @@ PDB.tool = {
     var b_factor = atom[7];
     var coe = atom[8];
     var atomType = atom[9];
-
-
-
     var radius = w3m.geometry["radius"][atomType];
-
     var pos = new THREE.Vector3(xyz[0], xyz[1], xyz[2]);
     // Center the geometry
     var offset = PDB.GeoCenterOffset;
@@ -173,18 +177,21 @@ PDB.tool = {
 
     return atomObj;
   },
+	
   equalAtom: function(atom1, atom2) {
     if (atom1.id === atom2.id) {
       return true;
     }
     return false;
   },
+	
   getColorByAtomType: function(atomType) {
     var X_color_index = w3m.color['element'][atomType];
     var X_color = w3m.rgb[X_color_index];
     var color = new THREE.Color(X_color[0], X_color[1], X_color[2]);
     return color;
   },
+	
   getColorByIndex: function(molid, id, structure) {
     var rId = w3m.mol[molid].color[structure][id];
     if (rId) {
@@ -197,11 +204,13 @@ PDB.tool = {
     }
 
   },
+	
   getColorByColorIndex: function(colorIndex) {
     var X_color = w3m.rgb[colorIndex];
     var color = new THREE.Color(X_color[0], X_color[1], X_color[2]);
     return color;
   },
+	
   getMaterialsByAtomId: function(id) {
     var colorId = w3m.mol[PDB.pdbId].color['main'][id];
     //if(materialsId[colorId]==undefined){
@@ -212,6 +221,7 @@ PDB.tool = {
 
     //}
   },
+	
   writeTextFile: function(afilename, output) {
     var outfile = new debugout();
     outfile.logFilename = afilename;
@@ -222,6 +232,7 @@ PDB.tool = {
     // txtFile.writeln(output);
     // txtFile.close();
   },
+	
   showMask: function() {
     var scope = this;
     var height = document.body.scrollHeight;
@@ -244,17 +255,20 @@ PDB.tool = {
     weChatPop.style.zIndex = "9999";
     weChatPop.style.opacity = "1";
   },
+	
   hideMask: function() {
     var weChatMask = document.getElementById("weChatMask");
     var weChatPop = document.getElementById("weChatPop");
     weChatMask.style.display = "none";
     weChatPop.style.display = "none";
   },
+	
   getFirstAtomIdByChain: function(chainName) {
     var first_resid = Object.keys(w3m.mol[PDB.pdbId].rep[chainName])[0];
     return this.getFirstAtomByResidueId(first_resid, chainName)[0];
 
   },
+	
   getFirstAtomByResidueId: function(residueId, chainName) {
     var atoms = w3m.mol[PDB.pdbId].atom.main;
     var atom = [];
@@ -269,6 +283,7 @@ PDB.tool = {
     }
     return atom;
   },
+	
   getLastAtomByResidueId: function(residueId, chainName) {
     var atoms = w3m.mol[PDB.pdbId].atom.main;
     var atom = [];
@@ -287,8 +302,6 @@ PDB.tool = {
         pre_residueId = atoms[atomId][5];
         // }
       }
-
-
     }
     return atom;
   },
@@ -306,6 +319,7 @@ PDB.tool = {
     }
     return atom;
   },
+	
   getCAAtomByStartAtomId: function(atomId) { //α炭原子ID
     var atoms = w3m.mol[PDB.pdbId].atom.main;
     var atom = atoms[atomId];
@@ -319,6 +333,7 @@ PDB.tool = {
     }
     return atom;
   },
+	
   getCAAtomByResidueId: function(residueId, chainName) {
     var scope = this;
     var atoms = w3m.mol[PDB.pdbId].atom.main;
@@ -335,6 +350,7 @@ PDB.tool = {
     var atomObj = scope.getMainAtom(PDB.pdbId, atom[1]);
     return atomObj;
   },
+	
   getMousePos: function(event) {
     var e = event || window.event;
     var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
@@ -346,13 +362,7 @@ PDB.tool = {
       'y': y
     };
   },
-  /**
-   * 获取空间三个坐标点所成的角度
-   * @param pointAngle 中心点
-   * @param pointEdge1
-   * @param pointEdge2
-   * @returns {{}} 返回角度数
-   */
+ 
   getAngleMeasurement: function(pointAngle, pointEdge1, pointEdge2) {
     var ms = {};
     var uAB = vec3.unit(vec3.point(pointAngle, pointEdge1)),
@@ -363,12 +373,7 @@ PDB.tool = {
     ms.label_xyz = xyz;
     return ms;
   },
-  /**
-   * 获取两个atom的中间点
-   * @param preAtomId 前一个点的Atom ID
-   * @param nextAtomId 后一个点的Atom ID
-   * @returns {{}} 返回中间点坐标Vector3
-   */
+  
   getMidPoint: function(molid, preAtomId, nextAtomId) {
     var offset = PDB.GeoCenterOffset; //偏移量
     var preAtom = w3m.mol[molid].atom.main[preAtomId];
@@ -380,6 +385,7 @@ PDB.tool = {
     } else return undefined;
 
   },
+	
   getColorForPercentage: function(pct) {
     var percentColors = [{
         pct: 0.0,
@@ -426,6 +432,7 @@ PDB.tool = {
     return new THREE.Color(color.r, color.g, color.b);
     // or output as hex if preferred
   },
+	
   colorIntersectObjectRed: function(obj, value) {
     if (obj.type === "Group") {
       for (var child in obj.children) {
@@ -439,6 +446,7 @@ PDB.tool = {
       }
     }
   },
+	
   colorIntersectObjectBlue: function(obj, value) {
     if (obj.type === "Group") {
       for (var child in obj.children) {
@@ -452,6 +460,7 @@ PDB.tool = {
       }
     }
   },
+	
   colorIntersectObjectRed0: function(obj, value) {
     if (obj.type === "Group") {
       for (var child in obj.children) {
@@ -462,6 +471,7 @@ PDB.tool = {
       obj.material.emissive.r = value;
     }
   },
+	
   colorIntersectObjectBlue0: function(obj, value) {
     if (obj.type === "Group") {
       for (var child in obj.children) {
@@ -472,6 +482,7 @@ PDB.tool = {
       obj.material.emissive.b = value;
     }
   },
+	
   ajax: (function() {
     var io = new XMLHttpRequest(),
       id = '',
@@ -512,6 +523,7 @@ PDB.tool = {
       }
     return io;
   })(),
+	
   checkPointOfSpecialPlane: function(point) {
     var plane = PDB.PLANE;
     var result = plane.a * point.x + plane.a * point.x + plane.b * point.y + plane.c * point.z + plane.d;
@@ -520,6 +532,7 @@ PDB.tool = {
     }
     return false;
   },
+	
   generatePlane: function(point1, point2, point3) {
     var a, b, c, d;
     a = ((point2.y - point1.y) * (point3.z - point1.z) - (point2.z - point1.z) * (point3.y - point1.y));
@@ -533,6 +546,7 @@ PDB.tool = {
       d: d
     };
   },
+	
   isBonded: function(at1, at2) {
     var minlength2 = 0.5 * 0.5;
     var maxlength2 = 1.9 * 1.9;
@@ -553,6 +567,7 @@ PDB.tool = {
       return PDB.BOND_TYPE_NONE;
     }
   },
+	
   backToInitialPositionForVr: function() {
     for (var i in PDB.GROUP_STRUCTURE_INDEX) {
       PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.copy(new THREE.Vector3(0, 0, 0));
@@ -570,22 +585,20 @@ PDB.tool = {
         };
       }
     }
-
-
     for (var resid in w3m.mol[PDB.pdbId].residueData) {
       PDB.GROUP['chain_' + resid].position.copy(new THREE.Vector3(0, 0, 0));
       PDB.GROUP['chain_' + resid].rotation.set(0, 0, 0);
     }
-
     PDB.painter.repeatPainter();
-
   },
+	
   matchSurfaceAndMainGroupLocationForVR: function(surfaceGroup, mainGroup) {
     if (surfaceGroup instanceof THREE.Group && mainGroup instanceof THREE.Group) {
       surfaceGroup.position.copy(mainGroup.position);
       surfaceGroup.rotation.copy(mainGroup.rotation);
     }
   },
+	
   generateButton: function(parent, text, value, className) {
     var b_ = document.createElement("button");
     b_.innerHTML = text;
@@ -594,12 +607,14 @@ PDB.tool = {
     parent.appendChild(b_);
     return b_;
   },
+	
   generateColorPanel: function(parent) {
     var input = document.createElement("input");
     input.className = "simple_color";
     input.value = "#3366cc";
     parent.appendChild(input);
   },
+	
   generateLabel: function(parent, text, className) {
     var b_ = document.createElement("label");
     b_.innerHTML = text;
@@ -607,6 +622,7 @@ PDB.tool = {
     parent.appendChild(b_);
     parent.appendChild(document.createElement("br"));
   },
+	
   generateSpan: function(parent, id, className) {
     var span = document.createElement("span");
     span.className = className;
@@ -615,6 +631,7 @@ PDB.tool = {
     parent.appendChild(document.createElement("br"));
     return span;
   },
+	
   generateALink: function(parent, id, text, link, className) {
     var aLink = document.createElement("a");
     var node = document.createTextNode(text);
@@ -627,6 +644,7 @@ PDB.tool = {
     // parent.appendChild(document.createElement("br"));
     return aLink;
   },
+	
   generateDocklingLink: function(parent, id, text, link, dbname) {
     var aLink = document.createElement("a");
     var node = document.createTextNode(text);
@@ -634,7 +652,6 @@ PDB.tool = {
     aLink.appendChild(node);
     aLink.id = id;
     aLink.addEventListener('click', function() {
-
       //docking move
       PDB.DRUGMOVE = true;
       PDB.drugMoveTime = new Date();
@@ -671,7 +688,7 @@ PDB.tool = {
             modelSpan.innerHTML = "";
           }
 
-          //停止移动drug
+          //stop move drug
           PDB.DRUGMOVE = false;
           PDB.tool.generateLabel(modelSpan, "ModelList &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score", "");
           for (var i in jsonObj.model_list) {
@@ -692,7 +709,7 @@ PDB.tool = {
                 //PDB.tool.generateDrugMigrationPath();
               });
             });
-            //创建 BR
+            //add BR
             var br = document.createElement("br");
             modelSpan.appendChild(br);
           }
@@ -702,32 +719,34 @@ PDB.tool = {
     parent.appendChild(aLink);
     return aLink;
   },
+	
   setFaceColor: function(geometry, posObj) {
     var f0 = (posObj.y * posObj.width + posObj.x) * 2;
     var f1 = f0 + 1;
     geometry.faces[f0].materialIndex = posObj.colorIndex;
     geometry.faces[f1].materialIndex = posObj.colorIndex;
   },
+	
   toHumanByte: function(limit) {
     var size = "";
-    if (limit < 0.1 * 1024) { //如果小于0.1KB转化成B
+    if (limit < 0.1 * 1024) { //to B
       size = limit.toFixed(2) + "B";
-    } else if (limit < 0.1 * 1024 * 1024) { //如果小于0.1MB转化成KB
+    } else if (limit < 0.1 * 1024 * 1024) { //to KB
       size = (limit / 1024).toFixed(2) + "KB";
-    } else if (limit < 0.1 * 1024 * 1024 * 1024) { //如果小于0.1GB转化成MB
+    } else if (limit < 0.1 * 1024 * 1024 * 1024) { //to MB
       size = (limit / (1024 * 1024)).toFixed(2) + "MB";
-    } else { //其他转化成GB
+    } else { //to GB
       size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB";
     }
-
     var sizestr = size + "";
     var len = sizestr.indexOf("\.");
     var dec = sizestr.substr(len + 1, 2);
-    if (dec == "00") { //当小数点后为00时 去掉小数部分
+    if (dec == "00") { //remove 00
       return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
     }
     return sizestr;
   },
+	
   setProgressBar: function(value, max) {
     var progress = document.getElementById("progress");
     if (progress.style.display == "none"){
@@ -737,26 +756,32 @@ PDB.tool = {
     progress.max = max;
 
   },
+	
   printProgress: function(msg) {
     var progmsg = document.getElementById("tip");
     progmsg.innerHTML = msg;
   },
+	
   getValueByPercent: function(min, max, percent) {
     return ((max - min) / 100) * percent + min;
   },
+	
   getPercentByValue: function(min, max, curr) {
     var perValue = (max - min) / 100;
     return Math.floor((curr - min) / perValue);
   },
+	
   backToInitialPositonForDesktop: function() {
     camera.position.set(PDB.cameraPosition.x, PDB.cameraPosition.y, PDB.cameraPosition.z);
   },
+	
   getAtomInfoPosition: function(formPos, toPos) {
     var x = (3 * formPos.x + toPos.x) / 4;
     var y = (3 * formPos.y + toPos.y) / 4;
     var z = (3 * formPos.z + toPos.z) / 4;
     return new THREE.Vector3(x, y, z);
   },
+	
   isJsonString: function(str) {
     try {
       if (typeof JSON.parse(str) == "object") {
@@ -765,6 +790,7 @@ PDB.tool = {
     } catch (e) {}
     return false;
   },
+	
   createDensityMapMenuForVR: function(jsonObj) {
     var color = 0xa345;
     limit = w3m.global.limit;
@@ -786,6 +812,7 @@ PDB.tool = {
       PDB.drawer.drawTextKB(PDB.GROUP_MENU_DENSITYMAP, new THREE.Vector3(x, y - 3 * 0.2, z), jsonObj.message, jsonObj.message, color, 135);
     }
   },
+	
   createDensityMapPanel: function(jsonObj) {
     if (jsonObj.code === 1 && jsonObj.data !== undefined) {
       var scope = this;
@@ -942,7 +969,7 @@ PDB.tool = {
         PDB.tool.showDestinyMap();
       });
 
-      //显隐slice
+      //show or hide slice
       var showSlice = document.getElementById("showSlice");
       showSlice.addEventListener('click', function(e) {
         PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
@@ -959,7 +986,7 @@ PDB.tool = {
         }
       });
 
-      //显隐slice
+      //show or hide slice
       var showMap = document.getElementById("showMap");
       showMap.addEventListener('click', function(e) {
         if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
@@ -983,7 +1010,7 @@ PDB.tool = {
         }
       });
 
-      //滑动slice控件调用的方法
+      //bar slice
       var sliceRange = document.getElementById("sliceRange");
       sliceRange.addEventListener('change', function(e) {
         var emmap = PDB.EMMAP.DATA;
@@ -1055,6 +1082,7 @@ PDB.tool = {
       });
     }
   },
+	
   showDestinyMap: function() {
     if (PDB.EMMAP.TYPE === 0) {
       PDB.render.clearGroupIndex(PDB.GROUP_MAP);
@@ -1079,6 +1107,7 @@ PDB.tool = {
       PDB.map_surface_show = 1;
     }
   },
+	
   changeDensityMapRangeValue: function(emmap) {
     //threshold
     var thresholdRange = document.getElementById("thresholdRange");
@@ -1102,7 +1131,7 @@ PDB.tool = {
     var currSlice = document.getElementById("currSlice");
     currSlice.innerHTML = PDB.EMMAP.MIN_SLICE;
 
-    //设置默认map 模式
+    //default map
     var solidMap = document.getElementById("solidMap");
     var surfaceMap = document.getElementById("surfaceMap");
     var meshMap = document.getElementById("meshMap");
@@ -1118,14 +1147,16 @@ PDB.tool = {
             break;
     }
   },
+	
   initChainNameFlag: function(chainName, isNomal, chainNum) {
     // console.log(chainNum);
     //$("#chainNumThreshold").append("<button class=\"labelPDB chainBtn"+(isNomal?" chainSelected":"")+"\" name=\"chainName\" id=\"chain_"+chainName+"\">"+chainNum+":"+chainName+"</button>&nbsp;");
-
   },
+	
   clearChainNameFlag: function() {
     //$("#chainNumThreshold").html("");
   },
+	
   bindAllChainEvent: function(type, allChainNum) {
     $(".chainBtn").bind('click', function(e) {
       var chainInfo = $("#" + e.target.id).html().split(":");
@@ -1136,8 +1167,7 @@ PDB.tool = {
           if ($($(".chainBtn")[i]).hasClass('chainSelected')) {
             continue;
           } else {
-            //重新画未正常初始化的链
-            // console.log("重新画"+);
+            //re-draw
             var chain_ = $(".chainBtn")[i].id;
             var chain = chain_.split("_")[1];
             PDB.render.clearGroupIndex(chain_);
@@ -1150,8 +1180,7 @@ PDB.tool = {
       } else if (chainNum < PDB.initChainNumThreshold) {
         for (var i = PDB.initChainNumThreshold - 1; i > chainNum - 1; i--) {
           if ($($(".chainBtn")[i]).hasClass('chainSelected')) {
-            //重新画未正常初始化的链
-            // console.log("重新画"+);
+            //re-draw
             var chain_ = $(".chainBtn")[i].id;
             var chain = chain_.split("_")[1];
             PDB.render.clearGroupIndex(chain_);
@@ -1168,6 +1197,7 @@ PDB.tool = {
       PDB.initChainNumThreshold = chainNum;
     })
   },
+	
   getRealVectorForRepeatPainter: function(vec) {
     for (var chain in PDB.residueGroupObject) {
       for (var resid in PDB.residueGroupObject[chain]) {
@@ -1178,6 +1208,7 @@ PDB.tool = {
     }
     PDB.painter.repeatPainter();
   },
+	
   rotateAboutWorldAxis: function(vec, axis, angle) {
     var rotationMatrix = new THREE.Matrix4();
     rotationMatrix.makeRotationAxis(axis.normalize(), angle);
@@ -1186,6 +1217,7 @@ PDB.tool = {
     return new THREE.Vector3(newPos.x, newPos.y, newPos.z);
 
   },
+	
   freshAllResidueGroupObject: function(angle) {
     PDB.nowRotateAngle = PDB.nowRotateAngle + angle;
     if (Math.abs(PDB.nowRotateAngle) >= PDB.rotateAngleThreshold) {
@@ -1236,6 +1268,7 @@ PDB.tool = {
     }
 
   },
+	
   freshOneVector: function(vector, angle) {
 
     if (angle.x && angle.x != 0) {
@@ -1255,10 +1288,11 @@ PDB.tool = {
     return vector;
 
   },
+	
   getVectorLength: function(vector) {
     return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2) + Math.pow(vector.z, 2));
   },
-  //8. 对tool函数的rotation方法进行修改，添加旋转计算坐标逻辑，如下箭头指向行
+	
   rotation: function(groupIndexs, type) {
     PDB.tool.rotation_y(groupIndexs, type);
   },
@@ -1271,7 +1305,7 @@ PDB.tool = {
           group.rotation.x = group.rotation.x - 0.005;
         }
       });
-      scope.freshAllResidueGroupObject(-0.005); //转动-0.005度<-------------
+      scope.freshAllResidueGroupObject(-0.005); //-0.005<-------------
     } else if (type === 1) {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
@@ -1279,9 +1313,10 @@ PDB.tool = {
           group.rotation.x = group.rotation.x + 0.005;
         }
       });
-      scope.freshAllResidueGroupObject(0.005); //转动0.005度<---------------
+      scope.freshAllResidueGroupObject(0.005); //0.005<---------------
     }
   },
+	
   rotation_y: function(groupIndexs, type) {
     var scope = this;
     if (type === 0) {
@@ -1291,7 +1326,7 @@ PDB.tool = {
           group.rotation.y = group.rotation.y - 0.005;
         }
       });
-      scope.freshAllResidueGroupObject(-0.005); //转动-0.005度<-------------
+      scope.freshAllResidueGroupObject(-0.005); //-0.005<-------------
     } else if (type === 1) {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
@@ -1299,9 +1334,10 @@ PDB.tool = {
           group.rotation.y = group.rotation.y + 0.005;
         }
       });
-      scope.freshAllResidueGroupObject(0.005); //转动0.005度<---------------
+      scope.freshAllResidueGroupObject(0.005); //0.005<---------------
     }
   },
+	
   rotation_z: function(groupIndexs, type) {
     var scope = this;
     if (type === 0) {
@@ -1322,6 +1358,7 @@ PDB.tool = {
       scope.freshAllResidueGroupObject(0.005); //转动0.005度<---------------
     }
   },
+	
   saveString: function(text, filename) {
     var blob = new Blob([text], {
       type: 'text/plain'
@@ -1333,6 +1370,7 @@ PDB.tool = {
     link.download = filename || 'data.obj';
     link.click();
   },
+	
   generateDrugMigrationPath: function(limit) {
     var offset = "";
     if (!limit) {
@@ -1370,6 +1408,7 @@ PDB.tool = {
     var t = new THREE.Vector3(0 - offset.x, 0 - offset.y, 0 - offset.z);
     PDB.GROUP[PDB.GROUP_DRUG].position.copy(t);
   },
+	
   migrationDrug: function() {
     if (PDB.GROUP[PDB.GROUP_DRUG] && PDB.GROUP[PDB.GROUP_DRUG].children.length > 0) {
       if (!PDB.PathCount) {
@@ -1381,15 +1420,15 @@ PDB.tool = {
         pos = PDB.tool.freshOneVector(pos, PDB.rotateAxisAngle);
         PDB.GROUP[PDB.GROUP_DRUG].position.copy(pos);
       }
-      //与drug位置保持同步
+      //drug
       if (PDB.GROUP[PDB.GROUP_SURFACE_HET] != undefined) {
         var po = PDB.GROUP[PDB.GROUP_DRUG].position;
         PDB.GROUP[PDB.GROUP_SURFACE_HET].position.copy(po);
       }
       PDB.PathCount++;
     }
-
   },
+	
   showMutationTable: function(flag, text) {
     var rightMenuDiv = document.getElementById("rightmenu");
     rightMenuDiv.innerHTML = "";
@@ -1438,6 +1477,7 @@ PDB.tool = {
       span.appendChild(table);
     }
   },
+	
   showAxis: function(showFlag) {
     if (PDB.GROUP[PDB.GROUP_AXIS] !== undefined && PDB.GROUP[PDB.GROUP_AXIS].children.length === 0) {
       var size = Math.max(PDB.limit.x[1], PDB.limit.y[1], PDB.limit.z[1])
@@ -1447,10 +1487,9 @@ PDB.tool = {
       PDB.GROUP[PDB.GROUP_AXIS].visible = showFlag;
     }
   },
+	
   editingReplace: function(chainReplae, residueId, pos, allResidue) {
     PDB.GROUP_ONE_RES = PDB.GROUP_COUNT + 1;
-
-    //初始化
     if (!PDB.GROUP[PDB.GROUP_ONE_RES]) {
       PDB.GROUP[PDB.GROUP_ONE_RES] = new THREE.Group();
     } else {
@@ -1587,8 +1626,6 @@ PDB.tool = {
         }
 
         reReplaceAtom.resname = resName;
-
-
         var t_group = new THREE.Group();
         t_group.copy(PDB.GROUP[PDB.GROUP_ONE_RES]);
         var _0po = new THREE.Vector3(0, 0, 0);
@@ -1601,8 +1638,6 @@ PDB.tool = {
             } else {
               _0po.copy(t_group.children[i].position);
             }
-
-
           }
         }
 
@@ -1647,6 +1682,7 @@ PDB.tool = {
       });
     }
   },
+	
   getResidueId: function(selectAtom) {
     var selectResidueId = 0;
     var chain = "a";
@@ -1663,9 +1699,8 @@ PDB.tool = {
     }
     return selectResidueId;
   },
+	
   updateAllEditResInfo: function(reReplaceAtom, _0po, resName, resid, chain_name) {
-    //console.log(_0po);
-    //初始化索引信息
     if (!PDB.allMainToms) {
       PDB.allMainToms = {};
       var resN = "-";
@@ -1763,6 +1798,7 @@ PDB.tool = {
       }
     }
   },
+	
   clearTempAtomId: function() {
     for (var chain_id in PDB.allMainToms) {
       for (var residue_id in PDB.allMainToms[chain_id]) {
@@ -1771,10 +1807,12 @@ PDB.tool = {
     }
 
   },
+	
   replacePos: function(strObj, pos, replacetext) {
     var str = strObj.substr(0, pos - 1) + replacetext + strObj.substring(pos, strObj.length - 1);
     return str;
   },
+	
   replacePosByStartEnd: function(strObj, start, end, replacetext) {
     var len = end - strObj.length;
     if (strObj.length < end) {
@@ -1785,6 +1823,7 @@ PDB.tool = {
     var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length - 1);
     return str;
   },
+	
   fillSpace: function(str, length, dir) {
     dir = dir ? dir : "qian"
     str = str + "";
@@ -1801,8 +1840,8 @@ PDB.tool = {
       }
       return str;
     }
-
   },
+	
   initFragmentInfo:function(){
 	  PDB.fragmentList = {};
 	  var ii = 0;
