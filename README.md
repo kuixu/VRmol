@@ -53,10 +53,10 @@ A screenshot of structure visualization with stereo view.
 
 
 ### URL Options
-You can save a specific structural representation scene by saving operation options setting in VRmol as a URL, like `https://vrmol.net/index.html?id=1dfb&panelShow=0&mainMode=7&showSurface=0&surfaceOpc=0.5&surfaceType=1&colorMode=602`. And then you can load and share the scene by opening this previously-saved URL in the web browser or embedding it into your own website by using `iframe`, such as
+You can save a specific structural representation scene by saving operation options setting in VRmol as a URL, like `https://vrmol.net/index.html?id=1dfb`. And then you can load and share the scene by opening this previously-saved URL in the web browser or embedding it into your own website by using `iframe`, such as
 
 ```html
-<iframe src="https://vrmol.net/index.html?id=1dfb&panelShow=0&mainMode=7&showSurface=1&surfaceOpc=0.5&surfaceType=1" />
+<iframe src="https://vrmol.net/index.html?id=1dfb" />
 ```
 
 
