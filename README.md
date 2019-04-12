@@ -15,8 +15,8 @@ VRmol provides two modes:
 
 ### Video Tutorials
 
-- [**Entering VR Scene**](https://vrmol.net/docs/#header-n59) 
-- [**Loading Structure**](https://vrmol.net/docs/#header-n72) 
+- [**Entering VR Scene**](https://vrmol.net/docs/#header-n59) [YouTube](https://www.youtube.com/watch?v=k-qsnA9e5-o)
+- [**Loading Structure**](https://vrmol.net/docs/#header-n72) [YouTube](https://www.youtube.com/watch?v=qAvqJ8WrTKA)
 - [**Measurement**](https://vrmol.net/docs/#header-n227) 
 - [**Drag Structure elements**](https://vrmol.net/docs/#header-n237) 
 - [**Structure Editing**](https://vrmol.net/docs/#header-n251) 
