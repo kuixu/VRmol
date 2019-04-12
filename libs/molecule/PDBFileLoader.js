@@ -87,6 +87,7 @@ PDB.loader = {
     w3m.file.get(file, function(response) {
       text = response;
       w3m.pdb(text);
+      PDB.pdbId = w3m.global.mol;
       scope.dealwithBigPDB();
       scope.getCenterOffset();
       w3m.api.switchRepModeMain(w3m.LINE);
