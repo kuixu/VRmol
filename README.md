@@ -34,7 +34,9 @@ VRmol provides two modes:
 
  VR devices such as HTC Vive, Oculus Rift, and Microsoft Mix Reality are well-supported by VRmol. More details can be seen at [documentation](https://vrmol.net/docs/#header-n5342).
 
+## Demo
 
+<img src="models/entervr-320.gif" width=50%>
 
 ## Framework
 
