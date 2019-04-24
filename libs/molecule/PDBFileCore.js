@@ -89,7 +89,7 @@ PDB = {
     DRUG_URL: SERVERURL + "/data/DB04464.pdb",
     // DRUG_URL: API_URL + "/server/api.php?taskid=12",
     currentUrl: "data/aaa.pdb",
-    remoteUrl: ['https://files.rcsb.org/view/', 'https://www.rcsb.org/pdb/files/' ],
+    remoteUrl: [ SERVERURL + '/data/', 'https://files.rcsb.org/view/', 'https://www.rcsb.org/pdb/files/' ],
     drugPDBUrl: [ SERVERURL + '/data/','https://www.drugbank.ca/structures/small_molecule_drugs/DB04464.pdb'],
     pdbId:"1mbs",
     molecules : {
