@@ -6,7 +6,7 @@ We leverage the most cutting-edge computational technologies to develop a virtua
 
 ## News
  - 05/16/2019: The service provider is suferring of Network Rounte Issue, VRmol server is outage.
- - 04/27/2019: VRmol is being on show at Tsinghua's 108 anniversary.
+ - 04/27/2019: VRmol is being on show at Tsinghua's 108th anniversary.
  - 02/27/2019: VRmol is applied in teaching structural biology cource at Tsinghua University.
 
 ## Documentation
