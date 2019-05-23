@@ -94,6 +94,7 @@ if (location.search) {
     panels.searchDiv.style.display = 'none';
     panels.topmenu.style.display = 'none';
     panels.info.style.display = 'none';
+    
   }
 
   if (surfaceOpc && !isNaN(surfaceOpc)) {
@@ -128,6 +129,9 @@ if (location.search) {
 
   var vrModelBtn = document.getElementById("vrMode");
   vrModelBtn.style.display = "block";
+  if (PDB.panelShow == PDB.config.panelClose) {
+      vrModelBtn.style.display = "none";
+  }
   switch (vmode) {
     case "desktop":
       PDB.mode = PDB.MODE_THREE;
