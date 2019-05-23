@@ -420,7 +420,9 @@ w3m.ajax = (function() {
     io.get = function(mol_id, fn) {
       if (mol_id.indexOf("http://") != -1) {
         url = mol_id;
-      } else {
+      } else if (mol_id.indexOf("https://") != -1) {
+        url = mol_id;
+      } else{
         url = PDB.remoteUrl[url_index] + mol_id + '.pdb';
       }
       id = mol_id;
