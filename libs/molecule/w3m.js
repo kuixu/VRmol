@@ -515,7 +515,6 @@ w3m.tool = {
     this.buffer();
     this.recycle();
   },
-  //绘画
   pipelineInit: function() {
     this.clear();
     this.plugin();
@@ -576,7 +575,7 @@ w3m.tool = {
     this.bufferLabel();
     this.recycle();
   },
-  /* Clear Methods  清楚所有需要绘画元素的存储结构中的数据*/
+  
   clear: function() {
     this.clearMain();
     this.clearHet();
@@ -2979,7 +2978,7 @@ w3m.tool = {
     // // fill
     // var len = frame.length;
     //   // link
-    // var lin  //获取到两个相连的原子k = [ [1,2], [3,4], [5,6], [7,0] ];
+    // var lin  //k = [ [1,2], [3,4], [5,6], [7,0] ];
     //   // handle
     // var pt2vrtx = w3m.tool.point2vertexMainTriangle;
     //   // head
@@ -2991,7 +2990,7 @@ w3m.tool = {
     //         normal = vec3.negate(fm[3]),
     //         sh     = shell[0];
     //     link.forEach(function(lk) {
-    //          //获取到两个相连的原子 pt2vrtx( [ id, o,            color, normal ] );
+    //          //pt2vrtx( [ id, o,            color, normal ] );
     //         pt2vrtx( [ id, sh[lk[0]][1], color, normal ] );
     //         pt2vrtx( [ id, sh[lk[1]][1], color, normal ] );
     //     });
