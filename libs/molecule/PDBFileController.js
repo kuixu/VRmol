@@ -1828,8 +1828,13 @@ PDB.controller = {
     var input = document.getElementById("search_text");
     input.value = name;
     if (name.indexOf("http://") != -1) {
-      name = name.substr(name.lastIndexOf("/") + 1);
-      name = name.replace(".pdb", "");
+      console.log(name);
+      //name = name.substr(name.lastIndexOf("/") + 1);
+      //name = name.replace(".pdb", "");
+    } else if (name.indexOf("https://") != -1) {
+      console.log(name);
+      //name = name.substr(name.lastIndexOf("/") + 1);
+      //name = name.replace(".pdb", "");
     } else {
       PDB.pdbId = name.toLowerCase();
     }
