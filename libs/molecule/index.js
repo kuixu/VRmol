@@ -59,6 +59,7 @@ if (location.search) {
   });
   var surfaceOpc, surfaceType, surfaceMode, showSurface, colorMode, rotation, travel, tcga, vmode,fragment;
   w3m_isset(kv.id) ? PDB.pdbId = kv.id : void(0);
+  w3m_isset(kv.pdburl) ? PDB.pdburl = kv.pdburl : void(0);
   w3m_isset(kv.panelShow) ? PDB.panelShow = parseInt(kv.panelShow) : void(0);
   w3m_isset(kv.mainMode) ? PDB.config.mainMode = parseInt(kv.mainMode) : void(0);
   w3m_isset(kv.rotation) ? rotation = parseInt(kv.rotation) : void(0);
