@@ -10,6 +10,7 @@ PDB.loader = {
       w3m.config.rep_mode_main = PDB.config.mainMode;
       w3m.config.rep_mode_het = PDB.config.hetMode;
       w3m.pdb(text);
+      PDB.pdbId = w3m.global.mol;
       scope.dealwithBigPDB();
       scope.getCenterOffset();
       w3m.api.switchRepModeMain(w3m.LINE);
