@@ -296,13 +296,13 @@ function voiceOperation(code) {
     case 46:
       break;
     case 51:
-      PDB.CHANGESTYLE = 0; //切换mode，放弃fragment
+      PDB.CHANGESTYLE = 0; 
       PDB.SURFACE_OPACITY = 0.5;
       PDB.SURFACE_WIREFRAME = false;
       PDB.controller.refreshSurface(PDB.config.surfaceMode, 2, PDB.SURFACE_OPACITY, PDB.SURFACE_WIREFRAME);
       break;
     case 52:
-      PDB.CHANGESTYLE = 0; //切换mode，放弃fragment
+      PDB.CHANGESTYLE = 0; 
       PDB.SURFACE_OPACITY = 1;
       PDB.SURFACE_WIREFRAME = true;
       PDB.controller.refreshSurface(PDB.config.surfaceMode, 2, 0.5, PDB.SURFACE_WIREFRAME);
@@ -310,11 +310,11 @@ function voiceOperation(code) {
     case 53:
       PDB.render.clear(3);
       PDB.render.clear(5);
-      PDB.CHANGESTYLE = 0; //切换mode，放弃fragment
+      PDB.CHANGESTYLE = 0; 
       PDB.GROUP[PDB.GROUP_SURFACE].visible = false;
       break;
     case 54:
-      PDB.CHANGESTYLE = 0; //切换mode，放弃fragment
+      PDB.CHANGESTYLE = 0;
       PDB.SURFACE_OPACITY = 1;
       PDB.SURFACE_WIREFRAME = false;
       PDB.controller.refreshSurface(PDB.config.surfaceMode, 2, PDB.SURFACE_OPACITY, PDB.SURFACE_WIREFRAME);
