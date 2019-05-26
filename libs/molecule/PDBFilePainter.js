@@ -2947,6 +2947,9 @@ PDB.painter = {
           atom = PDB.tool.getMainAtom(molId, i);
         }
         atom.caid = atom.id;
+		if (startAtom == undefined) {
+			continue;
+		}
         if (history[startAtom.id] == undefined) {
           PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom, addgroup, w);
           history[startAtom.id] = 1;

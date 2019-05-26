@@ -4671,28 +4671,31 @@ w3m.tool = {
             normal_info_2 = mol.getMain(normal_token_2),
             end_mode = w3m.config.geom_tube_round_end ? w3m.END_OS : w3m.END_OX;
           // fix
-          normal_info_1[0] = frame[normal_index][0];
-          normal_info_1[1] = frame[normal_index][1];
-          if (w3m.CLENGTH == 2) {
-            var residueData = w3m.mol[w3m.global.mol].residueData[chain_id][ii];
-            if (residueData.dnaStick == undefined) {
-              residueData.dnaStick = [];
-            }
-            var startPoint = {
-              id: normal_token_1,
-              xyz: new THREE.Vector3(pdboffset.x + normal_info_1[1][0], pdboffset.y + normal_info_1[1][1], pdboffset.z + normal_info_1[1][2]),
-            };
-            var endPoint = {
-              id: normal_token_2,
-              xyz: new THREE.Vector3(pdboffset.x + normal_info_2[1][0], pdboffset.y + normal_info_2[1][1], pdboffset.z + normal_info_2[1][2]),
-            };
-            residueData.dnaStick.push([startPoint, endPoint]);
-          }
-          // fill
-          this.stickFiller(normal_info_1, normal_info_2, {
-            radius: w3m.config.geom_tube_radius,
-            end_mode: end_mode
-          });
+		  if(frame[normal_index]){
+			  normal_info_1[0] = frame[normal_index][0];
+			  normal_info_1[1] = frame[normal_index][1];
+			  if (w3m.CLENGTH == 2) {
+				var residueData = w3m.mol[w3m.global.mol].residueData[chain_id][ii];
+				if (residueData.dnaStick == undefined) {
+				  residueData.dnaStick = [];
+				}
+				var startPoint = {
+				  id: normal_token_1,
+				  xyz: new THREE.Vector3(pdboffset.x + normal_info_1[1][0], pdboffset.y + normal_info_1[1][1], pdboffset.z + normal_info_1[1][2]),
+				};
+				var endPoint = {
+				  id: normal_token_2,
+				  xyz: new THREE.Vector3(pdboffset.x + normal_info_2[1][0], pdboffset.y + normal_info_2[1][1], pdboffset.z + normal_info_2[1][2]),
+				};
+				residueData.dnaStick.push([startPoint, endPoint]);
+			  }
+			  // fill
+			  this.stickFiller(normal_info_1, normal_info_2, {
+				radius: w3m.config.geom_tube_radius,
+				end_mode: end_mode
+			  });
+		  }
+          
         }
         offset++;
       }
