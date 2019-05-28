@@ -1878,13 +1878,13 @@ PDB.render = {
       controls.update();
     }
     //mutation effect
-    if (PDB.GROUP[PDB.GROUP_MUTATION] !== undefined && PDB.SHOW_MUTATION_WHEN_SWITCH_VR_MENU === 1 && PDB.GROUP[PDB.GROUP_MUTATION].children.length > 0) {
-      var time = Date.now();
-      if (time - tmpTime >= 500) {
-        PDB.GROUP[PDB.GROUP_MUTATION].visible = !PDB.GROUP[PDB.GROUP_MUTATION].visible;
-        tmpTime = time;
-      }
-    }
+    // if (PDB.GROUP[PDB.GROUP_MUTATION] !== undefined && PDB.SHOW_MUTATION_WHEN_SWITCH_VR_MENU === 1 && PDB.GROUP[PDB.GROUP_MUTATION].children.length > 0) {
+    //   var time = Date.now();
+    //   if (time - tmpTime >= 500) {
+    //     PDB.GROUP[PDB.GROUP_MUTATION].visible = !PDB.GROUP[PDB.GROUP_MUTATION].visible;
+    //     tmpTime = time;
+    //   }
+    // }
 
     //rotation effect
     if (PDB.ROTATION_START_FLAG) {
