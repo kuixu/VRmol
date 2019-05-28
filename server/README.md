@@ -2,16 +2,17 @@
 
 
 ## Statistics
-
-Kuis-iMac:dload kuixu$ wl uniprot_pdb_none.tab
+```
+$ wl uniprot_pdb_none.tab
     6153 uniprot_pdb_none.tab
-Kuis-iMac:dload kuixu$ wl uniprot_pdb.tab 
+$ wl uniprot_pdb.tab 
   159552 uniprot_pdb.tab
+```
 
 
 
 ## Mutation data API
-http://vr.zhanglab.net/server/api.php?taskid=10&pdbid=1MBD&ds=tcga
+http://vrmol.life.tsinghua.edu.cn/server/api.php?taskid=10&pdbid=1MBD&ds=tcga
 ```
 {
   "code": 0,
@@ -19,7 +20,7 @@ http://vr.zhanglab.net/server/api.php?taskid=10&pdbid=1MBD&ds=tcga
 }
 ```
 
-http://vr.zhanglab.net/server/api.php?taskid=10&pdbid=2YGD&ds=ccle
+http://vrmol.life.tsinghua.edu.cn/server/api.php?taskid=10&pdbid=2YGD&ds=ccle
 ```
 {
   "code": 0,
@@ -28,7 +29,7 @@ http://vr.zhanglab.net/server/api.php?taskid=10&pdbid=2YGD&ds=ccle
 ```
 
 
-http://vr.zhanglab.net/server/api.php?taskid=10&pdbid=2YGD&ds=tcga
+http://vrmol.life.tsinghua.edu.cn/server/api.php?taskid=10&pdbid=2YGD&ds=tcga
 ```
 {
   "code": 1,
@@ -133,7 +134,7 @@ http://vr.zhanglab.net/server/api.php?taskid=10&pdbid=2YGD&ds=tcga
 
 
 ## Conservation data API
-http://vr.zhanglab.net/server/api.php?taskid=11&pdbid=3IVD&chain=A
+http://vrmol.life.tsinghua.edu.cn/server/api.php?taskid=11&pdbid=3IVD&chain=A
 ```
 {
     code: 1,
@@ -168,7 +169,7 @@ http://vr.zhanglab.net/server/api.php?taskid=11&pdbid=3IVD&chain=A
 ```
 
 ## Drug data API
-http://vr.zhanglab.net/server/api.php?taskid=12&pdbid=2BR9
+http://vrmol.life.tsinghua.edu.cn/server/api.php?taskid=12&pdbid=2BR9
 ```
 {
     code: 1,
@@ -188,7 +189,7 @@ http://vr.zhanglab.net/server/api.php?taskid=12&pdbid=2BR9
 ```
 
 ## EMDB
-http://vr.zhanglab.net/server/api.php?taskid=13&pdbid=1MI6
+http://vrmol.life.tsinghua.edu.cn/server/api.php?taskid=13&pdbid=1MI6
 ```
 {
    code: 1,
@@ -205,7 +206,7 @@ http://vr.zhanglab.net/server/api.php?taskid=13&pdbid=1MI6
 
 
 ## AutoDock
-http://vr.zhanglab.net/server/autodock/autodock.php?pdbid=1mbs&smolid=DB04464&x_c=10&y_c=10&z_c=10&x_s=50&y_s=50&z_s=50
+http://vrmol.life.tsinghua.edu.cn/server/autodock/autodock.php?pdbid=1mbs&smolid=DB04464&x_c=10&y_c=10&z_c=10&x_s=50&y_s=50&z_s=50
 
 ```
 {
@@ -219,3 +220,12 @@ http://vr.zhanglab.net/server/autodock/autodock.php?pdbid=1mbs&smolid=DB04464&x_
    outdir : "http:\/\/vr.zhanglab.net\/server\/autodock\/jobs\/1mbs_DB04464_20181223200624_92"
 }
 ```
+
+# API from RCSB/EBI
+
+http://rest.rcsb.org/rest/structures/3dview/6hd1
+
+http://www.ebi.ac.uk/pdbe/api/doc/
+
+http://3dbionotes.cnb.csic.es/ws/api
+
