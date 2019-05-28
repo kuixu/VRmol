@@ -115,6 +115,11 @@ https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfa
     ```python
     python3 server/listen/sr.py
     ```
+  - Installation of external tools
+     - [AutoDock Vina](http://vina.scripps.edu/)
+     - [MGLTools](http://mgltools.scripps.edu/)
+     - [OpenBabel](http://openbabel.org/wiki/Main_Page)
+  - Data files in the Database
 
 > If you deploy VRmol in your local server with a prefix URL `http://localhost` or you do not have a setting of `https`, you should delete the `.htaccess` file. While without setting `https`, you would not access the Speech Recognition function.
 
