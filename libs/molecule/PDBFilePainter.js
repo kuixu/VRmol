@@ -2964,6 +2964,14 @@ PDB.painter = {
         PDB.drawer.drawStick(group, midp, atom.pos_centered, atom.color, radius, atom);
       }
     }
+	for (var i in w3m.mol[molId].connect) {
+		 for (j in w3m.mol[molId].connect[i]) {
+			 var atom = PDB.tool.getHetAtom(molId, w3m.mol[molId].connect[i][j]);
+			 if(atom.id&&!history[atom.id]){
+				 PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, atom.radius * 0.2, atom, addgroup, w);
+			 }
+		 }
+	}
   },
   showLabel: function(labeltype) {
     console.log("show label");
