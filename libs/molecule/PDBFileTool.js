@@ -1210,11 +1210,18 @@ PDB.tool = {
   },
 	
   rotateAboutWorldAxis: function(vec, axis, angle) {
-    var rotationMatrix = new THREE.Matrix4();
-    rotationMatrix.makeRotationAxis(axis.normalize(), angle);
-    var currentPos = new THREE.Vector4(vec.x, vec.y, vec.z, 1);
-    var newPos = currentPos.applyMatrix4(rotationMatrix);
-    return new THREE.Vector3(newPos.x, newPos.y, newPos.z);
+    //var rotationMatrix = new THREE.Matrix4();
+    //rotationMatrix.makeRotationAxis(axis.normalize(), angle);
+	var quaternion = new THREE.Quaternion();
+	quaternion.setFromAxisAngle( axis.normalize(), angle );
+
+	var vector = new THREE.Vector3(vec.x, vec.y, vec.z );
+	vector.applyQuaternion( quaternion );
+	
+	
+    //var currentPos = new THREE.Vector4(vec.x, vec.y, vec.z, 1);
+    //var newPos = currentPos.applyMatrix4(rotationMatrix);
+    return vector;
 
   },
 	
