@@ -145,6 +145,8 @@ PDB.drawer = {
         height: 0.05,
         curveSegments: 5
       });
+	  
+	  
       geometry.computeBoundingBox();
       var material = new THREE.MeshPhongMaterial({
         color: color
@@ -159,6 +161,30 @@ PDB.drawer = {
         group: group
       };
       PDB.GROUP[group].add(mesh);
+	  
+	  //添加box 
+	  var width = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
+	  var heigh = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
+	  var boxBufferGeometry = new THREE.BoxBufferGeometry( width,heigh - 0.01 , 0.05 );
+	  
+	  var material2 = new THREE.MeshBasicMaterial({
+        color: 0x808080
+      });
+	  var mesh2 = new THREE.Mesh(boxBufferGeometry, material2);
+	  material2.opacity = 0;
+      mesh2.material.opacity = 0;
+	  
+      mesh2.name = text;
+      //mesh.rotation.y = angle;
+      mesh2.position.set(pos.x + width/2,pos.y + heigh/2,pos.z);
+	  mesh2.rotation.copy(mesh.rotation);
+      mesh2.userData = {
+        reptype: type,
+        name: text,
+        group: group
+      };
+      PDB.GROUP[group].add(mesh);
+      PDB.GROUP[group].add(mesh2);
     });
   },
   drawMergeStickSphereStick: function(group, preAtom, atom, nextAtom, radius) {
