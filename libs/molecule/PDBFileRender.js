@@ -22,7 +22,7 @@ var tempMatrix = new THREE.Matrix4();
 // add more 3 lights
 var lightType = 0;
 // controls type
-var controlsType = 2;
+var controlsType = 0;
 //
 var showMenu = false;
 
@@ -1187,6 +1187,9 @@ PDB.render = {
       controls = new THREE.TrackballControls(camera, renderer.domElement);
       controls.minDistance = 10;
       controls.maxDistance = 50000;
+	  controls.staticMoving = false; 
+	  controls.dynamicDampingFactor = 0.3; 
+	  controls.rotateSpeed = 5; 
     } else if (controlsType == 1) {
       stats = new Stats();
       stats.domElement.style.position = 'absolute';
@@ -1198,6 +1201,7 @@ PDB.render = {
       controls.update();
     } else {
       controls = new THREE.OrbitControls(camera, renderer.domElement);
+
     }
 
     window.addEventListener('resize', this.onWindowResize, false);

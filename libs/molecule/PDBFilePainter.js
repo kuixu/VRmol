@@ -3977,6 +3977,8 @@ PDB.painter = {
         if (reptype === PDB.config.surfaceMode) {
           continue;
         }
+		//fragment选中与否都不改变颜色
+		issel = true;
         //if DNA draw as tube
         var chainType = w3m.mol[PDB.pdbId].chain[chain];
         if (chainType == w3m.CHAIN_NA && reptype >= PDB.TUBE && reptype != PDB.HIDE) {
