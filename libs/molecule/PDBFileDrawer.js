@@ -392,7 +392,7 @@ PDB.drawer = {
       return mesh;
     }
   },
-  drawMutation: function(group, point, color, radius, mutation, addGroup) {
+  drawMutation: function(group, point, color, radius, mutation, addGroup,presentAtom) {
     var addGroup = PDB.tool.getValue(addGroup, true);
     var alpha = 0.5,
       beta = 0.5,
@@ -423,7 +423,8 @@ PDB.drawer = {
     mesh.position.copy(point);
     mesh.userData = {
       group: group,
-      mutation: mutation
+      mutation: mutation,
+	  presentAtom:presentAtom
     };
     if (addGroup) {
       PDB.GROUP[group].add(mesh);

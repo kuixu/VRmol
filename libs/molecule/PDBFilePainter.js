@@ -557,7 +557,7 @@ PDB.painter = {
         mutations.forEach(function(mutation) {
           var atom = PDB.tool.getCAAtomByResidueId(mutation.pos, chainName);
           if (atom !== undefined) {
-            PDB.drawer.drawMutation(PDB.GROUP_MUTATION, atom.pos_centered, atom.color, atom.radius, mutation);
+            PDB.drawer.drawMutation(PDB.GROUP_MUTATION, atom.pos_centered, atom.color, atom.radius, mutation,undefined,atom);
           }
         });
       });

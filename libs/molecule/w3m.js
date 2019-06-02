@@ -425,7 +425,7 @@ w3m.ajax = (function() {
       } else{
         url = PDB.remoteUrl[url_index] + mol_id + '.pdb';
       }
-      //id = mol_id;
+      id = mol_id;
       callback = fn;
       this.open('GET', url, true);
       this.send();

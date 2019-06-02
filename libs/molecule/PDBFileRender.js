@@ -1810,7 +1810,7 @@ PDB.render = {
         var allObjs = [];
         var groupMain = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MAIN]];
         var groupHet = PDB.GROUP[PDB.GROUP_HET];
-        var groupMutation = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MUTATION]];
+        var groupMutation = PDB.GROUP[PDB.GROUP_MUTATION];
         if (groupMain != undefined && groupMain.children != undefined && groupMain.children.length > 0) {
           for (var i = 0; i < groupMain.children.length; i++) {
             allObjs.push(groupMain.children[i]);
@@ -1838,7 +1838,16 @@ PDB.render = {
               INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
               INTERSECTED.material.emissive.setHex(0xff0000);
             }
-            if (INTERSECTED.userData.presentAtom != undefined) {
+			
+			//deal with mutation
+            if(INTERSECTED.userData.mutation != undefined){
+				var atom = INTERSECTED.userData.presentAtom;
+				var mutation = INTERSECTED.userData.mutation;
+                var message = mutation.pos+" "+mutation.p_change+" "+mutation.v_class+" "+mutation.v_type;
+                var pos = PDB.tool.getAtomInfoPosition(atom.pos_centered, camera.position);
+                PDB.drawer.drawTextForDesktop(PDB.GROUP_INFO, pos,
+                  message, "", atom.color, 180);
+			}else if (INTERSECTED.userData.presentAtom != undefined) {
               // PDB.painter.showAtomLabel(INTERSECTED.userData.presentAtom);
               var atom = INTERSECTED.userData.presentAtom;
               var message = "";
