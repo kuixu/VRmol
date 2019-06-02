@@ -222,7 +222,7 @@ PDB = {
     BOND_TYPE_SSBOND:1,
     BOND_TYPE_COVALENT:2,
     BOND_TYPE_HBOND:3,
-    ZOOM_STEP:0.1,
+    ZOOM_STEP:0.5,
 	ZOOM_TIMES:1,
     //surface setting
     SURFACE_TYPE:1,
