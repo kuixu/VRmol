@@ -1309,18 +1309,18 @@ PDB.tool = {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
         if (group !== undefined) {
-          group.rotation.x = group.rotation.x - 0.005;
+          group.rotation.x = group.rotation.x - 0.025;
         }
       });
-      scope.freshAllResidueGroupObject(-0.005); //-0.005<-------------
+      scope.freshAllResidueGroupObject(-0.025); //-0.005<-------------
     } else if (type === 1) {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
         if (group !== undefined) {
-          group.rotation.x = group.rotation.x + 0.005;
+          group.rotation.x = group.rotation.x + 0.025;
         }
       });
-      scope.freshAllResidueGroupObject(0.005); //0.005<---------------
+      scope.freshAllResidueGroupObject(0.0025); //0.005<---------------
     }
   },
 	
@@ -1330,18 +1330,18 @@ PDB.tool = {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
         if (group !== undefined) {
-          group.rotation.y = group.rotation.y - 0.005;
+          group.rotation.y = group.rotation.y - 0.025;
         }
       });
-      scope.freshAllResidueGroupObject(-0.005); //-0.005<-------------
+      scope.freshAllResidueGroupObject(-0.025); //-0.005<-------------
     } else if (type === 1) {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
         if (group !== undefined) {
-          group.rotation.y = group.rotation.y + 0.005;
+          group.rotation.y = group.rotation.y + 0.025;
         }
       });
-      scope.freshAllResidueGroupObject(0.005); //0.005<---------------
+      scope.freshAllResidueGroupObject(0.025); //0.005<---------------
     }
   },
 	
@@ -1351,18 +1351,18 @@ PDB.tool = {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
         if (group !== undefined) {
-          group.rotation.z = group.rotation.z - 0.005;
+          group.rotation.z = group.rotation.z - 0.025;
         }
       });
-      scope.freshAllResidueGroupObject(-0.005); //转动-0.005度<-------------
+      scope.freshAllResidueGroupObject(-0.025); //转动-0.005度<-------------
     } else if (type === 1) {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
         if (group !== undefined) {
-          group.rotation.z = group.rotation.z + 0.005;
+          group.rotation.z = group.rotation.z + 0.025;
         }
       });
-      scope.freshAllResidueGroupObject(0.005); //转动0.005度<---------------
+      scope.freshAllResidueGroupObject(0.025); //转动0.005度<---------------
     }
   },
 	
