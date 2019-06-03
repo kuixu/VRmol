@@ -1,4 +1,4 @@
-# VRmol: Virtual Reality for Molecular structures 
+# VRmol: Virtual Reality for Molecular Structures 
 
 ## Introduction
 
