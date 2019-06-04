@@ -1,6 +1,6 @@
 #coding=utf-8
 
-import sys
+import os,sys
 # import io
 import json
 import hashlib
@@ -314,7 +314,11 @@ def deal_a_request(audiostr, language, command, connection, simer):
     # save the audio
     nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
     randomNum = random.randint(10, 99)
-    file = "voice/" + nowTime + '_' + str(randomNum) + ".wav"
+    dirName = "voice"
+    if not os.path.exists(dirName):
+        os.mkdir(dirName)
+        print("Directory " , dirName ,  " Created ")
+    file = dirName + "/" + nowTime + '_' + str(randomNum) + ".wav"
 
     ori_data = base64.b64decode(audiostr)
 
