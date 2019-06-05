@@ -8,7 +8,7 @@ from urllib.parse import urlencode
 class DemoError(Exception):
     # pass
     def __init__(self, ErrorInfo):
-        super().__init__(self)  # 初始化父类
+        super().__init__(self)
         self.errorinfo = ErrorInfo
 
 # flags

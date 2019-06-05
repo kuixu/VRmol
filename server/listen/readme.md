@@ -1,25 +1,26 @@
-使用方式：按住button，说对应指令，然后松开button
-
-前端debug方式：
-在recorder.js中， 将voiceControl的debug值设为true，即可在页面中显示百度和讯飞得到的返回值，以及对应的指令编码
-
-1月：
-1、修改中文打分方式，添加词林比较近义词。
-2、修改音频保存方式。改为在python中保存wav
-3、添加log
-4、修改文件夹结构
+How to use: Click the button (keep pressing), say the corresponding command, then release the button.
 
 
 
-12.13：
-1、添加英文判断
-2、添加自动更新token
 
-12.3修改：
-1、添加音频保存机制，将保存所有的base64文件。php中用当前时间+随机数生成文件名，python中将文件名作为参数传入，读取文件。
-2、改成lcs进行打分判断指令，添加打分函数
 
-11.30修改：
-1、将token获取单独分离出来，放入util/get_token_baidu.py，它需要每天or每周定期运行，更新token
-2、整理recorder.js和index.html 将用于debug的部分移除，并在endRecording中添加异步获取指令编码值的部分（TODO：根据编码进行操作 line85-91）
+Updated in January:
+1. Modify the Chinese scoring method and add the 'Cilin' dictionary to compare synonyms.
+2. Modify the audio save mode. Save wav file in python
+3. add log
+4. modify the folder structure
 
+Updated12.13:
+
+1. add English voice control
+2. add automatic update token for baidu api
+
+Updated12.3:
+
+1. Add an audio save mechanism that will save all base64 files. In php, the file name is generated with the current time + random number. In python, the file name is passed as a parameter and the file is read.
+2. Using lcs for scoring judgment instructions, add scoring function
+
+Updated11.30:
+
+1. Separate the getting tokens' function and put them into util/get_token_baidu.py. It needs to run regularly every day or every week to update the token.
+2. Organize the recorder.js and index.html to remove the part used for debugging, and add the part of the asynchronous acquisition instruction encoding value in endRecording 

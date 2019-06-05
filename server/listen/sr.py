@@ -293,7 +293,7 @@ def deal_a_request(audiostr, language, command, connection, simer):
     ############################################################################3
     # try:
     #     sentence = xunfei_voice(audiostr, language)
-    #     sentence = re.sub("[！，。？]", "", sentence)  # 去除标点
+    #     sentence = re.sub("[！，。？]", "", sentence)
     #     if language=="Chinese" or language=='chinese':
     #         score = convert_chinese_to_instruction(sentence, command)
     #     else:
@@ -348,7 +348,6 @@ for word in pseg.cut("start"):
 #######################################################################
 
 try:
-    # 地址簇 : AF_INET (IPv4),类型: SOCK_STREAM (使用 TCP 传输控制协议)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print("Socket Created")
     s.bind((HOST, PORT))
