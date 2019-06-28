@@ -1,6 +1,12 @@
 # EM Density Map
 
-## EM Header
+## Resource
+
+  - http://www.ebi.ac.uk/pdbe/eds
+  - http://www.ebi.ac.uk/pdbe/api/doc
+  - http://rest.rcsb.org/rest/structures/3dview/6hd1
+
+## CCP4/MRC File Header
 
 
 Byte Numbers | Id           |Variable Type| Variable Name | Contents |
