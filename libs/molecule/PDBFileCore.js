@@ -12,6 +12,7 @@ if(ServerType ===1){
     SERVERURL= "https://vrmol.net";
 }
 var API_URL = "https://vrmol.life.tsinghua.edu.cn";
+var API_URL_EMMAP = "https://vrmol.net/server/api.php?taskid=13&pdbid=";
 PDB = {
     DOCKING_POS_START: {x:0,
 		y:0,
@@ -123,7 +124,7 @@ PDB = {
     MENU_TYPE_ROTATION:12,MENU_TYPE_DRUG:13,MENU_TYPE_HBOND:14,MENU_TYPE_CONSERVATION:15,MENU_TYPE_DENSITYMAP:16,MENU_TYPE_DIRECTION:17,
     MENU_TYPE_CURRENT:1,MENU_TYPE_OUTBALL:18,MENU_TYPE_OUTSHOW:19,MENU_TYPE_OUTHIDE:20,MENU_TYPE_EXPORT:21,MENU_TYPE_SPEECH:22,
     MENU_TYPE_EDITING:23,
-    // representation Mode 
+    // representation Mode
     HIDE : 0,  LINE : 1, DOT : 2,BACKBONE : 3,  SPHERE: 4,STICK : 5, BALL_AND_ROD : 6,
     TUBE : 7,  RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11,
     RIBBON_RAILWAY:12, CARTOON_SSE:13, SURFACE:14,
@@ -179,7 +180,8 @@ PDB = {
         CHEMBL:"https://www.ebi.ac.uk/chembldb/target/inspect/",
         GUIDETOPHARMACOLOGY:"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId=",
         SWISSLIPIDS:"http://www.swisslipids.org/#/entity/",
-        EMMAP:"https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-"},
+        EMMAP:"https://www.ebi.ac.uk/pdbe/entry/emdb/",
+    },
     DRUBDB_URL : {
         'drugbank':SERVERURL+"/data/drugbank/",
         //'drugbank':"https://www.drugbank.ca/drugs/",

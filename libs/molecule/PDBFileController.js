@@ -96,7 +96,8 @@ PDB.controller = {
         if (file.name.endsWith("gz")) {
           w3m.file.getArrayBuffer(file, function(response) {
             var mapId = file.name.split(".")[0];
-            var url = API_URL + "/server/api.php?taskid=13&pdbid=" + PDB.pdbId.toUpperCase();
+            //var url = API_URL + "/server/api.php?taskid=13&pdbid=" + PDB.pdbId.toUpperCase();
+	    var url = API_URL_EMMAP + PDB.pdbId.toUpperCase();
             if (ServerType !== 2) {
                 url = SERVERURL + "/data/map01.json";
             }
@@ -248,7 +249,8 @@ PDB.controller = {
 
     var loadDensityMap = document.getElementById("loadDensityMap");
     loadDensityMap.addEventListener('click', function() {
-      var url = API_URL + "/server/api.php?taskid=13&pdbid=" + PDB.pdbId.toUpperCase();
+      // var url = API_URL + "/server/api.php?taskid=13&pdbid=" + PDB.pdbId.toUpperCase();
+      var url = API_URL_EMMAP + PDB.pdbId.toUpperCase();
       if (ServerType !== 2) {
         url = SERVERURL + "/data/map01.json";
       }
