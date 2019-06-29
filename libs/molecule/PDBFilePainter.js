@@ -4245,7 +4245,11 @@ PDB.painter = {
 		if(!PDB.residueGroupObject[chain]){
 			continue;
 		}
-        var length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
+		var length = 0;
+		if(PDB.residueGroupObject[chain][resid] && PDB.residueGroupObject[chain][resid].vector){
+			length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
+		}
+        
         PDB.residueGroupObject[chain][resid].len = length;
         if (PDB.residueGroupObject[chain][resid].len < showLengthThreshold) {
           if (PDB.loadType == PDB.bigmodel) {
