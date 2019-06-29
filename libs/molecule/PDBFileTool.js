@@ -11,11 +11,11 @@ PDB.tool = {
       return defaultVal;
     }
   },
-	
+
   midPoint: function(point1, point2) {
     return new THREE.Vector3((point1.x + point2.x) / 2, (point1.y + point2.y) / 2, (point1.z + point2.z) / 2);
   },
-	
+
   MaxEdge: function() {
     var limit = w3m.global.limit;
     var xedge = limit.x[1] - limit.x[0];
@@ -24,7 +24,7 @@ PDB.tool = {
     var medge = xedge > yedge ? xedge : yedge;
     return medge > zedge ? medge : zedge;
   },
-	
+
   getMainAtom: function(molid, id) {
     var scope = this;
     var atom = w3m.mol[molid].atom.main[id];
@@ -33,7 +33,7 @@ PDB.tool = {
     }
     return undefined;
   },
-	
+
   // before sphere visualization 2018-08-16
   rotation0: function(groupIndexs, type) {
     if (type === 0) {
@@ -56,7 +56,7 @@ PDB.tool = {
       })
     }
   },
-	
+
   getMainResAtomsByAtom: function(atom) {
     var key = atom.chainname + "_" + atom.resid;
     var molid = PDB.pdbId;
@@ -91,7 +91,7 @@ PDB.tool = {
     }
     return atoms;
   },
-	
+
   getMainChainAtomsByAtom: function(atom) {
     var key = atom.chainname;
     var molid = PDB.pdbId;
@@ -126,7 +126,7 @@ PDB.tool = {
     }
     return atoms;
   },
-	
+
   getHetAtom: function(molid, id) {
     var scope = this;
     var atom = w3m.mol[molid].atom.het[id];
@@ -137,7 +137,7 @@ PDB.tool = {
     }
     return undefined;
   },
-	
+
   getAtomById: function(molid, atom, structure) {
     var scope = this;
     var atomID = atom[1];
@@ -177,21 +177,21 @@ PDB.tool = {
 
     return atomObj;
   },
-	
+
   equalAtom: function(atom1, atom2) {
     if (atom1.id === atom2.id) {
       return true;
     }
     return false;
   },
-	
+
   getColorByAtomType: function(atomType) {
     var X_color_index = w3m.color['element'][atomType];
     var X_color = w3m.rgb[X_color_index];
     var color = new THREE.Color(X_color[0], X_color[1], X_color[2]);
     return color;
   },
-	
+
   getColorByIndex: function(molid, id, structure) {
     var rId = w3m.mol[molid].color[structure][id];
     if (rId) {
@@ -204,13 +204,13 @@ PDB.tool = {
     }
 
   },
-	
+
   getColorByColorIndex: function(colorIndex) {
     var X_color = w3m.rgb[colorIndex];
     var color = new THREE.Color(X_color[0], X_color[1], X_color[2]);
     return color;
   },
-	
+
   getMaterialsByAtomId: function(id) {
     var colorId = w3m.mol[PDB.pdbId].color['main'][id];
     //if(materialsId[colorId]==undefined){
@@ -221,7 +221,7 @@ PDB.tool = {
 
     //}
   },
-	
+
   writeTextFile: function(afilename, output) {
     var outfile = new debugout();
     outfile.logFilename = afilename;
@@ -232,7 +232,7 @@ PDB.tool = {
     // txtFile.writeln(output);
     // txtFile.close();
   },
-	
+
   showMask: function() {
     var scope = this;
     var height = document.body.scrollHeight;
@@ -255,20 +255,20 @@ PDB.tool = {
     weChatPop.style.zIndex = "9999";
     weChatPop.style.opacity = "1";
   },
-	
+
   hideMask: function() {
     var weChatMask = document.getElementById("weChatMask");
     var weChatPop = document.getElementById("weChatPop");
     weChatMask.style.display = "none";
     weChatPop.style.display = "none";
   },
-	
+
   getFirstAtomIdByChain: function(chainName) {
     var first_resid = Object.keys(w3m.mol[PDB.pdbId].rep[chainName])[0];
     return this.getFirstAtomByResidueId(first_resid, chainName)[0];
 
   },
-	
+
   getFirstAtomByResidueId: function(residueId, chainName) {
     var atoms = w3m.mol[PDB.pdbId].atom.main;
     var atom = [];
@@ -283,7 +283,7 @@ PDB.tool = {
     }
     return atom;
   },
-	
+
   getLastAtomByResidueId: function(residueId, chainName) {
     var atoms = w3m.mol[PDB.pdbId].atom.main;
     var atom = [];
@@ -319,7 +319,7 @@ PDB.tool = {
     }
     return atom;
   },
-	
+
   getCAAtomByStartAtomId: function(atomId) { //α炭原子ID
     var atoms = w3m.mol[PDB.pdbId].atom.main;
     var atom = atoms[atomId];
@@ -333,7 +333,7 @@ PDB.tool = {
     }
     return atom;
   },
-	
+
   getCAAtomByResidueId: function(residueId, chainName) {
     var scope = this;
     var atoms = w3m.mol[PDB.pdbId].atom.main;
@@ -350,7 +350,7 @@ PDB.tool = {
     var atomObj = scope.getMainAtom(PDB.pdbId, atom[1]);
     return atomObj;
   },
-	
+
   getMousePos: function(event) {
     var e = event || window.event;
     var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
@@ -362,7 +362,7 @@ PDB.tool = {
       'y': y
     };
   },
- 
+
   getAngleMeasurement: function(pointAngle, pointEdge1, pointEdge2) {
     var ms = {};
     var uAB = vec3.unit(vec3.point(pointAngle, pointEdge1)),
@@ -373,7 +373,7 @@ PDB.tool = {
     ms.label_xyz = xyz;
     return ms;
   },
-  
+
   getMidPoint: function(molid, preAtomId, nextAtomId) {
     var offset = PDB.GeoCenterOffset; //偏移量
     var preAtom = w3m.mol[molid].atom.main[preAtomId];
@@ -385,7 +385,7 @@ PDB.tool = {
     } else return undefined;
 
   },
-	
+
   getColorForPercentage: function(pct) {
     var percentColors = [{
         pct: 0.0,
@@ -432,7 +432,7 @@ PDB.tool = {
     return new THREE.Color(color.r, color.g, color.b);
     // or output as hex if preferred
   },
-	
+
   colorIntersectObjectRed: function(obj, value) {
     if (obj.type === "Group") {
       for (var child in obj.children) {
@@ -446,7 +446,7 @@ PDB.tool = {
       }
     }
   },
-	
+
   colorIntersectObjectBlue: function(obj, value) {
     if (obj.type === "Group") {
       for (var child in obj.children) {
@@ -460,7 +460,7 @@ PDB.tool = {
       }
     }
   },
-	
+
   colorIntersectObjectRed0: function(obj, value) {
     if (obj.type === "Group") {
       for (var child in obj.children) {
@@ -471,7 +471,7 @@ PDB.tool = {
       obj.material.emissive.r = value;
     }
   },
-	
+
   colorIntersectObjectBlue0: function(obj, value) {
     if (obj.type === "Group") {
       for (var child in obj.children) {
@@ -482,7 +482,7 @@ PDB.tool = {
       obj.material.emissive.b = value;
     }
   },
-	
+
   ajax: (function() {
     var io = new XMLHttpRequest(),
       id = '',
@@ -523,7 +523,7 @@ PDB.tool = {
       }
     return io;
   })(),
-	
+
   checkPointOfSpecialPlane: function(point) {
     var plane = PDB.PLANE;
     var result = plane.a * point.x + plane.a * point.x + plane.b * point.y + plane.c * point.z + plane.d;
@@ -532,7 +532,7 @@ PDB.tool = {
     }
     return false;
   },
-	
+
   generatePlane: function(point1, point2, point3) {
     var a, b, c, d;
     a = ((point2.y - point1.y) * (point3.z - point1.z) - (point2.z - point1.z) * (point3.y - point1.y));
@@ -546,7 +546,7 @@ PDB.tool = {
       d: d
     };
   },
-	
+
   isBonded: function(at1, at2) {
     var minlength2 = 0.5 * 0.5;
     var maxlength2 = 1.9 * 1.9;
@@ -567,7 +567,7 @@ PDB.tool = {
       return PDB.BOND_TYPE_NONE;
     }
   },
-	
+
   backToInitialPositionForVr: function() {
     for (var i in PDB.GROUP_STRUCTURE_INDEX) {
       PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[i]].position.copy(new THREE.Vector3(0, 0, 0));
@@ -591,14 +591,14 @@ PDB.tool = {
     }
     PDB.painter.repeatPainter();
   },
-	
+
   matchSurfaceAndMainGroupLocationForVR: function(surfaceGroup, mainGroup) {
     if (surfaceGroup instanceof THREE.Group && mainGroup instanceof THREE.Group) {
       surfaceGroup.position.copy(mainGroup.position);
       surfaceGroup.rotation.copy(mainGroup.rotation);
     }
   },
-	
+
   generateButton: function(parent, text, value, className) {
     var b_ = document.createElement("button");
     b_.innerHTML = text;
@@ -607,14 +607,14 @@ PDB.tool = {
     parent.appendChild(b_);
     return b_;
   },
-	
+
   generateColorPanel: function(parent) {
     var input = document.createElement("input");
     input.className = "simple_color";
     input.value = "#3366cc";
     parent.appendChild(input);
   },
-	
+
   generateLabel: function(parent, text, className) {
     var b_ = document.createElement("label");
     b_.innerHTML = text;
@@ -622,7 +622,7 @@ PDB.tool = {
     parent.appendChild(b_);
     parent.appendChild(document.createElement("br"));
   },
-	
+
   generateSpan: function(parent, id, className) {
     var span = document.createElement("span");
     span.className = className;
@@ -631,7 +631,7 @@ PDB.tool = {
     parent.appendChild(document.createElement("br"));
     return span;
   },
-	
+
   generateALink: function(parent, id, text, link, className) {
     var aLink = document.createElement("a");
     var node = document.createTextNode(text);
@@ -644,7 +644,7 @@ PDB.tool = {
     // parent.appendChild(document.createElement("br"));
     return aLink;
   },
-	
+
   generateDocklingLink: function(parent, id, text, link, dbname) {
     var aLink = document.createElement("a");
     var node = document.createTextNode(text);
@@ -719,14 +719,14 @@ PDB.tool = {
     parent.appendChild(aLink);
     return aLink;
   },
-	
+
   setFaceColor: function(geometry, posObj) {
     var f0 = (posObj.y * posObj.width + posObj.x) * 2;
     var f1 = f0 + 1;
     geometry.faces[f0].materialIndex = posObj.colorIndex;
     geometry.faces[f1].materialIndex = posObj.colorIndex;
   },
-	
+
   toHumanByte: function(limit) {
     var size = "";
     if (limit < 0.1 * 1024) { //to B
@@ -746,7 +746,7 @@ PDB.tool = {
     }
     return sizestr;
   },
-	
+
   setProgressBar: function(value, max) {
     var progress = document.getElementById("progress");
     if (progress.style.display == "none"){
@@ -756,32 +756,32 @@ PDB.tool = {
     progress.max = max;
 
   },
-	
+
   printProgress: function(msg) {
     var progmsg = document.getElementById("tip");
     progmsg.innerHTML = msg;
   },
-	
+
   getValueByPercent: function(min, max, percent) {
     return ((max - min) / 100) * percent + min;
   },
-	
+
   getPercentByValue: function(min, max, curr) {
     var perValue = (max - min) / 100;
     return Math.floor((curr - min) / perValue);
   },
-	
+
   backToInitialPositonForDesktop: function() {
     camera.position.set(PDB.cameraPosition.x, PDB.cameraPosition.y, PDB.cameraPosition.z);
   },
-	
+
   getAtomInfoPosition: function(formPos, toPos) {
     var x = (3 * formPos.x + toPos.x) / 4;
     var y = (3 * formPos.y + toPos.y) / 4;
     var z = (3 * formPos.z + toPos.z) / 4;
     return new THREE.Vector3(x, y, z);
   },
-	
+
   isJsonString: function(str) {
     try {
       if (typeof JSON.parse(str) == "object") {
@@ -790,7 +790,7 @@ PDB.tool = {
     } catch (e) {}
     return false;
   },
-	
+
   createDensityMapMenuForVR: function(jsonObj) {
     var color = 0xa345;
     limit = w3m.global.limit;
@@ -812,7 +812,7 @@ PDB.tool = {
       PDB.drawer.drawTextKB(PDB.GROUP_MENU_DENSITYMAP, new THREE.Vector3(x, y - 3 * 0.2, z), jsonObj.message, jsonObj.message, color, 135);
     }
   },
-	
+
   createDensityMapPanel: function(jsonObj) {
     if (jsonObj.code === 1 && jsonObj.data !== undefined) {
       var scope = this;
@@ -822,6 +822,7 @@ PDB.tool = {
       var menuSpan = PDB.tool.generateSpan(rightMenuDiv, "menuSpan", "rightsubmenu");
       var menuSpan1 = PDB.tool.generateSpan(rightMenuDiv, "menuSpan1", "rightsubmenu");
       var data = jsonObj.data;
+      var method = jsonObj.method
       if (PDB.EMMAP.FIRST_ID === 0 && data.length > 0) {
         PDB.EMMAP.FIRST_ID = data[0];
       }
@@ -839,10 +840,10 @@ PDB.tool = {
         }
       });
       for (var i in data) {
-        PDB.tool.generateButton(menuSpan, data[i], data[i], "rightLabelPDB").addEventListener('click', function() {
+        PDB.tool.generateButton(menuSpan, method+": "+data[i], data[i], "rightLabelPDB").addEventListener('click', function() {
           var mapId = this.value;
           //PDB.render.clear(2);
-          var mapserver = "map";
+          var mapserver = method;
           if (PDB.DEBUG_MODE == 1) {
             mapserver = "map-local";
           }
@@ -881,7 +882,9 @@ PDB.tool = {
             }
           });
         });
-        PDB.tool.generateALink(menuSpan, "mapLink" + i, "Detail", PDB.LINK_CONFIG.EMMAP + data[i], "");
+        var map_link = EmMapParser.getURLByType(data[i], method+"-desc");
+        // PDB.LINK_CONFIG.EMMAP + data[i]
+        PDB.tool.generateALink(menuSpan, "mapLink" + i, "Detail", map_link, "");
         menuSpan.appendChild(document.createElement("br"));
       }
       menuSpan1.innerHTML = '<input class="labelPDB" id="solidMap" name="mapType" checked="checked"   type="radio" title="Map Type"/>  <label class="label"  for="solidMap"> Solid </label>   <BR/>' +
@@ -1082,7 +1085,7 @@ PDB.tool = {
       });
     }
   },
-	
+
   showDestinyMap: function() {
     if (PDB.EMMAP.TYPE === 0) {
       PDB.render.clearGroupIndex(PDB.GROUP_MAP);
@@ -1107,7 +1110,7 @@ PDB.tool = {
       PDB.map_surface_show = 1;
     }
   },
-	
+
   changeDensityMapRangeValue: function(emmap) {
     //threshold
     var thresholdRange = document.getElementById("thresholdRange");
@@ -1147,16 +1150,16 @@ PDB.tool = {
             break;
     }
   },
-	
+
   initChainNameFlag: function(chainName, isNomal, chainNum) {
     // console.log(chainNum);
     //$("#chainNumThreshold").append("<button class=\"labelPDB chainBtn"+(isNomal?" chainSelected":"")+"\" name=\"chainName\" id=\"chain_"+chainName+"\">"+chainNum+":"+chainName+"</button>&nbsp;");
   },
-	
+
   clearChainNameFlag: function() {
     //$("#chainNumThreshold").html("");
   },
-	
+
   bindAllChainEvent: function(type, allChainNum) {
     $(".chainBtn").bind('click', function(e) {
       var chainInfo = $("#" + e.target.id).html().split(":");
@@ -1197,7 +1200,7 @@ PDB.tool = {
       PDB.initChainNumThreshold = chainNum;
     })
   },
-	
+
   getRealVectorForRepeatPainter: function(vec) {
     for (var chain in PDB.residueGroupObject) {
       for (var resid in PDB.residueGroupObject[chain]) {
@@ -1208,7 +1211,7 @@ PDB.tool = {
     }
     PDB.painter.repeatPainter();
   },
-	
+
   rotateAboutWorldAxis: function(vec, axis, angle) {
     var rotationMatrix = new THREE.Matrix4();
     rotationMatrix.makeRotationAxis(axis.normalize(), angle);
@@ -1216,7 +1219,7 @@ PDB.tool = {
     var newPos = currentPos.applyMatrix4(rotationMatrix);
     return new THREE.Vector3(newPos.x, newPos.y, newPos.z);
   },
-	
+
   freshAllResidueGroupObject: function(angle) {
     PDB.nowRotateAngle = PDB.nowRotateAngle + angle;
     if (Math.abs(PDB.nowRotateAngle) >= PDB.rotateAngleThreshold) {
@@ -1267,7 +1270,7 @@ PDB.tool = {
     }
 
   },
-	
+
   freshOneVector: function(vector, angle) {
 
     if (angle.x && angle.x != 0) {
@@ -1287,11 +1290,11 @@ PDB.tool = {
     return vector;
 
   },
-	
+
   getVectorLength: function(vector) {
     return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2) + Math.pow(vector.z, 2));
   },
-	
+
   rotation: function(groupIndexs, type) {
     PDB.tool.rotation_y(groupIndexs, type);
   },
@@ -1315,7 +1318,7 @@ PDB.tool = {
       scope.freshAllResidueGroupObject(0.025); //0.005<---------------
     }
   },
-	
+
   rotation_y: function(groupIndexs, type) {
     var scope = this;
     if (type === 0) {
@@ -1336,7 +1339,7 @@ PDB.tool = {
       scope.freshAllResidueGroupObject(0.025); //0.005<---------------
     }
   },
-	
+
   rotation_z: function(groupIndexs, type) {
     var scope = this;
     if (type === 0) {
@@ -1357,7 +1360,7 @@ PDB.tool = {
       scope.freshAllResidueGroupObject(0.025); //转动0.005度<---------------
     }
   },
-	
+
   saveString: function(text, filename) {
     var blob = new Blob([text], {
       type: 'text/plain'
@@ -1369,7 +1372,7 @@ PDB.tool = {
     link.download = filename || 'data.obj';
     link.click();
   },
-	
+
   generateDrugMigrationPath: function(limit) {
     var offset = "";
     if (!limit) {
@@ -1407,7 +1410,7 @@ PDB.tool = {
     var t = new THREE.Vector3(0 - offset.x, 0 - offset.y, 0 - offset.z);
     PDB.GROUP[PDB.GROUP_DRUG].position.copy(t);
   },
-	
+
   migrationDrug: function() {
     if (PDB.GROUP[PDB.GROUP_DRUG] && PDB.GROUP[PDB.GROUP_DRUG].children.length > 0) {
       if (!PDB.PathCount) {
@@ -1427,7 +1430,7 @@ PDB.tool = {
       PDB.PathCount++;
     }
   },
-	
+
   showMutationTable: function(flag, text) {
     var rightMenuDiv = document.getElementById("rightmenu");
     rightMenuDiv.innerHTML = "";
@@ -1476,7 +1479,7 @@ PDB.tool = {
       span.appendChild(table);
     }
   },
-	
+
   showAxis: function(showFlag) {
     if (PDB.GROUP[PDB.GROUP_AXIS] !== undefined && PDB.GROUP[PDB.GROUP_AXIS].children.length === 0) {
       var size = Math.max(PDB.limit.x[1], PDB.limit.y[1], PDB.limit.z[1])
@@ -1486,7 +1489,7 @@ PDB.tool = {
       PDB.GROUP[PDB.GROUP_AXIS].visible = showFlag;
     }
   },
-	
+
   editingReplace: function(chainReplae, residueId, pos, allResidue) {
     PDB.GROUP_ONE_RES = PDB.GROUP_COUNT + 1;
     if (!PDB.GROUP[PDB.GROUP_ONE_RES]) {
@@ -1681,7 +1684,7 @@ PDB.tool = {
       });
     }
   },
-	
+
   getResidueId: function(selectAtom) {
     var selectResidueId = 0;
     var chain = "a";
@@ -1698,7 +1701,7 @@ PDB.tool = {
     }
     return selectResidueId;
   },
-	
+
   updateAllEditResInfo: function(reReplaceAtom, _0po, resName, resid, chain_name) {
     if (!PDB.allMainToms) {
       PDB.allMainToms = {};
@@ -1797,7 +1800,7 @@ PDB.tool = {
       }
     }
   },
-	
+
   clearTempAtomId: function() {
     for (var chain_id in PDB.allMainToms) {
       for (var residue_id in PDB.allMainToms[chain_id]) {
@@ -1806,12 +1809,12 @@ PDB.tool = {
     }
 
   },
-	
+
   replacePos: function(strObj, pos, replacetext) {
     var str = strObj.substr(0, pos - 1) + replacetext + strObj.substring(pos, strObj.length - 1);
     return str;
   },
-	
+
   replacePosByStartEnd: function(strObj, start, end, replacetext) {
     var len = end - strObj.length;
     if (strObj.length < end) {
@@ -1822,7 +1825,7 @@ PDB.tool = {
     var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length - 1);
     return str;
   },
-	
+
   fillSpace: function(str, length, dir) {
     dir = dir ? dir : "qian"
     str = str + "";
@@ -1840,7 +1843,7 @@ PDB.tool = {
       return str;
     }
   },
-	
+
   initFragmentInfo:function(){
 	  PDB.fragmentList = {};
 	  var ii = 0;
@@ -1848,10 +1851,10 @@ PDB.tool = {
 		  for(var i in fragment){
 			  var frag = fragment[i];
 			  if(frag.length<2){
-				  continue;				  
+				  continue;
 			  }
 			  if(frag.length==2){
-				  continue;		
+				  continue;
 			  }
 			  var start,end,reptype;
 			  if(frag.length==4&&frag[1]!=frag[2]){
@@ -1864,13 +1867,13 @@ PDB.tool = {
 				  end     = w3m.mol[PDB.pdbId].residueData[frag[0]][frag[2]];
 				  reptype = frag[3];
 			  }else if(frag.length==3){
-				  
+
 				  start   = w3m.mol[PDB.pdbId].residueData[frag[0]][frag[1]];
 				  end     = w3m.mol[PDB.pdbId].residueData[frag[0]][frag[1]];
 				  reptype = frag[2];
-				  
+
 			  }
-			  
+
 			  var obj = {
 				  start: start,
 				  end: end,
@@ -1882,7 +1885,7 @@ PDB.tool = {
 		  }
 		  //console.log(PDB.fragmentList[ii]);
 	  }
-	  
+
   },showDrugMenuForVr: function(url){
 	  PDB.tool.ajax.get(url, function(text) {
         var jsonObj = JSON.parse(text);
@@ -1894,9 +1897,9 @@ PDB.tool = {
               };
 
           PDB.tool.generateDrugMigrationPath(limit);
-		  
+
 		  var group = PDB.GROUP_VR_MENU_DRUG;
-		  
+
 		  var parentGroup = PDB.GROUP[group];
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
@@ -1905,19 +1908,19 @@ PDB.tool = {
 		  var mainPos = PDB.GROUP[PDB.GROUP_MAIN];
           var pos = new THREE.Vector3(mainPos.x, mainPos.y+2, mainPos.z +2);
           parentGroup.position.copy(pos);
-		  
+
 		  var posStart = pos;
 		  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
           var reptype = "drugListMenu";
 		  PDB.drawer.drawTextKB(group, posStart, "Drug List", "", color, 135);
-			  
+
           var bindingdb = jsonObj.data[0].bindingdb;
 		  if (bindingdb !== undefined && bindingdb !== "" && bindingdb !== "null") {
 			  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
 			  PDB.drawer.drawTextKB(group, posStart, "bindingdb", "", color, 135);
 			  posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.BINDING_DB, bindingdb,color,reptype+","+PDB.DRUG_MODE_CONFIG.BINDING_DB);
 		  }
-          
+
 
           var chembl = jsonObj.data[0].chembl;
 		  if (chembl !== undefined && chembl !== "" && chembl !== "null") {
@@ -1930,29 +1933,29 @@ PDB.tool = {
           var swisslipids = jsonObj.data[0].swisslipids;
 		  if (swisslipids !== undefined && swisslipids !== "" && swisslipids !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
-			PDB.drawer.drawTextKB(group, posStart, "swisslip", "", color, 135);			  
+			PDB.drawer.drawTextKB(group, posStart, "swisslip", "", color, 135);
             posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.SWISSLIPIDS, swisslipids,color,reptype+","+PDB.DRUG_MODE_CONFIG.SWISSLIPIDS);
 		  }
 
           var guidetopharmacology = jsonObj.data[0].guidetopharmacology;
 		  if (guidetopharmacology !== undefined && guidetopharmacology !== "" && guidetopharmacology !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
-			PDB.drawer.drawTextKB(group, posStart, "guidetopharmacology", "", color, 135);			  
+			PDB.drawer.drawTextKB(group, posStart, "guidetopharmacology", "", color, 135);
             posStart = PDB.tool.addDrugMenuForVr(group,posStart,PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY, guidetopharmacology,color,reptype+","+PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY);
 		  }
 
           var drugbank = jsonObj.data[0].drugbank;
 		  if (drugbank !== undefined && drugbank !== "" && drugbank !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
-			PDB.drawer.drawTextKB(group, posStart, "drugbank", "", color, 135);			  
+			PDB.drawer.drawTextKB(group, posStart, "drugbank", "", color, 135);
             posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.DRUG_BANK, drugbank,color,reptype+","+PDB.DRUG_MODE_CONFIG.DRUG_BANK);
 		  }
-		  
+
 		  PDB.DOCKING_POS_START= posStart;
         } else {
           PDB.tool.printProgress(jsonObj.message);
         }
-		
+
       });
   },addDrugMenuForVr: function(parentGroup,posStart,dbname, dbjson,color,reptype){
 	  if (dbjson !== undefined && dbjson !== "" && dbjson !== "null") {
@@ -2003,7 +2006,7 @@ PDB.tool = {
                 y: w3m.global.limit.y,
                 z: w3m.global.limit.z
               };
-		 
+
 		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
@@ -2011,12 +2014,12 @@ PDB.tool = {
           var z = limit.z[1] + PDB.GeoCenterOffset.z;
           var pos = new THREE.Vector3(x * 0.02 + 4, 2.8, z * 0.02);
           parentGroup.position.copy(pos);
-		  
+
           var posStart = pos;
 		  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
           var reptype = "";
 		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, posStart, "Docking List", reptype, color, 135);
-		  
+
           for (var i in jsonObj.model_list) {
             if (jsonObj.model_list[i] === "") {
               continue;

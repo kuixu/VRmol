@@ -2,20 +2,33 @@
  * Created by Kui Xu on 2017/8/7.
  * mail: xukui.cs@gmail.com
  * MRC/CCP4 file format http://www.ccpem.ac.uk/mrc_format/mrc2014.php
+ * The 2mFo-DFc map (in CCP4 format): http://www.ebi.ac.uk/pdbe/coordinates/files/1cbs.ccp4
+ * The mFo-DFc map (in CCP4 format): http://www.ebi.ac.uk/pdbe/coordinates/files/1cbs_diff.ccp4
+ * The reflection file (in MTZ format): http://www.ebi.ac.uk/pdbe/coordinates/files/1cbs_map.mtz
  */
 var EmMapParser;
 EmMapParser = {
   getURLByType: function(mapid, type) {
+    console.log("======"+mapid+"----"+type);
     switch (type) {
+      case "X-Ray":
+        return 'http://www.ebi.ac.uk/pdbe/coordinates/files/' + mapid.toLowerCase() + '.ccp4';
+        break;
+        case "X-Ray-desc":
+          return 'http://www.ebi.ac.uk/pdbe/entry/pdb/' + mapid.toLowerCase();
+          break;
       case "ccp4":
         return 'https://ipr.pdbj.org/edmap/ccp4/' + mapid.toLowerCase() + '.ccp4.gz';
         break;
       case "ccp4-local":
         return 'http://localhost/ccp4/data/' + mapid.toLowerCase() + '.ccp4.gz';
         break;
-      case "map":
+      case "EM":
         return 'https://ftp.wwpdb.org/pub/emdb/structures/EMD-' + mapid.toLowerCase() + '/map/emd_' + mapid.toLowerCase() + '.map.gz';
         break;
+        case "EM-desc":
+          return 'https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-' + mapid.toLowerCase();
+          break;
       case "map-local":
         return 'data/emd_' + mapid.toLowerCase() + '.map.gz';
         break;
@@ -25,7 +38,6 @@ EmMapParser = {
     var scope = this;
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {
-
       if (this.status == 200) {
         var unit8map = new Uint8Array(this.response);
         var gunzip = new Zlib.Gunzip(unit8map);

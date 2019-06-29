@@ -276,7 +276,7 @@ PDB.controller = {
         if (jsonObj.code === 1 && jsonObj.data !== undefined) {
           PDB.tool.createDensityMapPanel(jsonObj);
 
-          var mapserver = "map";
+          var mapserver = jsonObj.method;
           if (PDB.DEBUG_MODE == 1) {
             mapserver = "map-local";
           }
@@ -1259,7 +1259,7 @@ PDB.controller = {
     var e = event || window.event;
     if (e.keyCode == 13) {
       var input = document.getElementById("load_text");
-      var mapserver = "map";
+      var mapserver = "EM";
       if (PDB.DEBUG_MODE == 1) {
         mapserver = "map-local";
       }
@@ -1824,14 +1824,14 @@ PDB.controller = {
     }
     // console.log(PDB.residueGroupObject);
 	// if(){
-		
+
 	// }
 	if(fragment){
 		PDB.CHANGESTYLE = PDB.DRAWSTYLE_FRAGMENT; //切换mode,fragment mode
 	}else{
 		PDB.CHANGESTYLE = PDB.DRAWSTYLE_DEFAULT; //切换mode，放弃fragment
 	}
-    
+
     var scope = this;
     var input = document.getElementById("search_text");
     input.value = name;

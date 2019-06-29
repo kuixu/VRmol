@@ -17,11 +17,12 @@ $obj = json_decode($result, true);
 $method = $obj[$pdbid][0]['experimental_method_class'];
 if (in_array("em", $method)){
    $id = $obj[$pdbid][0]['related_structures'][0]['accession'];
-   $md = 'em';
+   $id = str_replace("EMD-","", $id);
+   $md = 'EM';
    $msgArray = array('code'=>1, 'data'=> [$id], 'method'=>$md, 'pdbid'=>$pdbid, 'message'=>'success');
 }elseif(in_array("x-ray", $method)){
    $id = $pdbid;
-   $md = 'x-ray';
+   $md = 'X-Ray';
    $msgArray = array('code'=>1, 'data'=> [$id], 'method'=>$md, 'pdbid'=>$pdbid, 'message'=>'success');
 }else{
    $id = '';
