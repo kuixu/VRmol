@@ -1,17 +1,27 @@
-import sys
+#coding=utf-8
+
+import os,sys
+# import io
 import json
 import hashlib
-import base64
 import csv
-import io
 import time
-import re
+import base64
+import datetime
+import random
+import codecs
+import jieba.posseg as pseg
 from get_token_baidu import get_baidu_token
+import socket
 
 from urllib.request import urlopen
 from urllib.request import Request
 from urllib.error import URLError
 from urllib.parse import urlencode
+
+
+HOST = "127.0.0.1"
+PORT = 1234
 
 
 class DemoError(Exception):
@@ -79,7 +89,7 @@ def xunfei_voice(audio, language):
         lang = "sms16k"
     else:
         lang = "sms-en16k"
-    param = {"engine_type": lang, "aue": "raw"}  
+    param = {"engine_type": lang, "aue": "raw"}
     x_time = int(int(round(time.time() * 1000)) / 1000)
 
     # get checksum
@@ -110,12 +120,7 @@ def xunfei_voice(audio, language):
         raise DemoError(result)
 
 
-import codecs
-import jieba.posseg as pseg
-
-
 class SimCilin:
-
     def __init__(self):
         self.cilin_path = 'static-data/cilin.txt'
         self.sem_dict = self.load_semantic()
@@ -163,7 +168,7 @@ class SimCilin:
             else:
                 return 0.5
 
-    # Calculat the similarity between words, choose the max simiarity in different sems.
+    # Calculate the similarity between words, choose the max simiarity in different sems.
     def compute_word_sim(self, word1, word2):
         if (word1 == word2):
             return 1
@@ -193,7 +198,7 @@ class SimCilin:
         return similarity
 
 
-def convert_chinese_to_instruction(sentence, command):
+def convert_chinese_to_instruction(sentence, command, simer):
     def find_max(command_score):
         maxm = 0
         id = '0'
@@ -210,7 +215,6 @@ def convert_chinese_to_instruction(sentence, command):
         else:
             return (1, '0')
 
-    simer = SimCilin()
     command_score = {}
     for i in command:
         score = simer.distance(i[0], sentence)
@@ -263,73 +267,106 @@ def convert_english_to_instruction(sentence, command):
     return find_max(command_score)
 
 
-# set for Chinese
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-language = sys.argv[1]
-f = open('static-data/x.base64', 'r')
-audiostr = f.readlines()[0].strip()
+def deal_a_request(audiostr, language, command, connection, simer):
+    try:
+        sentence = baidu_voice(audiostr, language)
+        if language == "Chinese" or language == 'chinese':
+            score = convert_chinese_to_instruction(sentence, command, simer)
+        else:
+            score = convert_english_to_instruction(sentence, command)
+        baidu_result = {'state': 0, 'data': sentence, 'score': score}
+    except DemoError as err:
+        if ('err_no' in err.errorinfo.keys() and err.errorinfo['err_no'] == 3302):
+            # print("dada")
+            get_baidu_token()
+            try:
+                sentence = baidu_voice(audiostr, language)
+                if language == "Chinese" or language == 'chinese':
+                    score = convert_chinese_to_instruction(sentence, command, simer)
+                else:
+                    score = convert_english_to_instruction(sentence, command)
+                baidu_result = {'state': 0, 'data': sentence, 'score': score}
+            except DemoError as err:
+                baidu_result = {'state': 1, 'error': err.errorinfo}
+        else:
+            baidu_result = {'state': 1, 'error': err.errorinfo}
+    ############################################################################3
+    # try:
+    #     sentence = xunfei_voice(audiostr, language)
+    #     sentence = re.sub("[！，。？]", "", sentence)
+    #     if language=="Chinese" or language=='chinese':
+    #         score = convert_chinese_to_instruction(sentence, command)
+    #     else:
+    #         score = convert_english_to_instruction(sentence, command)
+    #     xunfei_result = {'state': 0, 'data': sentence, 'score': score}
+    # except DemoError as err:
+    #     xunfei_result = {'state': 1, 'error': err.errorinfo}
+    #############################################################################
 
+    if ('score' in baidu_result.keys()):
+        result = {'baidu': baidu_result, 'xunfei': {'state': 1, 'error': 'no xunfei'},
+                  'caozuo': baidu_result['score'][1]}
+    else:
+        result = {'baidu': baidu_result, 'xunfei': {'state': 1, 'error': 'no xunfei'}, 'caozuo': 0}
+    connection.send(bytes(json.dumps(result), encoding='utf-8'))
+    print(result)
+
+    # save the audio
+    nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    randomNum = random.randint(10, 99)
+    dirName = "voice"
+    if not os.path.exists(dirName):
+        os.mkdir(dirName)
+        print("Directory " , dirName ,  " Created ")
+    file = dirName + "/" + nowTime + '_' + str(randomNum) + ".wav"
+
+    ori_data = base64.b64decode(audiostr)
+
+    fout = open(file, 'wb')
+    fout.write(ori_data)
+    fout.close()
+
+    ##log the results
+    if ('score' in baidu_result.keys()):
+        import logging
+        logging.basicConfig(level=logging.INFO, filename='result.log', filemode='a', format='%(message)s')
+        logging.info(file + "-" + baidu_result['data'] + "-" + baidu_result['score'][1])
+
+
+# set for Chinese
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 csv_file = csv.reader(open('static-data/command.csv', encoding='utf-8'))
 command = []
 for i in csv_file:
     command.append(i)
+
+simer = SimCilin()
+
+for word in pseg.cut("start"):
+    print(word)
+
 #######################################################################
+
 try:
-    sentence = baidu_voice(audiostr, language)
-    score = convert_chinese_to_instruction(sentence, command)
-    if language == "Chinese" or language == 'chinese':
-        score = convert_chinese_to_instruction(sentence, command)
-    else:
-        score = convert_english_to_instruction(sentence, command)
-    baidu_result = {'state': 0, 'data': sentence, 'score': score}
-except DemoError as err:
-    if ('err_no' in err.errorinfo.keys() and err.errorinfo['err_no'] == 3302):
-        # print("dada")
-        get_baidu_token()
-        try:
-            sentence = baidu_voice(audiostr, language)
-            score = convert_chinese_to_instruction(sentence, command)
-            if language == "Chinese" or language == 'chinese':
-                score = convert_chinese_to_instruction(sentence, command)
-            else:
-                score = convert_english_to_instruction(sentence, command)
-            baidu_result = {'state': 0, 'data': sentence, 'score': score}
-        except DemoError as err:
-            baidu_result = {'state': 1, 'error': err.errorinfo, 'score':[1, 0]}
-    else:
-        baidu_result = {'state': 1, 'error': err.errorinfo, 'score':[1, 0]}
-############################################################################3
-# try:
-#     sentence = xunfei_voice(audiostr, language)
-#     sentence = re.sub("[！，。？]", "", sentence)  # 去除标点
-#     if language=="Chinese" or language=='chinese':
-#         score = convert_chinese_to_instruction(sentence, command)
-#     else:
-#         score = convert_english_to_instruction(sentence, command)
-#     xunfei_result = {'state': 0, 'data': sentence, 'score': score}
-# except DemoError as err:
-#     xunfei_result = {'state': 1, 'error': err.errorinfo}
-#############################################################################
-#print(json.dumps({'state': 1, 'error': 'no xunfei'}))  # (xunfei_result))
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print("Socket Created")
+    s.bind((HOST, PORT))
+    print('Socket bind complete')
+    s.listen(10)
+    print('Socket listening')
 
-print(json.dumps(baidu_result))
-# save the audio
-import base64
-import datetime
-import random
+    while True:
+        connection, address = s.accept()
+        language_byte = connection.recv(1024)
+        language = str(language_byte, encoding='utf-8')
+        # if(data_str):
+        #     print(data_str,data_byte)
+        # connection.send(bytes("receive:" +data_str+"\n",encoding='utf-8'))
+        # connection.send(bytes("0000001001001\n",encoding='utf-8'))
+        f = open('static-data/x.base64', 'r')
+        audiostr = f.readlines()[0].strip()
+        deal_a_request(audiostr, language, command, connection, simer)
 
-nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')  
-randomNum = random.randint(10, 99)
-file = "voice/" + nowTime + '_' + str(randomNum) + ".wav"
-
-ori_data = base64.b64decode(audiostr)
-
-fout = open(file, 'wb')
-fout.write(ori_data)
-fout.close()
-
-##log the results
-if (baidu_result['score'][1]>0):
-    import logging
-    logging.basicConfig(level=logging.INFO, filename='result.log', filemode='a', format='%(message)s')
-    logging.info(file + "-" + baidu_result['data'] + "-" + baidu_result['score'][1])
+        connection.close()
+except KeyboardInterrupt:
+    s.close()
