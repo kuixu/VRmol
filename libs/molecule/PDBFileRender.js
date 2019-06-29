@@ -673,6 +673,14 @@ function onTriggerDown(event) {
       case PDB.SELECTION_OBJECT:
         objectTrans(controller, object);
         break;
+	  case PDB.SELECTION_DRUG_LIST:
+        if(object){
+			var userData = object.userData;
+			if("drugListMenu" === userData.reptype){
+				PDB.tool.showDockingMenuForVr(userData.name);
+			}
+		}
+        break;	
     }
 
     // ================================ Deal with Trigger mode ===

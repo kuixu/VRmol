@@ -1117,11 +1117,11 @@ PDB.controller = {
     var hideDrugPanel = document.getElementById("hideDrugPanel");
     hideDrugPanel.addEventListener('click', function(e) {
       PDB.render.clear(6);
-	  // var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
-	  // if (ServerType !== 2) {
-		// url = SERVERURL + "/data/drug.json";
-	  // }
-	  // PDB.tool.showDrugMenuForVr(url);
+	  var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
+	  if (ServerType !== 2) {
+		url = SERVERURL + "/data/drug.json";
+	  }
+	  PDB.tool.showDrugMenuForVr(url);
 	  // PDB.tool.showDockingMenuForVr("DB404040");
     });
 
