@@ -121,17 +121,72 @@ PDB.drawer = {
       });
       var mesh = new THREE.Mesh(geometry, material);
       mesh.name = text;
-      var dir = new THREE.Vector3(0, 0, 0);
-      camera.getWorldDirection(dir);
+      // var dir = new THREE.Vector3(0, 0, 0);
+      // camera.getWorldDirection(dir);
       mesh.userData = {
         type: type,
         name: text,
         group: group
       };
       mesh.position.copy(pos);
-      mesh.lookAt(camera.position);
-      PDB.GROUP[group].add(mesh);
+	  // if(PDB.rotateAxis && PDB.rotateAxis.z > 0){
+		// mesh.up.set(0,-1,0); 		  
+	  // }
+	  // if(PDB.rotateAxis && PDB.rotateAxis.x > 0){
+		// mesh.up.set(0,-1,0); 		  
+	  // }
+	  // if(PDB.rotateAxis && PDB.rotateAxis.y > 0){
+		// mesh.up.set(0,-1,0); 		  
+	  // }
+	  	//normalize the direction vector (convert to vector of length 1)
+	
 
+	  
+	  //mesh.up.set(camera.position.x,camera.position.y,camera.position.z);
+      
+      PDB.GROUP[group].add(mesh);
+	  // mesh.rotateX(-PDB.rotateAxisAngle.x);
+	  // mesh.rotateY(-PDB.rotateAxisAngle.y);
+	  // mesh.rotateZ(-PDB.rotateAxisAngle.z);
+	  //mesh.up.set(PDB.rotateAxisAngle.x%Math.PI,(1+PDB.rotateAxisAngle.y)%Math.PI,PDB.rotateAxisAngle.z%Math.PI); 
+	  
+	  var updir = new THREE.Vector3(0, 1, 0);
+	  var axis ;
+	  if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.x!=0){
+			axis = new THREE.Vector3(1, 0, 0);
+			updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.x);
+			mesh.rotateX(-PDB.rotateAxisAngle.x);
+		}
+		
+		
+		if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.y!=0){
+			axis = new THREE.Vector3(0, 1, 0);
+			updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.y);
+			mesh.rotateY(-PDB.rotateAxisAngle.y);
+		}
+		
+		
+		if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.z!=0){
+			axis = new THREE.Vector3(0, 0, 1);
+			updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.z);
+			mesh.rotateZ(-PDB.rotateAxisAngle.z);
+		}
+		mesh.up.copy(updir.normalize());
+		mesh.lookAt(camera.position);
+	  
+	  // mesh.rotateX(-PDB.rotateAxisAngle.x);
+	  // mesh.rotateY(-PDB.rotateAxisAngle.y);
+	  // mesh.rotateZ(-PDB.rotateAxisAngle.z);
+
+	var hex = 0xffff00;
+	var t_t = mesh.up.clone();
+	var arrowHelper = new THREE.ArrowHelper( t_t.normalize(), pos, 1, hex );
+	
+	 var hex1 = 0x2aa41d;
+	 var t_t_1 = new THREE.Vector3(PDB.rotateAxisAngle.x,PDB.rotateAxisAngle.y,PDB.rotateAxisAngle.z);
+	 var arrowHelper1 = new THREE.ArrowHelper( t_t_1.normalize(), pos, 2, hex1 );
+	PDB.GROUP[group].add(arrowHelper);
+	PDB.GROUP[group].add(arrowHelper1);
     });
   },
  
