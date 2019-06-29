@@ -1891,5 +1891,153 @@ PDB.tool = {
 		  //console.log(PDB.fragmentList[ii]);
 	  }
 	  
+  },showDrugMenuForVr: function(url){
+	  PDB.tool.ajax.get(url, function(text) {
+        var jsonObj = JSON.parse(text);
+        if (jsonObj.code === 1 && jsonObj.data !== undefined) {
+          var limit = {
+                x: w3m.global.limit.x,
+                y: w3m.global.limit.y,
+                z: w3m.global.limit.z
+              };
+
+          PDB.tool.generateDrugMigrationPath(limit);
+		  
+		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DRUG];
+		  var color = 0x1f43;
+		  var limit = w3m.global.limit;
+          var x = limit.x[1] + PDB.GeoCenterOffset.x;
+          var z = limit.z[1] + PDB.GeoCenterOffset.z;
+		  var mainPos = PDB.GROUP[PDB.GROUP_MAIN];
+          var pos = new THREE.Vector3(mainPos.x, mainPos.y+2, mainPos.z +2);
+          parentGroup.position.copy(pos);
+		  
+		  var posStart = pos;
+		  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
+          var reptype = "";
+		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "Drug List", reptype, color, 135);
+			  
+          var bindingdb = jsonObj.data[0].bindingdb;
+		  if (bindingdb !== undefined && bindingdb !== "" && bindingdb !== "null") {
+			  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
+              var reptype = "";
+			  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "bindingdb", reptype, color, 135);
+			  posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG,posStart, PDB.DRUG_MODE_CONFIG.BINDING_DB, bindingdb,color);
+		  }
+          
+
+          var chembl = jsonObj.data[0].chembl;
+		  if (chembl !== undefined && chembl !== "" && chembl !== "null") {
+			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
+            var reptype = "";
+			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "chembl", reptype, color, 135);
+            posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG, posStart,PDB.DRUG_MODE_CONFIG.CHEMBL, chembl,color);
+		  }
+
+
+          var swisslipids = jsonObj.data[0].swisslipids;
+		  if (swisslipids !== undefined && swisslipids !== "" && swisslipids !== "null") {
+			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
+            var reptype = "";
+			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "swisslip", reptype, color, 135);			  
+            posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG,posStart, PDB.DRUG_MODE_CONFIG.SWISSLIPIDS, swisslipids,color);
+		  }
+
+          var guidetopharmacology = jsonObj.data[0].guidetopharmacology;
+		  if (guidetopharmacology !== undefined && guidetopharmacology !== "" && guidetopharmacology !== "null") {
+			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
+            var reptype = "";
+			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "guidetopharmacology", reptype, color, 135);			  
+            posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG,posStart,PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY, guidetopharmacology,color);
+		  }
+
+          var drugbank = jsonObj.data[0].drugbank;
+		  if (drugbank !== undefined && drugbank !== "" && drugbank !== "null") {
+			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
+            var reptype = "";
+			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "drugbank", reptype, color, 135);			  
+            posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG,posStart, PDB.DRUG_MODE_CONFIG.DRUG_BANK, drugbank,color);
+		  }
+		  
+		  PDB.DOCKING_POS_START= posStart;
+        } else {
+          PDB.tool.printProgress(jsonObj.message);
+        }
+		
+      });
+  },addDrugMenuForVr: function(parentGroup,posStart,dbname, dbjson,color){
+	  if (dbjson !== undefined && dbjson !== "" && dbjson !== "null") {
+		  var drugids = dbjson.split(';');
+		  for (var i in drugids) {
+			if (drugids[i] === "") {
+			  continue;
+			}
+			var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
+			var pos = new THREE.Vector3(posStart.x + 2.5, posStart.y, posStart.z);
+            var reptype = "";
+			PDB.drawer.drawTextKB(parentGroup, posStart, drugids[i], reptype, color, 135);
+			PDB.drawer.drawTextKB(parentGroup, pos, "docking", reptype, color, 135);
+		  }
+	  }
+	  return posStart;
+  },showDockingMenuForVr: function(drugId){
+	  PDB.DRUGMOVE = true;
+      PDB.drugMoveTime = new Date();
+      var x_c = w3m.global.limit.x[0] + (w3m.global.limit.x[1] - w3m.global.limit.x[0]) / 2;
+      var y_c = w3m.global.limit.y[0] + (w3m.global.limit.y[1] - w3m.global.limit.y[0]) / 2;
+      var z_c = w3m.global.limit.z[0] + (w3m.global.limit.z[1] - w3m.global.limit.z[0]) / 2;
+      var x_s = w3m.global.limit.x[1] - w3m.global.limit.x[0];
+      var y_s = w3m.global.limit.y[1] - w3m.global.limit.y[0];
+      var z_s = w3m.global.limit.z[1] - w3m.global.limit.z[0];
+      PDB.DRUG_MODE_CONFIG.x_c = x_c;
+      PDB.DRUG_MODE_CONFIG.y_c = y_c;
+      PDB.DRUG_MODE_CONFIG.z_c = z_c;
+      PDB.DRUG_MODE_CONFIG.x_s = x_s;
+      PDB.DRUG_MODE_CONFIG.y_s = y_s;
+      PDB.DRUG_MODE_CONFIG.z_s = z_s;
+      var url = PDB.DOCKING_URL + "?pdbid=" + PDB.pdbId.toUpperCase() + "&smolid=" + drugId +
+        "&x_c=" + PDB.DRUG_MODE_CONFIG.x_c +
+        "&y_c=" + PDB.DRUG_MODE_CONFIG.y_c +
+        "&z_c=" + PDB.DRUG_MODE_CONFIG.z_c +
+        "&x_s=" + PDB.DRUG_MODE_CONFIG.x_s +
+        "&y_s=" + PDB.DRUG_MODE_CONFIG.y_s +
+        "&z_s=" + PDB.DRUG_MODE_CONFIG.z_s;
+      if (ServerType !== 2) {
+        url = SERVERURL + "/data/autodock.json";
+      }
+	  PDB.tool.ajax.get(url, function(text) {
+        var jsonObj = JSON.parse(text);
+        if (jsonObj.model_list != undefined && jsonObj.model_list.length > 0) {
+          //stop move drug
+          PDB.DRUGMOVE = false;
+		  var limit = {
+                x: w3m.global.limit.x,
+                y: w3m.global.limit.y,
+                z: w3m.global.limit.z
+              };
+		 
+		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];
+		  var color = 0x1f43;
+		  var limit = w3m.global.limit;
+          var x = limit.x[1] + PDB.GeoCenterOffset.x;
+          var z = limit.z[1] + PDB.GeoCenterOffset.z;
+          var pos = new THREE.Vector3(x * 0.02 + 4, 2.8, z * 0.02);
+          parentGroup.position.copy(pos);
+		  
+          var posStart = pos;
+		  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
+          var reptype = "";
+		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, posStart, "Docking List", reptype, color, 135);
+		  
+          for (var i in jsonObj.model_list) {
+            if (jsonObj.model_list[i] === "") {
+              continue;
+            }
+		    posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
+			var reptype = "";
+			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, posStart, jsonObj.model_list[i], reptype, color, 135);
+          }
+        }
+      });
   }
 }
