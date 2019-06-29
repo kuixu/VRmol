@@ -1903,7 +1903,9 @@ PDB.tool = {
 
           PDB.tool.generateDrugMigrationPath(limit);
 		  
-		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DRUG];
+		  var group = PDB.GROUP_VR_MENU_DRUG;
+		  
+		  var parentGroup = PDB.GROUP[group];
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
           var x = limit.x[1] + PDB.GeoCenterOffset.x;
@@ -1921,8 +1923,8 @@ PDB.tool = {
 		  if (bindingdb !== undefined && bindingdb !== "" && bindingdb !== "null") {
 			  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
               var reptype = "";
-			  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "bindingdb", reptype, color, 135);
-			  posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG,posStart, PDB.DRUG_MODE_CONFIG.BINDING_DB, bindingdb,color);
+			  PDB.drawer.drawTextKB(group, posStart, "bindingdb", reptype, color, 135);
+			  posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.BINDING_DB, bindingdb,color);
 		  }
           
 
@@ -1930,8 +1932,8 @@ PDB.tool = {
 		  if (chembl !== undefined && chembl !== "" && chembl !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
             var reptype = "";
-			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "chembl", reptype, color, 135);
-            posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG, posStart,PDB.DRUG_MODE_CONFIG.CHEMBL, chembl,color);
+			PDB.drawer.drawTextKB(group, posStart, "chembl", reptype, color, 135);
+            posStart = PDB.tool.addDrugMenuForVr(group, posStart,PDB.DRUG_MODE_CONFIG.CHEMBL, chembl,color);
 		  }
 
 
@@ -1939,24 +1941,24 @@ PDB.tool = {
 		  if (swisslipids !== undefined && swisslipids !== "" && swisslipids !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
             var reptype = "";
-			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "swisslip", reptype, color, 135);			  
-            posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG,posStart, PDB.DRUG_MODE_CONFIG.SWISSLIPIDS, swisslipids,color);
+			PDB.drawer.drawTextKB(group, posStart, "swisslip", reptype, color, 135);			  
+            posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.SWISSLIPIDS, swisslipids,color);
 		  }
 
           var guidetopharmacology = jsonObj.data[0].guidetopharmacology;
 		  if (guidetopharmacology !== undefined && guidetopharmacology !== "" && guidetopharmacology !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
             var reptype = "";
-			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "guidetopharmacology", reptype, color, 135);			  
-            posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG,posStart,PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY, guidetopharmacology,color);
+			PDB.drawer.drawTextKB(group, posStart, "guidetopharmacology", reptype, color, 135);			  
+            posStart = PDB.tool.addDrugMenuForVr(group,posStart,PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY, guidetopharmacology,color);
 		  }
 
           var drugbank = jsonObj.data[0].drugbank;
 		  if (drugbank !== undefined && drugbank !== "" && drugbank !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
             var reptype = "";
-			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DRUG, posStart, "drugbank", reptype, color, 135);			  
-            posStart = PDB.tool.addDrugMenuForVr(PDB.GROUP_VR_MENU_DRUG,posStart, PDB.DRUG_MODE_CONFIG.DRUG_BANK, drugbank,color);
+			PDB.drawer.drawTextKB(group, posStart, "drugbank", reptype, color, 135);			  
+            posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.DRUG_BANK, drugbank,color);
 		  }
 		  
 		  PDB.DOCKING_POS_START= posStart;

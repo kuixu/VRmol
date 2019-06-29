@@ -395,13 +395,25 @@ function dealwithMenu(object) {
     case PDB.GROUP_MENU_DRUG:
       switch(curr_reptype){
 		case 1:
-	      PDB.GROUP[PDB.GROUP_DRUG].visible=false;
+		  PDB.GROUP[PDB.GROUP_DRUG].visible = false;
+		  if(PDB.GROUP[PDB.GROUP_DRUG].visible === false){
+			PDB.DRUGMOVE = false;
+		  }
 	      break;
 		case 2:
-		  PDB.loader.loadDrug("DB04464",PDB.DRUG_MODE_CONFIG.DRUG_BANK,function () {
-		    PDB.painter.showHet('DB04464');
+		  var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
+		  if (ServerType !== 2) {
+			url = SERVERURL + "/data/drug.json";
 		  }
-	    );
+		  PDB.tool.showDrugMenuForVr(url);
+		  // PDB.loader.loadDrug("DB04464",PDB.DRUG_MODE_CONFIG.DRUG_BANK,function () {
+			// w3m.mol["DB04464"].drug = true;
+            // PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+		    // PDB.painter.showHet("DB04464");
+            // PDB.tool.generateDrugMigrationPath();
+            // PDB.GROUP[PDB.GROUP_DRUG].visible = true;
+		  // }
+	    // )
         break;
       case 3:
 	    PDB.tool.generateDrugMigrationPath();
@@ -418,6 +430,10 @@ function dealwithMenu(object) {
       }
       onMenuDown();
 	  break;
+    case PDB.GROUP_VR_MENU_DRUG:
+      console.log(object.userData.reptype);
+      
+      break;	  
     case PDB.GROUP_MENU_DENSITYMAP:
       var type = object.userData.reptype;
       if (PDB.EMMAP.DATA != undefined && PDB.EMMAP.DATA.data != undefined) {
@@ -598,7 +614,7 @@ function onTriggerDown(event) {
   // console.log(intersection);
   var object = intersection.object;
   var pos = intersection.pos;
-
+  console.log("----------------"+object.name);
   // ================================ Deal with Menu ===
   if (PDB.isShowMenu) {
     dealwithMenu(object);
@@ -942,7 +958,8 @@ function getIntersections(controller) {
         inters.push(tmp_inters[j]);
       }
     }
-  } else {
+  } else { 
+    
     switch (PDB.selection_mode) {
       case PDB.SELECTION_MODEL:
         for (var i in PDB.GROUP_STRUCTURE_INDEX) {
@@ -959,7 +976,6 @@ function getIntersections(controller) {
         }
         break;
       case PDB.SELECTION_HET:
-        // inters.push({"object":PDB.GROUP[PDB.GROUP_HET]});
         var gIndexies = PDB.GROUP_HET_INDEX;
         for (var key in gIndexies) {
           var groupindex = gIndexies[key];
@@ -1081,7 +1097,16 @@ function getIntersections(controller) {
           }
         }
         break;
+      case PDB.SELECTION_DRUG_LIST:
+        if(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].children.length > 0){
+			var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].children);
+			for (var j = 0; j < tmp_inters.length; j++) {
+			  inters.push(tmp_inters[j]);
+			}
+		}
+        break;		
     }
+	
   }
   return inters;
 }

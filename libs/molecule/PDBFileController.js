@@ -50,7 +50,7 @@ PDB.controller = {
     var vrMode = document.getElementById("vrMode");
     var vrMode2 = document.getElementById("vrMode2");
     var threeMode = document.getElementById("threeMode");
-    var threeWithTravel = document.getElementById("threeWithTravel");
+    // var threeWithTravel = document.getElementById("threeWithTravel");
     //var vrWithTravel = document.getElementById("vrWithTravel");
 
     threeMode.addEventListener('click', function(e) {
@@ -59,13 +59,13 @@ PDB.controller = {
       window.location.href = "index.html?vmode=desktop";
     });
 
-    threeWithTravel.addEventListener('click', function(e) {
-      PDB.CHANGESTYLE = 6;
-      PDB.render.clearStructure();
-      PDB.render.changeToThreeMode(PDB.MODE_TRAVEL_THREE, true);
-      PDB.painter.showResidueByThreeTravel();
+    // threeWithTravel.addEventListener('click', function(e) {
+      // PDB.CHANGESTYLE = 6;
+      // PDB.render.clearStructure();
+      // PDB.render.changeToThreeMode(PDB.MODE_TRAVEL_THREE, true);
+      // PDB.painter.showResidueByThreeTravel();
 
-    });
+    // });
 
 
     vrMode.addEventListener('click', function(e) {
@@ -1117,6 +1117,12 @@ PDB.controller = {
     var hideDrugPanel = document.getElementById("hideDrugPanel");
     hideDrugPanel.addEventListener('click', function(e) {
       PDB.render.clear(6);
+	  // var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
+	  // if (ServerType !== 2) {
+		// url = SERVERURL + "/data/drug.json";
+	  // }
+	  // PDB.tool.showDrugMenuForVr(url);
+	  // PDB.tool.showDockingMenuForVr("DB404040");
     });
 
     var b_load_drug = document.getElementById("b_load_drug");
