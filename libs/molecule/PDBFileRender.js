@@ -676,8 +676,18 @@ function onTriggerDown(event) {
 	  case PDB.SELECTION_DRUG_LIST:
         if(object){
 			var userData = object.userData;
-			if("drugListMenu" === userData.reptype){
-				PDB.tool.showDockingMenuForVr(userData.name);
+			var repList = userData.reptype.split(',');
+			if("drugListMenu" === repList[0]){
+				var drugId = userData.name;
+				PDB.loader.loadDrug(drugId, repList[1], function() {
+					w3m.mol[drugId].drug = true;
+					PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+					PDB.painter.showHet(drugId);
+					PDB.tool.generateDrugMigrationPath();
+					PDB.GROUP[PDB.GROUP_DRUG].visible = true;
+                });
+			}else if("docking" === repList[0]){
+				PDB.tool.showDockingMenuForVr(repList[1]);
 			}
 		}
         break;	

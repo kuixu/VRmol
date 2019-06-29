@@ -1923,7 +1923,7 @@ PDB.tool = {
 		  if (bindingdb !== undefined && bindingdb !== "" && bindingdb !== "null") {
 			  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
 			  PDB.drawer.drawTextKB(group, posStart, "bindingdb", "", color, 135);
-			  posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.BINDING_DB, bindingdb,color,reptype);
+			  posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.BINDING_DB, bindingdb,color,reptype+","+PDB.DRUG_MODE_CONFIG.BINDING_DB);
 		  }
           
 
@@ -1931,7 +1931,7 @@ PDB.tool = {
 		  if (chembl !== undefined && chembl !== "" && chembl !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
 			PDB.drawer.drawTextKB(group, posStart, "chembl", "", color, 135);
-            posStart = PDB.tool.addDrugMenuForVr(group, posStart,PDB.DRUG_MODE_CONFIG.CHEMBL, chembl,color,reptype);
+            posStart = PDB.tool.addDrugMenuForVr(group, posStart,PDB.DRUG_MODE_CONFIG.CHEMBL, chembl,color,reptype+","+PDB.DRUG_MODE_CONFIG.CHEMBL);
 		  }
 
 
@@ -1939,21 +1939,21 @@ PDB.tool = {
 		  if (swisslipids !== undefined && swisslipids !== "" && swisslipids !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
 			PDB.drawer.drawTextKB(group, posStart, "swisslip", "", color, 135);			  
-            posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.SWISSLIPIDS, swisslipids,color,reptype);
+            posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.SWISSLIPIDS, swisslipids,color,reptype+","+PDB.DRUG_MODE_CONFIG.SWISSLIPIDS);
 		  }
 
           var guidetopharmacology = jsonObj.data[0].guidetopharmacology;
 		  if (guidetopharmacology !== undefined && guidetopharmacology !== "" && guidetopharmacology !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
 			PDB.drawer.drawTextKB(group, posStart, "guidetopharmacology", "", color, 135);			  
-            posStart = PDB.tool.addDrugMenuForVr(group,posStart,PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY, guidetopharmacology,color,reptype);
+            posStart = PDB.tool.addDrugMenuForVr(group,posStart,PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY, guidetopharmacology,color,reptype+","+PDB.DRUG_MODE_CONFIG.GUIDETOPHARMACOLOGY);
 		  }
 
           var drugbank = jsonObj.data[0].drugbank;
 		  if (drugbank !== undefined && drugbank !== "" && drugbank !== "null") {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y -  0.2, posStart.z);
 			PDB.drawer.drawTextKB(group, posStart, "drugbank", "", color, 135);			  
-            posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.DRUG_BANK, drugbank,color,reptype);
+            posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.DRUG_BANK, drugbank,color,reptype+","+PDB.DRUG_MODE_CONFIG.DRUG_BANK);
 		  }
 		  
 		  PDB.DOCKING_POS_START= posStart;
@@ -1972,7 +1972,7 @@ PDB.tool = {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
 			var pos = new THREE.Vector3(posStart.x + 2.5, posStart.y, posStart.z);
 			PDB.drawer.drawTextKB(parentGroup, posStart, drugids[i], reptype, color, 135);
-			PDB.drawer.drawTextKB(parentGroup, pos, "docking", "docking", color, 135);
+			PDB.drawer.drawTextKB(parentGroup, pos, "docking", "docking,"+drugids[i], color, 135);
 		  }
 	  }
 	  return posStart;
