@@ -184,17 +184,18 @@
     }, options || {});
 
     // Figure out the cell dimensions
-    options.totalWidth = options.columns * (options.cellWidth + (2 * options.cellMargin));
+    // options.totalWidth = options.columns * (options.cellWidth + (2 * options.cellMargin));
+    options.totalWidth = 182;
 
     // Custom CSS for the chooser, which relies on previously defined options.
     options.chooserCSS = $.extend({
       'border':           '1px solid #000',
-      'margin':           '0 0 0 5px',
+      'margin':           '0 0 0 0px',
       'width':            options.totalWidth,
       'height':           options.totalHeight,
       'top':              0,
       'left':             options.boxWidth,
-      'position':         'absolute',
+      //'position':         'absolute',
       'background-color': '#fff'
     }, options.chooserCSS || {});
 

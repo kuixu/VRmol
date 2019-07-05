@@ -9,7 +9,7 @@ function parse_em_map($pdbid){
   $pdb_api = "http://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/".$pdbid;
   $result  = file_get_contents($pdb_api);
   $obj     = json_decode($result, true);
-  #var_dump($obj);
+  // var_dump($obj);
   $method = $obj[$pdbid][0]['experimental_method_class'];
   if (in_array("em", $method)){
      $id = $obj[$pdbid][0]['related_structures'][0]['accession'];
@@ -23,7 +23,7 @@ function parse_em_map($pdbid){
   }else{
      $id = '';
      $md = '';
-     $msgArray = array('code'=>0, 'message'=>'no fitted PDB in current EMDB.');
+     $msgArray = array('code'=>0, 'message'=>'no fitted PDB '.$pdbid.' in current EM DataBase.');
   }
   return $msgArray;
 }

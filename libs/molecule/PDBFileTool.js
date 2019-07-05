@@ -306,7 +306,7 @@ PDB.tool = {
     return atom;
   },
 
-  getCAAtomByLastAtomId: function(atomId) { //α炭原子ID
+  getCAAtomByLastAtomId: function(atomId) { // Ca
     var atoms = w3m.mol[PDB.pdbId].atom.main;
     var atom = atoms[atomId];
     if (atom[2] === 'ca') {
@@ -320,7 +320,7 @@ PDB.tool = {
     return atom;
   },
 
-  getCAAtomByStartAtomId: function(atomId) { //α炭原子ID
+  getCAAtomByStartAtomId: function(atomId) { // Ca
     var atoms = w3m.mol[PDB.pdbId].atom.main;
     var atom = atoms[atomId];
     if (atom[2] === 'ca') {
@@ -375,7 +375,7 @@ PDB.tool = {
   },
 
   getMidPoint: function(molid, preAtomId, nextAtomId) {
-    var offset = PDB.GeoCenterOffset; //偏移量
+    var offset = PDB.GeoCenterOffset;
     var preAtom = w3m.mol[molid].atom.main[preAtomId];
     var nextAtom = w3m.mol[molid].atom.main[nextAtomId];
     if (preAtom != undefined && nextAtom != undefined) {
@@ -847,7 +847,7 @@ PDB.tool = {
           if (PDB.DEBUG_MODE == 1) {
             mapserver = "map-local";
           }
-          console.log('-----------------' + mapId);
+          // console.log('-----------------' + mapId);
           PDB.controller.emmapLoad(mapId, mapserver, function(emmap) {
             PDB.render.clearGroupIndex(PDB.GROUP_MAP);
             var dimension = document.getElementById("dimension");
@@ -900,7 +900,7 @@ PDB.tool = {
         '<label class="label" id="minThresHold" style="margin-left: 0px;padding-left: 0px;float: left;width: 60;text-align: left">0</label><label class="label" id="currThresHold" style="width: 60px;text-align: center">50</label><label class="label" style="width: 60px;text-align: right;" id="maxThresHold">100</label><BR/>' +
         '<label class="label"> Slice Range </label><BR/> <input type="range" id="sliceRange" title="Change the value of slice" style="width: 180px;" name="" /><BR/> ' +
         '<label class="label" id="minSlice" style="margin-left: 0px;padding-left: 0px;float: left">0</label><label class="label" id="currSlice" style="margin-left: 35px;">50</label><label class="label" style="margin-left: 35px;" id="maxSlice">100</label><BR/>' +
-        '<select id="dimension"> <option value="0" checked>x</option> <option value="1" checked>y</option> <option value="2" checked>z</option> </select> <label class="label"> Dimension </label><BR/>';
+        '<select id="dimension"> <option value="0" checked>x</option> <option value="1" checked>y</option> <option value="2" checked>z</option> </select> <label class="label"> Dimension </label><BR/> <label class="label"> Surface Color </label>';
 
       var solidMap = document.getElementById("solidMap");
       solidMap.addEventListener('click', function(e) {
@@ -1349,7 +1349,7 @@ PDB.tool = {
           group.rotation.z = group.rotation.z - 0.025;
         }
       });
-      scope.freshAllResidueGroupObject(-0.025); //转动-0.005度<-------------
+      scope.freshAllResidueGroupObject(-0.025);
     } else if (type === 1) {
       groupIndexs.forEach(function(index) {
         var group = PDB.GROUP[index];
@@ -1357,7 +1357,7 @@ PDB.tool = {
           group.rotation.z = group.rotation.z + 0.025;
         }
       });
-      scope.freshAllResidueGroupObject(0.025); //转动0.005度<---------------
+      scope.freshAllResidueGroupObject(0.025);
     }
   },
 

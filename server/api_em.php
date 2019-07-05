@@ -9,10 +9,9 @@ require_once('parse_em_map.php');
 // require_once('conservation.php');
 
 if($DEBUG){
-	$pdbid = '5ftm';
+	$pdbid = '1mbs';
 }else{
 	$pdbid  = isset($_GET['pdbid'])  ? trim($_GET['pdbid'])  : null;
-
 }
 
 $msgArray = parse_em_map(strtolower($pdbid));

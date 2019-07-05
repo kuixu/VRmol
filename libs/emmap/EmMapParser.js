@@ -9,13 +9,13 @@
 var EmMapParser;
 EmMapParser = {
   getURLByType: function(mapid, type) {
-    console.log("======"+mapid+"----"+type);
+    // console.log("======"+mapid+"----"+type);
     switch (type) {
       case "X-Ray":
-        return 'http://www.ebi.ac.uk/pdbe/coordinates/files/' + mapid.toLowerCase() + '.ccp4';
+        return 'https://www.ebi.ac.uk/pdbe/coordinates/files/' + mapid.toLowerCase() + '.ccp4';
         break;
         case "X-Ray-desc":
-          return 'http://www.ebi.ac.uk/pdbe/entry/pdb/' + mapid.toLowerCase();
+          return 'https://www.ebi.ac.uk/pdbe/entry/pdb/' + mapid.toLowerCase();
           break;
       case "ccp4":
         return 'https://ipr.pdbj.org/edmap/ccp4/' + mapid.toLowerCase() + '.ccp4.gz';
@@ -40,14 +40,16 @@ EmMapParser = {
     xhr.onload = function() {
       if (this.status == 200) {
         var unit8map = new Uint8Array(this.response);
-        var gunzip = new Zlib.Gunzip(unit8map);
-        var plain = gunzip.decompress();
-        var emmap = scope.parseMap(plain.buffer, mapid);
+        if (type != "X-Ray"){
+          var gunzip = new Zlib.Gunzip(unit8map);
+          unit8map = gunzip.decompress();
+        }
+        var emmap = scope.parseMap(unit8map.buffer, mapid);
 
         onCallBack(emmap) // showMap(emmap);
       } else {
         if (!PDB.pptShow) {
-          PDB.tool.printProgress("Error: EMD-" + mapid);
+          PDB.tool.printProgress("Error! Failed to load "+type+" map "+mapid);
         }
         // if ( w3m_isset(PDB.remoteUrl[++url_index]) ) {
         //     this.get(id, callback);
@@ -64,16 +66,14 @@ EmMapParser = {
           var loaded = PDB.tool.toHumanByte(e.loaded);
           var total = PDB.tool.toHumanByte(e.total);
           PDB.tool.printProgress("Density Map: EMD-" + mapid + ", size(" + loaded + "/" + total + ") " + ratio);
-          console.log(e.loaded);
+          // console.log(e.loaded);
         }
       }
-
     };
     xhr.onloadstart = function(e) {
       if (!PDB.pptShow) {
         PDB.tool.setProgressBar(0, e.total);
       }
-
     };
     xhr.onloadend = function(e) {
       if (!PDB.pptShow) {

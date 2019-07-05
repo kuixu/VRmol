@@ -93,9 +93,9 @@ PDB = {
   DRUG_URL: SERVERURL + "/data/DB04464.pdb",
   // DRUG_URL: API_URL + "/server/api.php?taskid=12",
   currentUrl: "data/aaa.pdb",
-  remoteUrl: [ SERVERURL + '/data/', 'https://files.rcsb.org/view/',  'https://www.rcsb.org/pdb/files/' ],
-  drugPDBUrl: [ SERVERURL + '/data/','https://www.drugbank.ca/structures/small_molecule_drugs/DB04464.pdb'],
-  pdbId:"1mbs",
+  remoteUrl: [ 'https://files.rcsb.org/view/',  'https://www.rcsb.org/pdb/files/', SERVERURL + '/data/' ],
+  drugPDBUrl: [ SERVERURL + '/data/','https://www.drugbank.ca/structures/small_molecule_drugs/'],
+  pdbId:"1cbs",
   pdburl:"",
   molecules : {
       "aaa": "aaa.pdb",
@@ -177,7 +177,7 @@ PDB = {
   },
   DRUBDB_URL : {
     'drugbank':SERVERURL+"/data/drugbank/",
-    //'drugbank':"https://www.drugbank.ca/drugs/",
+    //'drugbank':"https://www.drugbank.ca/structures/small_molecule_drugs/",
     'bindingdb':"http://www.bindingdb.org/uniport/"        ,
     'chembl':"https://www.ebi.ac.uk/chembldb/target/inspect/",
     'guidetopharmacology':"http://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId="        ,
