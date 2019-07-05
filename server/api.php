@@ -5,33 +5,27 @@
 //
 
 require_once('pgdao.php');
-require_once('parse_em_map.php');
 require_once('conservation.php');
 
 $msgArray = array('code'=>0, 'data'=>array(), 'message'=>'parameter error!');
 $taskid = isset($_GET['taskid']) ? trim($_GET['taskid']) : null;
 $pdbid = isset($_GET['pdbid']) ? trim($_GET['pdbid']) : null;
 // $taskid = isset($_POST['taskid']) ? trim($_POST['taskid']) : null;
-//echo $pdbid;
+// echo $pdbid;
 // $taskid = '13';
 // $pdbid = '5ftm';
 
 switch ($taskid) {
 	case '10':
-      		$ds = isset($_GET['ds']) ? trim($_GET['ds']) : null;
+    $ds = isset($_GET['ds']) ? trim($_GET['ds']) : null;
 		$msgArray= getMutByPDB($pdbid, $ds);
 		break;
 	case '11':
-      		$chain = isset($_GET['chain']) ? trim($_GET['chain']) : null;
+    $chain = isset($_GET['chain']) ? trim($_GET['chain']) : null;
 		$msgArray= parseConservationData($pdbid,$chain);
 		break;
 	case '12':
 		$msgArray= getDrugs(strtoupper($pdbid));
-		break;
-	case '13':
-		//$msgArray= getEMDB(strtoupper($pdbid));
-		// var_dump($pdbid);
-		$msgArray= parse_em_map(strtolower($pdbid));
 		break;
 	default:
 		# code...
