@@ -3,37 +3,41 @@
 // Created by Kui XU on 2018/09/08.
 // mail: xukui.cs@gmail.com
 //
-//echo shell_shell_exec("php -v");
+// echo shell_shell_exec("php -v");
 // config URL
-$babel='/home/t7910/usr/openbabel-2.4.1/build/bin/babel';
-$smolid   = 'DB04464';
-$cmd = $babel.' '.$smolid.'_out.pdbqt '.$smolid.'_out.pdb;' ;
-echo shell_exec($cmd);
 
+$DEBUG      = False;
+$outmodel   = 9;
 $server_url = 'https://vrmol.life.tsinghua.edu.cn';
 $mgtools    = '/home/vr/tools/mgltools_x86_64Linux2_1.5.6/bin';
 $vina       = '/home/vr/tools/autodock_vina_1_1_2_linux_x86/bin/vina';
 $pdb_url    = 'http://files.rcsb.org/view/';
 $smol_url   = 'https://www.drugbank.ca/structures/small_molecule_drugs/';
-$outmodel   = 9;
-// get nequest parameter
-$pdbid    = $_GET['pdbid'];
-$smolid   = $_GET['smolid'];
-$x_c      = $_GET['x_c'];
-$y_c      = $_GET['y_c'];
-$z_c      = $_GET['z_c'];
-$x_s      = $_GET['x_s'];
-$y_s      = $_GET['y_s'];
-$z_s      = $_GET['z_s'];
-//$pdbid= '1mbs';
-//$smolid   = 'DB04464';
-//$x_c      = 10;
-//$y_c      = 10;
-//$z_c      = 10;
-//$x_s      = 10;
-//$y_s      = 10;
-//$z_s      = 10;
+$babel='/home/t7910/usr/openbabel-2.4.1/build/bin/babel';
+#$smolid   = 'DB04464';
+#$cmd = $babel.' '.$smolid.'_out.pdbqt '.$smolid.'_out.pdb;' ;
+#echo shell_exec($cmd);
 
+if ($DEBUG){
+    $pdbid= '1mbs';
+    $smolid   = 'DB04464';
+    $x_c      = 10;
+    $y_c      = 10;
+    $z_c      = 10;
+    $x_s      = 10;
+    $y_s      = 10;
+    $z_s      = 10;
+}else{
+    # get request parameter
+    $pdbid    = $_GET['pdbid'];
+    $smolid   = $_GET['smolid'];
+    $x_c      = $_GET['x_c'];
+    $y_c      = $_GET['y_c'];
+    $z_c      = $_GET['z_c'];
+    $x_s      = $_GET['x_s'];
+    $y_s      = $_GET['y_s'];
+    $z_s      = $_GET['z_s'];
+}
 $pdbfile  = $pdb_url.$pdbid.'.pdb';
 $smolfile = $smol_url.$smolid.'.pdb';
 // echo $pdbfile;
