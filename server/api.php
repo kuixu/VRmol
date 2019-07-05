@@ -4,9 +4,9 @@
 // mail: xukui.cs@gmail.com
 //
 
-#require_once('pgdao.php');
+require_once('pgdao.php');
 require_once('parse_em_map.php');
-#require_once('conservation.php');
+require_once('conservation.php');
 
 $msgArray = array('code'=>0, 'data'=>array(), 'message'=>'parameter error!');
 $taskid = isset($_GET['taskid']) ? trim($_GET['taskid']) : null;

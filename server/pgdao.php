@@ -145,7 +145,7 @@ function getMutByPDB($pdbid, $dataset){
   			$msgArray = array('code'=>0, 'message'=>'no mutation information in the current '.$dataset.' database.');
   		}
 	}else{
-		$msgArray = array('code'=>0, 'message'=>'no corresponding Uniprot-AC');
+		$msgArray = array('code'=>0, 'message'=>'no corresponding Uniprot-AC of '.$pdbid);
 		//$db->close();
 	}
 	return $msgArray;
