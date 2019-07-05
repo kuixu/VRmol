@@ -432,8 +432,8 @@ function dealwithMenu(object) {
 	  break;
     case PDB.GROUP_VR_MENU_DRUG:
       console.log(object.userData.reptype);
-      
-      break;	  
+
+      break;
     case PDB.GROUP_MENU_DENSITYMAP:
       var type = object.userData.reptype;
       if (PDB.EMMAP.DATA != undefined && PDB.EMMAP.DATA.data != undefined) {
@@ -690,7 +690,7 @@ function onTriggerDown(event) {
 				PDB.tool.showDockingMenuForVr(repList[1]);
 			}
 		}
-        break;	
+        break;
     }
 
     // ================================ Deal with Trigger mode ===
@@ -976,8 +976,8 @@ function getIntersections(controller) {
         inters.push(tmp_inters[j]);
       }
     }
-  } else { 
-    
+  } else {
+
     switch (PDB.selection_mode) {
       case PDB.SELECTION_MODEL:
         for (var i in PDB.GROUP_STRUCTURE_INDEX) {
@@ -1122,9 +1122,9 @@ function getIntersections(controller) {
 			  inters.push(tmp_inters[j]);
 			}
 		}
-        break;		
+        break;
     }
-	
+
   }
   return inters;
 }
@@ -1195,9 +1195,6 @@ PDB.render = {
   animationView: false,
   currentNodeIndex: 0,
   init: function() {
-    //  //if(PDB.pdbId=="4pyp"){
-    //ss     document.getElementById('player').play();
-    // // }
     scene = new THREE.Scene();
     raycasterFor3 = new THREE.Raycaster();
     container = document.createElement('div');
@@ -1207,8 +1204,6 @@ PDB.render = {
     scene.background = new THREE.Color(0x000000);
     scene.add(camera);
     document.addEventListener('mousemove', onDocumentMouseMove, false);
-    console.log("lightType:" + lightType);
-
     this.addLightsByType(lightType);
 
     for (var i = 0; i < PDB.GROUP_COUNT; i++) {
@@ -1232,9 +1227,9 @@ PDB.render = {
       controls = new THREE.TrackballControls(camera, renderer.domElement);
       controls.minDistance = 10;
       controls.maxDistance = 50000;
-	  controls.staticMoving = false; 
-	  controls.dynamicDampingFactor = 0.3; 
-	  controls.rotateSpeed = 5; 
+	  controls.staticMoving = false;
+	  controls.dynamicDampingFactor = 0.3;
+	  controls.rotateSpeed = 5;
     } else if (controlsType == 1) {
       stats = new Stats();
       stats.domElement.style.position = 'absolute';
@@ -1250,91 +1245,6 @@ PDB.render = {
     }
 
     window.addEventListener('resize', this.onWindowResize, false);
-  },
-  initVR0: function() {
-    // Scene
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x808080);
-    scene.add(new THREE.HemisphereLight(0x808080, 0x606060));
-    // Camera
-    camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 50000);
-    scene.add(camera);
-    // Group
-    for (var i = 0; i < PDB.GROUP_COUNT; i++) {
-      PDB.GROUP[i] = new THREE.Group();
-      PDB.GROUP[i].userData["group"] = i;
-      scene.add(PDB.GROUP[i]);
-    }
-
-    this.addLightsByType(lightType);
-    container = document.createElement('div');
-    document.body.appendChild(container);
-    renderer = new THREE.WebGLRenderer({
-      antialias: true
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.shadowMap.enabled = true;
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
-    container.appendChild(renderer.domElement);
-    renderer.vr.enabled = true;
-    renderer.vr.standing = true;
-    //vr
-    vrControls = new THREE.VRControls(camera);
-    vrEffect = new THREE.VREffect(renderer);
-    // vive controllers
-    tempMatrix = new THREE.Matrix4();
-    // controllers
-    controller1 = new THREE.ViveController(0);
-    for (var i = 0; i < 4; i++) {
-      controller1 = new THREE.ViveController(i);
-      if (controller1.visible) {
-        break;
-      }
-    }
-
-    controller1.standingMatrix = renderer.vr.getStandingMatrix();
-    controller1.addEventListener('triggerdown', onTriggerDown);
-    controller1.addEventListener('triggerup', onTriggerUp);
-    controller1.addEventListener('menuup', onMenuUp);
-    controller1.addEventListener('menudown', onMenuDown);
-    controller1.addEventListener('thumbpadup', onThumbpadUp);
-    controller1.addEventListener('thumbpaddown', onThumbpadDown);
-    controller1.addEventListener('axischanged', onAxisChanged);
-    scene.add(controller1);
-
-    var loader = new THREE.OBJLoader();
-    loader.setPath('models/obj/vive-controller/');
-    loader.load('vr_controller_vive_1_5.obj', function(object) {
-      var loader = new THREE.TextureLoader();
-      loader.setPath('models/obj/vive-controller/');
-      var controller = object.children[0];
-      controller.material.map = loader.load('onepointfive_texture.png');
-      controller.material.specularMap = loader.load('onepointfive_spec.png');
-      controller1.add(object.clone());
-      // controller2.add( object.clone() );
-    });
-
-    var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(0, 0, 0));
-    geometry.vertices.push(new THREE.Vector3(0, 0, -1));
-
-    var line = new THREE.Line(geometry);
-    line.name = 'line';
-    line.scale.z = 5;
-
-    controller1.add(line.clone());
-    // controller2.add( line.clone() );
-    raycaster = new THREE.Raycaster();
-
-    WEBVR.getVRDisplay(function(display) {
-      renderer.vr.setDevice(display);
-      document.body.appendChild(WEBVR.getButton(display, renderer.domElement));
-      if (PDB.pdbId == "4pyp") {
-        document.getElementById('player').play();
-      }
-    });
   },
   initVR: function() {
     // Scene
@@ -1507,7 +1417,7 @@ PDB.render = {
     scene.background = new THREE.Color(0x000000);
     scene.add(camera);
     console.log("lightType:" + lightType);
-   
+
     scope.clearRender();
     scope.generateRender();
     //all the group position back the initial location
@@ -1539,50 +1449,6 @@ PDB.render = {
       PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
     }
   },
-  changeToThreeMode0: function(mode, travelMode) {
-    var scope = this;
-    if (PDB.mode !== mode) {
-      PDB.mode = mode;
-      PDB.TravelMode = travelMode;
-      scope.removeCamera(scene);
-      camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 50000);
-      camera.position.set(0, 0, 300);
-      scene.background = new THREE.Color(0x000000);
-      scene.add(camera);
-      console.log("lightType:" + lightType);
-     
-      scope.clearRender();
-      scope.generateRender();
-      //all the group position back the initial location
-      PDB.tool.backToInitialPositonForDesktop();
-      console.log("lightType:" + lightType);
-      this.addLightsByType(lightType);
-      if (controlsType == 0) {
-        controls = new THREE.TrackballControls(camera, renderer.domElement);
-        controls.minDistance = 10;
-        controls.maxDistance = 50000;
-      } else if (controlsType == 1) {
-        stats = new Stats();
-        stats.domElement.style.position = 'absolute';
-        stats.domElement.style.right = '0px';
-        stats.domElement.style.left = 'inherit';
-        container.appendChild(stats.dom);
-        controls = new THREE.OrbitControls(camera);
-        controls.target.set(0, 0, 0);
-        controls.update();
-      } else {
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
-      }
-
-      if (PDB.TravelMode === true) {
-        scope.openTrackMode();
-      } else {
-        PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
-        PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
-      }
-    }
-  },
-
   changeToVrMode: function(mode, travelMode) {
     if (PDB.mode !== mode) {
       var scope = this;
@@ -1883,7 +1749,7 @@ PDB.render = {
               INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
               INTERSECTED.material.emissive.setHex(0xff0000);
             }
-			
+
 			//deal with mutation
             if(INTERSECTED.userData.mutation != undefined){
 				var atom = INTERSECTED.userData.presentAtom;
@@ -1948,12 +1814,10 @@ PDB.render = {
     if (PDB.ROTATION_START_FLAG) {
       PDB.tool.rotation(PDB.GROUP_STRUCTURE_INDEX, PDB.ROTATION_DIRECTION);
     }
-    //demo
-    // PDB.render.showDemo();
   },
   showDemo: function() {
     if (PDB.DEMO.FLAG) {
-      var time = Date.now(); //
+      var time = Date.now();
       if (time - PDB.DEMO.LAST_EXE_TIME >= 8000 && PDB.DEMO.INDEX != PDB.DEMO.PRE_INDEX) {
 
         console.log(PDB.DEMO.INDEX);
@@ -2107,7 +1971,6 @@ PDB.render = {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    // zwd
     // if (PDB.VRMode) {
     //     vrEffect.setSize( window.innerWidth, window.innerHeight );
     // }
@@ -2319,8 +2182,6 @@ PDB.render = {
     container.appendChild(renderer.domElement);
     renderer.vr.enabled = true;
     renderer.vr.standing = true;
-
-
   },
   clearRender: function() {
     if (container.children.length > 0) {
@@ -2375,18 +2236,14 @@ PDB.render = {
     switch (type) {
       case 'MainStructure':
         var residueData = w3m.mol[PDB.pdbId].residueData;
-        //var t_group = new THREE.Group();
         for (var chain in residueData) {
           var output = exporter.parse(PDB.GROUP['chain_' + chain]);
           PDB.tool.saveString(output, PDB.pdbId + '_' + chain + '.obj');
         }
-        //delete t_group;
         break;
       case 'Map':
-
         var output = exporter.parse(PDB.GROUP[PDB.GROUP_MAP]);
         PDB.tool.saveString(output, PDB.pdbId + '.obj');
-
         break;
       case 'LigandStructure':
         if (PDB.GROUP[PDB.GROUP_HET]) {

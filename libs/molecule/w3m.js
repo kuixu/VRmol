@@ -27,21 +27,11 @@ var w3m_require = function(filename) {
   }
 };
 
-/* Require */
-//w3m_require('web3dmol.css');
-//w3m_require('extension.js');
-//w3m_require('math.js');
-//w3m_require('static.js');
-
-/* === Web3DMol === */
-
 /* Global */
 var w3m, canvas, gl;
 
 w3m = {
   mol: {},
-
-
   /* Geometry */
   // Main
   fillqueue_main: [],
@@ -227,8 +217,6 @@ w3m = {
   MEASURE_DIHEDRAL_ANGLE: 1103,
   MEASURE_TRIANGLE_AREA: 1104
 };
-
-
 
 /* Config */
 w3m.config = {
@@ -575,7 +563,7 @@ w3m.tool = {
     this.bufferLabel();
     this.recycle();
   },
-  
+
   clear: function() {
     this.clearMain();
     this.clearHet();
@@ -2022,7 +2010,7 @@ w3m.tool = {
     // 	var xyz = path[i][1];
     // 	PDB.backboneArray.push({x:xyz[0],y:xyz[1],z:xyz[2]});
     // }
-	
+
     var len = path.length;
 	if(len==0){
 		return;
@@ -4655,7 +4643,7 @@ w3m.tool = {
         offset = 0;
       for (var ii = part_start; ii <= part_stop; ii++) {
 		  if(!w3m.structure.normal[mol.residue[chain_id][ii]]){
-			 continue; 
+			 continue;
 		  }
         var residue = chain[ii],
           residue_name = mol.residue[chain_id][ii],
@@ -4695,7 +4683,7 @@ w3m.tool = {
 				end_mode: end_mode
 			  });
 		  }
-          
+
         }
         offset++;
       }
