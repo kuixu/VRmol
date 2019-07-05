@@ -28,12 +28,4 @@ data/.DS_Store
 data/figs/.DS_Store
 data/figs/vr/.DS_Store
 server/autodock/jobs
-server/listen1/__pycache__
-server/listen2/__pycache__
-server/listen2/voice
-server/listen2/result.log
-server/listen2/static-data/x.base64
-server/listen3/__pycache__
-server/listen3/voice
-server/listen3/result.log
-server/listen3/static-data/x.base64
+server/listen/__pycache__
