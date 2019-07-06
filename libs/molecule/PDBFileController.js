@@ -991,6 +991,7 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
+		PDB.tool.showMutationTable(false, text);
       })
     });
     mutationExAC.addEventListener('click', function() {
@@ -998,6 +999,7 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
+		PDB.tool.showMutationTable(false, text);
       })
     });
 
@@ -1006,6 +1008,7 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
+		PDB.tool.showMutationTable(false, text);
       })
     });
 
