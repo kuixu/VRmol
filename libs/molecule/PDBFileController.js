@@ -335,17 +335,19 @@ PDB.controller = {
     var b_sse = document.getElementById("b_sse");
     var b_surface = document.getElementById("b_surface");
     var editResidue = document.getElementById("editResidue");
-    var segmentholder = document.getElementById("segmentholder");
+    //var segmentholder = document.getElementById("segmentholder");
     var closeeditResidue = document.getElementById("closeeditResidue");
     var b_show_editResidue = document.getElementById("b_show_editResidue");
 
     closeeditResidue.addEventListener('click', function() {
-      segmentholder.style.display = "none";
+      //segmentholder.style.display = "none";
+	  PDB.tool.showSegmentholder(false);
       editResidue.style.display = "none";
     });
 
     b_show_editResidue.addEventListener('click', function(e) {
-      segmentholder.style.display = "block";
+      //segmentholder.style.display = "block";
+	  PDB.tool.showSegmentholder(true);
       editResidue.style.display = "block";
     });
 
@@ -384,7 +386,7 @@ PDB.controller = {
       var residue_replace = document.getElementById("residue_replace");
       //console.log();
       var allResidue = document.getElementById("allResidue");
-      var segmentholder = document.getElementById("segmentholder");
+      //var segmentholder = document.getElementById("segmentholder");
       var editResidue = document.getElementById("editResidue");
       var resName = allResidue.value;
       if (w3m.mol[resName]) {
@@ -393,7 +395,8 @@ PDB.controller = {
         //mesh.userData = {group:group,presentAtom:atom};
         //PDB.painter.showRes_Ball_Rod(resName);
         //PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
-        segmentholder.style.display = "none";
+        //segmentholder.style.display = "none";
+		PDB.tool.showSegmentholder(false);
         editResidue.style.display = "none";
         var xyz = residue_replace.selectedOptions[0].xyz;
         var resid = residue_replace.value;
@@ -477,7 +480,7 @@ PDB.controller = {
           //PDB.painter.showRes_Ball_Rod(resName);
           PDB.painter.showOneRes(representation, resName);
           //PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
-          segmentholder.style.display = "none";
+          PDB.tool.showSegmentholder(false);
           editResidue.style.display = "none";
           var xyz = residue_replace.selectedOptions[0].xyz;
           var resid = residue_replace.value;
@@ -953,16 +956,17 @@ PDB.controller = {
 
     //get segment panel
     var closer = document.getElementById("closesegment");
-    var segmentholder = document.getElementById("segmentholder");
+    //var segmentholder = document.getElementById("segmentholder");
     var segmentPanel = document.getElementById("segmentPanel");
     var b_show_segmenpanel = document.getElementById("b_show_segmenpanel");
 
     b_show_segmenpanel.addEventListener('click', function() {
-      segmentholder.style.display = "block";
+      //segmentholder.style.display = "block";
+	  PDB.tool.showSegmentholder(true);
       segmentPanel.style.display = "block";
     });
     closer.addEventListener('click', function() {
-      segmentholder.style.display = "none";
+      PDB.tool.showSegmentholder(false);
       segmentPanel.style.display = "none";
     });
 
@@ -1404,7 +1408,7 @@ PDB.controller = {
     var defaultEndAtom = w3m.mol[PDB.pdbId].atom.main[atomIDs[atomIDs.length - 1]];
     //PDB.CONFIG.endSegmentID = defaultEndAtom[1];
 
-    var segmentholder = document.getElementById("segmentholder");
+    //var segmentholder = document.getElementById("segmentholder");
     var segmentPanel = document.getElementById("segmentPanel");
     startPointDom.addEventListener('change', function(e) {
       var residueID = startPointDom.value;
@@ -1460,7 +1464,7 @@ PDB.controller = {
     }
 
     b_Confirm_fregment.addEventListener('click', function(e) {
-      segmentholder.style.display = "none";
+      PDB.tool.showSegmentholder(false);
       segmentPanel.style.display = "none";
       PDB.render.clear(0);
       scope.drawGeometry(PDB.config.mainMode);
@@ -1942,23 +1946,27 @@ PDB.controller = {
     return loadType;
   },
   drawGeometry: function(type) {
-    if (w3m.mol[PDB.pdbId] == undefined) return;
-    var scope = this;
-    console.log("sta: " + type + ": " + new Date());
-    if (type >= PDB.HET) {
-      PDB.painter.showHet(PDB.pdbId);
-    } else {
-      if (PDB.CHANGESTYLE != PDB.DRAWSTYLE_FRAGMENT && PDB.CHANGESTYLE != PDB.DRAWSTYLE_DEFAULT && PDB.CHANGESTYLE != 6) {
-        PDB.painter.showAllResiduesBySelect();
-      } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_FRAGMENT) { // has fragment
-        PDB.painter.showFragmentsResidues();
+	PDB.tool.showSegmentholder(true,true);
+	setTimeout(function(e){
+		if (w3m.mol[PDB.pdbId] == undefined) return;
+		var scope = this;
+		console.log("sta: " + type + ": " + new Date());
+		if (type >= PDB.HET) {
+		  PDB.painter.showHet(PDB.pdbId);
+		} else {
+		  if (PDB.CHANGESTYLE != PDB.DRAWSTYLE_FRAGMENT && PDB.CHANGESTYLE != PDB.DRAWSTYLE_DEFAULT && PDB.CHANGESTYLE != 6) {
+			PDB.painter.showAllResiduesBySelect();
+		  } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_FRAGMENT) { // has fragment
+			PDB.painter.showFragmentsResidues();
 
-      } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_DEFAULT) { //no style
-        PDB.painter.showAllResidues(type);
-      }
-    }
-    console.log("end: " + type + ": " + new Date());
-
+		  } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_DEFAULT) { //no style
+			PDB.painter.showAllResidues(type);
+		  }
+		}
+		console.log("end: " + type + ": " + new Date());
+		PDB.tool.showSegmentholder(false,false);
+	},100);
+    
   },
   refreshGeometryByMode: function(type) {
     //console.log("controller.refreshGeometryByMode");
@@ -1978,6 +1986,7 @@ PDB.controller = {
   },
   refreshSurface: function(structureType, surfaceType, opacity, wireframe) {
     console.log("Present Surface:" + structureType);
+	
     var scope = this;
     var changeSurfaceType = false;
     if (surfaceType !== undefined && surfaceType !== PDB.SURFACE_TYPE) {
