@@ -150,7 +150,17 @@ PDB.drawer = {
 	  // mesh.rotateZ(-PDB.rotateAxisAngle.z);
 	  //mesh.up.set(PDB.rotateAxisAngle.x%Math.PI,(1+PDB.rotateAxisAngle.y)%Math.PI,PDB.rotateAxisAngle.z%Math.PI); 
 	  
-	  var updir = new THREE.Vector3(0, 1, 0);
+	  var updir = camera.position.clone();
+	  
+	  if(PDB.rotateAxis.x){
+		 updir.x = updir.x + PDB.rotateAxis.x;		  
+	  }
+	  if(PDB.rotateAxis.y){
+		 updir.y = updir.y + PDB.rotateAxis.y;		  
+	  }
+	  if(PDB.rotateAxis.z){
+		 updir.z = updir.z + PDB.rotateAxis.z;		  
+	  }
 	  var axis ;
 	  if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.x!=0){
 			axis = new THREE.Vector3(1, 0, 0);
@@ -171,8 +181,8 @@ PDB.drawer = {
 			updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.z);
 			mesh.rotateZ(-PDB.rotateAxisAngle.z);
 		}
-		mesh.up.copy(updir.normalize());
-		mesh.lookAt(camera.position);
+		//mesh.up.copy(updir.normalize());
+		mesh.lookAt(updir);
 	  
 	  // mesh.rotateX(-PDB.rotateAxisAngle.x);
 	  // mesh.rotateY(-PDB.rotateAxisAngle.y);

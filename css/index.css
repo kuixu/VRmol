@@ -50,8 +50,7 @@ a {
   height: 100%;
   position: absolute;
   z-index: 999;
-  opacity: 0.5;
-  background: #eee;
+  background: rgba(245, 245, 245, 0.7);
   display: none
 }
 
@@ -454,4 +453,15 @@ button:active {
 
 #progress {
   display: none;
+}
+.holderClass{
+	margin: auto;
+    width: 205px;
+    text-align: center;
+    color: #293342;
+    font-size: 18px;
+    font-weight: 600;
+    opacity: 0.9;
+    display: table-cell;
+    vertical-align: middle;
 }

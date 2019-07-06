@@ -2034,5 +2034,15 @@ PDB.tool = {
           }
         }
       });
+  },showSegmentholder: function(show,titleMessage){
+	  var segmentholder = document.getElementById("segmentholder");
+	  if(show){
+		segmentholder.style.display = "table";
+	  }else{
+		segmentholder.style.display = "none";    
+	  }
+	  if(titleMessage){
+		segmentholder.innerHTML = "<div class=\"holderClass\">Just a moment, please.</div>";
+	  }
   }
 }

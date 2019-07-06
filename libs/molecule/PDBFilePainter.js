@@ -2588,7 +2588,7 @@ PDB.painter = {
         atoms[atom.id] = atomSu;
       }
     }
-    console.log(Object.keys(atoms).length);
+    //console.log(Object.keys(atoms).length);
     //====================================
     var ps = ProteinSurface({
       min: {
