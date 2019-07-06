@@ -459,9 +459,10 @@ PDB.painter = {
         break;
       case PDB.MENU_TYPE_DENSITYMAP:
         var dmMenu = [
+          ["Hide", 4],
           ["Solid", 1],
           ["Surface", 2],
-          ["Mesh", 3]
+          ["Mesh", 3],
         ];
         for (var i = 0; i < dmMenu.length; i++) {
           PDB.drawer.drawTextKB(PDB.GROUP_MENU_DENSITYMAP, new THREE.Vector3(x, y - i * 0.2, z), dmMenu[i][0], dmMenu[i][1], color, 135);
