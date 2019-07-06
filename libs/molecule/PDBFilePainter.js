@@ -550,6 +550,7 @@ PDB.painter = {
   showMutation: function(mutations) {
     var jsonObj = JSON.parse(mutations);
     if (jsonObj.code === 1 && jsonObj.data !== undefined) {
+	  PDB.tool.printProgress("");
       var mutations = jsonObj.data.mutations;
       var chains = jsonObj.data.chains;
       //mutations

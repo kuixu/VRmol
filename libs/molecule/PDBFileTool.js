@@ -1471,9 +1471,12 @@ PDB.tool = {
 
         var v_type = newRow.insertCell(3);
         v_type.innerHTML = data[i].v_type
-
+		
         var disease = newRow.insertCell(4);
-        disease.innerHTML = data[i].disease
+		if(data[i].disease){
+			disease.innerHTML = data[i].disease
+		}
+        
       }
       var span = PDB.tool.generateSpan(rightMenuDiv, "span", "rightsubmenu");
       span.appendChild(table);

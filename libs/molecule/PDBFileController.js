@@ -983,7 +983,7 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
-        PDB.tool.showMutationTable(false, text);
+        PDB.tool.showMutationTable(PDB.showMutationTable, text);
       })
     });
     mutationCCLE.addEventListener('click', function() {
@@ -991,7 +991,7 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
-		PDB.tool.showMutationTable(false, text);
+		PDB.tool.showMutationTable(PDB.showMutationTable, text);
       })
     });
     mutationExAC.addEventListener('click', function() {
@@ -999,7 +999,7 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
-		PDB.tool.showMutationTable(false, text);
+		PDB.tool.showMutationTable(PDB.showMutationTable, text);
       })
     });
 
@@ -1008,19 +1008,21 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
-		PDB.tool.showMutationTable(false, text);
+		PDB.tool.showMutationTable(PDB.showMutationTable, text);
       })
     });
 
     mutationNone.addEventListener('click', function() {
       PDB.controller.clear(4, undefined);
     });
-
+	PDB.showMutationTable = true;//默认显示MutationTable
     showMutationTable.addEventListener('click', function() {
       if (this.checked) {
         document.getElementById("rightmenu").hidden = false;
+		PDB.showMutationTable = true;
       } else {
         document.getElementById("rightmenu").hidden = true;
+		PDB.showMutationTable = false;
       }
     });
 
