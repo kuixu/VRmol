@@ -395,25 +395,23 @@ function dealwithMenu(object) {
     case PDB.GROUP_MENU_DRUG:
       switch(curr_reptype){
 		case 1:
-		  PDB.GROUP[PDB.GROUP_DRUG].visible = false;
-		  if(PDB.GROUP[PDB.GROUP_DRUG].visible === false){
-			PDB.DRUGMOVE = false;
-		  }
+		  // PDB.GROUP[PDB.GROUP_DRUG].visible = false;
+		  // if(PDB.GROUP[PDB.GROUP_DRUG].visible === false){
+			// PDB.DRUGMOVE = false;
+		  // }
+		  PDB.DRUGMOVE = false;
+		  PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+		  PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
+		  PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DRUG);
+		  PDB.selection_mode = PDB.SELECTION_RESIDUE;
 	      break;
 		case 2:
 		  var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
 		  if (ServerType !== 2) {
 			url = SERVERURL + "/data/drug.json";
 		  }
+		  PDB.selection_mode = PDB.SELECTION_DRUG_LIST;
 		  PDB.tool.showDrugMenuForVr(url);
-		  // PDB.loader.loadDrug("DB04464",PDB.DRUG_MODE_CONFIG.DRUG_BANK,function () {
-			// w3m.mol["DB04464"].drug = true;
-            // PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
-		    // PDB.painter.showHet("DB04464");
-            // PDB.tool.generateDrugMigrationPath();
-            // PDB.GROUP[PDB.GROUP_DRUG].visible = true;
-		  // }
-	    // )
         break;
       case 3:
 	    PDB.tool.generateDrugMigrationPath();
@@ -691,7 +689,6 @@ function onTriggerDown(event) {
 				PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
 				PDB.tool.showDockingMenuForVr(repList[1]);
 			}else if("dockingMenu" === repList[0]){
-				console.log("----------------"+repList[1]+"|"+repList[2]);
 				var drugId = repList[1].replace(".pdb", "");
                 PDB.config.selectedDrug = drugId;
                 PDB.DRUBDB_URL.docking =  repList[2]+ "/";

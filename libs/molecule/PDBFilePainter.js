@@ -450,7 +450,7 @@ PDB.painter = {
         var drugMenu = [
           ["Hide Drug", 1],
           ["Load Drug", 2],
-          ["Drug Docking", 3],
+          ["Drug Random Migration", 3],
           ["Show/Hide Box Helper", 4],
         ];
         for (var i = 0; i < drugMenu.length; i++) {

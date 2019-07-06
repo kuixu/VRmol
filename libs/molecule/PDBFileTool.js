@@ -1906,10 +1906,12 @@ PDB.tool = {
 		  var parentGroup = PDB.GROUP[group];
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
-          var x = limit.x[1] + PDB.GeoCenterOffset.x;
-          var z = limit.z[1] + PDB.GeoCenterOffset.z;
-		  var mainPos = PDB.GROUP[PDB.GROUP_MAIN];
-          var pos = new THREE.Vector3(mainPos.x, mainPos.y+2, mainPos.z +2);
+		  var mainPos = PDB.GROUP[PDB.GROUP_MAIN].position;
+		  
+          var x = limit.x[1] + PDB.GeoCenterOffset.x - mainPos.x;
+          var y = limit.y[1] + PDB.GeoCenterOffset.y - mainPox.y;
+          var z = limit.z[1] + PDB.GeoCenterOffset.z - mainPox.z;
+          var pos = new THREE.Vector3(x+4,y,z + 1);
           parentGroup.position.copy(pos);
 
 		  var posStart = pos;
@@ -1953,8 +1955,6 @@ PDB.tool = {
 			PDB.drawer.drawTextKB(group, posStart, "drugbank", "", color, 135);
             posStart = PDB.tool.addDrugMenuForVr(group,posStart, PDB.DRUG_MODE_CONFIG.DRUG_BANK, drugbank,color,reptype+","+PDB.DRUG_MODE_CONFIG.DRUG_BANK);
 		  }
-
-		  PDB.DOCKING_POS_START= posStart;
         } else {
           PDB.tool.printProgress(jsonObj.message);
         }
@@ -2010,16 +2010,16 @@ PDB.tool = {
                 z: w3m.global.limit.z
               };
 
+		  var mainPos = PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].position;
+          var pos = new THREE.Vector3(mainPos.x+6, mainPos.y, mainPos.z - 1);
 		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];
+          parentGroup.position.copy(pos);
+		  
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
 		  
-          var mainPos = PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].position;
-          var pos = new THREE.Vector3(mainPos.x+6, mainPos.y, mainPos.z);
-		  
-          parentGroup.position.copy(pos);
 
-          var posStart = pos;
+          var posStart = parentGroup.position;
 		  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
           var reptype = "";
 		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, posStart, "Docking List", reptype, color, 135);
