@@ -691,7 +691,16 @@ function onTriggerDown(event) {
 				PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
 				PDB.tool.showDockingMenuForVr(repList[1]);
 			}else if("dockingMenu" === repList[0]){
-				console.log("----------------"+repList[1]);
+				console.log("----------------"+repList[1]+"|"+repList[2]);
+				var drugId = repList[1].replace(".pdb", "");
+                PDB.config.selectedDrug = drugId;
+                PDB.DRUBDB_URL.docking =  repList[2]+ "/";
+                PDB.loader.loadDrug(drugId, "docking", function() {
+                    w3m.mol[drugId].drug = true;
+                    PDB.render.clearGroupIndex(PDB.GROUP_DOCKING);
+                    var docking = true;
+                    PDB.painter.showHet(drugId, docking);
+              });
 			}
 		}
         break;
