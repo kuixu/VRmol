@@ -508,11 +508,13 @@ PDB.tool = {
         url_index = 0;
       },
       io.ontimeout = function() {
+		PDB.tool.showSegmentholder(false);
         if (w3m_isset(PDB.remoteUrl[++url_index])) {
           this.get(id, callback);
         } else {
           url_index = 0;
         }
+		
       },
       io.onerror = function() {
         url_index = 0;
@@ -653,6 +655,12 @@ PDB.tool = {
     aLink.appendChild(node);
     aLink.id = id;
     aLink.addEventListener('click', function() {
+		//add holder 
+		PDB.tool.showSegmentholder(true,true);
+		var modelSpan = document.getElementById("modelSpan");
+		if(modelSpan){
+			modelSpan.innerHTML = "";
+		}
       //docking move
       PDB.DRUGMOVE = true;
       PDB.drugMoveTime = new Date();
@@ -679,10 +687,13 @@ PDB.tool = {
         url = SERVERURL + "/data/autodock.json";
       }
       PDB.tool.ajax.get(url, function(text) {
+		  //clear 				
+			
+		  PDB.tool.showSegmentholder(false);
         var jsonObj = JSON.parse(text);
         if (jsonObj.model_list != undefined && jsonObj.model_list.length > 0) {
           var menuSpan = document.getElementById("menuSpan");
-          var modelSpan = document.getElementById("modelSpan");
+          
           if (modelSpan == undefined) {
             modelSpan = PDB.tool.generateSpan(menuSpan, "modelSpan", "rightsubmenu");
           } else {
@@ -697,10 +708,7 @@ PDB.tool = {
               continue;
             }
             var text = jsonObj.model_list[i] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + jsonObj.scores[i];
-            PDB.tool.generateButton(modelSpan, text, jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function() {
-				
-				//clear 
-				
+            PDB.tool.generateButton(modelSpan, text, jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function() {				
 				
               var drugId = this.value.replace(".pdb", "");
               PDB.config.selectedDrug = drugId;
