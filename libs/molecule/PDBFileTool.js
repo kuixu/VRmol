@@ -2013,9 +2013,10 @@ PDB.tool = {
 		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
-          var x = limit.x[1] + PDB.GeoCenterOffset.x;
-          var z = limit.z[1] + PDB.GeoCenterOffset.z;
-          var pos = new THREE.Vector3(x * 0.02 + 4, 2.8, z * 0.02);
+		  
+          var mainPos = PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].position;
+          var pos = new THREE.Vector3(mainPos.x+6, mainPos.y, mainPos.z);
+		  
           parentGroup.position.copy(pos);
 
           var posStart = pos;
@@ -2028,7 +2029,7 @@ PDB.tool = {
               continue;
             }
 		    posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
-			var reptype = "";
+			reptype = "dockingMenu,"+jsonObj.model_list[i];
 			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, posStart, jsonObj.model_list[i], reptype, color, 135);
           }
         }

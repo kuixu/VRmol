@@ -677,6 +677,7 @@ function onTriggerDown(event) {
         if(object){
 			var userData = object.userData;
 			var repList = userData.reptype.split(',');
+			
 			if("drugListMenu" === repList[0]){
 				var drugId = userData.name;
 				PDB.loader.loadDrug(drugId, repList[1], function() {
@@ -687,7 +688,10 @@ function onTriggerDown(event) {
 					PDB.GROUP[PDB.GROUP_DRUG].visible = true;
                 });
 			}else if("docking" === repList[0]){
+				PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
 				PDB.tool.showDockingMenuForVr(repList[1]);
+			}else if("dockingMenu" === repList[0]){
+				console.log("----------------"+repList[1]);
 			}
 		}
         break;
@@ -1118,6 +1122,12 @@ function getIntersections(controller) {
       case PDB.SELECTION_DRUG_LIST:
         if(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].children.length > 0){
 			var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].children);
+			for (var j = 0; j < tmp_inters.length; j++) {
+			  inters.push(tmp_inters[j]);
+			}
+		}
+		if(PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].children.length > 0){
+			var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].children);
 			for (var j = 0; j < tmp_inters.length; j++) {
 			  inters.push(tmp_inters[j]);
 			}
