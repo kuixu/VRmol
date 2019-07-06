@@ -683,11 +683,12 @@ function onTriggerDown(event) {
 					PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
 					PDB.painter.showHet(drugId);
 					PDB.tool.generateDrugMigrationPath();
+					PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.GROUP[PDB.GROUP_MAIN].position);
 					PDB.GROUP[PDB.GROUP_DRUG].visible = true;
-					PDB.DRUGMOVE = true;
-                    PDB.drugMoveTime = new Date();
                 });
 			}else if("docking" === repList[0]){
+				PDB.DRUGMOVE = true;
+                PDB.drugMoveTime = new Date();
 				PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
 				PDB.tool.showDockingMenuForVr(repList[1]);
 			}else if("dockingMenu" === repList[0]){
