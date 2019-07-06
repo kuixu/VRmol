@@ -1912,28 +1912,26 @@ PDB.tool = {
         var jsonObj = JSON.parse(text);
         if (jsonObj.code === 1 && jsonObj.data !== undefined) {
           PDB.tool.generateDrugMigrationPath(limit);
-
 		  var group = PDB.GROUP_VR_MENU_DRUG;
-
 		  var parentGroup = PDB.GROUP[group];
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
           var x = limit.x[1] + PDB.GeoCenterOffset.x;
-          var y = 2;
+          var y = 1.5;
           var z = limit.z[1] + PDB.GeoCenterOffset.z;
-          x = x * 0.02;
-          z = z * 0.022-0.5;
+          x = x * 0.02-2;
+		  z = z * 0.022 - 2.5;			  
           var pos = new THREE.Vector3(x,y,z);
-		  PDB.tempPos = pos.clone();
-		  PDB.tempMovePos = {
-			  x:PDB.rotateAxis.x,
-			  y:PDB.rotateAxis.y,
-			  z:PDB.rotateAxis.z			  
-		  };
           parentGroup.position.copy(pos);
-
-		  var posStart = pos;
-		  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
+		  var posStart = pos.clone();
+		  var switchPos_on = posStart.clone();
+		  var switchPos_off = posStart.clone();
+		  switchPos_on.x = switchPos_on.x + 1.1;
+		  switchPos_off.x = switchPos_off.x + 2.4;
+		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_SWITCH, switchPos_on, "MENU ON", "menuOn", 0x37bd3f, 135);
+		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_SWITCH, switchPos_off, "MENU OFF", "menuOff", 0xfe3f12, 135);
+		  PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH].position.copy(posStart);
+		  
           var reptype = "drugListMenu";
 		  PDB.drawer.drawTextKB(group, posStart, "Drug List", "", color, 135);
 
@@ -2018,27 +2016,24 @@ PDB.tool = {
         url = SERVERURL + "/data/autodock.json";
       }
 	  PDB.tool.ajax.get(url, function(text) {
+	//var text = " {\"jobid\":\"1CBS_DB00523_20190706190409_30\",\"log\":\"https:\/\/vrmol.life.tsinghua.edu.cn\/server\/autodock\/jobs\/1CBS_DB00523_20190706190409_30\/log\",\"pdbid\":\"1CBS\",\"smolid\":\"DB00523\",\"fullmodel\":\"DB00523_out.pdb\",\"fullmodel_url\":\"https:\/\/vrmol.life.tsinghua.edu.cn\/server\/autodock\/jobs\/1CBS_DB00523_20190706190409_30\/DB00523_out.pdb\",\"model_list\":[\"DB00523_out_1.pdb\",\"DB00523_out_2.pdb\",\"DB00523_out_3.pdb\",\"DB00523_out_4.pdb\",\"DB00523_out_5.pdb\",\"DB00523_out_6.pdb\",\"DB00523_out_7.pdb\",\"DB00523_out_8.pdb\",\"DB00523_out_9.pdb\"],\"outdir\":\"https:\/\/vrmol.life.tsinghua.edu.cn\/server\/autodock\/jobs\/1CBS_DB00523_20190706190409_30\",\"scores\":[\"-7.2\",\"-7.2\",\"-7.1\",\"-7.1\",\"-7.1\",\"-7.1\",\"-7.0\",\"-6.9\",\"-6.8\",\"\"]}";
+		 // console.log(text);
         var jsonObj = JSON.parse(text);
         if (jsonObj.model_list != undefined && jsonObj.model_list.length > 0) {
           //stop move drug
           PDB.DRUGMOVE = false;
-		  var drugPos = new THREE.Vector3(0,0,0);
-		  drugPos.setFromMatrixPosition(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].matrixWorld); 
-		  console.log(drugPos);
-		  // drugPos.x = drugPos.x + (PDB.rotateAxis.x - PDB.tempMovePos.x);
-		  // drugPos.y = drugPos.y + (PDB.rotateAxis.y - PDB.tempMovePos.y);
-		  // drugPos.z = drugPos.z + (PDB.rotateAxis.z - PDB.tempMovePos.z);		  
-		  console.log("-------------drug position"+drugPos);
-          var pos = new THREE.Vector3(drugPos.x,drugPos.y,drugPos.z);
-		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];
-          parentGroup.position.copy(pos);
-		  
+		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];		  
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
+          var x = limit.x[1] + PDB.GeoCenterOffset.x;
+         var y = 1.5;
+          var z = limit.z[1] + PDB.GeoCenterOffset.z;
+          x = x * 0.02;
+		  z = z * 0.022 - 2.5;			  
+          var pos = new THREE.Vector3(x,y,z);
+          parentGroup.position.copy(pos);
+		  var posStart = pos.clone();
 		  
-
-          var posStart = parentGroup.position;
-		  var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
           var reptype = "";
 		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, posStart, "Docking List", reptype, color, 135);
 

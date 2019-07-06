@@ -702,6 +702,12 @@ function onTriggerDown(event) {
                     var docking = true;
                     PDB.painter.showHet(drugId, docking);
               });
+			}else if("menuOn" === repList[0]){
+				PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].visible =true;
+				PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].visible =true;
+			}else if("menuOff" === repList[0]){
+				PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].visible =false;
+				PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].visible =false;
 			}
 		}
         break;
@@ -1138,6 +1144,12 @@ function getIntersections(controller) {
 		}
 		if(PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].children.length > 0){
 			var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].children);
+			for (var j = 0; j < tmp_inters.length; j++) {
+			  inters.push(tmp_inters[j]);
+			}
+		}
+		if(PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH].children.length > 0){
+			var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH].children);
 			for (var j = 0; j < tmp_inters.length; j++) {
 			  inters.push(tmp_inters[j]);
 			}
