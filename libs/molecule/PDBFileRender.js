@@ -478,7 +478,7 @@ function dealwithMenu(object) {
         onMenuDown();
       } else {
         // var url ="http://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
-        var url = SERVERURL + "/server/api.php?taskid=13&pdbid=5ftm";
+        var url = API_URL_EMMAP + PDB.pdbId.toUpperCase();
         PDB.tool.ajax.get(url, function(text) {
           //PDB.render.clear(2);
           PDB.MATERIALLIST = [];
@@ -500,10 +500,12 @@ function dealwithMenu(object) {
             if (PDB.EMMAP.FIRST_ID === 0 && data.length > 0) {
               PDB.EMMAP.FIRST_ID = data[0];
             }
-            var mapserver = "map-local";
+			
+            var mapserver = jsonObj.method;
             if (PDB.DEBUG_MODE == 1) {
               mapserver = "map-local";
             }
+			
             PDB.controller.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver, function(emmap) {
               // PDB.render.clearStructure();
               if (type === 1) {
