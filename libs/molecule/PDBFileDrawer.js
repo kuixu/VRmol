@@ -150,53 +150,53 @@ PDB.drawer = {
 	  // mesh.rotateZ(-PDB.rotateAxisAngle.z);
 	  //mesh.up.set(PDB.rotateAxisAngle.x%Math.PI,(1+PDB.rotateAxisAngle.y)%Math.PI,PDB.rotateAxisAngle.z%Math.PI); 
 	  
-	  var updir = camera.position.clone();
+	  // var updir = camera.position.clone();
 	  
-	  if(PDB.rotateAxis.x){
-		 updir.x = updir.x + PDB.rotateAxis.x;		  
-	  }
-	  if(PDB.rotateAxis.y){
-		 updir.y = updir.y + PDB.rotateAxis.y;		  
-	  }
-	  if(PDB.rotateAxis.z){
-		 updir.z = updir.z + PDB.rotateAxis.z;		  
-	  }
-	  var axis ;
-	  if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.x!=0){
-			axis = new THREE.Vector3(1, 0, 0);
-			updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.x);
-			mesh.rotateX(-PDB.rotateAxisAngle.x);
-		}
+	  // if(PDB.rotateAxis.x){
+		 // updir.x = updir.x + PDB.rotateAxis.x;		  
+	  // }
+	  // if(PDB.rotateAxis.y){
+		 // updir.y = updir.y + PDB.rotateAxis.y;		  
+	  // }
+	  // if(PDB.rotateAxis.z){
+		 // updir.z = updir.z + PDB.rotateAxis.z;		  
+	  // }
+	  // var axis ;
+	  // if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.x!=0){
+			// axis = new THREE.Vector3(1, 0, 0);
+			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.x);
+			// mesh.rotateX(-PDB.rotateAxisAngle.x);
+		// }
 		
 		
-		if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.y!=0){
-			axis = new THREE.Vector3(0, 1, 0);
-			updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.y);
-			mesh.rotateY(-PDB.rotateAxisAngle.y);
-		}
+		// if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.y!=0){
+			// axis = new THREE.Vector3(0, 1, 0);
+			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.y);
+			// mesh.rotateY(-PDB.rotateAxisAngle.y);
+		// }
 		
 		
-		if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.z!=0){
-			axis = new THREE.Vector3(0, 0, 1);
-			updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.z);
-			mesh.rotateZ(-PDB.rotateAxisAngle.z);
-		}
-		//mesh.up.copy(updir.normalize());
-		mesh.lookAt(updir);
-	  
+		// if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.z!=0){
+			// axis = new THREE.Vector3(0, 0, 1);
+			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.z);
+			// mesh.rotateZ(-PDB.rotateAxisAngle.z);
+		// }
+		// //mesh.up.copy(updir.normalize());
+		// mesh.lookAt(updir);
+	  mesh.lookAt(camera.position);
 	  // mesh.rotateX(-PDB.rotateAxisAngle.x);
 	  // mesh.rotateY(-PDB.rotateAxisAngle.y);
 	  // mesh.rotateZ(-PDB.rotateAxisAngle.z);
 
-	var hex = 0xffff00;
-	var t_t = mesh.up.clone();
-	var arrowHelper = new THREE.ArrowHelper( t_t.normalize(), pos, 1, hex );
+	// var hex = 0xffff00;
+	// var t_t = mesh.up.clone();
+	// var arrowHelper = new THREE.ArrowHelper( t_t.normalize(), pos, 1, hex );
 	
-	 var hex1 = 0x2aa41d;
-	 var t_t_1 = new THREE.Vector3(PDB.rotateAxisAngle.x,PDB.rotateAxisAngle.y,PDB.rotateAxisAngle.z);
-	 var arrowHelper1 = new THREE.ArrowHelper( t_t_1.normalize(), pos, 2, hex1 );
-	PDB.GROUP[group].add(arrowHelper);
-	PDB.GROUP[group].add(arrowHelper1);
+	 // var hex1 = 0x2aa41d;
+	 // var t_t_1 = new THREE.Vector3(PDB.rotateAxisAngle.x,PDB.rotateAxisAngle.y,PDB.rotateAxisAngle.z);
+	 // var arrowHelper1 = new THREE.ArrowHelper( t_t_1.normalize(), pos, 2, hex1 );
+	// PDB.GROUP[group].add(arrowHelper);
+	// PDB.GROUP[group].add(arrowHelper1);
     });
   },
  

@@ -1946,6 +1946,7 @@ PDB.controller = {
     return loadType;
   },
   drawGeometry: function(type) {
+	PDB.tool.printProgress("");
 	PDB.tool.showSegmentholder(true,true);
 	setTimeout(function(e){
 		if (w3m.mol[PDB.pdbId] == undefined) return;
