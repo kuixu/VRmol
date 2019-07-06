@@ -684,6 +684,8 @@ function onTriggerDown(event) {
 					PDB.painter.showHet(drugId);
 					PDB.tool.generateDrugMigrationPath();
 					PDB.GROUP[PDB.GROUP_DRUG].visible = true;
+					PDB.DRUGMOVE = true;
+                    PDB.drugMoveTime = new Date();
                 });
 			}else if("docking" === repList[0]){
 				PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
@@ -695,6 +697,8 @@ function onTriggerDown(event) {
                 PDB.loader.loadDrug(drugId, "docking", function() {
                     w3m.mol[drugId].drug = true;
                     PDB.render.clearGroupIndex(PDB.GROUP_DOCKING);
+                    PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+					PDB.DRUGMOVE = false;
                     var docking = true;
                     PDB.painter.showHet(drugId, docking);
               });
