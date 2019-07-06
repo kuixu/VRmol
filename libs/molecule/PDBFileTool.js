@@ -489,6 +489,7 @@ PDB.tool = {
       url = '',
       url_index = 0,
       callback = null;
+	  io.timeout = 180000; // timeout ms
     io.onprogress = function() {
 
     }
@@ -697,7 +698,10 @@ PDB.tool = {
             }
             var text = jsonObj.model_list[i] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + jsonObj.scores[i];
             PDB.tool.generateButton(modelSpan, text, jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function() {
-
+				
+				//clear 
+				
+				
               var drugId = this.value.replace(".pdb", "");
               PDB.config.selectedDrug = drugId;
               PDB.DRUBDB_URL.docking = jsonObj.outdir + "/";
@@ -708,12 +712,18 @@ PDB.tool = {
                 PDB.painter.showHet(drugId, docking);
                 //PDB.tool.generateDrugMigrationPath();
               });
+			  
+			  
+			  
             });
             //add BR
             var br = document.createElement("br");
             modelSpan.appendChild(br);
           }
         }
+		//clear
+		PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+		
       });
     });
     parent.appendChild(aLink);
@@ -1906,6 +1916,12 @@ PDB.tool = {
           x = x * 0.02;
           z = z * 0.022-0.5;
           var pos = new THREE.Vector3(x,y,z);
+		  PDB.tempPos = pos.clone();
+		  PDB.tempMovePos = {
+			  x:PDB.rotateAxis.x,
+			  y:PDB.rotateAxis.y,
+			  z:PDB.rotateAxis.z			  
+		  };
           parentGroup.position.copy(pos);
 
 		  var posStart = pos;
@@ -1998,7 +2014,12 @@ PDB.tool = {
         if (jsonObj.model_list != undefined && jsonObj.model_list.length > 0) {
           //stop move drug
           PDB.DRUGMOVE = false;
-		  var drugPos = PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].position;
+		  var drugPos = new THREE.Vector3(0,0,0);
+		  drugPos.setFromMatrixPosition(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].matrixWorld); 
+		  console.log(drugPos);
+		  // drugPos.x = drugPos.x + (PDB.rotateAxis.x - PDB.tempMovePos.x);
+		  // drugPos.y = drugPos.y + (PDB.rotateAxis.y - PDB.tempMovePos.y);
+		  // drugPos.z = drugPos.z + (PDB.rotateAxis.z - PDB.tempMovePos.z);		  
 		  console.log("-------------drug position"+drugPos);
           var pos = new THREE.Vector3(drugPos.x,drugPos.y,drugPos.z);
 		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];

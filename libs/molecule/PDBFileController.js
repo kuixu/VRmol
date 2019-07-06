@@ -1966,7 +1966,7 @@ PDB.controller = {
 		}
 		console.log("end: " + type + ": " + new Date());
 		PDB.tool.showSegmentholder(false,false);
-	},100);
+	},PDB.HOLDERTIME);
     
   },
   refreshGeometryByMode: function(type) {

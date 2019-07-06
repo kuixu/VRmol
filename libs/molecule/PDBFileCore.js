@@ -24,6 +24,7 @@ PDB = {
 	loadType:19, // out of sphericcal view
 	map_step:2, // default:4, 4,2,1
   map_surface_show:0 ,// 0,no; 1,yes
+  HOLDERTIME:100,
 	rotateAngleThreshold:0.005,
 	nowRotateAngle:0,
 	rotateAxis:{x:0,y:0,z:0},
