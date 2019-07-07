@@ -231,7 +231,7 @@ PDB.painter = {
           ["Bond", PDB.MENU_TYPE_HBOND],
           // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
           ["Density Map", PDB.MENU_TYPE_DENSITYMAP],
-          ["Drugs", PDB.MENU_TYPE_DRUG],
+          ["Drugs & Docking", PDB.MENU_TYPE_DRUG],
           ["Export", PDB.MENU_TYPE_EXPORT],
           ["Speech", PDB.MENU_TYPE_SPEECH],
           ["Spherical View", PDB.MENU_TYPE_OUTBALL]
@@ -551,7 +551,7 @@ PDB.painter = {
   showMutation: function(mutations) {
     var jsonObj = JSON.parse(mutations);
     if (jsonObj.code === 1 && jsonObj.data !== undefined) {
-	  PDB.tool.printProgress("");
+      PDB.tool.printProgress("");
       var mutations = jsonObj.data.mutations;
       var chains = jsonObj.data.chains;
       //mutations
@@ -560,7 +560,7 @@ PDB.painter = {
         mutations.forEach(function(mutation) {
           var atom = PDB.tool.getCAAtomByResidueId(mutation.pos, chainName);
           if (atom !== undefined) {
-            PDB.drawer.drawMutation(PDB.GROUP_MUTATION, atom.pos_centered, atom.color, atom.radius, mutation,undefined,atom);
+            PDB.drawer.drawMutation(PDB.GROUP_MUTATION, atom.pos_centered, atom.color, atom.radius, mutation, undefined, atom);
           }
         });
       });
@@ -1238,7 +1238,7 @@ PDB.painter = {
 
     var groupindex = showLow ? ("chain_" + atom.chainname + "_low") : ("chain_" + atom.chainname);
     if (path.length > 0) {
-      var high_r = (PDB.structureSizeLevel >= 3 && Math.floor(path.length / 4) >=2) ? Math.floor(path.length / 4) : (path.length - 1);
+      var high_r = (PDB.structureSizeLevel >= 3 && Math.floor(path.length / 4) >= 2) ? Math.floor(path.length / 4) : (path.length - 1);
       var low_h = PDB.structureSizeLevel <= 1 ? high_r : 3;
       PDB.drawer.drawTube(groupindex, path, sel ? atom.color : color, radius, {}, showLow ? low_h : high_r, [resobj.caid]);
       PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
@@ -1264,13 +1264,13 @@ PDB.painter = {
     var radius = PDB.CONFIG.tube_radius;
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
     var groupindex = showLow ? ("chain_" + atom.chainname + "_low") : ("chain_" + atom.chainname);
-	if(path.length>0){
-		var high_r = PDB.structureSizeLevel >= 3 ? Math.floor(path.length / 4) : (path.length - 1);
-		var low_h = PDB.structureSizeLevel <= 1 ? high_r : 3;
-		PDB.drawer.drawTube(groupindex, path, sel ? atom.color : color, radius, {}, showLow ? low_h : high_r, [resobj.caid]);
-		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
-	}
-    
+    if (path.length > 0) {
+      var high_r = PDB.structureSizeLevel >= 3 ? Math.floor(path.length / 4) : (path.length - 1);
+      var low_h = PDB.structureSizeLevel <= 1 ? high_r : 3;
+      PDB.drawer.drawTube(groupindex, path, sel ? atom.color : color, radius, {}, showLow ? low_h : high_r, [resobj.caid]);
+      PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
+    }
+
   },
   showTubeByResdueFOOT: function(chainId, resid, sel, showLow, isshow) {
     showLow = (showLow == undefined ? false : showLow);
@@ -1282,13 +1282,13 @@ PDB.painter = {
     var radius = PDB.CONFIG.tube_radius;
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
     var groupindex = showLow ? ("chain_" + atom.chainname + "_low") : ("chain_" + atom.chainname);
-	if(path.length>0){
-		var high_r = PDB.structureSizeLevel >= 3 ? Math.floor(path.length / 4) : (path.length - 1);	
-		var low_h = PDB.structureSizeLevel <= 1 ? high_r : 3;
-		PDB.drawer.drawTube(groupindex, path, sel ? atom.color : color, radius, {}, showLow ? low_h : high_r, [resobj.caid]);
-		PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
-	}
-    
+    if (path.length > 0) {
+      var high_r = PDB.structureSizeLevel >= 3 ? Math.floor(path.length / 4) : (path.length - 1);
+      var low_h = PDB.structureSizeLevel <= 1 ? high_r : 3;
+      PDB.drawer.drawTube(groupindex, path, sel ? atom.color : color, radius, {}, showLow ? low_h : high_r, [resobj.caid]);
+      PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
+    }
+
   },
   showRibbon_Flat: function() {
     // var color  = 0xa345;
@@ -1398,7 +1398,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } 
+      }
     }
     var radius = 0;
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
@@ -1495,7 +1495,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } 
+      }
     }
     //console.log(cubedataObj);
     var radius = PDB.CONFIG.ellipse_radius;
@@ -1546,7 +1546,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } 
+      }
     }
 
 
@@ -1587,7 +1587,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } 
+      }
     }
 
     var color = new THREE.Color('#CCC');
@@ -1688,7 +1688,7 @@ PDB.painter = {
           normals: n,
           binormals: b
         }
-      } 
+      }
     }
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
     var groupindex = "chain_" + atom.chainname + (showLow ? '_low' : '');
@@ -2842,7 +2842,7 @@ PDB.painter = {
         if (history[atom.id] == undefined) {
           PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, radius + 0.001, atom, addgroup, w);
           history[atom.id] = 1;
-        } 
+        }
         var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
         PDB.drawer.drawStick(group, startAtom.pos_centered, midp, startAtom.color, radius, startAtom);
         PDB.drawer.drawStick(group, midp, atom.pos_centered, atom.color, radius, atom);
@@ -2956,9 +2956,9 @@ PDB.painter = {
           atom = PDB.tool.getMainAtom(molId, i);
         }
         atom.caid = atom.id;
-		if (startAtom == undefined) {
-			continue;
-		}
+        if (startAtom == undefined) {
+          continue;
+        }
         if (history[startAtom.id] == undefined) {
           PDB.drawer.drawSphere(group, startAtom.pos_centered, startAtom.color, startAtom.radius * 0.2, startAtom, addgroup, w);
           history[startAtom.id] = 1;
@@ -2973,14 +2973,14 @@ PDB.painter = {
         PDB.drawer.drawStick(group, midp, atom.pos_centered, atom.color, radius, atom);
       }
     }
-	for (var i in w3m.mol[molId].connect) {
-		 for (j in w3m.mol[molId].connect[i]) {
-			 var atom = PDB.tool.getHetAtom(molId, w3m.mol[molId].connect[i][j]);
-			 if(atom.id&&!history[atom.id]){
-				 PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, atom.radius * 0.2, atom, addgroup, w);
-			 }
-		 }
-	}
+    for (var i in w3m.mol[molId].connect) {
+      for (j in w3m.mol[molId].connect[i]) {
+        var atom = PDB.tool.getHetAtom(molId, w3m.mol[molId].connect[i][j]);
+        if (atom.id && !history[atom.id]) {
+          PDB.drawer.drawSphere(group, atom.pos_centered, atom.color, atom.radius * 0.2, atom, addgroup, w);
+        }
+      }
+    }
   },
   showLabel: function(labeltype) {
     console.log("show label");
@@ -3508,7 +3508,7 @@ PDB.painter = {
 
     subtract = 12;
     strength = 1.2 / ((Math.sqrt(numblobs) - 1) / 4 + 1);
-   
+
     //====================================
     var ps = ProteinSurface({
       min: {
@@ -3895,10 +3895,10 @@ PDB.painter = {
 
           length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
           // console.log('length:',length);
-		   // console.log(resid);
-		  // if(resid==314){
-			  // console.log(resid);
-		  // }
+          // console.log(resid);
+          // if(resid==314){
+          // console.log(resid);
+          // }
           PDB.residueGroupObject[chain][resid].len = length;
           if (length < showLengthThreshold) {
             if (PDB.loadType == PDB.bigmodel) {
@@ -3986,8 +3986,8 @@ PDB.painter = {
         if (reptype === PDB.config.surfaceMode) {
           continue;
         }
-		//fragment选中与否都不改变颜色
-		issel = true;
+        //fragment选中与否都不改变颜色
+        issel = true;
         //if DNA draw as tube
         var chainType = w3m.mol[PDB.pdbId].chain[chain];
         if (chainType == w3m.CHAIN_NA && reptype >= PDB.TUBE && reptype != PDB.HIDE) {
@@ -4025,19 +4025,23 @@ PDB.painter = {
   },
   showHet: function(molId, isdocking) {
     PDB.CONFIG = PDB.CONFIG_HIGH;
-    switch (PDB.config.hetMode) {
-      case PDB.HET_LINE:
-        this.showHet_Line(molId, isdocking);
-        break;
-      case PDB.HET_SPHERE:
-        this.showHet_Sphere(molId, isdocking);
-        break;
-      case PDB.HET_STICK:
-        this.showHet_Stick(molId, isdocking);
-        break;
-      case PDB.HET_BALL_ROD:
-        this.showHet_Ball_Rod(molId, isdocking);
-        break;
+    if (isdocking) {
+      this.showHet_Stick(molId, isdocking);
+    } else {
+      switch (PDB.config.hetMode) {
+        case PDB.HET_LINE:
+          this.showHet_Line(molId, isdocking);
+          break;
+        case PDB.HET_SPHERE:
+          this.showHet_Sphere(molId, isdocking);
+          break;
+        case PDB.HET_STICK:
+          this.showHet_Stick(molId, isdocking);
+          break;
+        case PDB.HET_BALL_ROD:
+          this.showHet_Ball_Rod(molId, isdocking);
+          break;
+      }
     }
   },
   showOneRes: function(representation, molId) {
@@ -4100,7 +4104,7 @@ PDB.painter = {
       };
       atoms[atom.id] = atomSu;
     }
-   
+
     //====================================
     var ps = ProteinSurface({
       min: {
@@ -4250,14 +4254,14 @@ PDB.painter = {
       for (var resid in residueData[chain]) {
 
         var caid = residueData[chain][resid].caid;
-		if(!PDB.residueGroupObject[chain]){
-			continue;
-		}
-		var length = 0;
-		if(PDB.residueGroupObject[chain][resid] && PDB.residueGroupObject[chain][resid].vector){
-			length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
-		}
-        
+        if (!PDB.residueGroupObject[chain]) {
+          continue;
+        }
+        var length = 0;
+        if (PDB.residueGroupObject[chain][resid] && PDB.residueGroupObject[chain][resid].vector) {
+          length = PDB.tool.getVectorLength(PDB.residueGroupObject[chain][resid].vector);
+        }
+
         PDB.residueGroupObject[chain][resid].len = length;
         if (PDB.residueGroupObject[chain][resid].len < showLengthThreshold) {
           if (PDB.loadType == PDB.bigmodel) {

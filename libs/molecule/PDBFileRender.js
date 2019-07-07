@@ -500,12 +500,12 @@ function dealwithMenu(object) {
             if (PDB.EMMAP.FIRST_ID === 0 && data.length > 0) {
               PDB.EMMAP.FIRST_ID = data[0];
             }
-			
+
             var mapserver = jsonObj.method;
             if (PDB.DEBUG_MODE == 1) {
               mapserver = "map-local";
             }
-			
+
             PDB.controller.emmapLoad(PDB.EMMAP.FIRST_ID, mapserver, function(emmap) {
               // PDB.render.clearStructure();
               if (type === 1) {
@@ -677,7 +677,7 @@ function onTriggerDown(event) {
         if(object){
 			var userData = object.userData;
 			var repList = userData.reptype.split(',');
-			
+
 			if("drugListMenu" === repList[0]){
 				var drugId = userData.name;
 				PDB.loader.loadDrug(drugId, repList[1], function() {
@@ -1697,7 +1697,7 @@ PDB.render = {
       if (PDB.DRUGMOVE) {
         var now = new Date();
         //console.log(PDB.drugMoveTime - now);
-        if (PDB.drugMoveTime - now < -2000) {
+        if (PDB.drugMoveTime - now < -500) {
           PDB.tool.migrationDrug();
           PDB.drugMoveTime = new Date();
         }

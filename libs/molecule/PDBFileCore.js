@@ -185,6 +185,13 @@ PDB = {
     'swisslipids':"http://www.swisslipids.org/#/entity/",
     'docking':""
   },
+  DRUBDB_NAME : {
+    'drugbank' : "DrugBank",
+    'bindingdb': "BindingDB"        ,
+    'chembl'   : "ChEMBL",
+    'guidetopharmacology':"Guide to PHARMACOLOGY"        ,
+    'swisslipids':"SwissLipids"
+  },
   DOCKING_URL: API_URL +"/server/autodock/autodock.php",
   // docking var
   DIMENSION:0,

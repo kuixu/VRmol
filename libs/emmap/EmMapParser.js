@@ -14,9 +14,9 @@ EmMapParser = {
       case "X-Ray":
         return 'https://www.ebi.ac.uk/pdbe/coordinates/files/' + mapid.toLowerCase() + '.ccp4';
         break;
-        case "X-Ray-desc":
-          return 'https://www.ebi.ac.uk/pdbe/entry/pdb/' + mapid.toLowerCase();
-          break;
+      case "X-Ray-desc":
+        return 'https://www.ebi.ac.uk/pdbe/entry/pdb/' + mapid.toLowerCase();
+        break;
       case "ccp4":
         return 'https://ipr.pdbj.org/edmap/ccp4/' + mapid.toLowerCase() + '.ccp4.gz';
         break;
@@ -26,9 +26,9 @@ EmMapParser = {
       case "EM":
         return 'https://ftp.wwpdb.org/pub/emdb/structures/EMD-' + mapid.toLowerCase() + '/map/emd_' + mapid.toLowerCase() + '.map.gz';
         break;
-        case "EM-desc":
-          return 'https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-' + mapid.toLowerCase();
-          break;
+      case "EM-desc":
+        return 'https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-' + mapid.toLowerCase();
+        break;
       case "map-local":
         return 'data/emd_' + mapid.toLowerCase() + '.map.gz';
         break;
@@ -40,7 +40,7 @@ EmMapParser = {
     xhr.onload = function() {
       if (this.status == 200) {
         var unit8map = new Uint8Array(this.response);
-        if (type != "X-Ray"){
+        if (type != "X-Ray") {
           var gunzip = new Zlib.Gunzip(unit8map);
           unit8map = gunzip.decompress();
         }
@@ -49,7 +49,7 @@ EmMapParser = {
         onCallBack(emmap) // showMap(emmap);
       } else {
         if (!PDB.pptShow) {
-          PDB.tool.printProgress("Error! Failed to load "+type+" map "+mapid);
+          PDB.tool.printProgress("Error! Failed to load " + type + " map " + mapid);
         }
         // if ( w3m_isset(PDB.remoteUrl[++url_index]) ) {
         //     this.get(id, callback);
@@ -65,7 +65,7 @@ EmMapParser = {
           var ratio = Math.floor((e.loaded / e.total) * 100) + "%";
           var loaded = PDB.tool.toHumanByte(e.loaded);
           var total = PDB.tool.toHumanByte(e.total);
-          PDB.tool.printProgress("Density Map: EMD-" + mapid + ", size(" + loaded + "/" + total + ") " + ratio);
+          PDB.tool.printProgress(type + " map: " + mapid + " loaded, size(" + loaded + "/" + total + ") " + ratio);
           // console.log(e.loaded);
         }
       }

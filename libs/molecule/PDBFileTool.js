@@ -514,7 +514,7 @@ PDB.tool = {
         } else {
           url_index = 0;
         }
-		
+
       },
       io.onerror = function() {
         url_index = 0;
@@ -625,6 +625,19 @@ PDB.tool = {
     parent.appendChild(b_);
     parent.appendChild(document.createElement("br"));
   },
+  generateLabel_nobr: function(parent, text, className) {
+    var b_ = document.createElement("label");
+    b_.innerHTML = text;
+    b_.className = className;
+    parent.appendChild(b_);
+  },
+  generateTextBox: function(parent, id, text, className) {
+    var tb = document.createElement("input");
+    tb.id = id;
+    tb.setAttribute("value", text);
+    tb.className = className;
+    parent.appendChild(tb);
+  },
 
   generateSpan: function(parent, id, className) {
     var span = document.createElement("span");
@@ -655,7 +668,7 @@ PDB.tool = {
     aLink.appendChild(node);
     aLink.id = id;
     aLink.addEventListener('click', function() {
-		//add holder 
+		//add holder
 		PDB.tool.showSegmentholder(true,true);
 		var modelSpan = document.getElementById("modelSpan");
 		if(modelSpan){
@@ -687,13 +700,13 @@ PDB.tool = {
         url = SERVERURL + "/data/autodock.json";
       }
       PDB.tool.ajax.get(url, function(text) {
-		  //clear 				
-			
+		  //clear
+
 		  PDB.tool.showSegmentholder(false);
         var jsonObj = JSON.parse(text);
         if (jsonObj.model_list != undefined && jsonObj.model_list.length > 0) {
           var menuSpan = document.getElementById("menuSpan");
-          
+
           if (modelSpan == undefined) {
             modelSpan = PDB.tool.generateSpan(menuSpan, "modelSpan", "rightsubmenu");
           } else {
@@ -702,14 +715,17 @@ PDB.tool = {
 
           //stop move drug
           PDB.DRUGMOVE = false;
-          PDB.tool.generateLabel(modelSpan, "ModelList &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score", "");
+          result_list_title = "<br>Model List &nbsp;&nbsp;&nbsp;Score&nbsp;&nbsp;Download";
+          PDB.tool.generateLabel(modelSpan, result_list_title, "");
           for (var i in jsonObj.model_list) {
             if (jsonObj.model_list[i] === "") {
               continue;
             }
-            var text = jsonObj.model_list[i] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + jsonObj.scores[i];
-            PDB.tool.generateButton(modelSpan, text, jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function() {				
-				
+            //var text = jsonObj.model_list[i] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + jsonObj.scores[i];
+            var text = jsonObj.model_list[i] ; //+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + jsonObj.scores[i];
+            var text = jsonObj.smolid+"_"+(parseInt(i)+1);
+            PDB.tool.generateButton(modelSpan, text, jsonObj.model_list[i], "rightLabelPDB").addEventListener('click', function() {
+
               var drugId = this.value.replace(".pdb", "");
               PDB.config.selectedDrug = drugId;
               PDB.DRUBDB_URL.docking = jsonObj.outdir + "/";
@@ -718,20 +734,21 @@ PDB.tool = {
                 PDB.render.clearGroupIndex(PDB.GROUP_DOCKING);
                 var docking = true;
                 PDB.painter.showHet(drugId, docking);
-                //PDB.tool.generateDrugMigrationPath();
               });
-			  
-			  
-			  
+
+
+
             });
+            PDB.tool.generateLabel_nobr(modelSpan, jsonObj.scores[i], "docking_score");
+            PDB.tool.generateALink(modelSpan, "link" + i, "Link", jsonObj.outdir + "/" + jsonObj.model_list[i], "");
+
             //add BR
-            var br = document.createElement("br");
-            modelSpan.appendChild(br);
+            modelSpan.appendChild(document.createElement("br"));
           }
         }
 		//clear
 		PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
-		
+
       });
     });
     parent.appendChild(aLink);
@@ -836,7 +853,7 @@ PDB.tool = {
       var scope = this;
       var rightMenuDiv = document.getElementById("rightmenu");
       rightMenuDiv.innerHTML = "";
-      var titleLab = PDB.tool.generateLabel(rightMenuDiv, "Density Map List", "");
+      var titleLab = PDB.tool.generateLabel(rightMenuDiv, "Map List", "");
       var menuSpan = PDB.tool.generateSpan(rightMenuDiv, "menuSpan", "rightsubmenu");
       var menuSpan1 = PDB.tool.generateSpan(rightMenuDiv, "menuSpan1", "rightsubmenu");
       var data = jsonObj.data;
@@ -910,15 +927,22 @@ PDB.tool = {
         '<input class="labelPDB" id="meshMap" name="mapType"  type="radio" title="Map Type"/>  <label class="label"   for="meshMap"> Mesh </label>   <BR/>' +
         '<input class="labelPDB" type="checkbox" id="showSlice"><label class="label" for="showSlice"  > Show/Hide Slice </label> <BR/>' +
         '<input class="labelPDB" type="checkbox" checked id="showMap"><label class="label" for="showMap" > Show/Hide Map </label> <BR/><BR/>' +
-        '<label class="label"> Step Option </label><BR/>' +
+        '<label class="label"> Step Size </label><BR/>' +
         '<input class="labelPDB" id="step1" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 1.x </label>' +
         '<input class="labelPDB" id="step2" name="stepOption"  checked="checked" type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 2.x </label>' +
         '<input class="labelPDB" id="step4" name="stepOption"  type="radio" title="Map Type"/>  <label class="label" for="threeMode"> 4.x </label> <BR/><BR/>' +
-        '<label class="label"> Threshold Range </label><BR/> <input type="range" id="thresholdRange" title="Change the value of threshold" style="width: 180px;" name="" min="1" max="100" /><BR/>' +
-        '<label class="label" id="minThresHold" style="margin-left: 0px;padding-left: 0px;float: left;width: 60;text-align: left">0</label><label class="label" id="currThresHold" style="width: 60px;text-align: center">50</label><label class="label" style="width: 60px;text-align: right;" id="maxThresHold">100</label><BR/>' +
-        '<label class="label"> Slice Range </label><BR/> <input type="range" id="sliceRange" title="Change the value of slice" style="width: 180px;" name="" /><BR/> ' +
-        '<label class="label" id="minSlice" style="margin-left: 0px;padding-left: 0px;float: left">0</label><label class="label" id="currSlice" style="margin-left: 35px;">50</label><label class="label" style="margin-left: 35px;" id="maxSlice">100</label><BR/>' +
-        '<select id="dimension"> <option value="0" checked>x</option> <option value="1" checked>y</option> <option value="2" checked>z</option> </select> <label class="label"> Dimension </label><BR/> <label class="label"> Surface Color </label>';
+        '<label class="label"> Level </label><BR/> <input type="range" id="thresholdRange" title="Change the value of threshold" style="width: 180px;" name="" min="1" max="100" /><BR/>' +
+        '<label class="label" id="minThresHold"  style="width: 60px;text-align: left;float: left;"> </label>'+
+        '<label class="label" id="currThresHold" style="width: 60px;text-align: center"> </label>'+
+        '<label class="label" id="maxThresHold"  style="width: 60px;text-align: right;float: right;"> </label><BR/>' +
+        '<label class="label"> Slice Range </label><BR/> '+
+        '<input type="range" id="sliceRange" title="Change the value of slice" style="width: 180px;" name="" /><BR/> ' +
+        '<label class="label" id="minSlice"  style="width: 60px;text-align: left;float: left;"></label>'+
+        '<label class="label" id="currSlice" style="width: 60px;text-align: center"></label>'+
+        '<label class="label" id="maxSlice"  style="width: 60px;text-align: right; float: right" ></label><BR/>' +
+        '<label class="label"> Slice Axis </label><BR/> '+
+        '<select id="dimension"> <option value="0" checked>x</option> <option value="1" checked>y</option> <option value="2" checked>z</option> </select> <BR/>'+
+        '<label class="label"> Surface Color </label>';
 
       var solidMap = document.getElementById("solidMap");
       solidMap.addEventListener('click', function(e) {
@@ -1489,12 +1513,12 @@ PDB.tool = {
 
         var v_type = newRow.insertCell(3);
         v_type.innerHTML = data[i].v_type
-		
+
         var disease = newRow.insertCell(4);
 		if(data[i].disease){
 			disease.innerHTML = data[i].disease
 		}
-        
+
       }
       var span = PDB.tool.generateSpan(rightMenuDiv, "span", "rightsubmenu");
       span.appendChild(table);
@@ -1920,7 +1944,7 @@ PDB.tool = {
           var y = 1.5;
           var z = limit.z[1] + PDB.GeoCenterOffset.z;
           x = x * 0.02-2;
-		  z = z * 0.022 - 2.5;			  
+		  z = z * 0.022 - 2.5;
           var pos = new THREE.Vector3(x,y,z);
           parentGroup.position.copy(pos);
 		  var posStart = pos.clone();
@@ -1931,7 +1955,7 @@ PDB.tool = {
 		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_SWITCH, switchPos_on, "MENU ON", "menuOn", 0x37bd3f, 135);
 		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_SWITCH, switchPos_off, "MENU OFF", "menuOff", 0xfe3f12, 135);
 		  PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH].position.copy(posStart);
-		  
+
           var reptype = "drugListMenu";
 		  PDB.drawer.drawTextKB(group, posStart, "Drug List", "", color, 135);
 
@@ -1986,7 +2010,7 @@ PDB.tool = {
 			var posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
 			var pos = new THREE.Vector3(posStart.x + 2.5, posStart.y, posStart.z);
 			PDB.drawer.drawTextKB(parentGroup, posStart, drugids[i], reptype, color, 135);
-			PDB.drawer.drawTextKB(parentGroup, pos, "docking", "docking,"+drugids[i], color, 135);
+			PDB.drawer.drawTextKB(parentGroup, pos, "Docking", "Docking,"+drugids[i], color, 135);
 		  }
 	  }
 	  return posStart;
@@ -2016,24 +2040,22 @@ PDB.tool = {
         url = SERVERURL + "/data/autodock.json";
       }
 	  PDB.tool.ajax.get(url, function(text) {
-	//var text = " {\"jobid\":\"1CBS_DB00523_20190706190409_30\",\"log\":\"https:\/\/vrmol.life.tsinghua.edu.cn\/server\/autodock\/jobs\/1CBS_DB00523_20190706190409_30\/log\",\"pdbid\":\"1CBS\",\"smolid\":\"DB00523\",\"fullmodel\":\"DB00523_out.pdb\",\"fullmodel_url\":\"https:\/\/vrmol.life.tsinghua.edu.cn\/server\/autodock\/jobs\/1CBS_DB00523_20190706190409_30\/DB00523_out.pdb\",\"model_list\":[\"DB00523_out_1.pdb\",\"DB00523_out_2.pdb\",\"DB00523_out_3.pdb\",\"DB00523_out_4.pdb\",\"DB00523_out_5.pdb\",\"DB00523_out_6.pdb\",\"DB00523_out_7.pdb\",\"DB00523_out_8.pdb\",\"DB00523_out_9.pdb\"],\"outdir\":\"https:\/\/vrmol.life.tsinghua.edu.cn\/server\/autodock\/jobs\/1CBS_DB00523_20190706190409_30\",\"scores\":[\"-7.2\",\"-7.2\",\"-7.1\",\"-7.1\",\"-7.1\",\"-7.1\",\"-7.0\",\"-6.9\",\"-6.8\",\"\"]}";
-		 // console.log(text);
         var jsonObj = JSON.parse(text);
         if (jsonObj.model_list != undefined && jsonObj.model_list.length > 0) {
           //stop move drug
           PDB.DRUGMOVE = false;
-		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];		  
+		  var parentGroup = PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING];
 		  var color = 0x1f43;
 		  var limit = w3m.global.limit;
           var x = limit.x[1] + PDB.GeoCenterOffset.x;
          var y = 1.5;
           var z = limit.z[1] + PDB.GeoCenterOffset.z;
           x = x * 0.02;
-		  z = z * 0.022 - 2.5;			  
+		  z = z * 0.022 - 2.5;
           var pos = new THREE.Vector3(x,y,z);
           parentGroup.position.copy(pos);
 		  var posStart = pos.clone();
-		  
+
           var reptype = "";
 		  PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, posStart, "Docking List", reptype, color, 135);
 
@@ -2052,7 +2074,7 @@ PDB.tool = {
 	  if(show){
 		segmentholder.style.display = "table";
 	  }else{
-		segmentholder.style.display = "none";    
+		segmentholder.style.display = "none";
 	  }
 	  if(titleMessage){
 		segmentholder.innerHTML = "<div class=\"holderClass\">Just a moment, please.</div>";

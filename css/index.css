@@ -17,9 +17,16 @@ a {
   color: rgb(255, 255, 255);
   background: transparent;
   border: 0px;
-  padding: 0px;
   cursor: pointer;
   font-size: 11px;
+}
+.docking_score{
+  font-size: 13.33px;
+  margin: 0 0 0 8px;
+}
+
+.textbox{
+  width: 70px;
 }
 
 #info {

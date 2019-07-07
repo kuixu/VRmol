@@ -1090,8 +1090,7 @@ PDB.controller = {
     //    PDB.painter.showBond(PDB.BOND_TYPE_COVALENT);
     //} );
 
-    //=============================== Drug Design =======================
-    //=======add randomMigration
+    // =============================== Drug Design =======================
     var showBoxHelper = document.getElementById("showBoxHelper");
     showBoxHelper.addEventListener('click', function(e) {
       if (this.checked) {
@@ -1104,16 +1103,16 @@ PDB.controller = {
         }
       }
     });
-    //=======add randomMigration
-    var randomMigration = document.getElementById("randomMigration");
-    randomMigration.addEventListener('click', function(e) {
-      if (this.checked) {
-        PDB.DRUGMOVE = true;
-        PDB.drugMoveTime = new Date();
-      } else {
-        PDB.DRUGMOVE = false;
-      }
-    });
+    // =======add randomMigration
+    // var randomMigration = document.getElementById("randomMigration");
+    // randomMigration.addEventListener('click', function(e) {
+    //   if (this.checked) {
+    //     PDB.DRUGMOVE = true;
+    //     PDB.drugMoveTime = new Date();
+    //   } else {
+    //     PDB.DRUGMOVE = false;
+    //   }
+    // });
 
     //hide drug
     var hideDrug = document.getElementById("hideDrug");
@@ -1150,9 +1149,11 @@ PDB.controller = {
           var rightMenuDiv = document.getElementById("rightmenu");
           rightMenuDiv.hidden = false;
           rightMenuDiv.style.overflowY = "hidden";
-          rightMenuDiv.innerHTML = "<label>Box Helper Limit</label><br/><span class=\"xyz_min_max\"><label>x:</label><input id=\"x_min\"/>~<input id=\"x_max\"/><br/><label>y:</label><input id=\"y_min\"/>~<input id=\"y_max\"/><br/><label>z:</label><input id=\"z_min\"/>~<input id=\"z_max\"/><br/></span>";
+          rightMenuDiv.innerHTML = '<label>Docking Region</label><br/><span class="xyz_min_max">'+
+          '<label>X:</label><input id="x_min"/>~<input id="x_max"/><br/><label>Y:</label>'+
+          '<input id="y_min"/>~<input id="y_max"/><br/><label>Z:</label><input id="z_min"/>~<input id="z_max"/><br/></span>';
 
-          var helperLab = PDB.tool.generateLabel(rightMenuDiv, "Box Helper Limit", "");
+          var helperLab = PDB.tool.generateLabel(rightMenuDiv, "", "");
 
           $("#x_min").val(w3m.global.limit.x[0]);
           $("#x_max").val(w3m.global.limit.x[1]);
@@ -1217,6 +1218,16 @@ PDB.controller = {
 
           var drugbank = jsonObj.data[0].drugbank;
           PDB.controller.LoadDrugDetails(span, PDB.DRUG_MODE_CONFIG.DRUG_BANK, drugbank);
+          // text boxes
+          // get drug_id
+          // var drug_id =  input =
+          PDB.tool.generateTextBox(span, "drugbankid", "DB04464", 'textbox');
+          PDB.tool.generateButton(span, "Load", "Load", "rightLabelPDB").addEventListener('click', function() {
+            drugbankid = document.getElementById("drugbankid").value;
+            PDB.tool.generateDocklingLink(span, "link" + i, "Docking", drugbankid, "drugbank");
+            span.appendChild(document.createElement("br"));
+          });
+          //
         } else {
           PDB.tool.printProgress(jsonObj.message);
           // alert(jsonObj.message);
@@ -1227,8 +1238,9 @@ PDB.controller = {
   LoadDrugDetails: function(span, dbname, dbjson) {
     if (dbjson !== undefined && dbjson !== "" && dbjson !== "null") {
 
-      PDB.tool.generateLabel(span, dbname, "");
+      PDB.tool.generateLabel(span, "DataBase: "+PDB.DRUBDB_NAME[dbname], "");
       var drugids = dbjson.split(';');
+
       for (var i in drugids) {
         if (drugids[i] === "") {
           continue;
@@ -1247,9 +1259,14 @@ PDB.controller = {
           });
         });
         PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUG_MODE_CONFIG.Detail_URL[dbname] + drugids[i], "");
-        PDB.tool.generateDocklingLink(span, "link" + i, "docking", drugids[i], dbname);
+        if (dbname=='drugbank'){
+          PDB.tool.generateDocklingLink(span, "link" + i, "Docking", drugids[i], dbname);
+        }
         span.appendChild(document.createElement("br"));
       }
+
+      span.appendChild(document.createElement("br"));
+
     }
   },
   onKeyDown: function(event) {
@@ -1967,7 +1984,7 @@ PDB.controller = {
 		console.log("end: " + type + ": " + new Date());
 		PDB.tool.showSegmentholder(false,false);
 	},PDB.HOLDERTIME);
-    
+
   },
   refreshGeometryByMode: function(type) {
     //console.log("controller.refreshGeometryByMode");
@@ -1987,7 +2004,7 @@ PDB.controller = {
   },
   refreshSurface: function(structureType, surfaceType, opacity, wireframe) {
     console.log("Present Surface:" + structureType);
-	
+
     var scope = this;
     var changeSurfaceType = false;
     if (surfaceType !== undefined && surfaceType !== PDB.SURFACE_TYPE) {
