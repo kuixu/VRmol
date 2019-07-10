@@ -2,8 +2,13 @@
  * Created by Kui Xu on 2017/7/15.
  * mail: xukui.cs@gmail.com
  */
+var font ;
+var loader = new THREE.FontLoader();
+loader.load('js/fonts/helvetiker_bold.typeface.json', function(font0) {
+  font = font0;
+});
+var fontloader =
 PDB.drawer = {
-
   drawLabel: function(group, pos, color, name) {
     var scope = this;
     var text = document.createElement('div');
@@ -51,206 +56,192 @@ PDB.drawer = {
    * @param rotation
    */
   drawTextForDesktop: function(group, pos, text, type, color, rotation) {
-    // load font
-    var loader = new THREE.FontLoader();
-    loader.load('js/fonts/helvetiker_bold.typeface.json', function(font) {
-      var geometry = new THREE.TextGeometry(text, {
-        font: font,
-        size: 0.38,
-        height: 0.05,
-        curveSegments: 5
-      });
-      geometry.computeBoundingBox();
-      var material = new THREE.MeshPhongMaterial({
-        color: Math.random() * 0xffffff
-      });
-      var mesh = new THREE.Mesh(geometry, material);
-      mesh.name = text;
-      mesh.position.copy(pos);
-      // mesh.rotation.copy(rotation);
-      // mesh.rotation.y += 180;
-      mesh.lookAt(camera.position);
-      mesh.userData = {
-        type: type,
-        name: text,
-        group: group
-      };
-      PDB.GROUP[group].add(mesh);
+    var geometry = new THREE.TextGeometry(text, {
+      font: font,
+      size: 0.38,
+      height: 0.05,
+      curveSegments: 5
     });
+    geometry.computeBoundingBox();
+    var material = new THREE.MeshPhongMaterial({
+      color: Math.random() * 0xffffff
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = text;
+    mesh.position.copy(pos);
+    // mesh.rotation.copy(rotation);
+    // mesh.rotation.y += 180;
+    mesh.lookAt(camera.position);
+    mesh.userData = {
+      type: type,
+      name: text,
+      group: group
+    };
+    PDB.GROUP[group].add(mesh);
   },
   drawText: function(group, pos, text, type, color, rotation) {
-    var loader = new THREE.FontLoader();
-    loader.load('js/fonts/helvetiker_bold.typeface.json', function(font) {
-      var geometry = new THREE.TextGeometry(text, {
-        font: font,
-        size: 0.38,
-        height: 0.05,
-        curveSegments: 5
-      });
-      geometry.computeBoundingBox();
-      var material = new THREE.MeshPhongMaterial({
-        color: Math.random() * 0xffffff
-      });
-      var mesh = new THREE.Mesh(geometry, material);
-      mesh.name = text;
-      var dir = new THREE.Vector3(0, 0, 0);
-      camera.getWorldDirection(dir);
-      mesh.userData = {
-        type: type,
-        name: text,
-        group: group
-      };
-      PDB.GROUP[group].position.copy(pos);
-      PDB.GROUP[group].lookAt(dir);
-      PDB.GROUP[group].add(mesh);
-
+    var geometry = new THREE.TextGeometry(text, {
+      font: font,
+      size: 0.38,
+      height: 0.05,
+      curveSegments: 5
     });
+    geometry.computeBoundingBox();
+    var material = new THREE.MeshPhongMaterial({
+      color: Math.random() * 0xffffff
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = text;
+    var dir = new THREE.Vector3(0, 0, 0);
+    camera.getWorldDirection(dir);
+    mesh.userData = {
+      type: type,
+      name: text,
+      group: group
+    };
+    PDB.GROUP[group].position.copy(pos);
+    PDB.GROUP[group].lookAt(dir);
+    PDB.GROUP[group].add(mesh);
   },
   drawTextForDistance: function(group, pos, text, type, color, rotation) {
-    var loader = new THREE.FontLoader();
-    loader.load('js/fonts/helvetiker_bold.typeface.json', function(font) {
-      var geometry = new THREE.TextGeometry(text, {
-        font: font,
-        size: 0.38,
-        height: 0.05,
-        curveSegments: 5
-      });
-      geometry.computeBoundingBox();
-      var material = new THREE.MeshPhongMaterial({
-        color: Math.random() * 0xffffff
-      });
-      var mesh = new THREE.Mesh(geometry, material);
-      mesh.name = text;
-      // var dir = new THREE.Vector3(0, 0, 0);
-      // camera.getWorldDirection(dir);
-      mesh.userData = {
-        type: type,
-        name: text,
-        group: group
-      };
-      mesh.position.copy(pos);
-	  // if(PDB.rotateAxis && PDB.rotateAxis.z > 0){
-		// mesh.up.set(0,-1,0);
-	  // }
-	  // if(PDB.rotateAxis && PDB.rotateAxis.x > 0){
-		// mesh.up.set(0,-1,0);
-	  // }
-	  // if(PDB.rotateAxis && PDB.rotateAxis.y > 0){
-		// mesh.up.set(0,-1,0);
-	  // }
-	  	//normalize the direction vector (convert to vector of length 1)
-
-
-
-	  //mesh.up.set(camera.position.x,camera.position.y,camera.position.z);
-
-      PDB.GROUP[group].add(mesh);
-	  // mesh.rotateX(-PDB.rotateAxisAngle.x);
-	  // mesh.rotateY(-PDB.rotateAxisAngle.y);
-	  // mesh.rotateZ(-PDB.rotateAxisAngle.z);
-	  //mesh.up.set(PDB.rotateAxisAngle.x%Math.PI,(1+PDB.rotateAxisAngle.y)%Math.PI,PDB.rotateAxisAngle.z%Math.PI);
-
-	  // var updir = camera.position.clone();
-
-	  // if(PDB.rotateAxis.x){
-		 // updir.x = updir.x + PDB.rotateAxis.x;
-	  // }
-	  // if(PDB.rotateAxis.y){
-		 // updir.y = updir.y + PDB.rotateAxis.y;
-	  // }
-	  // if(PDB.rotateAxis.z){
-		 // updir.z = updir.z + PDB.rotateAxis.z;
-	  // }
-	  // var axis ;
-	  // if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.x!=0){
-			// axis = new THREE.Vector3(1, 0, 0);
-			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.x);
-			// mesh.rotateX(-PDB.rotateAxisAngle.x);
-		// }
-
-
-		// if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.y!=0){
-			// axis = new THREE.Vector3(0, 1, 0);
-			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.y);
-			// mesh.rotateY(-PDB.rotateAxisAngle.y);
-		// }
-
-
-		// if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.z!=0){
-			// axis = new THREE.Vector3(0, 0, 1);
-			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.z);
-			// mesh.rotateZ(-PDB.rotateAxisAngle.z);
-		// }
-		// //mesh.up.copy(updir.normalize());
-		// mesh.lookAt(updir);
-	  mesh.lookAt(camera.position);
-	  // mesh.rotateX(-PDB.rotateAxisAngle.x);
-	  // mesh.rotateY(-PDB.rotateAxisAngle.y);
-	  // mesh.rotateZ(-PDB.rotateAxisAngle.z);
-
-	// var hex = 0xffff00;
-	// var t_t = mesh.up.clone();
-	// var arrowHelper = new THREE.ArrowHelper( t_t.normalize(), pos, 1, hex );
-
-	 // var hex1 = 0x2aa41d;
-	 // var t_t_1 = new THREE.Vector3(PDB.rotateAxisAngle.x,PDB.rotateAxisAngle.y,PDB.rotateAxisAngle.z);
-	 // var arrowHelper1 = new THREE.ArrowHelper( t_t_1.normalize(), pos, 2, hex1 );
-	// PDB.GROUP[group].add(arrowHelper);
-	// PDB.GROUP[group].add(arrowHelper1);
+    var geometry = new THREE.TextGeometry(text, {
+      font: font,
+      size: 0.38,
+      height: 0.05,
+      curveSegments: 5
     });
+    geometry.computeBoundingBox();
+    var material = new THREE.MeshPhongMaterial({
+      color: Math.random() * 0xffffff
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = text;
+    // var dir = new THREE.Vector3(0, 0, 0);
+    // camera.getWorldDirection(dir);
+    mesh.userData = {
+      type: type,
+      name: text,
+      group: group
+    };
+    mesh.position.copy(pos);
+    // if(PDB.rotateAxis && PDB.rotateAxis.z > 0){
+    // mesh.up.set(0,-1,0);
+    // }
+    // if(PDB.rotateAxis && PDB.rotateAxis.x > 0){
+    // mesh.up.set(0,-1,0);
+    // }
+    // if(PDB.rotateAxis && PDB.rotateAxis.y > 0){
+    // mesh.up.set(0,-1,0);
+    // }
+    //normalize the direction vector (convert to vector of length 1)
+
+
+
+    //mesh.up.set(camera.position.x,camera.position.y,camera.position.z);
+
+    PDB.GROUP[group].add(mesh);
+    // mesh.rotateX(-PDB.rotateAxisAngle.x);
+    // mesh.rotateY(-PDB.rotateAxisAngle.y);
+    // mesh.rotateZ(-PDB.rotateAxisAngle.z);
+    //mesh.up.set(PDB.rotateAxisAngle.x%Math.PI,(1+PDB.rotateAxisAngle.y)%Math.PI,PDB.rotateAxisAngle.z%Math.PI);
+
+    // var updir = camera.position.clone();
+
+    // if(PDB.rotateAxis.x){
+    // updir.x = updir.x + PDB.rotateAxis.x;
+    // }
+    // if(PDB.rotateAxis.y){
+    // updir.y = updir.y + PDB.rotateAxis.y;
+    // }
+    // if(PDB.rotateAxis.z){
+    // updir.z = updir.z + PDB.rotateAxis.z;
+    // }
+    // var axis ;
+    // if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.x!=0){
+    // axis = new THREE.Vector3(1, 0, 0);
+    // updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.x);
+    // mesh.rotateX(-PDB.rotateAxisAngle.x);
+    // }
+
+
+    // if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.y!=0){
+    // axis = new THREE.Vector3(0, 1, 0);
+    // updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.y);
+    // mesh.rotateY(-PDB.rotateAxisAngle.y);
+    // }
+
+
+    // if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.z!=0){
+    // axis = new THREE.Vector3(0, 0, 1);
+    // updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.z);
+    // mesh.rotateZ(-PDB.rotateAxisAngle.z);
+    // }
+    // //mesh.up.copy(updir.normalize());
+    // mesh.lookAt(updir);
+    mesh.lookAt(camera.position);
+    // mesh.rotateX(-PDB.rotateAxisAngle.x);
+    // mesh.rotateY(-PDB.rotateAxisAngle.y);
+    // mesh.rotateZ(-PDB.rotateAxisAngle.z);
+
+    // var hex = 0xffff00;
+    // var t_t = mesh.up.clone();
+    // var arrowHelper = new THREE.ArrowHelper( t_t.normalize(), pos, 1, hex );
+
+    // var hex1 = 0x2aa41d;
+    // var t_t_1 = new THREE.Vector3(PDB.rotateAxisAngle.x,PDB.rotateAxisAngle.y,PDB.rotateAxisAngle.z);
+    // var arrowHelper1 = new THREE.ArrowHelper( t_t_1.normalize(), pos, 2, hex1 );
+    // PDB.GROUP[group].add(arrowHelper);
+    // PDB.GROUP[group].add(arrowHelper1);
   },
 
   drawTextKB: function(group, pos, text, type, color, angle) {
-    // load font
-    var loader = new THREE.FontLoader();
-    loader.load('js/fonts/helvetiker_bold.typeface.json', function(font) {
-      var geometry = new THREE.TextGeometry(text, {
-        font: font,
-        size: 0.18,
-        height: 0.05,
-        curveSegments: 5
-      });
-
-
-      geometry.computeBoundingBox();
-      var material = new THREE.MeshPhongMaterial({
-        color: color
-      });
-      var mesh = new THREE.Mesh(geometry, material);
-      mesh.name = text;
-      //mesh.rotation.y = angle;
-      mesh.position.copy(pos);
-      mesh.userData = {
-        reptype: type,
-        name: text,
-        group: group
-      };
-      PDB.GROUP[group].add(mesh);
-
-	  //添加box
-	  var width = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
-	  var heigh = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
-	  var boxBufferGeometry = new THREE.BoxBufferGeometry( width,heigh - 0.01 , 0.05 );
-
-	  var material2 = new THREE.MeshBasicMaterial({
-        color: 0x808080
-      });
-	  var mesh2 = new THREE.Mesh(boxBufferGeometry, material2);
-	  material2.opacity = 0;
-      mesh2.material.opacity = 0;
-
-      mesh2.name = text;
-      //mesh.rotation.y = angle;
-      mesh2.position.set(pos.x + width/2,pos.y + heigh/2,pos.z);
-	  mesh2.rotation.copy(mesh.rotation);
-      mesh2.userData = {
-        reptype: type,
-        name: text,
-        group: group
-      };
-      PDB.GROUP[group].add(mesh);
-      PDB.GROUP[group].add(mesh2);
+    var geometry = new THREE.TextGeometry(text, {
+      font: font,
+      size: 0.18,
+      height: 0.05,
+      curveSegments: 5
     });
+
+
+    geometry.computeBoundingBox();
+    var material = new THREE.MeshPhongMaterial({
+      color: color
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = text;
+    //mesh.rotation.y = angle;
+    mesh.position.copy(pos);
+    mesh.userData = {
+      reptype: type,
+      name: text,
+      group: group
+    };
+    PDB.GROUP[group].add(mesh);
+
+    //add box
+    var width = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
+    var heigh = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
+    var boxBufferGeometry = new THREE.BoxBufferGeometry( width,heigh - 0.01 , 0.05 );
+
+    var material2 = new THREE.MeshBasicMaterial({
+      color: 0x808080
+    });
+    var mesh2 = new THREE.Mesh(boxBufferGeometry, material2);
+    material2.opacity = 0;
+    mesh2.material.opacity = 0;
+
+    mesh2.name = text;
+    //mesh.rotation.y = angle;
+    mesh2.position.set(pos.x + width/2,pos.y + heigh/2,pos.z);
+    mesh2.rotation.copy(mesh.rotation);
+    mesh2.userData = {
+      reptype: type,
+      name: text,
+      group: group
+    };
+    PDB.GROUP[group].add(mesh);
+    PDB.GROUP[group].add(mesh2);
+
   },
   drawMergeStickSphereStick: function(group, preAtom, atom, nextAtom, radius) {
     var scope = this;
