@@ -5943,7 +5943,15 @@ w3m.file = (function() {
     callback = null;
   io.onload = function(event) {
     var e = event || window.event;
-    callback(e.target.result)
+    var file_cont = e.target.result;
+    if(file_cont.includes("mmcif_pdbx")){
+      cif_cont = loadCIF(file_cont, 1)
+      callback(cif_cont)
+    }else{
+      callback(e.target.result)
+    }
+
+
   }
   io.get = function(file, fn) {
     callback = fn;
