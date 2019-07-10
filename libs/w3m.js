@@ -893,7 +893,7 @@ w3m.tool = {
   },
 
   point2vertexMainLine: function(pt) {
-    //w3m.vertex_main_line存储需要绘画的�?
+    //w3m.vertex_main_line
     pt[2] ? Array.prototype.push.apply(w3m.vertex_main_line, [].concat(pt[0], pt[1], w3m.rgb[pt[2]], [null, null, null])) : void(0);
   },
   point2vertexMainTriangle: function(pt) {
@@ -1268,7 +1268,7 @@ w3m.tool = {
     } else if (w3m.dict.nucleic_acid.indexOf(residue_name) >= 0) {
       return w3m.CHAIN_NA;
     } else {
-      return w3m.CHAIN_UNK; //不知道的ChainNType,即不属于核酸与氨基酸;
+      return w3m.CHAIN_UNK; //unknown ChainNType
     }
   },
   updateMolRepColorLabelMap: function(mol_id) {
