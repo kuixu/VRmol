@@ -110,7 +110,7 @@ https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfa
 ## Deploy VRmol on your own server
 
   - Download the code into the apache server web directory
-  - Set `SERVERURL` as your URL (like https://example.com) at `libs/molecule/PDBFileCore.js`
+  - Set `SERVERURL` as your URL (like https://example.com) at `libs/core.js`
   - Start the Speech Recognition service by run:
     ```python
     python3 server/listen/sr.py
