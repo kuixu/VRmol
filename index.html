@@ -40,22 +40,20 @@
 <script type="text/javascript" src="js/webvr-ui/webvr-ui.min.js"></script>
 -->
 
-<!--  <script type="text/javascript" src="molmil/molmil.js"></script>
-  <script type="text/javascript" src="molmil/molmil_dep.js"></script>-->
   <!-- w3m-->
-  <script type="text/javascript" src="libs/molecule/w3m.js"></script>
-  <script type="text/javascript" src="libs/molecule/extension.js"></script>
-  <script type="text/javascript" src="libs/molecule/static.js"></script>
-  <script type="text/javascript" src="libs/molecule/math.js"></script>
+  <script type="text/javascript" src="libs/w3m.js"></script>
+  <script type="text/javascript" src="libs/extension.js"></script>
+  <script type="text/javascript" src="libs/static.js"></script>
+  <script type="text/javascript" src="libs/math.js"></script>
   <!-- Our Design-->
-  <script type="text/javascript" src="libs/molecule/PDBFileCore.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileLoader.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileRender.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileTool.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileDrawer.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFilePainter.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileController.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileParser.js"></script>
+  <script type="text/javascript" src="libs/core.js"></script>
+  <script type="text/javascript" src="libs/loader.js"></script>
+  <script type="text/javascript" src="libs/render.js"></script>
+  <script type="text/javascript" src="libs/tool.js"></script>
+  <script type="text/javascript" src="libs/drawer.js"></script>
+  <script type="text/javascript" src="libs/painter.js"></script>
+  <script type="text/javascript" src="libs/controller.js"></script>
+  <script type="text/javascript" src="libs/pdbparser.js"></script>
   <!-- vr js -->
   <script type="text/javascript" src="js/controls/TrackballControls.js"></script>
   <script type="text/javascript" src="js/controls/OrbitControls.js"></script>
@@ -79,13 +77,13 @@
   <!-- import from three for surface-->
   <!-- <script type="text/javascript" src="js/MarchingCubes.js"></script>-->
   <!--import EmMapParser-->
-  <script type="text/javascript" src="libs/emmap/gunzip.min.js"></script>
-  <script type="text/javascript" src="libs/emmap/chroma.min.js"></script>
-  <script type="text/javascript" src="libs/emmap/EmMapParser.js"></script>
-  <script type="text/javascript" src="libs/molecule/surface.js"></script>
+  <script type="text/javascript" src="js/libs/gunzip.min.js"></script>
+  <script type="text/javascript" src="js/libs/chroma.min.js"></script>
+  <script type="text/javascript" src="libs/emparser.js"></script>
+  <script type="text/javascript" src="libs/surface.js"></script>
   <!--exporter-->
   <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
-  <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
+  <!--<script type="text/javascript" src="libs/fileutils/debugout.js"></script>-->
   <script type="text/javascript" src="server/listen/recorder.js"></script>
   <!--<script type="text/javascript" src="https://vrmol.net/server/listen/sr.min.js"></script>-->
 </head>
@@ -332,13 +330,13 @@
       <br>
     </span>
     <BR />
-    <LABEL id="progmsg"></LABEL><BR />
+    <LABEL id="progmsg"></LABEL><BR/>
     <LABEL id="tip"></LABEL><br>
     <progress id="progress" value="0"></progress>
     <BR />
   </div>
   <div id="rightmenu">
-    <LABEL id="titleLab"></LABEL><BR />
+    <LABEL id="titleLab"></LABEL><BR/>
     <span class="rightsubmenu" id="menuSpan">
     </span>
     <BR />
@@ -396,20 +394,20 @@
           <div class="segment_option">
             <span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">Representation:</span>
             <select id="selectedMode">
-              <option value=3>BACKBONE</option>
-              <option value=1>LINE</option>
-              <option value=2>DOT</option>
-              <option value=6>BALL_AND_ROD</option>
-              <option value=5>STICKS</option>
-              <option value=4>SPHERE</option>
-              <option value=7>CARTOON_TUBE</option>
-              <option value=8>CARTOON_FLAT</option>
-              <option value=9>CARTOON_ELLIPSE</option>
-              <option value=10>CARTOON_RECTANGLE</option>
-              <option value=11>CARTOON_STRIP</option>
-              <option value=12>CARTOON_RAILWAY</option>
-              <option value=13>CARTOON_SSE</option>
-              <option value=14>SURFACE</option>
+              <option value=3>Backbone</option>
+              <option value=1>Line</option>
+              <option value=2>Dot</option>
+              <option value=6>Ball & Rod</option>
+              <option value=5>Stick</option>
+              <option value=4>Sphere</option>
+              <option value=7>Tube</option>
+              <option value=8>Ribbon-flat</option>
+              <option value=9>Ribbon-ellipse</option>
+              <option value=10>Ribbon-rectangle</option>
+              <option value=11>Ribbon-strip</option>
+              <option value=12>Ribbon-railway</option>
+              <option value=13>Ribbon-SS</option>
+              <option value=14>Surface</option>
             </select>
           </div>
         </li>
@@ -460,7 +458,7 @@
     </div>
   </div>
   <button id="vrMode">VR Mode</button><BR />
-  <script type="text/javascript" src="libs/molecule/index.js"></script>
+  <script type="text/javascript" src="libs/index.js"></script>
 </body>
 
 </html>

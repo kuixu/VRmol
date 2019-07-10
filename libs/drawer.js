@@ -53,7 +53,7 @@ PDB.drawer = {
   drawTextForDesktop: function(group, pos, text, type, color, rotation) {
     // load font
     var loader = new THREE.FontLoader();
-    loader.load('fonts/helvetiker_bold.typeface.json', function(font) {
+    loader.load('js/fonts/helvetiker_bold.typeface.json', function(font) {
       var geometry = new THREE.TextGeometry(text, {
         font: font,
         size: 0.38,
@@ -80,7 +80,7 @@ PDB.drawer = {
   },
   drawText: function(group, pos, text, type, color, rotation) {
     var loader = new THREE.FontLoader();
-    loader.load('fonts/helvetiker_bold.typeface.json', function(font) {
+    loader.load('js/fonts/helvetiker_bold.typeface.json', function(font) {
       var geometry = new THREE.TextGeometry(text, {
         font: font,
         size: 0.38,
@@ -108,7 +108,7 @@ PDB.drawer = {
   },
   drawTextForDistance: function(group, pos, text, type, color, rotation) {
     var loader = new THREE.FontLoader();
-    loader.load('fonts/helvetiker_bold.typeface.json', function(font) {
+    loader.load('js/fonts/helvetiker_bold.typeface.json', function(font) {
       var geometry = new THREE.TextGeometry(text, {
         font: font,
         size: 0.38,
@@ -130,36 +130,36 @@ PDB.drawer = {
       };
       mesh.position.copy(pos);
 	  // if(PDB.rotateAxis && PDB.rotateAxis.z > 0){
-		// mesh.up.set(0,-1,0); 		  
+		// mesh.up.set(0,-1,0);
 	  // }
 	  // if(PDB.rotateAxis && PDB.rotateAxis.x > 0){
-		// mesh.up.set(0,-1,0); 		  
+		// mesh.up.set(0,-1,0);
 	  // }
 	  // if(PDB.rotateAxis && PDB.rotateAxis.y > 0){
-		// mesh.up.set(0,-1,0); 		  
+		// mesh.up.set(0,-1,0);
 	  // }
 	  	//normalize the direction vector (convert to vector of length 1)
-	
 
-	  
+
+
 	  //mesh.up.set(camera.position.x,camera.position.y,camera.position.z);
-      
+
       PDB.GROUP[group].add(mesh);
 	  // mesh.rotateX(-PDB.rotateAxisAngle.x);
 	  // mesh.rotateY(-PDB.rotateAxisAngle.y);
 	  // mesh.rotateZ(-PDB.rotateAxisAngle.z);
-	  //mesh.up.set(PDB.rotateAxisAngle.x%Math.PI,(1+PDB.rotateAxisAngle.y)%Math.PI,PDB.rotateAxisAngle.z%Math.PI); 
-	  
+	  //mesh.up.set(PDB.rotateAxisAngle.x%Math.PI,(1+PDB.rotateAxisAngle.y)%Math.PI,PDB.rotateAxisAngle.z%Math.PI);
+
 	  // var updir = camera.position.clone();
-	  
+
 	  // if(PDB.rotateAxis.x){
-		 // updir.x = updir.x + PDB.rotateAxis.x;		  
+		 // updir.x = updir.x + PDB.rotateAxis.x;
 	  // }
 	  // if(PDB.rotateAxis.y){
-		 // updir.y = updir.y + PDB.rotateAxis.y;		  
+		 // updir.y = updir.y + PDB.rotateAxis.y;
 	  // }
 	  // if(PDB.rotateAxis.z){
-		 // updir.z = updir.z + PDB.rotateAxis.z;		  
+		 // updir.z = updir.z + PDB.rotateAxis.z;
 	  // }
 	  // var axis ;
 	  // if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.x!=0){
@@ -167,15 +167,15 @@ PDB.drawer = {
 			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.x);
 			// mesh.rotateX(-PDB.rotateAxisAngle.x);
 		// }
-		
-		
+
+
 		// if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.y!=0){
 			// axis = new THREE.Vector3(0, 1, 0);
 			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.y);
 			// mesh.rotateY(-PDB.rotateAxisAngle.y);
 		// }
-		
-		
+
+
 		// if(PDB.rotateAxisAngle && PDB.rotateAxisAngle.z!=0){
 			// axis = new THREE.Vector3(0, 0, 1);
 			// updir = PDB.tool.rotateAboutWorldAxis(updir, axis, -PDB.rotateAxisAngle.z);
@@ -191,7 +191,7 @@ PDB.drawer = {
 	// var hex = 0xffff00;
 	// var t_t = mesh.up.clone();
 	// var arrowHelper = new THREE.ArrowHelper( t_t.normalize(), pos, 1, hex );
-	
+
 	 // var hex1 = 0x2aa41d;
 	 // var t_t_1 = new THREE.Vector3(PDB.rotateAxisAngle.x,PDB.rotateAxisAngle.y,PDB.rotateAxisAngle.z);
 	 // var arrowHelper1 = new THREE.ArrowHelper( t_t_1.normalize(), pos, 2, hex1 );
@@ -199,19 +199,19 @@ PDB.drawer = {
 	// PDB.GROUP[group].add(arrowHelper1);
     });
   },
- 
+
   drawTextKB: function(group, pos, text, type, color, angle) {
     // load font
     var loader = new THREE.FontLoader();
-    loader.load('fonts/helvetiker_bold.typeface.json', function(font) {
+    loader.load('js/fonts/helvetiker_bold.typeface.json', function(font) {
       var geometry = new THREE.TextGeometry(text, {
         font: font,
         size: 0.18,
         height: 0.05,
         curveSegments: 5
       });
-	  
-	  
+
+
       geometry.computeBoundingBox();
       var material = new THREE.MeshPhongMaterial({
         color: color
@@ -226,19 +226,19 @@ PDB.drawer = {
         group: group
       };
       PDB.GROUP[group].add(mesh);
-	  
-	  //添加box 
+
+	  //添加box
 	  var width = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
 	  var heigh = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
 	  var boxBufferGeometry = new THREE.BoxBufferGeometry( width,heigh - 0.01 , 0.05 );
-	  
+
 	  var material2 = new THREE.MeshBasicMaterial({
         color: 0x808080
       });
 	  var mesh2 = new THREE.Mesh(boxBufferGeometry, material2);
 	  material2.opacity = 0;
       mesh2.material.opacity = 0;
-	  
+
       mesh2.name = text;
       //mesh.rotation.y = angle;
       mesh2.position.set(pos.x + width/2,pos.y + heigh/2,pos.z);
@@ -574,7 +574,7 @@ PDB.drawer = {
       return mesh;
     }
   },
- 
+
   drawCylinder0: function(group, start, end, color, radius) {
     var path = [];
     path.push(start);
@@ -1022,7 +1022,7 @@ PDB.drawer = {
       //边
       var materials = [];
       var verticesIdsAndmaterialId = {};
-      var materialsId = {}; 
+      var materialsId = {};
       for (var i in geometry.vertices) {
 
         var id = ids[i];

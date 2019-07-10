@@ -715,7 +715,7 @@ PDB.tool = {
 
           //stop move drug
           PDB.DRUGMOVE = false;
-          result_list_title = "<br>Model List &nbsp;&nbsp;&nbsp;Score&nbsp;&nbsp;Download";
+          result_list_title = "<br>Model List &nbsp;&nbsp;Score&nbsp;&nbsp;Download";
           PDB.tool.generateLabel(modelSpan, result_list_title, "");
           for (var i in jsonObj.model_list) {
             if (jsonObj.model_list[i] === "") {
