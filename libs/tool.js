@@ -1460,7 +1460,7 @@ PDB.tool = {
       }
       var i = PDB.PathCount % (PDB.DRUGMigrationPaths.length);
       if (PDB.DRUGMigrationPaths.length > 0) {
-        var pos = new THREE.Vector3(PDB.DRUGMigrationPaths[i].x + PDB.rotateAxis.x, PDB.DRUGMigrationPaths[i].y + PDB.rotateAxis.y, PDB.DRUGMigrationPaths[i].z + PDB.rotateAxis.z, );;
+        var pos = new THREE.Vector3(PDB.DRUGMigrationPaths[i].x + PDB.rotateAxis.x, PDB.DRUGMigrationPaths[i].y + PDB.rotateAxis.y, PDB.DRUGMigrationPaths[i].z + PDB.rotateAxis.z );;
         pos = PDB.tool.freshOneVector(pos, PDB.rotateAxisAngle);
         PDB.GROUP[PDB.GROUP_DRUG].position.copy(pos);
       }
