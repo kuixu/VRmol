@@ -5945,13 +5945,11 @@ w3m.file = (function() {
     var e = event || window.event;
     var file_cont = e.target.result;
     if(file_cont.includes("mmcif_pdbx")){
-      cif_cont = loadCIF(file_cont, 1)
-      callback(cif_cont)
+      cont = loadCIF(file_cont, 1);
+      callback(cont);
     }else{
-      callback(e.target.result)
+      callback(e.target.result);
     }
-
-
   }
   io.get = function(file, fn) {
     callback = fn;
@@ -5966,14 +5964,7 @@ w3m.file = (function() {
 
 /* API */
 w3m.api = {
-  /**
-   * w3m 初始化方�?
-   * @param div_id 页面容器
-   * @param pdb_id pdb文件标志
-   * @param show_widget 小部件显示标�?0 不显示，1显示
-   * @param user_config
-   * @param user_color
-   */
+
   init: function(div_id, pdb_id, show_widget, user_config, user_color) {
     var show_widget = typeof(show_widget) != 'undefined' ? show_widget : w3m.global.widget,
       user_config = user_config || {},
@@ -5982,7 +5973,6 @@ w3m.api = {
     window.onload = function() {
       // id
       w3m.global.mol = "pdb";
-      // module 配置初始�?
       w3m.config.init(show_widget, user_config, user_color);
     }
   },
@@ -6035,8 +6025,6 @@ w3m.api = {
         w3m.config.color_mode_main == w3m.COLOR_BY_REP ? w3m.tool.updateMolColorMapMain(i) : void(0);
       }
     }
-
-
     this.refreshMain();
   },
   switchRepModeHet: function(rep_mode) {

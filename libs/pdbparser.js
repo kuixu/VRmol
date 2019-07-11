@@ -1,11 +1,8 @@
 /*!
- * cif.js
- *
- * JavaScript CIF parser: https://github.com/gjbekker/cif-parsers
- *
- * By Gert-Jan Bekker
+ * PDB CIF file parser
+ * By Gert-Jan Bekker, Kui Xu
  * License: MIT
- *   See https://github.com/gjbekker/cif-parsers/blob/master/LICENSE
+ * http://www.wwpdb.org/documentation/file-format-content/format33/sect5.html#SHEET
  */
 
 // pdbml
@@ -62,36 +59,6 @@ PDBMLparser.prototype.parse = function(data) {
     }
   }
 }
-/*
-function loadPDBMLdic() {
-  var request = new CallRemote("GET");
-  request.Send("/schema/pdbx-v40.xsd");
-
-  var typing = {};
-
-  var root = request.request.responseXML.documentElement, cat, catName, stuff;
-  for (var i=0, j; i<root.childNodes.length; i++) {
-    cat = root.childNodes[i];
-    if (! cat.localName) continue;
-    catName = cat.getAttribute("name");
-    if (catName.substr(0, 9) == "datablock" || catName.substr(catName.length-4) != "Type") continue;
-    catName = catName.substr(0, catName.length-4);
-    typing[catName] = {}
-    stuff = cat.getElementsByTagNameNS("*", "element");
-    for (j=0; j<stuff.length; j++) {
-      if (catName == "atom_site") console.log(stuff[j].getAttribute("name"), stuff[j].getAttribute("type"));
-      if (stuff[j].getAttribute("type") == "xsd:integer") typing[catName][stuff[j].getAttribute("name")] = parseInt;
-      else if (stuff[j].getAttribute("type") == "xsd:decimal") typing[catName][stuff[j].getAttribute("name")] = parseFloat;
-    }
-    stuff = cat.getElementsByTagNameNS("*", "attribute");
-    for (j=0; j<stuff.length; j++) {
-      if (catName == "atom_site") console.log(stuff[j].getAttribute("name"), stuff[j].getAttribute("type"));
-      if (stuff[j].getAttribute("type") == "xsd:integer") typing[catName][stuff[j].getAttribute("name")] = parseInt;
-      else if (stuff[j].getAttribute("type") == "xsd:decimal") typing[catName][stuff[j].getAttribute("name")] = parseFloat;
-    }
-  }
-  __PDBMLDICT__ = typing;
-}*/
 
 //registerPublic::loadPDBML
 function loadPDBML(data, noCnT) {
@@ -171,7 +138,6 @@ function renderChildCIFTree(target, jso) {
 }
 
 // mmcif parser
-
 function _loop(parserObj) {
   this.parserObj = parserObj;
   this.length = 0;
@@ -309,7 +275,8 @@ CIFparser.prototype.endFrame = function() {this.currentTarget = this.currentTarg
 
 function loadCIFdic() {
   var request = new CallRemote("GET");
-  request.Send("/mmcif_pdbx_v40.dic");
+  //request.Send("/mmcif_pdbx_v40.dic");
+  request.Send("/mmcif_pdbx.dic");
 
   var parser = new CIFparser();
   parser.parse(request.request.responseText);
@@ -433,26 +400,17 @@ String.prototype.$ = function() {
     return String.form(this, Array.prototype.slice.call(arguments));
 }
 
-// String.format("%s %s", [ "This is a string", 11 ])
-// console.log("%s %s".$("This is a string", 11))
-// var arr = [ "12.3", 13.6 ]; console.log("Array: %s".$(arr));
-// var obj = { test:"test", id:12 }; console.log("Object: %s".$(obj));
-// console.log("%c", "Test");
-// console.log("%5d".$(12)); // '   12'
-// console.log("%05d".$(12)); // '00012'
-// console.log("%-5d".$(12)); // '12   '
-// console.log("%5.2d".$(123)); // '  120'
-// console.log("%5.2f".$(1.1)); // ' 1.10'
-// console.log("%10.2e".$(1.1)); // '   1.10e+0'
-// console.log("%5.3p".$(1.12345)); // ' 1.12'
-// console.log("%5x".$(45054)); // ' affe'
-// console.log("%20#2x".$("45054")); // '    1010111111111110'
-// console.log("%6#2d".$("111")); // '     7'
-// console.log("%6#16d".$("affe")); // ' 45054'
-
 function to_cont(data) {
-  var cont = 'HEADER\n';
+  var cont = '';
   var model = data[Object.keys(data)];
+  var header = model.struct_keywords;
+  if (header!==undefined){
+    classification = "%-40s".$(header.pdbx_keywords[0]);
+    depDate        = "%-10s".$(model.pdbx_database_status.recvd_initial_deposition_date[0]);
+    idCode         = "%4s".$(header.entry_id[0]);
+    line = "%-6s".$("HEADER")+"     "+classification+depDate+" "+idCode;
+    cont = cont + line+"\n";
+  }
   cont = cont + model.entry.id+'\n';
   cont = cont + 'TITLE     '+model.struct.title+'\n';
   var hel = model.struct_conf;
@@ -468,7 +426,7 @@ function to_cont(data) {
       end_seqid = "%4d".$(hel.end_label_seq_id[i]);
       initICode = "%s".$(' ');
       endICode  = "%s".$(' ');
-      helixClass= "%4d".$(hel.pdbx_PDB_helix_class[i]);
+      helixClass= "%2d".$(hel.pdbx_PDB_helix_class[i]);
       comment   = "%-30s".$(" ");
       length    = "%2d".$(hel.pdbx_PDB_helix_length[i]);
       line = "%-6s".$("HELIX")+" "+helixID+" "+helixID+" "+beg_label+" "+beg_chain+" "+beg_seqid+initICode+" "+end_label+" "+end_chain+" "+end_seqid+endICode+helixClass+comment+" "+length;
@@ -481,40 +439,123 @@ function to_cont(data) {
   if(sheet.id.length > 0){
     for (i=0; i<sheet.id.length; i++){
       strand    = "%3d".$(sheet.id[i]);
-      sheetID   = "%-3s".$(sheet.id[i]);
+      sheetID   = "%3s".$(sheet.sheet_id[i]);
       numStrands= "%-2s".$(sheet.id.length);
       beg_label = "%-3s".$(sheet.beg_label_comp_id[i]);
       end_label = "%-3s".$(sheet.end_label_comp_id[i]);
       beg_chain = "%s".$(sheet.beg_label_asym_id[i]);
-      end_chain = "%s".$(sheet.beg_label_seq_id[i]);
-      beg_seqid = "%4d".$(sheet.end_label_seq_id[i]);
+      end_chain = "%s".$(sheet.end_label_asym_id[i]);
+      beg_seqid = "%4d".$(sheet.beg_label_seq_id[i]);
       end_seqid = "%4d".$(sheet.end_label_seq_id[i]);
       initICode = "%s".$(' ');
       endICode  = "%s".$(' ');
-      // sense     = "%2d".$(hel.end_label_seq_id[i]);
-      // curAtom   = "%4s".$(
-      // curResName= "%-3s".$(
-      // curChainId= "%s".$(
-      // curResSeq = "%4d".$(
-      // curICode  = "%s".$('1');
-      //
-      // preAtom   = "%4s".$(
-      // preResName= "%-3s".$(
-      // preChainId= "%s".$(
-      // preResSeq = "%4d".$(
-      // preICode  = "%s".$('1');
-      line = "%-6s".$("SHEET")+" "+strand+" "+sheetID+" "+numStrands+" "+beg_label+" "+beg_chain+beg_seqid+initICode+" "+end_label+" "+end_chain+end_seqid+endICode;
+      sense     = 0;
+      sense     = "%2d".$(sense);
+      curAtom   = "";
+      curResName= "";
+      curChainId= "";
+      curResSeq = "";
+      curICode  = "";
+
+      preAtom   = "";
+      preResName= "";
+      preChainId= "";
+      preResSeq = "";
+      preICode  = "";
+      if(i>0){
+        sense   = model.struct_sheet_order.sense[i];
+        if (sense==='anti-parallel'){
+          sense = -1;
+        }else if(sense==='parallel'){
+          sense = 1;
+        }else{
+          sense = 0;
+        }
+
+      }
+      if(i>0 && sense !==0){
+        sense     = "%2d".$(sense);
+        var sheet_hbond = model.pdbx_struct_sheet_hbond;
+        curAtom   = "%-4s".$(sheet_hbond.range_2_label_atom_id[i-1]);
+        curResName= "%-3s".$(sheet_hbond.range_2_label_comp_id[i-1]);
+        curChainId= "%s".$(sheet_hbond.range_2_label_asym_id[i-1]);
+        curResSeq = "%4d".$(sheet_hbond.range_2_label_seq_id[i-1]);
+        curICode  = "%s".$(' ');
+
+        preAtom   = "%-4s".$(sheet_hbond.range_1_label_atom_id[i-1]);
+        preResName= "%-3s".$(sheet_hbond.range_1_label_comp_id[i-1]);
+        preChainId= "%s".$(sheet_hbond.range_1_label_asym_id[i-1]);
+        preResSeq = "%4d".$(sheet_hbond.range_1_label_seq_id[i-1]);
+        preICode  = "%s".$(' ');
+      }
+
+      line = "%-6s".$("SHEET")+" "+strand+" "+sheetID+numStrands+" "+beg_label+" "+
+           beg_chain+beg_seqid+initICode+" "+end_label+" "+end_chain+end_seqid+endICode+
+           sense+" "+curAtom+curResName+" "+curChainId+curResSeq+curICode+" "+preAtom+preResName+" "+preChainId+preResSeq+preICode;
+      cont = cont + line+"\n";
+    }
+  }
+  // SSBOND AND link
+  var bonds = model.struct_conn;
+  if (bonds!==undefined){
+    for (i=0; i<bonds.id.length; i++){
+      if (bonds.conn_type_id[i]==="disulf"){
+        serNum   = "%3d".$(i+1);
+        resName1 = "%3s".$(bonds.ptnr1_auth_comp_id[i]);
+        chainID1 = "%s".$(bonds.ptnr1_auth_asym_id[i]);
+        seqNum1  = "%4d".$(bonds.ptnr1_auth_seq_id[i]);
+        iCode1   = " ";
+        resName2 = "%3s".$(bonds.ptnr2_auth_comp_id[i]);
+        chainID2 = "%s".$(bonds.ptnr2_auth_asym_id[i]);
+        seqNum2  = "%4d".$(bonds.ptnr2_auth_seq_id[i]);
+        iCode2   = " ";
+        space    = "%23s".$(' ');
+        sym1     = "%6s".$(bonds.ptnr1_symmetry[i]);
+        sym2     = "%6s".$(bonds.ptnr2_symmetry[i]);
+        length   = "%5.2f".$(bonds.pdbx_dist_value[i]);
+        line = "%-6s".$("SSBOND")+" "+serNum+" "+resName1+" "+chainID1+" "+seqNum1+iCode1+"   "+resName2+" "+chainID2+" "+seqNum2+iCode2+space+sym1+" "+sym2+" "+length;
+      }
+      if (bonds.conn_type_id[i]==="covale"){
+        name1      = "%-3s".$(bonds.ptnr1_label_atom_id[i]);
+        altLoc1    = "%s".$(' ');
+        resName1   = "%-3s".$(bonds.ptnr1_auth_comp_id[i]);
+        chainID1   = "%s".$(bonds.ptnr1_auth_asym_id[i]);
+        resSeq1    = "%4d".$(bonds.ptnr1_auth_seq_id[i]);
+        iCode1     = "%s".$(' ');
+
+        space      = "%15s".$(' ');
+
+        name2      = "%-4s".$(bonds.ptnr2_label_atom_id[i]);
+        altLoc2    = "%s".$(' ');
+        resName2   = "%-3s".$(bonds.ptnr2_auth_comp_id[i]);
+        chainID2   = "%s".$(bonds.ptnr2_auth_asym_id[i]);
+        resSeq2    = "%4d".$(bonds.ptnr2_auth_seq_id[i]);
+        iCode2     = "%s".$(' ');
+
+        sym1     = "%6s".$(bonds.ptnr1_symmetry[i]);
+        sym2     = "%6s".$(bonds.ptnr2_symmetry[i]);
+        length   = "%5.2f".$(bonds.pdbx_dist_value[i]);
+        line = "%-6s".$("LINK")+"      "+name1+altLoc1+resName1+" "+chainID1+resSeq1+iCode1+space+name2+altLoc2+resName2+" "+chainID2+resSeq2+iCode2+"   "+sym1+" "+sym2+" "+length;
+      }
       // + sense+curAtom+curResName+curChainId+curResSeq+curICode+preAtom+preResName+preChainId+preResSeq+preICode;
       cont = cont + line+"\n";
     }
   }
-  // struct_conn
-  var bonds = model.struct_conn;
-  if (bonds!==undefined){
-    for (i=0; i<bonds.id.length; i++){
-      // line = group+serial+" "+name+altLoc+resName+" "+chainID+resSeq+iCode+"   "+x+y+z+occupancy+tempFactor+space+element;
+  // SITE
+  var sites = model.struct_site_gen;
+  if (sites!==undefined){
+    for (i=0; i<sites.id.length; i++){
+      seqNum   = "%3d".$(sites.id[i]);
+      siteID   = "%3s".$(sites.site_id[i]);
+      numRes   = "%2d".$(sites.pdbx_num_res[i]);
+      resName1 = "%3s".$(sites.auth_comp_id[i]);
+      chainID1 = "%s".$(sites.auth_asym_id[i]);
+      seq1     = "%4d".$(sites.auth_seq_id[i]);
+      iCode1   = " ";
+
+      line = "%-6s".$("SITE")+" "+seqNum+" "+siteID+" "+numRes+" "+resName1+" "+chainID1+seq1+iCode1;
       // + sense+curAtom+curResName+curChainId+curResSeq+curICode+preAtom+preResName+preChainId+preResSeq+preICode;
-      // cont = cont + line+"\n";
+      cont = cont + line+"\n";
     }
   }
   var atoms = model.atom_site;
@@ -524,7 +565,6 @@ function to_cont(data) {
       serial    = "%5d".$(atoms.id[i]);
       name      = "%-4s".$(atoms.label_atom_id[i]);
       altLoc    = "%s".$(' ');
-
       resName   = "%-3s".$(atoms.label_comp_id[i]);
       chainID   = "%s".$(atoms.label_asym_id[i]);
       resSeq    = "%4d".$(atoms.auth_seq_id[i]);
