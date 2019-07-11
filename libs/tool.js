@@ -1476,7 +1476,8 @@ PDB.tool = {
   showMutationTable: function(flag, text) {
     var rightMenuDiv = document.getElementById("rightmenu");
     rightMenuDiv.innerHTML = "";
-    rightMenuDiv.style.overflowY = "scroll";
+    rightMenuDiv.style.overflowY = "auto";
+    rightMenuDiv.style.height="600px";
     if (flag) {
       rightMenuDiv.hidden = false;
     } else {
