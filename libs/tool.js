@@ -1501,6 +1501,7 @@ PDB.tool = {
 
       for (var i = 0; i < data.length; i++) {
         var newRow = table.insertRow();
+        newRow.id=data[i].pos+data[i].p_change;
 
         var pos = newRow.insertCell(0);
         pos.innerHTML = data[i].pos;
@@ -2079,5 +2080,13 @@ PDB.tool = {
 	  if(titleMessage){
 		segmentholder.innerHTML = "<div class=\"holderClass\">Just a moment, please.</div>";
 	  }
-  }
+  },hideGroup: function (group) {
+        if(PDB.GROUP[group] !== undefined && PDB.GROUP[group].length > 0){
+            PDB.GROUP[group].visible = false;
+        }
+  },showGroup: function (group) {
+        if(PDB.GROUP[group] !== undefined && PDB.GROUP[group].length > 0){
+            PDB.GROUP[group].visible = true;
+        }
+    }
 }

@@ -1443,7 +1443,8 @@ PDB.render = {
   },
   changeToThreeMode: function(mode, travelMode) {
     var scope = this;
-
+    PDB.tool.hideGroup(PDB.GROUP_VR_MENU_DOCKING);
+    PDB.tool.hideGroup(PDB.GROUP_VR_MENU_DRUG);
     PDB.mode = mode;
     PDB.TravelMode = travelMode;
     scope.removeCamera(scene);
@@ -1491,7 +1492,8 @@ PDB.render = {
       PDB.TravelMode = travelMode;
       scope.clearStructure();
       scope.removeCamera(scene);
-
+      PDB.tool.showGroup(PDB.GROUP_VR_MENU_DOCKING);
+      PDB.tool.showGroup(PDB.GROUP_VR_MENU_DRUG);
       scope.initVR();
       if (PDB.TravelMode === true) {
         // PDB.controller.refreshGeometryByMode(PDB.TUBE);
@@ -1793,6 +1795,13 @@ PDB.render = {
                 var pos = PDB.tool.getAtomInfoPosition(atom.pos_centered, camera.position);
                 PDB.drawer.drawTextForDesktop(PDB.GROUP_INFO, pos,
                   message, "", atom.color, 180);
+                var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
+                if(selectedMutation){
+                    selectedMutation.style.background = "black";
+                }
+                var tr = document.getElementById(mutation.pos+mutation.p_change);
+                tr.style.background = "red";
+                PDB.SELECTED_MUTATION = mutation.pos+mutation.p_change;
 			}else if (INTERSECTED.userData.presentAtom != undefined) {
               // PDB.painter.showAtomLabel(INTERSECTED.userData.presentAtom);
               var atom = INTERSECTED.userData.presentAtom;
@@ -1825,6 +1834,10 @@ PDB.render = {
             }
           }
         } else {
+          var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
+          if(selectedMutation){
+              selectedMutation.style.background = "black";
+          }
           if (INTERSECTED && INTERSECTED.material != undefined && INTERSECTED.material.emissive != undefined) {
             INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
           }
