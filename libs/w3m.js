@@ -5513,7 +5513,7 @@ w3m.pdb = function(text, drugname) {
       s = s.replace(w3m_sub(s, 47, 54), Math.floor(xyz[2] * 1000) / 1000);
     }
 
-    if (PDB.allMainToms[chain_id][residue_id]) {
+    if (PDB.allMainToms && PDB.allMainToms[chain_id][residue_id]) {
       var state = PDB.allMainToms[chain_id][residue_id]['state'];
       if (state == 'editRes') {
         var nowEndID = w3m.structure.enum[residue_name].length + PDB.allMainToms[chain_id][residue_id].startAtomID - 1;
