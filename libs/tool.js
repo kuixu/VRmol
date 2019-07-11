@@ -1477,7 +1477,7 @@ PDB.tool = {
     var rightMenuDiv = document.getElementById("rightmenu");
     rightMenuDiv.innerHTML = "";
     rightMenuDiv.style.overflowY = "auto";
-    rightMenuDiv.style.height="600px";
+    rightMenuDiv.style.height=(document.body.clientHeight - 110)+"px";
     if (flag) {
       rightMenuDiv.hidden = false;
     } else {
