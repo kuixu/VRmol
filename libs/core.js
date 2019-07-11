@@ -18,6 +18,7 @@ PDB = {
 		y:0,
 		z:0,
 	},
+  SELECTED_MUTATION:"",
   DEBUG_MODE:0,
 	bigmodel:19, // show out of sphericcal view
 	smallmodel:20, // hide out of sphericcal view
