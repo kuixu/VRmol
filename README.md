@@ -4,6 +4,10 @@
 
 We leverage the most cutting-edge computational technologies to develop a virtual reality (VR) system - VRmol - that provides the visualization and analysis of macromolecule structures in an infinite virtual environment on the web. VRmol is natively built with WebVR technology, providing all structural analysis functions in a fully immersive, inspiring virtual environment. It is convenient to use, runs on internet and requires no software downloading and installation. And by connecting to a number of cloud-based genomic and drug databases, it provides an integrative platform to perform advanced structural and translational research. It can be freely accessed online by typing [https://VRmol.net](https://VRmol.net?from=github) in VR-supported browser. 
 
+## Demo
+
+<img src="imgs/entervr-320.gif" width=50%>
+
 ## News
  - 05/17/2019: VRmol is return to normal.
  - 05/16/2019: The service provider is sufferring of Network Rounte Issue, VRmol server is outage.
@@ -39,9 +43,6 @@ VRmol provides two modes:
 
  VR devices such as HTC Vive, Oculus Rift, and Microsoft Mix Reality are well-supported by VRmol. More details can be seen at [documentation](https://vrmol.net/docs/#header-n5342).
 
-## Demo
-
-<img src="imgs/entervr-320.gif" width=50%>
 
 ## Framework
 
@@ -156,5 +157,7 @@ VRmol is developed based on [three.js](https://threejs.org) and [WebVR](https://
   - [GLmol.js](https://github.com/biochem-fan/GLmol) - for calculating surface 
   - [Chroma.js](https://github.com/gka/chroma.js) - for color handling
   - [gunzip.min.js](https://github.com/imaya/zlib.js) - for decompress EM map files
-  - [AutoDock vina](http://vina.scripts.edu)- for Docking Drugs in VR scene
+  - [AutoDock vina](http://vina.scripts.edu) - for Docking Drugs in VR scene
+  - [MGLTools](http://mgltools.scripps.edu/) - for preparing docking files
+  - [OpenBabel](http://openbabel.org/wiki/Main_Page) - for convert docking results
 
