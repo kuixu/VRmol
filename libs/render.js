@@ -1797,11 +1797,13 @@ PDB.render = {
                   message, "", atom.color, 180);
                 var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
                 if(selectedMutation){
-                    selectedMutation.style.background = "black";
+                    selectedMutation.style.background = "transparent";
                 }
                 var tr = document.getElementById(mutation.pos+mutation.p_change);
-                tr.style.background = "red";
-                PDB.SELECTED_MUTATION = mutation.pos+mutation.p_change;
+                if(tr){
+                    tr.style.background = "red";
+                    PDB.SELECTED_MUTATION = mutation.pos+mutation.p_change;
+                }
 			}else if (INTERSECTED.userData.presentAtom != undefined) {
               // PDB.painter.showAtomLabel(INTERSECTED.userData.presentAtom);
               var atom = INTERSECTED.userData.presentAtom;
@@ -1836,7 +1838,7 @@ PDB.render = {
         } else {
           var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
           if(selectedMutation){
-              selectedMutation.style.background = "black";
+              selectedMutation.style.background = "transparent";
           }
           if (INTERSECTED && INTERSECTED.material != undefined && INTERSECTED.material.emissive != undefined) {
             INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
