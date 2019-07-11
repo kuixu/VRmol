@@ -393,41 +393,41 @@ function dealwithMenu(object) {
       PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
       break;
     case PDB.GROUP_MENU_DRUG:
-      switch(curr_reptype){
-		case 1:
-		  // PDB.GROUP[PDB.GROUP_DRUG].visible = false;
-		  // if(PDB.GROUP[PDB.GROUP_DRUG].visible === false){
-			// PDB.DRUGMOVE = false;
-		  // }
-		  PDB.DRUGMOVE = false;
-		  PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
-		  PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
-		  PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DRUG);
-		  PDB.selection_mode = PDB.SELECTION_RESIDUE;
-	      break;
-		case 2:
-		  var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
-		  if (ServerType !== 2) {
-			url = SERVERURL + "/data/drug.json";
-		  }
-		  PDB.selection_mode = PDB.SELECTION_DRUG_LIST;
-		  PDB.tool.showDrugMenuForVr(url);
-        break;
-      case 3:
-	    PDB.tool.generateDrugMigrationPath();
-        PDB.DRUGMOVE = true;
-        PDB.drugMoveTime = new Date();
-        break;
-      case 4:
-		if(PDB.GROUP[PDB.GROUP_BOX_HELPER] !== undefined && PDB.GROUP[PDB.GROUP_BOX_HELPER].visible){
-		  PDB.GROUP[PDB.GROUP_BOX_HELPER].visible=false;
-		}else if(PDB.GROUP[PDB.GROUP_BOX_HELPER] !== undefined && !PDB.GROUP[PDB.GROUP_BOX_HELPER].visible){
-		  PDB.GROUP[PDB.GROUP_BOX_HELPER].visible=true;
-		}
-		break;
+      switch (curr_reptype) {
+        case 1:
+          // PDB.GROUP[PDB.GROUP_DRUG].visible = false;
+          // if(PDB.GROUP[PDB.GROUP_DRUG].visible === false){
+          // PDB.DRUGMOVE = false;
+          // }
+          PDB.DRUGMOVE = false;
+          PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+          PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
+          PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DRUG);
+          PDB.selection_mode = PDB.SELECTION_RESIDUE;
+          break;
+        case 2:
+          var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
+          if (ServerType !== 2) {
+            url = SERVERURL + "/data/drug.json";
+          }
+          PDB.selection_mode = PDB.SELECTION_DRUG_LIST;
+          PDB.tool.showDrugMenuForVr(url);
+          break;
+        case 3:
+          PDB.tool.generateDrugMigrationPath();
+          PDB.DRUGMOVE = true;
+          PDB.drugMoveTime = new Date();
+          break;
+        case 4:
+          if (PDB.GROUP[PDB.GROUP_BOX_HELPER] !== undefined && PDB.GROUP[PDB.GROUP_BOX_HELPER].visible) {
+            PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = false;
+          } else if (PDB.GROUP[PDB.GROUP_BOX_HELPER] !== undefined && !PDB.GROUP[PDB.GROUP_BOX_HELPER].visible) {
+            PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = true;
+          }
+          break;
       }
       onMenuDown();
-	  break;
+      break;
     case PDB.GROUP_VR_MENU_DRUG:
       console.log(object.userData.reptype);
 
@@ -614,7 +614,7 @@ function onTriggerDown(event) {
   // console.log(intersection);
   var object = intersection.object;
   var pos = intersection.pos;
-  console.log("----------------"+object.name);
+  console.log("----------------" + object.name);
   // ================================ Deal with Menu ===
   if (PDB.isShowMenu) {
     dealwithMenu(object);
@@ -673,46 +673,46 @@ function onTriggerDown(event) {
       case PDB.SELECTION_OBJECT:
         objectTrans(controller, object);
         break;
-	  case PDB.SELECTION_DRUG_LIST:
-        if(object){
-			var userData = object.userData;
-			var repList = userData.reptype.split(',');
+      case PDB.SELECTION_DRUG_LIST:
+        if (object) {
+          var userData = object.userData;
+          var repList = userData.reptype.split(',');
 
-			if("drugListMenu" === repList[0]){
-				var drugId = userData.name;
-				PDB.loader.loadDrug(drugId, repList[1], function() {
-					w3m.mol[drugId].drug = true;
-					PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
-					PDB.painter.showHet(drugId);
-					PDB.tool.generateDrugMigrationPath();
-					PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.GROUP[PDB.GROUP_MAIN].position);
-					PDB.GROUP[PDB.GROUP_DRUG].visible = true;
-                });
-			}else if("docking" === repList[0]){
-				PDB.DRUGMOVE = true;
-                PDB.drugMoveTime = new Date();
-				PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
-				PDB.tool.showDockingMenuForVr(repList[1]);
-			}else if("dockingMenu" === repList[0]){
-				var drugId = repList[1].replace(".pdb", "");
-                PDB.config.selectedDrug = drugId;
-                PDB.DRUBDB_URL.docking =  repList[2]+ "/";
-                PDB.loader.loadDrug(drugId, "docking", function() {
-                    w3m.mol[drugId].drug = true;
-                    PDB.render.clearGroupIndex(PDB.GROUP_DOCKING);
-                    PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
-					PDB.DRUGMOVE = false;
-                    var docking = true;
-                    PDB.painter.showHet(drugId, docking);
-              });
-			}else if("menuOn" === repList[0]){
-				PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].visible =true;
-				PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].visible =true;
-			}else if("menuOff" === repList[0]){
-				PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].visible =false;
-				PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].visible =false;
-			}
-		}
+          if ("drugListMenu" === repList[0]) {
+            var drugId = userData.name;
+            PDB.loader.loadDrug(drugId, repList[1], function() {
+              w3m.mol[drugId].drug = true;
+              PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+              PDB.painter.showHet(drugId);
+              PDB.tool.generateDrugMigrationPath();
+              PDB.GROUP[PDB.GROUP_DRUG].position.copy(PDB.GROUP[PDB.GROUP_MAIN].position);
+              PDB.GROUP[PDB.GROUP_DRUG].visible = true;
+            });
+          } else if ("docking" === repList[0]) {
+            PDB.DRUGMOVE = true;
+            PDB.drugMoveTime = new Date();
+            PDB.render.clearGroupIndex(PDB.GROUP_VR_MENU_DOCKING);
+            PDB.tool.showDockingMenuForVr(repList[1]);
+          } else if ("dockingMenu" === repList[0]) {
+            var drugId = repList[1].replace(".pdb", "");
+            PDB.config.selectedDrug = drugId;
+            PDB.DRUBDB_URL.docking = repList[2] + "/";
+            PDB.loader.loadDrug(drugId, "docking", function() {
+              w3m.mol[drugId].drug = true;
+              PDB.render.clearGroupIndex(PDB.GROUP_DOCKING);
+              PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+              PDB.DRUGMOVE = false;
+              var docking = true;
+              PDB.painter.showHet(drugId, docking);
+            });
+          } else if ("menuOn" === repList[0]) {
+            PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].visible = true;
+            PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].visible = true;
+          } else if ("menuOff" === repList[0]) {
+            PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].visible = false;
+            PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].visible = false;
+          }
+        }
         break;
     }
 
@@ -1139,24 +1139,24 @@ function getIntersections(controller) {
         }
         break;
       case PDB.SELECTION_DRUG_LIST:
-        if(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].children.length > 0){
-			var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].children);
-			for (var j = 0; j < tmp_inters.length; j++) {
-			  inters.push(tmp_inters[j]);
-			}
-		}
-		if(PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].children.length > 0){
-			var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].children);
-			for (var j = 0; j < tmp_inters.length; j++) {
-			  inters.push(tmp_inters[j]);
-			}
-		}
-		if(PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH].children.length > 0){
-			var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH].children);
-			for (var j = 0; j < tmp_inters.length; j++) {
-			  inters.push(tmp_inters[j]);
-			}
-		}
+        if (PDB.GROUP[PDB.GROUP_VR_MENU_DRUG] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].children.length > 0) {
+          var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].children);
+          for (var j = 0; j < tmp_inters.length; j++) {
+            inters.push(tmp_inters[j]);
+          }
+        }
+        if (PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].children.length > 0) {
+          var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].children);
+          for (var j = 0; j < tmp_inters.length; j++) {
+            inters.push(tmp_inters[j]);
+          }
+        }
+        if (PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH] !== undefined && PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH].children.length > 0) {
+          var tmp_inters = raycaster.intersectObjects(PDB.GROUP[PDB.GROUP_VR_MENU_SWITCH].children);
+          for (var j = 0; j < tmp_inters.length; j++) {
+            inters.push(tmp_inters[j]);
+          }
+        }
         break;
     }
 
@@ -1262,9 +1262,9 @@ PDB.render = {
       controls = new THREE.TrackballControls(camera, renderer.domElement);
       controls.minDistance = 10;
       controls.maxDistance = 50000;
-	  controls.staticMoving = false;
-	  controls.dynamicDampingFactor = 0.3;
-	  controls.rotateSpeed = 5;
+      controls.staticMoving = false;
+      controls.dynamicDampingFactor = 0.3;
+      controls.rotateSpeed = 5;
     } else if (controlsType == 1) {
       stats = new Stats();
       stats.domElement.style.position = 'absolute';
@@ -1435,6 +1435,7 @@ PDB.render = {
 
     raycaster = new THREE.Raycaster();
     window.addEventListener('resize', onWindowResize, false);
+
     function onWindowResize() {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -1787,24 +1788,24 @@ PDB.render = {
               INTERSECTED.material.emissive.setHex(0xff0000);
             }
 
-			//deal with mutation
-            if(INTERSECTED.userData.mutation != undefined){
-				var atom = INTERSECTED.userData.presentAtom;
-				var mutation = INTERSECTED.userData.mutation;
-                var message = mutation.pos+" "+mutation.p_change+" "+mutation.v_class+" "+mutation.v_type;
-                var pos = PDB.tool.getAtomInfoPosition(atom.pos_centered, camera.position);
-                PDB.drawer.drawTextForDesktop(PDB.GROUP_INFO, pos,
-                  message, "", atom.color, 180);
-                var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
-                if(selectedMutation){
-                    selectedMutation.style.background = "transparent";
-                }
-                var tr = document.getElementById(mutation.pos+mutation.p_change);
-                if(tr){
-                    tr.style.background = "red";
-                    PDB.SELECTED_MUTATION = mutation.pos+mutation.p_change;
-                }
-			}else if (INTERSECTED.userData.presentAtom != undefined) {
+            //deal with mutation
+            if (INTERSECTED.userData.mutation != undefined) {
+              var atom = INTERSECTED.userData.presentAtom;
+              var mutation = INTERSECTED.userData.mutation;
+              var message = mutation.pos + " " + mutation.p_change + " " + mutation.v_class + " " + mutation.v_type;
+              var pos = PDB.tool.getAtomInfoPosition(atom.pos_centered, camera.position);
+              PDB.drawer.drawTextForDesktop(PDB.GROUP_INFO, pos,
+                message, "", atom.color, 180);
+              var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
+              if (selectedMutation) {
+                selectedMutation.style.background = "transparent";
+              }
+              var tr = document.getElementById(mutation.pos + mutation.p_change);
+              if (tr) {
+                tr.style.background = "red";
+                PDB.SELECTED_MUTATION = mutation.pos + mutation.p_change;
+              }
+            } else if (INTERSECTED.userData.presentAtom != undefined) {
               // PDB.painter.showAtomLabel(INTERSECTED.userData.presentAtom);
               var atom = INTERSECTED.userData.presentAtom;
               var message = "";
@@ -1837,8 +1838,8 @@ PDB.render = {
           }
         } else {
           var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
-          if(selectedMutation){
-              selectedMutation.style.background = "transparent";
+          if (selectedMutation) {
+            selectedMutation.style.background = "transparent";
           }
           if (INTERSECTED && INTERSECTED.material != undefined && INTERSECTED.material.emissive != undefined) {
             INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
@@ -1994,9 +1995,9 @@ PDB.render = {
     }
     //
     var offset = camera.position;
-	if(!PDB.offset){
-		PDB.offset = offset.clone();
-	}
+    if (!PDB.offset) {
+      PDB.offset = offset.clone();
+    }
     var movenlength = Math.sqrt(Math.pow(offset.x - PDB.offset.x, 2) + Math.pow(offset.y - PDB.offset.y, 2) + Math.pow(offset.z - PDB.offset.z, 2));
     if (movenlength > 0.01) { //0.01, speci
       var vec = {

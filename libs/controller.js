@@ -31,9 +31,9 @@ PDB.controller = {
       } else if (!this.checked) {
         PDB.loadType = PDB.smallmodel;
       }
-      PDB.render.clear(2);	  
+      PDB.render.clear(2);
       scope.refreshGeometryByMode(PDB.config.mainMode);
-	  PDB.render.clear(5);
+      PDB.render.clear(5);
       PDB.config.hetMode = PDB.config.hetMode;
       scope.refreshGeometryByMode(PDB.config.hetMode);
 
@@ -63,10 +63,10 @@ PDB.controller = {
     });
 
     // threeWithTravel.addEventListener('click', function(e) {
-      // PDB.CHANGESTYLE = 6;
-      // PDB.render.clearStructure();
-      // PDB.render.changeToThreeMode(PDB.MODE_TRAVEL_THREE, true);
-      // PDB.painter.showResidueByThreeTravel();
+    // PDB.CHANGESTYLE = 6;
+    // PDB.render.clearStructure();
+    // PDB.render.changeToThreeMode(PDB.MODE_TRAVEL_THREE, true);
+    // PDB.painter.showResidueByThreeTravel();
 
     // });
 
@@ -100,69 +100,69 @@ PDB.controller = {
           w3m.file.getArrayBuffer(file, function(response) {
             var mapId = file.name.split(".")[0];
             //var url = API_URL + "/server/api.php?taskid=13&pdbid=" + PDB.pdbId.toUpperCase();
-	    var url = API_URL_EMMAP + PDB.pdbId.toUpperCase();
+            var url = API_URL_EMMAP + PDB.pdbId.toUpperCase();
             if (ServerType !== 2) {
-                url = SERVERURL + "/data/map01.json";
+              url = SERVERURL + "/data/map01.json";
             }
 
             PDB.tool.ajax.get(url, function(text) {
-                //PDB.render.clear(2);
-                PDB.MATERIALLIST = [];
-                if (PDB.MATERIALLIST.length == 0) {
-                    for (var i = 1000; i < 1100; i++) {
-                        var material = new THREE.MeshPhongMaterial({
-                            color: new THREE.Color(w3m.rgb[i][0], w3m.rgb[i][1], w3m.rgb[i][2]),
-                            wireframe: false,
-                            side: THREE.DoubleSide
-                        });
-                        PDB.MATERIALLIST.push(material);
+              //PDB.render.clear(2);
+              PDB.MATERIALLIST = [];
+              if (PDB.MATERIALLIST.length == 0) {
+                for (var i = 1000; i < 1100; i++) {
+                  var material = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color(w3m.rgb[i][0], w3m.rgb[i][1], w3m.rgb[i][2]),
+                    wireframe: false,
+                    side: THREE.DoubleSide
+                  });
+                  PDB.MATERIALLIST.push(material);
+                }
+              }
+              var isJson = PDB.tool.isJsonString(text);
+              if (!isJson) {
+                PDB.tool.printProgress("the response text is not a json string");
+                return;
+              }
+              var jsonObj = JSON.parse(text);
+              if (jsonObj.code === 1 && jsonObj.data !== undefined) {
+                PDB.controller.emmapLoadFromFile(response, "gz", function(emmap) {
+                  PDB.tool.createDensityMapPanel(jsonObj);
+                  var dimension = document.getElementById("dimension");
+                  PDB.DIMENSION = Number(dimension.value);
+                  switch (PDB.DIMENSION) {
+                    case PDB.DIMENSION_X:
+                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
+                      break;
+                    case PDB.DIMENSION_Y:
+                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
+                      break;
+                    case PDB.DIMENSION_Z:
+                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
+                      break;
+                  }
+                  PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+                  PDB.render.clear(2);
+                  PDB.EMMAP.TYPE = 1;
+                  if (emmap) {
+                    switch (PDB.EMMAP.TYPE) {
+                      case 0:
+                        PDB.painter.showMapSolid(emmap, emmap.threshold);
+                        PDB.map_surface_show = 0;
+                        break;
+                      case 1:
+                        PDB.painter.showMapSurface(emmap, emmap.threshold, false);
+                        PDB.map_surface_show = 1;
+                        break;
+                      case 2:
+                        PDB.painter.showMapSurface(emmap, emmap.threshold, true);
+                        PDB.map_surface_show = 1;
                     }
-                }
-                var isJson = PDB.tool.isJsonString(text);
-                if (!isJson) {
-                    PDB.tool.printProgress("the response text is not a json string");
-                    return;
-                }
-                var jsonObj = JSON.parse(text);
-                if (jsonObj.code === 1 && jsonObj.data !== undefined) {
-                    PDB.controller.emmapLoadFromFile(response, "gz", function(emmap) {
-                        PDB.tool.createDensityMapPanel(jsonObj);
-                        var dimension = document.getElementById("dimension");
-                        PDB.DIMENSION = Number(dimension.value);
-                        switch (PDB.DIMENSION) {
-                            case PDB.DIMENSION_X:
-                                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
-                                break;
-                            case PDB.DIMENSION_Y:
-                                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
-                                break;
-                            case PDB.DIMENSION_Z:
-                                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
-                                break;
-                        }
-                        PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
-                        PDB.render.clear(2);
-                        PDB.EMMAP.TYPE = 1;
-                        if (emmap) {
-                            switch (PDB.EMMAP.TYPE) {
-                                case 0:
-                                    PDB.painter.showMapSolid(emmap, emmap.threshold);
-                                    PDB.map_surface_show = 0;
-                                    break;
-                                case 1:
-                                    PDB.painter.showMapSurface(emmap, emmap.threshold, false);
-                                    PDB.map_surface_show = 1;
-                                    break;
-                                case 2:
-                                    PDB.painter.showMapSurface(emmap, emmap.threshold, true);
-                                    PDB.map_surface_show = 1;
-                            }
-                        }
-                        PDB.tool.changeDensityMapRangeValue(emmap);
-                    });
-                } else {
-                    PDB.tool.printProgress(jsonObj.message);
-                }
+                  }
+                  PDB.tool.changeDensityMapRangeValue(emmap);
+                });
+              } else {
+                PDB.tool.printProgress(jsonObj.message);
+              }
             })
           })
         } else if (file.name.endsWith("mrc")) {
@@ -344,13 +344,13 @@ PDB.controller = {
 
     closeeditResidue.addEventListener('click', function() {
       //segmentholder.style.display = "none";
-	  PDB.tool.showSegmentholder(false);
+      PDB.tool.showSegmentholder(false);
       editResidue.style.display = "none";
     });
 
     b_show_editResidue.addEventListener('click', function(e) {
       //segmentholder.style.display = "block";
-	  PDB.tool.showSegmentholder(true);
+      PDB.tool.showSegmentholder(true);
       editResidue.style.display = "block";
     });
 
@@ -399,7 +399,7 @@ PDB.controller = {
         //PDB.painter.showRes_Ball_Rod(resName);
         //PDB.GROUP[groupa].add(PDB.GROUP[PDB.GROUP_ONE_RES]);
         //segmentholder.style.display = "none";
-		PDB.tool.showSegmentholder(false);
+        PDB.tool.showSegmentholder(false);
         editResidue.style.display = "none";
         var xyz = residue_replace.selectedOptions[0].xyz;
         var resid = residue_replace.value;
@@ -965,7 +965,7 @@ PDB.controller = {
 
     b_show_segmenpanel.addEventListener('click', function() {
       //segmentholder.style.display = "block";
-	  PDB.tool.showSegmentholder(true);
+      PDB.tool.showSegmentholder(true);
       segmentPanel.style.display = "block";
     });
     closer.addEventListener('click', function() {
@@ -998,7 +998,7 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
-		PDB.tool.showMutationTable(PDB.showMutationTable, text);
+        PDB.tool.showMutationTable(PDB.showMutationTable, text);
       })
     });
     mutationExAC.addEventListener('click', function() {
@@ -1006,7 +1006,7 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
-		PDB.tool.showMutationTable(PDB.showMutationTable, text);
+        PDB.tool.showMutationTable(PDB.showMutationTable, text);
       })
     });
 
@@ -1015,21 +1015,21 @@ PDB.controller = {
       PDB.tool.ajax.get(url, function(text) {
         PDB.controller.clear(4, undefined);
         PDB.painter.showMutation(text);
-		PDB.tool.showMutationTable(PDB.showMutationTable, text);
+        PDB.tool.showMutationTable(PDB.showMutationTable, text);
       })
     });
 
     mutationNone.addEventListener('click', function() {
       PDB.controller.clear(4, undefined);
     });
-	PDB.showMutationTable = true;//默认显示MutationTable
+    PDB.showMutationTable = true; //默认显示MutationTable
     showMutationTable.addEventListener('click', function() {
       if (this.checked) {
         document.getElementById("rightmenu").hidden = false;
-		PDB.showMutationTable = true;
+        PDB.showMutationTable = true;
       } else {
         document.getElementById("rightmenu").hidden = true;
-		PDB.showMutationTable = false;
+        PDB.showMutationTable = false;
       }
     });
 
@@ -1130,12 +1130,12 @@ PDB.controller = {
     var hideDrugPanel = document.getElementById("hideDrugPanel");
     hideDrugPanel.addEventListener('click', function(e) {
       PDB.render.clear(6);
-	  var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
-	  if (ServerType !== 2) {
-		url = SERVERURL + "/data/drug.json";
-	  }
-	  PDB.tool.showDrugMenuForVr(url);
-	  // PDB.tool.showDockingMenuForVr("DB404040");
+      // var url = API_URL + "/server/api.php?taskid=12&pdbid=" + PDB.pdbId.toUpperCase();
+      // if (ServerType !== 2) {
+      //   url = SERVERURL + "/data/drug.json";
+      // }
+      // PDB.tool.showDrugMenuForVr(url);
+      // PDB.tool.showDockingMenuForVr("DB404040");
     });
 
     var b_load_drug = document.getElementById("b_load_drug");
@@ -1152,9 +1152,9 @@ PDB.controller = {
           var rightMenuDiv = document.getElementById("rightmenu");
           rightMenuDiv.hidden = false;
           rightMenuDiv.style.overflowY = "hidden";
-          rightMenuDiv.innerHTML = '<label>Docking Region</label><br/><span class="xyz_min_max">'+
-          '<label>X:</label><input id="x_min"/>~<input id="x_max"/><br/><label>Y:</label>'+
-          '<input id="y_min"/>~<input id="y_max"/><br/><label>Z:</label><input id="z_min"/>~<input id="z_max"/><br/></span>';
+          rightMenuDiv.innerHTML = '<label>Docking Region</label><br/><span class="xyz_min_max">' +
+            '<label>X:</label><input id="x_min"/>~<input id="x_max"/><br/><label>Y:</label>' +
+            '<input id="y_min"/>~<input id="y_max"/><br/><label>Z:</label><input id="z_min"/>~<input id="z_max"/><br/></span>';
 
           var helperLab = PDB.tool.generateLabel(rightMenuDiv, "", "");
 
@@ -1241,7 +1241,7 @@ PDB.controller = {
   LoadDrugDetails: function(span, dbname, dbjson) {
     if (dbjson !== undefined && dbjson !== "" && dbjson !== "null") {
 
-      PDB.tool.generateLabel(span, "DataBase: "+PDB.DRUBDB_NAME[dbname], "");
+      PDB.tool.generateLabel(span, "DataBase: " + PDB.DRUBDB_NAME[dbname], "");
       var drugids = dbjson.split(';');
 
       for (var i in drugids) {
@@ -1262,7 +1262,7 @@ PDB.controller = {
           });
         });
         PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUG_MODE_CONFIG.Detail_URL[dbname] + drugids[i], "");
-        if (dbname=='drugbank'){
+        if (dbname == 'drugbank') {
           PDB.tool.generateDocklingLink(span, "link" + i, "Docking", drugids[i], dbname);
         }
         span.appendChild(document.createElement("br"));
@@ -1651,7 +1651,7 @@ PDB.controller = {
         }
         break;
     }
-	//console.log(html);
+    //console.log(html);
     p_seletedPanel.innerHTML = html;
     this.bindSelectedAndDeleteSpan();
   },
@@ -1852,14 +1852,14 @@ PDB.controller = {
       PDB.residueGroupObject = {};
     }
     // console.log(PDB.residueGroupObject);
-	// if(){
+    // if(){
 
-	// }
-	if(fragment){
-		PDB.CHANGESTYLE = PDB.DRAWSTYLE_FRAGMENT; //切换mode,fragment mode
-	}else{
-		PDB.CHANGESTYLE = PDB.DRAWSTYLE_DEFAULT; //切换mode，放弃fragment
-	}
+    // }
+    if (fragment) {
+      PDB.CHANGESTYLE = PDB.DRAWSTYLE_FRAGMENT; //切换mode,fragment mode
+    } else {
+      PDB.CHANGESTYLE = PDB.DRAWSTYLE_DEFAULT; //切换mode，放弃fragment
+    }
 
     var scope = this;
     var input = document.getElementById("search_text");
@@ -1880,11 +1880,11 @@ PDB.controller = {
     //PDB.currentType = -1;
     PDB.loader.load(name, function() {
       //PDB.painter.generateGroupPosition();
-	  PDB.tool.initFragmentInfo();
-	  //console.log(PDB.fragmentList);
-	  if(PDB.fragmentList&&Object.keys(PDB.fragmentList).length>0){
-		  PDB.controller.initSelectedPanel(PDB.DRAWSTYLE_FRAGMENT);
-	  }
+      PDB.tool.initFragmentInfo();
+      //console.log(PDB.fragmentList);
+      if (PDB.fragmentList && Object.keys(PDB.fragmentList).length > 0) {
+        PDB.controller.initSelectedPanel(PDB.DRAWSTYLE_FRAGMENT);
+      }
       scope.drawGeometry(PDB.config.mainMode);
       scope.drawGeometry(PDB.config.hetMode);
       if (PDB.isShowSurface == PDB.config.openSurface) {
@@ -1966,27 +1966,27 @@ PDB.controller = {
     return loadType;
   },
   drawGeometry: function(type) {
-	PDB.tool.printProgress("");
-	PDB.tool.showSegmentholder(true,true);
-	setTimeout(function(e){
-		if (w3m.mol[PDB.pdbId] == undefined) return;
-		var scope = this;
-		console.log("sta: " + type + ": " + new Date());
-		if (type >= PDB.HET) {
-		  PDB.painter.showHet(PDB.pdbId);
-		} else {
-		  if (PDB.CHANGESTYLE != PDB.DRAWSTYLE_FRAGMENT && PDB.CHANGESTYLE != PDB.DRAWSTYLE_DEFAULT && PDB.CHANGESTYLE != 6) {
-			PDB.painter.showAllResiduesBySelect();
-		  } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_FRAGMENT) { // has fragment
-			PDB.painter.showFragmentsResidues();
+    PDB.tool.printProgress("");
+    PDB.tool.showSegmentholder(true, true);
+    setTimeout(function(e) {
+      if (w3m.mol[PDB.pdbId] == undefined) return;
+      var scope = this;
+      console.log("sta: " + type + ": " + new Date());
+      if (type >= PDB.HET) {
+        PDB.painter.showHet(PDB.pdbId);
+      } else {
+        if (PDB.CHANGESTYLE != PDB.DRAWSTYLE_FRAGMENT && PDB.CHANGESTYLE != PDB.DRAWSTYLE_DEFAULT && PDB.CHANGESTYLE != 6) {
+          PDB.painter.showAllResiduesBySelect();
+        } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_FRAGMENT) { // has fragment
+          PDB.painter.showFragmentsResidues();
 
-		  } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_DEFAULT) { //no style
-			PDB.painter.showAllResidues(type);
-		  }
-		}
-		console.log("end: " + type + ": " + new Date());
-		PDB.tool.showSegmentholder(false,false);
-	},PDB.HOLDERTIME);
+        } else if (PDB.CHANGESTYLE == PDB.DRAWSTYLE_DEFAULT) { //no style
+          PDB.painter.showAllResidues(type);
+        }
+      }
+      console.log("end: " + type + ": " + new Date());
+      PDB.tool.showSegmentholder(false, false);
+    }, PDB.HOLDERTIME);
 
   },
   refreshGeometryByMode: function(type) {
