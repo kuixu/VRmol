@@ -100,27 +100,27 @@ function getlanguage() {
 
 // *************************
 //     recording part
-// ************************* 
+// *************************
 // Loading recording part
 (function(window) {
-    // For compatible  
+    // For compatible
     window.URL = window.URL || window.webkitURL;
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
     var HZRecorder = function(stream, config) {
         config = config || {};
-        config.sampleBits = config.sampleBits || 16;  
-        config.sampleRate = config.sampleRate || 16000;  
+        config.sampleBits = config.sampleBits || 16;
+        config.sampleRate = config.sampleRate || 16000;
 
 
-        // Set an audio context object. 
+        // Set an audio context object.
         audioContext = window.AudioContext || window.webkitAudioContext;
         var context = new audioContext();
 
-        // Put the input voice stream to the object. 
+        // Put the input voice stream to the object.
         var audioInput = context.createMediaStreamSource(stream);
 
-        // Set the volume. 
+        // Set the volume.
         var volume = context.createGain();
         audioInput.connect(volume);
 
@@ -128,28 +128,28 @@ function getlanguage() {
             console.log("state", context.state);
         }
         // Set buffer to save voice
-        var bufferSize = 4096; 
+        var bufferSize = 4096;
         var recorder = context.createScriptProcessor(bufferSize, 2, 2);
 
         var audioData = {
-            size: 0   
+            size: 0
                 ,
-            buffer: []  
+            buffer: []
                 ,
-            inputSampleRate: context.sampleRate 
+            inputSampleRate: context.sampleRate
                 ,
-            inputSampleBits: 16 //Could choose 8 or 16  
+            inputSampleBits: 16 //Could choose 8 or 16
                 ,
-            outputSampleRate: config.sampleRate 
+            outputSampleRate: config.sampleRate
                 ,
-            oututSampleBits: config.sampleBits //Could choose 8 or 16  
+            oututSampleBits: config.sampleBits //Could choose 8 or 16
                 ,
             input: function(data) {
                 this.buffer.push(new Float32Array(data));
                 this.size += data.length;
             },
-            compress: function() { // Merge and compression  
-                // Merge 
+            compress: function() { // Merge and compression
+                // Merge
                 var data = new Float32Array(this.size);
                 var offset = 0;
                 for (var i = 0; i < this.buffer.length; i++) {
@@ -177,7 +177,7 @@ function getlanguage() {
                 var buffer = new ArrayBuffer(44 + dataLength);
                 var data = new DataView(buffer);
 
-                var channelCount = 1; // Only one channel. 
+                var channelCount = 1; // Only one channel.
                 var offset = 0;
 
                 var writeString = function(str) {
@@ -186,46 +186,46 @@ function getlanguage() {
                     }
                 };
 
-                // Resource exchange file identifier   
+                // Resource exchange file identifier
                 writeString('RIFF');
                 offset += 4;
-                // The total number of bytes from the beginning of the next address to the end of the file.  
+                // The total number of bytes from the beginning of the next address to the end of the file.
                 data.setUint32(offset, 36 + dataLength, true);
                 offset += 4;
-                // WAV 
+                // WAV
                 writeString('WAVE');
                 offset += 4;
-                // Waveform format  
+                // Waveform format
                 writeString('fmt ');
                 offset += 4;
-                // Filter bytes, usually 0x10 = 16   
+                // Filter bytes, usually 0x10 = 16
                 data.setUint32(offset, 16, true);
                 offset += 4;
-                // Format category (sampled data in PCM format)   
+                // Format category (sampled data in PCM format)
                 data.setUint16(offset, 1, true);
                 offset += 2;
-                // channel Count   
+                // channel Count
                 data.setUint16(offset, channelCount, true);
                 offset += 2;
-                // sample Rate   
+                // sample Rate
                 data.setUint32(offset, sampleRate, true);
                 offset += 4;
-                // Waveform data transmission rate   
+                // Waveform data transmission rate
                 data.setUint32(offset, channelCount * sampleRate * (sampleBits / 8), true);
                 offset += 4;
                 // Bytes for one sampling
                 data.setUint16(offset, channelCount * (sampleBits / 8), true);
                 offset += 2;
-                // sample Bits   
+                // sample Bits
                 data.setUint16(offset, sampleBits, true);
                 offset += 2;
-                // data   
+                // data
                 writeString('data');
                 offset += 4;
-                // dataLength  
+                // dataLength
                 data.setUint32(offset, dataLength, true);
                 offset += 4;
-                // write data   
+                // write data
                 if (sampleBits === 8) {
                     for (var i = 0; i < bytes.length; i++, offset++) {
                         var s = Math.max(-1, Math.min(1, bytes[i]));
@@ -246,19 +246,19 @@ function getlanguage() {
             }
         };
 
-        // start recording  
+        // start recording
         this.start = function() {
             audioInput.connect(recorder);
             recorder.connect(context.destination);
         };
 
-        // stop recording 
+        // stop recording
         this.stop = function() {
             recorder.disconnect();
             return audioData.buffer.length;
         };
 
-        // Get blob object. 
+        // Get blob object.
         this.getBlob = function() {
             var time = this.stop();
             return {
@@ -272,33 +272,34 @@ function getlanguage() {
             audioData.size = 0;
         }
 
-        // Play the recording 
+        // Play the recording
         this.play = function(audio, blob) {
             blob = blob || this.getBlob().blob;
             audio.src = window.URL.createObjectURL(blob);
         };
 
-  
+
         recorder.onaudioprocess = function(e) {
             audioData.input(e.inputBuffer.getChannelData(0));
-            //record(e.inputBuffer.getChannelData(0));  
+            //record(e.inputBuffer.getChannelData(0));
         };
 
     };
-    // Throw the error  
+    // Throw the error
     HZRecorder.throwError = function(message) {
-        console.error(message);
+        // console.error(message);
+        alert(message);
     };
-    // Support recording or not 
+    // Support recording or not
     HZRecorder.canRecording = !!navigator.getUserMedia;
-    // Get the recorder  
+    // Get the recorder
     HZRecorder.get = function(callback, config) {
         HZRecorder.throwError = config && config.error || HZRecorder.throwError;
         if (callback) {
             if (navigator.getUserMedia) {
                 navigator.getUserMedia({
                         audio: true
-                    }   
+                    }
                     ,
                     function(stream) {
                         var rec = new HZRecorder(stream, config);
@@ -331,6 +332,3 @@ function getlanguage() {
     };
     window.HZRecorder = HZRecorder;
 })(window);
-
-
-

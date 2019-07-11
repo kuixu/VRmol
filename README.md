@@ -41,18 +41,18 @@ VRmol provides two modes:
 
 ## Demo
 
-<img src="models/entervr-320.gif" width=50%>
+<img src="imgs/entervr-320.gif" width=50%>
 
 ## Framework
 
 The framework of VRmol.
 
-<img src="models/framework.png" width=50%>
+<img src="imgs/framework.png" width=50%>
 
 ## Screenshot
 
 A screenshot of structure visualization with stereo view.
-<img src="models/screenshot.png" width=80%>
+<img src="imgs/screenshot.png" width=80%>
 
 
 

@@ -1395,10 +1395,10 @@ PDB.render = {
 
       scene.add(controller1);
       var objname = 'vr_controller_vive_1_5.obj';
-      var path = 'models/obj/vive-controller/';
+      var path = 'js/models/vive-controller/';
       if (controller1.style === "microsoft") {
         objname = controller1.gamepad.hand + '.obj';
-        path = 'models/obj/microsoft-controller/';
+        path = 'js/models/microsoft-controller/';
       }
       var loader = new THREE.OBJLoader();
       loader.setPath(path);
