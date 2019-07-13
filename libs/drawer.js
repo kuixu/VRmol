@@ -1159,74 +1159,77 @@ PDB.drawer = {
   drawPlane: function(group, width, height, color, dimension, val, emmap) {
     var geometry = new THREE.PlaneGeometry(width, height, width, height);
     var plane = new THREE.Mesh(geometry, PDB.MATERIALLIST);
+    var newScale = emmap.header.voxelsize;
     switch (dimension) {
       case PDB.DIMENSION_X:
         plane.rotation.x = -Math.PI / 2;
         plane.rotation.y = -Math.PI / 2;
         var i = val;
         if (PDB.mode != PDB.MODE_VR) {
-          for (var j = 0; j < emmap.header.NR; j++) {
-            for (var k = 0; k < emmap.header.NS; k++) {
+          for (var j = 0; j < emmap.header.NY; j++) {
+            for (var k = 0; k < emmap.header.NX; k++) {
               var v = emmap.data[i][j][k];
               var per = Math.floor(100 * ((v - emmap.header.min) / (1.0 * (emmap.header.max - emmap.header.min))));
               // console.log(pre);
               var posObj = {
                 x: j,
                 y: k,
-                width: emmap.header.NR,
+                width: emmap.header.NY,
                 colorIndex: per
               };
               PDB.tool.setFaceColor(geometry, posObj)
             }
           }
         }
-        val = val + emmap.center.x;
+        //val = val + emmap.header.offset.x;
         plane.position.copy(new THREE.Vector3(val, 0, 0));
         break;
       case PDB.DIMENSION_Y:
         plane.rotation.x = -Math.PI / 2;
         var j = val;
         if (PDB.mode != PDB.MODE_VR) {
-          for (var i = 0; i < emmap.header.NC; i++) {
-            for (var k = 0; k < emmap.header.NS; k++) {
+          for (var i = 0; i < emmap.header.NZ; i++) {
+            for (var k = 0; k < emmap.header.NX; k++) {
               var v = emmap.data[i][j][k];
               var per = Math.floor(100 * ((v - emmap.header.min) / (1.0 * (emmap.header.max - emmap.header.min))));
               // console.log(pre);
               var posObj = {
                 x: i,
                 y: k,
-                width: emmap.header.NR,
+                width: emmap.header.NX,
                 colorIndex: per
               };
               PDB.tool.setFaceColor(geometry, posObj)
             }
           }
         }
-        val = val + emmap.center.y;
+        val = val + emmap.header.offset.y;
         plane.position.copy(new THREE.Vector3(0, val, 0));
         break;
       case PDB.DIMENSION_Z:
         var k = val;
         if (PDB.mode != PDB.MODE_VR) {
-          for (var i = 0; i < emmap.header.NC; i++) {
-            for (var j = 0; j < emmap.header.NR; j++) {
+          for (var i = 0; i < emmap.header.NZ; i++) {
+            for (var j = 0; j < emmap.header.NY; j++) {
               var v = emmap.data[i][j][k];
               var per = Math.floor(100 * ((v - emmap.header.min) / (1.0 * (emmap.header.max - emmap.header.min))));
               // console.log(pre);
               var posObj = {
                 x: i,
                 y: j,
-                width: emmap.header.NR,
+                width: emmap.header.NY,
                 colorIndex: per
               };
               PDB.tool.setFaceColor(geometry, posObj)
             }
           }
         }
-        val = val + emmap.center.y;
+        val = val + emmap.header.offset.z;
         plane.position.copy(new THREE.Vector3(0, 0, val));
         break;
     }
+    plane.position.add(emmap.header.offset);
     PDB.GROUP[group].add(plane);
+    PDB.GROUP[group].scale.set(newScale.x, newScale.y, newScale.z);
   }
 };

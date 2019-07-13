@@ -756,7 +756,7 @@ PDB.tool = {
   },
 
   setFaceColor: function(geometry, posObj) {
-    var f0 = (posObj.y * posObj.width + posObj.x) * 2;
+    var f0 = (posObj.x * posObj.width + posObj.y) * 2;
     var f1 = f0 + 1;
     geometry.faces[f0].materialIndex = posObj.colorIndex;
     geometry.faces[f1].materialIndex = posObj.colorIndex;
@@ -890,13 +890,13 @@ PDB.tool = {
               PDB.DIMENSION = Number(dimension.value);
               switch (PDB.DIMENSION) {
                 case PDB.DIMENSION_X:
-                  PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
+                  PDB.EMMAP.MAX_SLICE = Number(emmap.header.NX);
                   break;
                 case PDB.DIMENSION_Y:
-                  PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
+                  PDB.EMMAP.MAX_SLICE = Number(emmap.header.NY);
                   break;
                 case PDB.DIMENSION_Z:
-                  PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
+                  PDB.EMMAP.MAX_SLICE = Number(emmap.header.NZ);
                   break;
               }
             }
@@ -1105,13 +1105,13 @@ PDB.tool = {
           sliceRange.min = 1;
           switch (PDB.DIMENSION) {
             case PDB.DIMENSION_X:
-              sliceRange.max = Number(emmap.header.NC);
+              sliceRange.max = Number(emmap.header.NX);
               break;
             case PDB.DIMENSION_Y:
-              sliceRange.max = Number(emmap.header.NR);
+              sliceRange.max = Number(emmap.header.NY);
               break;
             case PDB.DIMENSION_Z:
-              sliceRange.max = Number(emmap.header.NS);
+              sliceRange.max = Number(emmap.header.NZ);
               break;
           }
           var sliceRange = document.getElementById("sliceRange");

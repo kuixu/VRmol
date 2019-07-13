@@ -131,13 +131,13 @@ PDB.controller = {
                   PDB.DIMENSION = Number(dimension.value);
                   switch (PDB.DIMENSION) {
                     case PDB.DIMENSION_X:
-                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
+                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NX);
                       break;
                     case PDB.DIMENSION_Y:
-                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
+                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NY);
                       break;
                     case PDB.DIMENSION_Z:
-                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
+                      PDB.EMMAP.MAX_SLICE = Number(emmap.header.NZ);
                       break;
                   }
                   PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
@@ -291,13 +291,13 @@ PDB.controller = {
             PDB.DIMENSION = Number(dimension.value);
             switch (PDB.DIMENSION) {
               case PDB.DIMENSION_X:
-                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NC);
+                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NX);
                 break;
               case PDB.DIMENSION_Y:
-                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NR);
+                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NY);
                 break;
               case PDB.DIMENSION_Z:
-                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NS);
+                PDB.EMMAP.MAX_SLICE = Number(emmap.header.NZ);
                 break;
             }
             switch (PDB.EMMAP.TYPE) {
@@ -1293,9 +1293,9 @@ PDB.controller = {
         mapserver = "map-local";
       }
       EmMapParser.loadMap(input.value, mapserver, function(emmap) {
-        console.log("NC:" + emmap.header.NC);
-        console.log("NR:" + emmap.header.NR);
-        console.log("NS:" + emmap.header.NS);
+        console.log("NX:" + emmap.header.NX);
+        console.log("NY:" + emmap.header.NY);
+        console.log("NZ:" + emmap.header.NZ);
         console.log(emmap.data.length);
       });
     }

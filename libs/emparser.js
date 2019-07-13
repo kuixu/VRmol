@@ -111,23 +111,32 @@ EmMapParser = {
     }
 
   },
-  parseMap: function(data, mapid) {
+  parseMap: function(data_bin, mapid) {
     var start = new Date();
-    header_int = new Int32Array(data, 0, 56);
-    header_float = new Float32Array(data, 0, 56);
+    header_int = new Int32Array(data_bin, 0, 56);
+    header_float = new Float32Array(data_bin, 0, 56);
     map_header = {};
-    map_header.NC = header_int[0];
-    map_header.NR = header_int[1];
-    map_header.NS = header_int[2];
-    map_header.NCSTART = header_int[4];
-    map_header.NRSTART = header_int[5];
-    map_header.NSSTART = header_int[6];
-    map_header.NX = header_int[7];
-    map_header.NY = header_int[8];
-    map_header.NZ = header_int[9];
-    map_header.a = header_float[10];
-    map_header.b = header_float[11];
-    map_header.c = header_float[12];
+    map_header.NX      = header_int[0]; // NC - columns (fastest changing)
+    map_header.NY      = header_int[1]; // NR - rows
+    map_header.NZ      = header_int[2]; // NS - sections (slowest changing)
+    // mode
+    //  0 image : signed 8-bit bytes range -128 to 127
+    //  1 image : 16-bit halfwords
+    //  2 image : 32-bit reals
+    //  3 transform : complex 16-bit integers
+    //  4 transform : complex 32-bit reals
+    //  6 image : unsigned 16-bit range 0 to 65535
+    // 16 image: unsigned char * 3 (for rgb data, non-standard)
+    map_header.MODE    = header_int[3];
+    map_header.NXSTART = header_int[4];
+    map_header.NYSTART = header_int[5];
+    map_header.NZSTART = header_int[6];
+    map_header.MX = header_int[7];
+    map_header.MY = header_int[8];
+    map_header.MZ = header_int[9];
+    map_header.xlen = header_float[10];
+    map_header.ylen = header_float[11];
+    map_header.zlen = header_float[12];
     map_header.alpha = header_float[13];
     map_header.beta = header_float[14];
     map_header.gamma = header_float[15];
@@ -139,28 +148,120 @@ EmMapParser = {
     map_header.mean = header_float[21];
     map_header.ISPG = header_int[22];
     map_header.NSYMBT = header_int[23];
+    map_header.originX = header_float[ 49 ];
+    map_header.originY = header_float[ 50 ];
+    map_header.originZ = header_float[ 51 ];
     map_header.ARMS = header_float[54];
+
+    ix = map_header.MAPC - 1;
+    iy = map_header.MAPR - 1;
+    iz = map_header.MAPS - 1;
+
+    offset = (offset[ix], offset[iy], offset[iz])
+
+    map_header.voxelsize = new THREE.Vector3(map_header.xlen/map_header.MX,
+      map_header.ylen/map_header.MY,
+      map_header.zlen/map_header.MZ);
+    map_header.offset = [map_header.NXSTART + map_header.originX,
+      map_header.NYSTART + map_header.originY,
+      map_header.NZSTART + map_header.originZ];
+    map_header.offset = new THREE.Vector3(map_header.offset[ix], map_header.offset[iy],
+      map_header.offset[iz]);
+    // NEEED to comfirm
+    map_header.offset = map_header.offset.divide( map_header.voxelsize) ;
+
+
+    const h = map_header
+
+    const basisX = [
+      h.xlen,
+      0,
+      0
+    ]
+
+    const basisY = [
+      h.ylen * Math.cos(Math.PI / 180.0 * h.gamma),
+      h.ylen * Math.sin(Math.PI / 180.0 * h.gamma),
+      0
+    ]
+
+    const basisZ = [
+      h.zlen * Math.cos(Math.PI / 180.0 * h.beta),
+      h.zlen * (
+        Math.cos(Math.PI / 180.0 * h.alpha) -
+        Math.cos(Math.PI / 180.0 * h.gamma) *
+        Math.cos(Math.PI / 180.0 * h.beta)
+      ) / Math.sin(Math.PI / 180.0 * h.gamma),
+      0
+    ]
+    basisZ[ 2 ] = Math.sqrt(
+      h.zlen * h.zlen * Math.sin(Math.PI / 180.0 * h.beta) *
+      Math.sin(Math.PI / 180.0 * h.beta) - basisZ[ 1 ] * basisZ[ 1 ]
+    )
+
+    const basis = [ 0, basisX, basisY, basisZ ]
+    const nxyz = [ 0, h.MX, h.MY, h.MZ ]
+    const mapcrs = [ 0, h.MAPC, h.MAPR, h.MAPS ]
+
+    const matrix = new THREE.Matrix4()
+
+    matrix.set(
+      basis[ mapcrs[1] ][0] / nxyz[ mapcrs[1] ],
+      basis[ mapcrs[2] ][0] / nxyz[ mapcrs[2] ],
+      basis[ mapcrs[3] ][0] / nxyz[ mapcrs[3] ],
+      0,
+      basis[ mapcrs[1] ][1] / nxyz[ mapcrs[1] ],
+      basis[ mapcrs[2] ][1] / nxyz[ mapcrs[2] ],
+      basis[ mapcrs[3] ][1] / nxyz[ mapcrs[3] ],
+      0,
+      basis[ mapcrs[1] ][2] / nxyz[ mapcrs[1] ],
+      basis[ mapcrs[2] ][2] / nxyz[ mapcrs[2] ],
+      basis[ mapcrs[3] ][2] / nxyz[ mapcrs[3] ],
+      0,
+      0, 0, 0, 1
+    )
+
+    matrix.setPosition(new THREE.Vector3(
+      h.originX, h.originY, h.originZ
+    ))
+
+    matrix.multiply(new THREE.Matrix4().makeTranslation(
+      h.NXSTART, h.NYSTART, h.NZSTART
+    ))
+
+    //return matrix
+
+    map_header.matrix = matrix ;
+
     var emmap = {};
+    var mapdata = [] ;
     emmap.header = map_header;
-    var mapdata = new Float32Array(data, 256 * 4 + map_header.NSYMBT, map_header.NC * map_header.NR * map_header.NS);
+    if (map_header.MODE === 2) {
+      mapdata = new Float32Array(data_bin, 256 * 4 + map_header.NSYMBT,
+        map_header.NX * map_header.NY * map_header.NZ);
+    } else if (map_header.MODE === 0) {
+      mapdata = new Float32Array(new Int8Array(
+        data_bin, 256 * 4 + map_header.NSYMBT,
+        map_header.NX * map_header.NY * map_header.NZ
+      ));
+    }else {
+      console.error('EM parser unknown mode: ', map_header.MODE)
+    }
     var map = new Array();
     var min = 9999;
     var max = -9999;
-    for (var i = 0; i < emmap.header.NS; i++) {
-      //if(i%4!=0) continue;
+    for (var i = 0; i < emmap.header.NZ; i++) {
       map[i] = new Array();
-      for (var j = 0; j < emmap.header.NR; j++) {
-        //if(j%4!=0) continue;
+      for (var j = 0; j < emmap.header.NY; j++) {
         map[i][j] = new Array()
-        for (var k = 0; k < emmap.header.NC; k++) {
-          //if(k%4!=0) continue;
-          //map[i][j][k] = mapdata[i*emmap.header.NS*emmap.header.NR+ j*emmap.header.NS+ k];
-          map[i][j][k] = mapdata[i * emmap.header.NC * emmap.header.NR + j * emmap.header.NC + k];
-          // if (min > map[i][j][k]) min =map[i][j][k];
-          // if (max < map[i][j][k]) max =map[i][j][k];
+        for (var k = 0; k < emmap.header.NX; k++) {
+          map[i][j][k] = mapdata[i * emmap.header.NX * emmap.header.NY + j * emmap.header.NX + k];
         }
       }
     }
+    // for (var i = 0; i < emmap.header.NZ; i++) {
+    //   for (var j = 0; j < emmap.header.NY; j++) {
+    //     for (var k = 0; k < emmap.header.NX; k++) {
     //emmap.header.NS = emmap.header.NS/2;
     //console.log(emmap.header.NS);
     //emmap.header.NR = emmap.header.NR/2;
@@ -170,7 +271,7 @@ EmMapParser = {
     emmap.id = mapid;
     emmap.data = map;
     //emmap.mapdata = mapdata;
-    emmap.center = new THREE.Vector3(-emmap.header.NC / 2, -emmap.header.NR / 2, -emmap.header.NS / 2);
+    emmap.center = new THREE.Vector3(-emmap.header.NX / 2, -emmap.header.NY / 2, -emmap.header.NZ / 2);
     emmap.threshold = (emmap.header.max - emmap.header.mean) / 2;
     emmap.slice = 0;
     var end = new Date();

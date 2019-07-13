@@ -3269,12 +3269,13 @@ PDB.painter = {
   },
   showMapSolid: function(emmap, threshold) {
     var scale = chroma.scale(['green', 'red']);
-    for (var i = 0; i < emmap.header.NS; i = i + PDB.map_step) {
-      for (var j = 0; j < emmap.header.NR; j = j + PDB.map_step) {
-        for (var k = 0; k < emmap.header.NC; k = k + PDB.map_step) {
+    for (var i = 0; i < emmap.header.NZ; i = i + PDB.map_step) {
+      for (var j = 0; j < emmap.header.NY; j = j + PDB.map_step) {
+        for (var k = 0; k < emmap.header.NX; k = k + PDB.map_step) {
           var v = emmap.data[i][j][k];
           if (v > threshold) {
-            var p = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
+            var p = new THREE.Vector3(i, j, k) ;
+            // p = p.add(emmap.header.offset);
             var per = (v - threshold) / (1.0 * (emmap.header.max - threshold));
             var color = scale(per).hex();
             PDB.drawer.drawDot(PDB.GROUP_MAP, p, color);
@@ -3282,25 +3283,26 @@ PDB.painter = {
         }
       }
     }
-    var newScale = new THREE.Vector3(emmap.header.a / emmap.header.NC, emmap.header.b / emmap.header.NR, emmap.header.c / emmap.header.NS);
+    var newScale = emmap.header.voxelsize; // new THREE.Vector3(emmap.header.a / emmap.header.NX, emmap.header.b / emmap.header.NY, emmap.header.c / emmap.header.NZ);
     PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x, newScale.y, newScale.z);
+    PDB.GROUP[PDB.GROUP_MAP].position.applyMatrix4(emmap.header.matrix);
     // PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
   },
   // point material
   showMapSolid00000: function(emmap, threshold) {
     console.log("map: " + new Date() + " Prepare color and position! threshold:" + threshold);
     var scale = chroma.scale(['green', 'red']);
-    var positions = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS * 3);
-    var colors = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS * 3);
-    var alphas = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS);
+    var positions = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ * 3);
+    var colors    = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ * 3);
+    var alphas    = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ);
     var color = new THREE.Color();
     color = new THREE.Color("#567856");
     var color1 = new THREE.Color("#ffffff");
-    for (var i = 0; i < emmap.header.NC; i++) {
-      for (var j = 0; j < emmap.header.NR; j++) {
-        for (var k = 0; k < emmap.header.NS; k++) {
+    for (var i = 0; i < emmap.header.NX; i++) {
+      for (var j = 0; j < emmap.header.NY; j++) {
+        for (var k = 0; k < emmap.header.NZ; k++) {
           var v = emmap.data[i][j][k];
-          var m = i * emmap.header.NS * emmap.header.NR + j * emmap.header.NS + k;
+          var m = i * emmap.header.NZ * emmap.header.NY + j * emmap.header.NZ + k;
           var n = m * 3;
           positions[n] = emmap.center.x + i;
           positions[n + 1] = emmap.center.y + j;
@@ -3326,9 +3328,9 @@ PDB.painter = {
     var start = new Date();
     console.log("MapSolid: " + start + " Prepare color and position! threshold:" + threshold);
     var scale = chroma.scale(['green', 'red']);
-    var positions = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS * 3);
-    var colors = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS * 3);
-    var alphas = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS);
+    var positions = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ * 3);
+    var colors    = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ * 3);
+    var alphas    = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ);
     var array = [];
     for (var i = 1000; i < 1100; i++) {
       var color = new THREE.Color(w3m.rgb[i][0], w3m.rgb[i][1], w3m.rgb[i][2]);
@@ -3336,12 +3338,12 @@ PDB.painter = {
     }
     var color = new THREE.Color("#FFFFFF");
     var di = emmap.header.max - emmap.header.min;
-    for (var i = 0; i < emmap.header.NS; i = i + PDB.map_step) {
-      for (var j = 0; j < emmap.header.NR; j = j + PDB.map_step) {
-        for (var k = 0; k < emmap.header.NC; k = k + PDB.map_step) {
+    for (var i = 0; i < emmap.header.NX; i = i + PDB.map_step) {
+      for (var j = 0; j < emmap.header.NY; j = j + PDB.map_step) {
+        for (var k = 0; k < emmap.header.NZ; k = k + PDB.map_step) {
           var v = emmap.data[i][j][k];
           //var m = i*emmap.header.NS* emmap.header.NR  + j* emmap.header.NS+ k;
-          var m = i * emmap.header.NC * emmap.header.NR + j * emmap.header.NC + k;
+          var m = i * emmap.header.NY * emmap.header.NZ + j * emmap.header.NZ + k;
 
           var n = m * 3;
           positions[n] = emmap.center.x + i;
@@ -3368,9 +3370,9 @@ PDB.painter = {
   showMapSolid2: function(emmap, threshold) {
     console.log("map: " + new Date() + " Prepare color and position! threshold:" + threshold);
     var scale = chroma.scale(['green', 'red']);
-    var positions = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS * 3);
-    var colors = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS * 3);
-    var alphas = new Float32Array(emmap.header.NC * emmap.header.NR * emmap.header.NS);
+    var positions = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ * 3);
+    var colors    = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ * 3);
+    var alphas    = new Float32Array(emmap.header.NX * emmap.header.NY * emmap.header.NZ);
     var color = new THREE.Color();
     color = new THREE.Color("#ffffff");
     for (var i = 0; i < emmap.mapdata.length; i++) {
@@ -3428,16 +3430,16 @@ PDB.painter = {
     }
     var color = new THREE.Color("#FFFFFF");
     var di = emmap.header.max - emmap.header.min;
-    for (var i = 0; i < emmap.header.NC; i++) {
-      for (var j = 0; j < emmap.header.NR; j++) {
-        for (var k = 0; k < emmap.header.NS; k++) {
+    for (var i = 0; i < emmap.header.NX; i++) {
+      for (var j = 0; j < emmap.header.NY; j++) {
+        for (var k = 0; k < emmap.header.NZ; k++) {
 
           var v = emmap.data[i][j][k];
           if (v < threshold) continue;
           var per = Math.floor(((v - emmap.header.min) / (1.0 * di)) * 99);
           color = array[per];
 
-          var m = i * emmap.header.NS * emmap.header.NR + j * emmap.header.NS + k;
+          var m = i * emmap.header.NY * emmap.header.NZ + j * emmap.header.NZ + k;
           var n = m * 3;
           var vec = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
           targetGeometry.vertices.push(vec);
@@ -3451,15 +3453,21 @@ PDB.painter = {
   //ParticleSystem
   showMapSurface: function(emmap, threshold, wireframe) {
     var start = new Date();
-    var newScale = new THREE.Vector3(emmap.header.a / emmap.header.NC, emmap.header.b / emmap.header.NR, emmap.header.c / emmap.header.NS)
+    var newScale = emmap.header.voxelsize;
     var wf = PDB.tool.getValue(wireframe, false);
     var offset = PDB.GeoCenterOffset;
-    var minx = emmap.center.x,
-      miny = emmap.center.y,
-      minz = emmap.center.z;
-    var maxx = emmap.center.x + emmap.header.NC,
-      maxy = emmap.center.y + emmap.header.NR,
-      maxz = emmap.center.z + emmap.header.NS;
+    // var minx = emmap.center.x,
+    //   miny = emmap.center.y,
+    //   minz = emmap.center.z;
+    // var maxx = emmap.center.x + emmap.header.NX,
+    //   maxy = emmap.center.y + emmap.header.NY,
+    //   maxz = emmap.center.z + emmap.header.NZ;
+    var minx = emmap.header.offset.x,
+      miny = emmap.header.offset.y,
+      minz = emmap.header.offset.z;
+    var maxx = emmap.header.offset.x + emmap.header.NX,
+      maxy = emmap.header.offset.y + emmap.header.NY,
+      maxz = emmap.header.offset.z + emmap.header.NZ;
     // MATERIALS
     var material = new THREE.MeshPhongMaterial({
       color: 0x000000,
@@ -3479,18 +3487,20 @@ PDB.painter = {
     // }
 
     var di = emmap.header.max - emmap.header.min;
-    for (var i = 0; i < emmap.header.NS; i = i + PDB.map_step) {
-      for (var j = 0; j < emmap.header.NR; j = j + PDB.map_step) {
-        for (var k = 0; k < emmap.header.NC; k = k + PDB.map_step) {
-          var m = i * emmap.header.NC * emmap.header.NR + j * emmap.header.NC + k;
+    for (var i = 0; i < emmap.header.NZ; i = i + PDB.map_step) {
+      for (var j = 0; j < emmap.header.NY; j = j + PDB.map_step) {
+        for (var k = 0; k < emmap.header.NX; k = k + PDB.map_step) {
+          var m = i * emmap.header.NX * emmap.header.NY + j * emmap.header.NX + k;
 
           var v = emmap.data[i][j][k];
           if (v < threshold) continue;
           numblobs = numblobs + 1;
           var per = Math.floor(((v - emmap.header.min) / (1.0 * di)) * 99);
           //color = array[per];
-          var vec = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
-          var xyz = vec;
+          var xyz = new THREE.Vector3(i, j, k) ;
+          xyz = xyz.add(emmap.header.offset);
+          // var vec = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
+          // var xyz = vec;
           //var color = array[per];
           var atomSu = {
             coord: xyz,
@@ -3560,15 +3570,15 @@ PDB.painter = {
     console.log("time(ms):" + (new Date() - start));
   }, //ParticleSystem
   showMapSurface1: function(emmap, threshold, wireframe) {
-    var newScale = new THREE.Vector3(emmap.header.c / emmap.header.NS, emmap.header.b / emmap.header.NR, emmap.header.a / emmap.header.NC)
+    var newScale = new THREE.Vector3(emmap.header.c / emmap.header.NZ, emmap.header.b / emmap.header.NY, emmap.header.a / emmap.header.NX)
     var wf = PDB.tool.getValue(wireframe, false);
     var offset = PDB.GeoCenterOffset;
     var minx = emmap.center.x,
       miny = emmap.center.y,
       minz = emmap.center.z;
-    var maxx = emmap.center.x + emmap.header.NS,
-      maxy = emmap.center.y + emmap.header.NR,
-      maxz = emmap.center.z + emmap.header.NC;
+    var maxx = emmap.center.x + emmap.header.NX,
+      maxy = emmap.center.y + emmap.header.NY,
+      maxz = emmap.center.z + emmap.header.NZ;
     // MATERIALS
     var material = new THREE.MeshPhongMaterial({
       color: 0x000000,
@@ -3587,10 +3597,10 @@ PDB.painter = {
     }
 
     var di = emmap.header.max - emmap.header.min;
-    for (var i = 0; i < emmap.header.NC; i++) {
-      for (var j = 0; j < emmap.header.NR; j++) {
-        for (var k = 0; k < emmap.header.NS; k++) {
-          var m = i * emmap.header.NS * emmap.header.NR + j * emmap.header.NS + k;
+    for (var i = 0; i < emmap.header.NX; i++) {
+      for (var j = 0; j < emmap.header.NY; j++) {
+        for (var k = 0; k < emmap.header.NZ; k++) {
+          var m = i * emmap.header.NY * emmap.header.NZ + j * emmap.header.NZ + k;
 
           var v = emmap.data[i][j][k];
           if (v < threshold) continue;
@@ -3670,15 +3680,15 @@ PDB.painter = {
     switch (dimensionType) {
       case PDB.DIMENSION_X:
         var val = slice;
-        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NR, emmap.header.NS, "", PDB.DIMENSION_X, val, emmap);
+        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NY, emmap.header.NX, "", PDB.DIMENSION_X, val, emmap);
         break;
       case PDB.DIMENSION_Y:
         var val = slice;
-        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NC, emmap.header.NS, "", PDB.DIMENSION_Y, val, emmap);
+        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NZ, emmap.header.NX, "", PDB.DIMENSION_Y, val, emmap);
         break;
       case PDB.DIMENSION_Z:
         var val = slice;
-        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NC, emmap.header.NR, "", PDB.DIMENSION_Z, val, emmap);
+        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NZ, emmap.header.NY, "", PDB.DIMENSION_Z, val, emmap);
         break;
     }
 
