@@ -1804,6 +1804,7 @@ PDB.render = {
               if (tr) {
                 tr.style.background = "red";
                 PDB.SELECTED_MUTATION = mutation.pos + mutation.p_change;
+                  window.location.hash = "#"+PDB.SELECTED_MUTATION;
               }
             } else if (INTERSECTED.userData.presentAtom != undefined) {
               // PDB.painter.showAtomLabel(INTERSECTED.userData.presentAtom);
