@@ -157,7 +157,7 @@ EmMapParser = {
     iy = map_header.MAPR - 1;
     iz = map_header.MAPS - 1;
 
-    offset = (offset[ix], offset[iy], offset[iz])
+    //var offset = (offset[ix], offset[iy], offset[iz])
 
     map_header.voxelsize = new THREE.Vector3(map_header.xlen/map_header.MX,
       map_header.ylen/map_header.MY,
@@ -168,7 +168,8 @@ EmMapParser = {
     map_header.offset = new THREE.Vector3(map_header.offset[ix], map_header.offset[iy],
       map_header.offset[iz]);
     // NEEED to comfirm
-    map_header.offset = map_header.offset.divide( map_header.voxelsize) ;
+    // map_header.offset = map_header.offset.divide( map_header.voxelsize) ;
+    //map_header.offset = map_header.offset.multipy( map_header.voxelsize) ;
 
 
     const h = map_header

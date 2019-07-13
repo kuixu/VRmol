@@ -3275,7 +3275,8 @@ PDB.painter = {
           var v = emmap.data[i][j][k];
           if (v > threshold) {
             var p = new THREE.Vector3(i, j, k) ;
-            // p = p.add(emmap.header.offset);
+            p = p.add(emmap.header.offset);
+
             var per = (v - threshold) / (1.0 * (emmap.header.max - threshold));
             var color = scale(per).hex();
             PDB.drawer.drawDot(PDB.GROUP_MAP, p, color);
@@ -3284,8 +3285,11 @@ PDB.painter = {
       }
     }
     var newScale = emmap.header.voxelsize; // new THREE.Vector3(emmap.header.a / emmap.header.NX, emmap.header.b / emmap.header.NY, emmap.header.c / emmap.header.NZ);
-    PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x, newScale.y, newScale.z);
+
     PDB.GROUP[PDB.GROUP_MAP].position.applyMatrix4(emmap.header.matrix);
+    PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x, newScale.y, newScale.z);
+    // PDB scene offset
+    PDB.GROUP[PDB.GROUP_MAP].position.copy(PDB.GeoCenterOffset);
     // PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
   },
   // point material
