@@ -758,8 +758,13 @@ PDB.tool = {
   setFaceColor: function(geometry, posObj) {
     var f0 = (posObj.x * posObj.width + posObj.y) * 2;
     var f1 = f0 + 1;
-    geometry.faces[f0].materialIndex = posObj.colorIndex;
-    geometry.faces[f1].materialIndex = posObj.colorIndex;
+	if(geometry.faces[f0]){
+		geometry.faces[f0].materialIndex = posObj.colorIndex;
+	}
+    if(geometry.faces[f1]){
+		geometry.faces[f1].materialIndex = posObj.colorIndex;
+	}
+    
   },
 
   toHumanByte: function(limit) {
