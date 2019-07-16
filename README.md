@@ -74,7 +74,7 @@ The options and their data types supported in VRmol are shown in the table below
 | :------ | :------ |:------ |:------ |
 | id | String|PDB code|4 charactors|
 |panelShow|Integer|Show:1, Hide:0|Show menu panel or not|
-|mainMode|Integer|LINE:1, DOT:2,BACKBONE:3, SPHERE:4, STICK:5, BALL_AND_ROD:6, TUBE:7, RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11, RIBBON_RAILWAY:12, CARTOON_SSE:13, SURFACE:14|Main Structure Representation|
+|mainMode|Integer|LINE:1, DOT:2, BACKBONE:3, SPHERE:4, STICK:5, BALL_AND_ROD:6, TUBE:7, RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11, RIBBON_RAILWAY:12, CARTOON_SSE:13, SURFACE:14|Main Structure Representation|
 |showSurface|Integer|Show:1, Hide:0|Show surface panel or not|
 |surfaceOpc|Float|0~1|Transparency of surface|
 |surfaceType|Integer|Van der Waals surface:1, solvent excluded surface:2, solvent accessible surface:3, molecular surface:4|Surface type|
