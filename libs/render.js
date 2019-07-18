@@ -1787,56 +1787,6 @@ PDB.render = {
               INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
               INTERSECTED.material.emissive.setHex(0xff0000);
             }
-            //deal with distance and angle
-            if (PDB.SELECTION_ATOM && PDB.trigger === PDB.TRIGGER_EVENT_DISTANCE) {
-                var atom = INTERSECTED.userData.presentAtom;
-                atom["pos_curr"] = atom.pos_centered;
-                if (PDB.distanceArray.length > 0) {
-                    if (!PDB.tool.equalAtom(PDB.distanceArray[PDB.distanceArray.length - 1], atom)) {
-                        PDB.distanceArray.push(atom);
-                    }
-                } else {
-                    PDB.distanceArray.push(atom);
-                }
-
-                if (PDB.distanceArray.length === 2) {
-                    var locationStart = PDB.distanceArray[0];
-                    var locationEnd = PDB.distanceArray[1];
-                    PDB.painter.showDistance(locationStart, locationEnd);
-                    PDB.distanceArray = [];
-                }
-            }else if(PDB.SELECTION_ATOM &&  PDB.trigger === PDB.TRIGGER_EVENT_ANGLE){
-                var atom = INTERSECTED.userData.presentAtom;
-                atom["pos_curr"] = atom.pos_centered;
-                if (PDB.distanceArray.length > 0) {
-                    if (!PDB.tool.equalAtom(PDB.distanceArray[PDB.distanceArray.length - 1], atom)) {
-                        PDB.distanceArray.push(atom);
-                    }
-                } else {
-                    PDB.distanceArray.push(atom);
-                }
-
-                if (PDB.distanceArray.length === 2) {
-                    var locationStart = PDB.distanceArray[0];
-                    var locationEnd = PDB.distanceArray[1];
-                    PDB.painter.showDistance(locationStart, locationEnd);
-                } else if (PDB.distanceArray.length === 3) {
-                    var locationStart = PDB.distanceArray[1];
-                    var locationEnd = PDB.distanceArray[2];
-                    PDB.painter.showDistance(locationStart, locationEnd);
-                    var anglePoint = locationStart;
-                    var edgePoint1 = PDB.distanceArray[0];
-                    var edgePoint2 = locationEnd;
-                    var anglePointPos = [anglePoint.pos_curr.x, anglePoint.pos_curr.y, anglePoint.pos_curr.z];
-                    var edgePoint1Pos = [edgePoint1.pos_curr.x, edgePoint1.pos_curr.y, edgePoint1.pos_curr.z];
-                    var edgePoint2Pos = [edgePoint2.pos_curr.x, edgePoint2.pos_curr.y, edgePoint2.pos_curr.z];
-                    var ms = PDB.tool.getAngleMeasurement(anglePointPos, edgePoint1Pos, edgePoint2Pos);
-                    var labelPos = locationStart.pos_curr;
-                    PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, labelPos,
-                        ms.result, "", anglePoint.color, 180);
-                    PDB.distanceArray = [];
-                }
-            }
 
             //deal with mutation
             if (INTERSECTED.userData.mutation != undefined) {
@@ -1890,7 +1840,7 @@ PDB.render = {
         } else {
           var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
           if (selectedMutation) {
-            selectedMutation.style.background = "transparent";
+              selectedMutation.style.background = "transparent";
           }
           if (INTERSECTED && INTERSECTED.material != undefined && INTERSECTED.material.emissive != undefined) {
             INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);

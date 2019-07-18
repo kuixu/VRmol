@@ -69,7 +69,81 @@ PDB.controller = {
     // PDB.painter.showResidueByThreeTravel();
 
     // });
+      document.addEventListener("mouseup", (event) => {
+          raycasterFor3.setFromCamera(mouse, camera);
+          var allObjs = [];
+          var groupMain = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MAIN]];
+          var groupHet = PDB.GROUP[PDB.GROUP_HET];
+          var groupMutation = PDB.GROUP[PDB.GROUP_MUTATION];
+          if (groupMain != undefined && groupMain.children != undefined && groupMain.children.length > 0) {
+              for (var i = 0; i < groupMain.children.length; i++) {
+                  allObjs.push(groupMain.children[i]);
+              }
+          }
+          if (groupHet != undefined && groupHet.children != undefined && groupHet.children.length > 0) {
+              for (var i = 0; i < groupHet.children.length; i++) {
+                  allObjs.push(groupHet.children[i]);
+              }
+          }
+          if (groupMutation != undefined && groupMutation.children != undefined && groupMutation.children.length > 0) {
+              for (var i = 0; i < groupMutation.children.length; i++) {
+                  allObjs.push(groupMutation.children[i]);
+              }
+          }
+          var intersects = raycasterFor3.intersectObjects(allObjs);
+          if(intersects.length > 0 ){
+              var INTERSECTED = intersects[0].object;
+              if (PDB.SELECTION_ATOM && PDB.trigger === PDB.TRIGGER_EVENT_DISTANCE) {
+                  var atom = INTERSECTED.userData.presentAtom;
+                  atom["pos_curr"] = atom.pos_centered;
+                  if (PDB.distanceArray.length > 0) {
+                      if (!PDB.tool.equalAtom(PDB.distanceArray[PDB.distanceArray.length - 1], atom)) {
+                          PDB.distanceArray.push(atom);
+                      }
+                  } else {
+                      PDB.distanceArray.push(atom);
+                  }
 
+                  if (PDB.distanceArray.length === 2) {
+                      var locationStart = PDB.distanceArray[0];
+                      var locationEnd = PDB.distanceArray[1];
+                      PDB.painter.showDistance(locationStart, locationEnd);
+                      PDB.distanceArray = [];
+                  }
+              }else if(PDB.SELECTION_ATOM &&  PDB.trigger === PDB.TRIGGER_EVENT_ANGLE){
+                  var atom = INTERSECTED.userData.presentAtom;
+                  atom["pos_curr"] = atom.pos_centered;
+                  if (PDB.distanceArray.length > 0) {
+                      if (!PDB.tool.equalAtom(PDB.distanceArray[PDB.distanceArray.length - 1], atom)) {
+                          PDB.distanceArray.push(atom);
+                      }
+                  } else {
+                      PDB.distanceArray.push(atom);
+                  }
+
+                  if (PDB.distanceArray.length === 2) {
+                      var locationStart = PDB.distanceArray[0];
+                      var locationEnd = PDB.distanceArray[1];
+                      PDB.painter.showDistance(locationStart, locationEnd);
+                  } else if (PDB.distanceArray.length === 3) {
+                      var locationStart = PDB.distanceArray[1];
+                      var locationEnd = PDB.distanceArray[2];
+                      PDB.painter.showDistance(locationStart, locationEnd);
+                      var anglePoint = locationStart;
+                      var edgePoint1 = PDB.distanceArray[0];
+                      var edgePoint2 = locationEnd;
+                      var anglePointPos = [anglePoint.pos_curr.x, anglePoint.pos_curr.y, anglePoint.pos_curr.z];
+                      var edgePoint1Pos = [edgePoint1.pos_curr.x, edgePoint1.pos_curr.y, edgePoint1.pos_curr.z];
+                      var edgePoint2Pos = [edgePoint2.pos_curr.x, edgePoint2.pos_curr.y, edgePoint2.pos_curr.z];
+                      var ms = PDB.tool.getAngleMeasurement(anglePointPos, edgePoint1Pos, edgePoint2Pos);
+                      var labelPos = locationStart.pos_curr;
+                      PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, labelPos,
+                          ms.result, "", anglePoint.color, 180);
+                      PDB.distanceArray = [];
+                  }
+              }
+          }
+      });
 
     vrMode.addEventListener('click', function(e) {
       this.style.display = "none";
