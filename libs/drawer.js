@@ -1174,7 +1174,7 @@ PDB.drawer = {
               var posObj = {
                 x: j,
                 y: k,
-                width: emmap.header.NY,
+                width: emmap.header.NX,
                 colorIndex: per
               };
               PDB.tool.setFaceColor(geometry, posObj)

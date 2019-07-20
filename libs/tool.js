@@ -951,54 +951,66 @@ PDB.tool = {
 
       var solidMap = document.getElementById("solidMap");
       solidMap.addEventListener('click', function(e) {
-        PDB.render.clearGroupIndex(PDB.GROUP_MAP);
-        PDB.EMMAP.TYPE = 0;
-        PDB.map_surface_show = 0;
-        if (PDB.EMMAP.DATA) {
-          var thresholdObj = document.getElementById("currThresHold");
-          PDB.painter.showMapSolid(PDB.EMMAP.DATA, Number(thresholdObj.innerHTML));
-        }
+		PDB.tool.showSegmentholder(true, true);
+		setTimeout(function(e) {
+			PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+			PDB.EMMAP.TYPE = 0;
+			PDB.map_surface_show = 0;
+			if (PDB.EMMAP.DATA) {
+			  var thresholdObj = document.getElementById("currThresHold");
+			  PDB.painter.showMapSolid(PDB.EMMAP.DATA, Number(thresholdObj.innerHTML));
+			}
+		PDB.tool.showSegmentholder(false, false);
+		}, PDB.HOLDERTIME);
       });
       var surfaceMap = document.getElementById("surfaceMap");
       surfaceMap.addEventListener('click', function(e) {
-        PDB.EMMAP.TYPE = 1;
-        if (PDB.map_surface_show === 0) {
-          PDB.render.clearGroupIndex(PDB.GROUP_MAP);
-          if (PDB.EMMAP.DATA) {
-            var thresholdObj = document.getElementById("currThresHold");
-            PDB.painter.showMapSurface(PDB.EMMAP.DATA, Number(thresholdObj.innerHTML), false);
-          }
-        } else {
-          var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
-          if (surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh) {
-            var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
-            if (mesh.material !== undefined) {
-              mesh.material.wireframe = false;
-            }
-          }
-        }
-        PDB.map_surface_show = 1;
+		PDB.tool.showSegmentholder(true, true);
+		setTimeout(function(e) {
+			PDB.EMMAP.TYPE = 1;
+			if (PDB.map_surface_show === 0) {
+			  PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+			  if (PDB.EMMAP.DATA) {
+				var thresholdObj = document.getElementById("currThresHold");
+				PDB.painter.showMapSurface(PDB.EMMAP.DATA, Number(thresholdObj.innerHTML), false);
+			  }
+			} else {
+			  var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
+			  if (surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh) {
+				var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
+				if (mesh.material !== undefined) {
+				  mesh.material.wireframe = false;
+				}
+			  }
+			}
+			PDB.map_surface_show = 1;
+			PDB.tool.showSegmentholder(false, false);
+		}, PDB.HOLDERTIME);
       });
 
       var meshMap = document.getElementById("meshMap");
       meshMap.addEventListener('click', function(e) {
-        PDB.EMMAP.TYPE = 2;
-        if (PDB.map_surface_show === 0) {
-          PDB.render.clearGroupIndex(PDB.GROUP_MAP);
-          if (PDB.EMMAP.DATA) {
-            var thresholdObj = document.getElementById("currThresHold");
-            PDB.painter.showMapSurface(PDB.EMMAP.DATA, Number(thresholdObj.innerHTML), true);
-          }
-        } else {
-          var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
-          if (surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh) {
-            var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
-            if (mesh.material !== undefined) {
-              mesh.material.wireframe = true;
-            }
-          }
-        }
-        PDB.map_surface_show = 1;
+		PDB.tool.showSegmentholder(true, true);
+		setTimeout(function(e) {
+			PDB.EMMAP.TYPE = 2;
+			if (PDB.map_surface_show === 0) {
+			  PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+			  if (PDB.EMMAP.DATA) {
+				var thresholdObj = document.getElementById("currThresHold");
+				PDB.painter.showMapSurface(PDB.EMMAP.DATA, Number(thresholdObj.innerHTML), true);
+			  }
+			} else {
+			  var surfaceGroup = PDB.GROUP[PDB.GROUP_MAP];
+			  if (surfaceGroup !== undefined && surfaceGroup.children.length > 0 && surfaceGroup.children[0] instanceof THREE.Mesh) {
+				var mesh = PDB.GROUP[PDB.GROUP_MAP].children[0];
+				if (mesh.material !== undefined) {
+				  mesh.material.wireframe = true;
+				}
+			  }
+			}
+			PDB.map_surface_show = 1;
+		PDB.tool.showSegmentholder(false, false);
+		}, PDB.HOLDERTIME);
       });
 
       //add step
@@ -1022,113 +1034,134 @@ PDB.tool = {
       //show or hide slice
       var showSlice = document.getElementById("showSlice");
       showSlice.addEventListener('click', function(e) {
-        PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
-        if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
-          PDB.EMMAP.SHOW_SLICE = true;
-          var value = Number(document.getElementById("sliceRange").value);
-          var currSlice = document.getElementById("currSlice");
-          currSlice.innerHTML = value;
-          var thresholdObj = document.getElementById("currThresHold");
-          var tvalue = Number(thresholdObj.innerHTML);
-          PDB.painter.showMapSlices(PDB.EMMAP.DATA, tvalue, value, PDB.DIMENSION);
-        } else {
-          PDB.EMMAP.SHOW_SLICE = false;
-        }
+		PDB.tool.showSegmentholder(true, true);
+		setTimeout(function(e) {
+			PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
+			if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
+			  PDB.EMMAP.SHOW_SLICE = true;
+			  var value = Number(document.getElementById("sliceRange").value);
+			  var currSlice = document.getElementById("currSlice");
+			  currSlice.innerHTML = value;
+			  var thresholdObj = document.getElementById("currThresHold");
+			  var tvalue = Number(thresholdObj.innerHTML);
+			  PDB.painter.showMapSlices(PDB.EMMAP.DATA, tvalue, value, PDB.DIMENSION);
+			} else {
+			  PDB.EMMAP.SHOW_SLICE = false;
+			}
+		PDB.tool.showSegmentholder(false, false);
+		}, PDB.HOLDERTIME);
       });
 
       //show or hide slice
       var showMap = document.getElementById("showMap");
       showMap.addEventListener('click', function(e) {
-        if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
-          PDB.EMMAP.SHOW_MAP = true;
-          var emmap = PDB.EMMAP.DATA;
-          var thresholdObj = document.getElementById("currThresHold");
-          var tvalue = Number(thresholdObj.innerHTML);
-          switch (PDB.EMMAP.TYPE) {
-            case 0:
-              PDB.painter.showMapSolid(emmap, tvalue);
-              break;
-            case 1:
-              PDB.painter.showMapSurface(emmap, tvalue, false);
-              break;
-            case 2:
-              PDB.painter.showMapSurface(emmap, tvalue, true);
-          }
-        } else {
-          PDB.render.clearGroupIndex(PDB.GROUP_MAP);
-          PDB.EMMAP.SHOW_MAP = false;
-        }
+		PDB.tool.showSegmentholder(true, true);
+		setTimeout(function(e) {
+			if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
+			  PDB.EMMAP.SHOW_MAP = true;
+			  var emmap = PDB.EMMAP.DATA;
+			  var thresholdObj = document.getElementById("currThresHold");
+			  var tvalue = Number(thresholdObj.innerHTML);
+			  switch (PDB.EMMAP.TYPE) {
+				case 0:
+				  PDB.painter.showMapSolid(emmap, tvalue);
+				  break;
+				case 1:
+				  PDB.painter.showMapSurface(emmap, tvalue, false);
+				  break;
+				case 2:
+				  PDB.painter.showMapSurface(emmap, tvalue, true);
+			  }
+			} else {
+			  PDB.render.clearGroupIndex(PDB.GROUP_MAP);
+			  PDB.EMMAP.SHOW_MAP = false;
+			}
+		PDB.tool.showSegmentholder(false, false);
+		}, PDB.HOLDERTIME);	
       });
 
       //bar slice
       var sliceRange = document.getElementById("sliceRange");
       sliceRange.addEventListener('change', function(e) {
-        var emmap = PDB.EMMAP.DATA;
-        var value = Number(e.target.value);
-        PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
-        var currSlice = document.getElementById("currSlice");
-        currSlice.innerHTML = value;
-        if (PDB.EMMAP.SHOW_SLICE) {
-          PDB.painter.showMapSlices(emmap, emmap.threshold, value, PDB.DIMENSION);
-        }
+		PDB.tool.showSegmentholder(true, true);
+		setTimeout(function(e) {
+			var emmap = PDB.EMMAP.DATA;
+			var value = Number(e.target.value);
+			PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
+			var currSlice = document.getElementById("currSlice");
+			currSlice.innerHTML = value;
+			if (PDB.EMMAP.SHOW_SLICE) {
+			  PDB.painter.showMapSlices(emmap, emmap.threshold, value, PDB.DIMENSION);
+			}
+		PDB.tool.showSegmentholder(false, false);
+		}, PDB.HOLDERTIME);
       });
       var thresholdRange = document.getElementById("thresholdRange");
       thresholdRange.addEventListener('change', function(e) {
-        var emmap = PDB.EMMAP.DATA;
-        if (emmap) {
-          var value = Number(e.target.value);
-          var perValue = PDB.tool.getValueByPercent(emmap.header.min, emmap.header.max, value);
-          var currThresHold = document.getElementById("currThresHold");
-          currThresHold.innerHTML = perValue.toFixed(3);
-          if (PDB.EMMAP.SHOW_MAP) {
-            PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
-            switch (PDB.EMMAP.TYPE) {
-              case 0:
-                PDB.painter.showMapSolid(emmap, perValue);
-                break;
-              case 1:
-                PDB.painter.showMapSurface(emmap, perValue, false);
-                break;
-              case 2:
-                PDB.painter.showMapSurface(emmap, perValue, true);
-            }
-          }
-        }
+		PDB.tool.showSegmentholder(true, true);
+		setTimeout(function(e) {
+			var emmap = PDB.EMMAP.DATA;
+			if (emmap) {
+			  var value = Number(e.target.value);
+			  var perValue = PDB.tool.getValueByPercent(emmap.header.min, emmap.header.max, value);
+			  var currThresHold = document.getElementById("currThresHold");
+			  currThresHold.innerHTML = perValue.toFixed(3);
+			  if (PDB.EMMAP.SHOW_MAP) {
+				PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+				switch (PDB.EMMAP.TYPE) {
+				  case 0:
+					PDB.painter.showMapSolid(emmap, perValue);
+					break;
+				  case 1:
+					PDB.painter.showMapSurface(emmap, perValue, false);
+					break;
+				  case 2:
+					PDB.painter.showMapSurface(emmap, perValue, true);
+				}
+			  }
+			}
+		PDB.tool.showSegmentholder(false, false);
+		}, PDB.HOLDERTIME);
       });
 
       var dimension = document.getElementById("dimension");
       dimension.addEventListener('change', function(e) {
-        var v = e.target.value;
-        if (v) {
-          v = Number(v);
-        }
-        PDB.DIMENSION = v;
-        var emmap = PDB.EMMAP.DATA;
-        if (emmap && PDB.EMMAP.SHOW_SLICE) {
-          PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
-          var sliceRange = document.getElementById("sliceRange");
-          sliceRange.min = 1;
-          switch (PDB.DIMENSION) {
-            case PDB.DIMENSION_X:
-              sliceRange.max = Number(emmap.header.NX);
-              break;
-            case PDB.DIMENSION_Y:
-              sliceRange.max = Number(emmap.header.NY);
-              break;
-            case PDB.DIMENSION_Z:
-              sliceRange.max = Number(emmap.header.NZ);
-              break;
-          }
-          var sliceRange = document.getElementById("sliceRange");
-          sliceRange.value = 1;
-          var minSlice = document.getElementById("minSlice");
-          minSlice.innerHTML = sliceRange.min;
-          var maxSlice = document.getElementById("maxSlice");
-          maxSlice.innerHTML = sliceRange.max;
-          var currSlice = document.getElementById("currSlice");
-          currSlice.innerHTML = sliceRange.value;
-          PDB.painter.showMapSlices(emmap, emmap.threshold, 0, PDB.DIMENSION);
-        }
+		PDB.tool.showSegmentholder(true, true);
+		setTimeout(function(e) {
+			var v = e.target.value;
+			if (v) {
+			  v = Number(v);
+			}
+			PDB.DIMENSION = v;
+			var emmap = PDB.EMMAP.DATA;
+			if (emmap && PDB.EMMAP.SHOW_SLICE) {
+			  PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
+			  var sliceRange = document.getElementById("sliceRange");
+			  sliceRange.min = 1;
+			  switch (PDB.DIMENSION) {
+				case PDB.DIMENSION_X:
+				  sliceRange.max = Number(emmap.header.NX);
+				  break;
+				case PDB.DIMENSION_Y:
+				  sliceRange.max = Number(emmap.header.NY);
+				  break;
+				case PDB.DIMENSION_Z:
+				  sliceRange.max = Number(emmap.header.NZ);
+				  break;
+			  }
+			  var sliceRange = document.getElementById("sliceRange");
+			  sliceRange.value = 1;
+			  var minSlice = document.getElementById("minSlice");
+			  minSlice.innerHTML = sliceRange.min;
+			  var maxSlice = document.getElementById("maxSlice");
+			  maxSlice.innerHTML = sliceRange.max;
+			  var currSlice = document.getElementById("currSlice");
+			  currSlice.innerHTML = sliceRange.value;
+			  PDB.painter.showMapSlices(emmap, emmap.threshold, 0, PDB.DIMENSION);
+			}
+		PDB.tool.showSegmentholder(false, false);
+		}, PDB.HOLDERTIME);
+        
       });
     }
   },

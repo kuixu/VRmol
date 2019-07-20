@@ -3268,29 +3268,32 @@ PDB.painter = {
     }
   },
   showMapSolid: function(emmap, threshold) {
-    var scale = chroma.scale(['green', 'red']);
-    for (var i = 0; i < emmap.header.NZ; i = i + PDB.map_step) {
-      for (var j = 0; j < emmap.header.NY; j = j + PDB.map_step) {
-        for (var k = 0; k < emmap.header.NX; k = k + PDB.map_step) {
-          var v = emmap.data[i][j][k];
-          if (v > threshold) {
-            var p = new THREE.Vector3(i, j, k) ;
-            p = p.add(emmap.header.offset);
+	if(emmap.header&&emmap.header.NZ){
+		var scale = chroma.scale(['green', 'red']);
+		for (var i = 0; i < emmap.header.NZ; i = i + PDB.map_step) {
+		  for (var j = 0; j < emmap.header.NY; j = j + PDB.map_step) {
+			for (var k = 0; k < emmap.header.NX; k = k + PDB.map_step) {
+			  var v = emmap.data[i][j][k];
+			  if (v > threshold) {
+				var p = new THREE.Vector3(i, j, k) ;
+				p = p.add(emmap.header.offset);
 
-            var per = (v - threshold) / (1.0 * (emmap.header.max - threshold));
-            var color = scale(per).hex();
-            PDB.drawer.drawDot(PDB.GROUP_MAP, p, color);
-          }
-        }
-      }
-    }
-    var newScale = emmap.header.voxelsize; // new THREE.Vector3(emmap.header.a / emmap.header.NX, emmap.header.b / emmap.header.NY, emmap.header.c / emmap.header.NZ);
+				var per = (v - threshold) / (1.0 * (emmap.header.max - threshold));
+				var color = scale(per).hex();
+				PDB.drawer.drawDot(PDB.GROUP_MAP, p, color);
+			  }
+			}
+		  }
+		}
+		var newScale = emmap.header.voxelsize; // new THREE.Vector3(emmap.header.a / emmap.header.NX, emmap.header.b / emmap.header.NY, emmap.header.c / emmap.header.NZ);
 
-    PDB.GROUP[PDB.GROUP_MAP].position.applyMatrix4(emmap.header.matrix);
-    PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x, newScale.y, newScale.z);
-    // PDB scene offset
-    PDB.GROUP[PDB.GROUP_MAP].position.copy(PDB.GeoCenterOffset);
-    // PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
+		PDB.GROUP[PDB.GROUP_MAP].position.applyMatrix4(emmap.header.matrix);
+		PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x, newScale.y, newScale.z);
+		// PDB scene offset
+		PDB.GROUP[PDB.GROUP_MAP].position.copy(PDB.GeoCenterOffset);
+		// PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
+	}
+    
   },
   // point material
   showMapSolid00000: function(emmap, threshold) {
@@ -3457,119 +3460,122 @@ PDB.painter = {
   //ParticleSystem
   showMapSurface: function(emmap, threshold, wireframe) {
     var start = new Date();
-    var newScale = emmap.header.voxelsize;
-    var wf = PDB.tool.getValue(wireframe, false);
-    var offset = PDB.GeoCenterOffset;
-    // var minx = emmap.center.x,
-    //   miny = emmap.center.y,
-    //   minz = emmap.center.z;
-    // var maxx = emmap.center.x + emmap.header.NX,
-    //   maxy = emmap.center.y + emmap.header.NY,
-    //   maxz = emmap.center.z + emmap.header.NZ;
-    var minx = emmap.header.offset.x,
-      miny = emmap.header.offset.y,
-      minz = emmap.header.offset.z;
-    var maxx = emmap.header.offset.x + emmap.header.NX,
-      maxy = emmap.header.offset.y + emmap.header.NY,
-      maxz = emmap.header.offset.z + emmap.header.NZ;
-    // MATERIALS
-    var material = new THREE.MeshPhongMaterial({
-      color: 0x000000,
-      specular: 0x888888,
-      shininess: 250
-    });
-    // MARCHING CUBES
-    var atoms = {};
-    var color = new THREE.Color("#3366cc");
-    var numblobs = 0;
-    //var scale = chroma.scale(['green', 'red']);
-    //var array = [];
-    // for(var i=1000;i< 1100;i++){
-    //     var color = new THREE.Color(scale((i-1000)*0.01).hex());
-    //     //var color = new THREE.Color(w3m.rgb[i][0],w3m.rgb[i][1],w3m.rgb[i][2]);
-    //     array.push(color);
-    // }
+	if(emmap.header&&emmap.header.voxelsize){
+		var newScale = emmap.header.voxelsize;
+		var wf = PDB.tool.getValue(wireframe, false);
+		var offset = PDB.GeoCenterOffset;
+		// var minx = emmap.center.x,
+		//   miny = emmap.center.y,
+		//   minz = emmap.center.z;
+		// var maxx = emmap.center.x + emmap.header.NX,
+		//   maxy = emmap.center.y + emmap.header.NY,
+		//   maxz = emmap.center.z + emmap.header.NZ;
+		var minx = emmap.header.offset.x,
+		  miny = emmap.header.offset.y,
+		  minz = emmap.header.offset.z;
+		var maxx = emmap.header.offset.x + emmap.header.NX,
+		  maxy = emmap.header.offset.y + emmap.header.NY,
+		  maxz = emmap.header.offset.z + emmap.header.NZ;
+		// MATERIALS
+		var material = new THREE.MeshPhongMaterial({
+		  color: 0x000000,
+		  specular: 0x888888,
+		  shininess: 250
+		});
+		// MARCHING CUBES
+		var atoms = {};
+		var color = new THREE.Color("#3366cc");
+		var numblobs = 0;
+		//var scale = chroma.scale(['green', 'red']);
+		//var array = [];
+		// for(var i=1000;i< 1100;i++){
+		//     var color = new THREE.Color(scale((i-1000)*0.01).hex());
+		//     //var color = new THREE.Color(w3m.rgb[i][0],w3m.rgb[i][1],w3m.rgb[i][2]);
+		//     array.push(color);
+		// }
 
-    var di = emmap.header.max - emmap.header.min;
-    for (var i = 0; i < emmap.header.NZ; i = i + PDB.map_step) {
-      for (var j = 0; j < emmap.header.NY; j = j + PDB.map_step) {
-        for (var k = 0; k < emmap.header.NX; k = k + PDB.map_step) {
-          var m = i * emmap.header.NX * emmap.header.NY + j * emmap.header.NX + k;
+		var di = emmap.header.max - emmap.header.min;
+		for (var i = 0; i < emmap.header.NZ; i = i + PDB.map_step) {
+		  for (var j = 0; j < emmap.header.NY; j = j + PDB.map_step) {
+			for (var k = 0; k < emmap.header.NX; k = k + PDB.map_step) {
+			  var m = i * emmap.header.NX * emmap.header.NY + j * emmap.header.NX + k;
 
-          var v = emmap.data[i][j][k];
-          if (v < threshold) continue;
-          numblobs = numblobs + 1;
-          var per = Math.floor(((v - emmap.header.min) / (1.0 * di)) * 99);
-          //color = array[per];
-          var xyz = new THREE.Vector3(i, j, k) ;
-          xyz = xyz.add(emmap.header.offset);
-          // var vec = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
-          // var xyz = vec;
-          //var color = array[per];
-          var atomSu = {
-            coord: xyz,
-            name: "c",
-            serial: m,
-            elem: "c",
-            resn: "ala",
-            resi: 1,
-            color: color
-          };
-          atoms[m] = atomSu;
-        }
-      }
-    }
+			  var v = emmap.data[i][j][k];
+			  if (v < threshold) continue;
+			  numblobs = numblobs + 1;
+			  var per = Math.floor(((v - emmap.header.min) / (1.0 * di)) * 99);
+			  //color = array[per];
+			  var xyz = new THREE.Vector3(i, j, k) ;
+			  xyz = xyz.add(emmap.header.offset);
+			  // var vec = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
+			  // var xyz = vec;
+			  //var color = array[per];
+			  var atomSu = {
+				coord: xyz,
+				name: "c",
+				serial: m,
+				elem: "c",
+				resn: "ala",
+				resi: 1,
+				color: color
+			  };
+			  atoms[m] = atomSu;
+			}
+		  }
+		}
 
-    subtract = 12;
-    strength = 1.2 / ((Math.sqrt(numblobs) - 1) / 4 + 1);
+		subtract = 12;
+		strength = 1.2 / ((Math.sqrt(numblobs) - 1) / 4 + 1);
 
-    //====================================
-    var ps = ProteinSurface({
-      min: {
-        x: minx,
-        y: miny,
-        z: minz
-      },
-      max: {
-        x: maxx,
-        y: maxy,
-        z: maxz
-      },
-      atoms: atoms,
-      type: PDB.SURFACE_TYPE,
-    });
-    var verts = ps.verts;
-    var faces = ps.faces;
-    var geo = new THREE.Geometry();
-    geo.vertices = verts.map(function(v) {
-      var r = new THREE.Vector3(v.x, v.y, v.z);
-      r.atomid = v.atomid;
-      return r;
-    });
-    geo.faces = faces.map(function(f) {
-      return new THREE.Face3(f.a, f.b, f.c);
-    });
-    geo.computeFaceNormals();
-    geo.computeVertexNormals(false);
-    //this.surfaces[type] = geo;
+		//====================================
+		var ps = ProteinSurface({
+		  min: {
+			x: minx,
+			y: miny,
+			z: minz
+		  },
+		  max: {
+			x: maxx,
+			y: maxy,
+			z: maxz
+		  },
+		  atoms: atoms,
+		  type: PDB.SURFACE_TYPE,
+		});
+		var verts = ps.verts;
+		var faces = ps.faces;
+		var geo = new THREE.Geometry();
+		geo.vertices = verts.map(function(v) {
+		  var r = new THREE.Vector3(v.x, v.y, v.z);
+		  r.atomid = v.atomid;
+		  return r;
+		});
+		geo.faces = faces.map(function(f) {
+		  return new THREE.Face3(f.a, f.b, f.c);
+		});
+		geo.computeFaceNormals();
+		geo.computeVertexNormals(false);
+		//this.surfaces[type] = geo;
 
-    var geoc = geo.clone(); // A clone is necessary because the state of the geometry object will be changed.
-    geoc.faces.forEach(function(f) {
-      f.vertexColors = ['a', 'b', 'c'].map(function(d) {
-        return atoms[geo.vertices[f[d]].atomid].color;
-      });
-    });
-    var mesh = new THREE.Mesh(geoc, new THREE.MeshLambertMaterial({
-      vertexColors: THREE.VertexColors,
-      wireframe: wf,
-      opacity: PDB.SURFACE_OPACITY,
-      transparent: true,
-    }));
-    mesh.scale.set(newScale.x, newScale.y, newScale.z);
-    // mesh.rotation.y =  -Math.PI/2;
-    PDB.GROUP[PDB.GROUP_MAP].add(mesh);
-    PDB.GROUP[PDB.GROUP_MAP].visible = true;
-    PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x, newScale.y, newScale.z);
+		var geoc = geo.clone(); // A clone is necessary because the state of the geometry object will be changed.
+		geoc.faces.forEach(function(f) {
+		  f.vertexColors = ['a', 'b', 'c'].map(function(d) {
+			return atoms[geo.vertices[f[d]].atomid].color;
+		  });
+		});
+		var mesh = new THREE.Mesh(geoc, new THREE.MeshLambertMaterial({
+		  vertexColors: THREE.VertexColors,
+		  wireframe: wf,
+		  opacity: PDB.SURFACE_OPACITY,
+		  transparent: true,
+		}));
+		mesh.scale.set(newScale.x, newScale.y, newScale.z);
+		// mesh.rotation.y =  -Math.PI/2;
+		PDB.GROUP[PDB.GROUP_MAP].add(mesh);
+		PDB.GROUP[PDB.GROUP_MAP].visible = true;
+		PDB.GROUP[PDB.GROUP_MAP].scale.set(newScale.x, newScale.y, newScale.z);
+	}
+    
     // PDB.GROUP[PDB.GROUP_MAP].position.copy(new THREE.Vector3(emmap.header.x,emmap.header.y,emmap.header.z));
     console.log("time(ms):" + (new Date() - start));
   }, //ParticleSystem

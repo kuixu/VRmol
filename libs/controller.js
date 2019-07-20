@@ -331,6 +331,7 @@ PDB.controller = {
       if (ServerType !== 2) {
         url = SERVERURL + "/data/map01.json";
       }
+	  PDB.tool.showSegmentholder(true);
       PDB.tool.ajax.get(url, function(text) {
         //PDB.render.clear(2);
         PDB.MATERIALLIST = [];
@@ -386,10 +387,12 @@ PDB.controller = {
             }
 
             PDB.tool.changeDensityMapRangeValue(emmap);
+			PDB.tool.showSegmentholder(false);
           })
         } else {
           PDB.tool.printProgress(jsonObj.message);
         }
+		
       })
     });
 
