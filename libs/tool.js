@@ -952,7 +952,7 @@ PDB.tool = {
       var solidMap = document.getElementById("solidMap");
       solidMap.addEventListener('click', function(e) {
 		PDB.tool.showSegmentholder(true, true);
-		setTimeout(function(e) {
+		setTimeout(function() {
 			PDB.render.clearGroupIndex(PDB.GROUP_MAP);
 			PDB.EMMAP.TYPE = 0;
 			PDB.map_surface_show = 0;
@@ -966,7 +966,7 @@ PDB.tool = {
       var surfaceMap = document.getElementById("surfaceMap");
       surfaceMap.addEventListener('click', function(e) {
 		PDB.tool.showSegmentholder(true, true);
-		setTimeout(function(e) {
+		setTimeout(function() {
 			PDB.EMMAP.TYPE = 1;
 			if (PDB.map_surface_show === 0) {
 			  PDB.render.clearGroupIndex(PDB.GROUP_MAP);
@@ -991,7 +991,7 @@ PDB.tool = {
       var meshMap = document.getElementById("meshMap");
       meshMap.addEventListener('click', function(e) {
 		PDB.tool.showSegmentholder(true, true);
-		setTimeout(function(e) {
+		setTimeout(function() {
 			PDB.EMMAP.TYPE = 2;
 			if (PDB.map_surface_show === 0) {
 			  PDB.render.clearGroupIndex(PDB.GROUP_MAP);
@@ -1035,7 +1035,7 @@ PDB.tool = {
       var showSlice = document.getElementById("showSlice");
       showSlice.addEventListener('click', function(e) {
 		PDB.tool.showSegmentholder(true, true);
-		setTimeout(function(e) {
+		setTimeout(function() {
 			PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
 			if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
 			  PDB.EMMAP.SHOW_SLICE = true;
@@ -1056,7 +1056,7 @@ PDB.tool = {
       var showMap = document.getElementById("showMap");
       showMap.addEventListener('click', function(e) {
 		PDB.tool.showSegmentholder(true, true);
-		setTimeout(function(e) {
+		setTimeout(function() {
 			if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
 			  PDB.EMMAP.SHOW_MAP = true;
 			  var emmap = PDB.EMMAP.DATA;
@@ -1084,7 +1084,7 @@ PDB.tool = {
       var sliceRange = document.getElementById("sliceRange");
       sliceRange.addEventListener('change', function(e) {
 		PDB.tool.showSegmentholder(true, true);
-		setTimeout(function(e) {
+		setTimeout(function() {
 			var emmap = PDB.EMMAP.DATA;
 			var value = Number(e.target.value);
 			PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
@@ -1099,7 +1099,7 @@ PDB.tool = {
       var thresholdRange = document.getElementById("thresholdRange");
       thresholdRange.addEventListener('change', function(e) {
 		PDB.tool.showSegmentholder(true, true);
-		setTimeout(function(e) {
+		setTimeout(function() {
 			var emmap = PDB.EMMAP.DATA;
 			if (emmap) {
 			  var value = Number(e.target.value);
@@ -1127,7 +1127,7 @@ PDB.tool = {
       var dimension = document.getElementById("dimension");
       dimension.addEventListener('change', function(e) {
 		PDB.tool.showSegmentholder(true, true);
-		setTimeout(function(e) {
+		setTimeout(function() {
 			var v = e.target.value;
 			if (v) {
 			  v = Number(v);
