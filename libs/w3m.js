@@ -1791,7 +1791,7 @@ w3m.tool = {
     }
   },
   simpleFrame: function(path, frame, compute_NB) {
-    console.log("simpleFrame:" + frame);
+    //console.log("simpleFrame:" + frame);
     var compute_NB = w3m_isset(compute_NB) ? compute_NB : true;
     for (var i = 0, l = path.length; i < l; i++) {
       // mid
@@ -1808,7 +1808,7 @@ w3m.tool = {
     compute_NB ? this.compute_NB_by_rotation(frame) : void(0);
   },
   smoothFrame: function(path, frame, compute_NB) {
-    // console.log(frame);
+    //console.log("smoothFrame:");
     var offset = PDB.GeoCenterOffset;
     var compute_NB = w3m_isset(compute_NB) ? compute_NB : true,
       n = w3m.config.smooth_segment % 2 ? w3m.config.smooth_segment + 1 : w3m.config.smooth_segment,
@@ -1847,9 +1847,10 @@ w3m.tool = {
           if (PDB.residue && PDB.residue != "") {
             atom = w3m.tool.getMainAtomById(PDB.residue, id);
           }
-
-          if (atom) {
-            w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(xyz[0] + offset.x, xyz[1] + offset.y, xyz[2] + offset.z));
+		  
+			
+          if (atom) {			  
+             w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(xyz[0] + offset.x, xyz[1] + offset.y, xyz[2] + offset.z)); 
           }
 
         }
@@ -1859,7 +1860,7 @@ w3m.tool = {
 
   },
   naturalFrame: function(path, frame) {
-
+	//console.log("naturalFrame: ");
     var offset = PDB.GeoCenterOffset;
     // var tempPathArray  = [],
     // // tempIdArray		   = [],
@@ -1939,10 +1940,14 @@ w3m.tool = {
             atom = w3m.tool.getMainAtomById(PDB.residue, id);
           }
           if (atom) {
-            w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(xyz[0] + offset.x, xyz[1] + offset.y, xyz[2] + offset.z));
-            w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].binormals.push(new THREE.Vector3(binormal[0], binormal[1], binormal[2]));
-            w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].normals.push(new THREE.Vector3(normal[0], normal[1], normal[2]));
-            w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].tangents.push(new THREE.Vector3(tan[0], tan[1], tan[2]));
+				if(w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.length == ( w3m.config.smooth_segment+1)){
+					continue;
+				}
+				w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].path.push(new THREE.Vector3(xyz[0] + offset.x, xyz[1] + offset.y, xyz[2] + offset.z));
+				w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].binormals.push(new THREE.Vector3(binormal[0], binormal[1], binormal[2]));
+				w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].normals.push(new THREE.Vector3(normal[0], normal[1], normal[2]));
+				w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].tangents.push(new THREE.Vector3(tan[0], tan[1], tan[2])); 
+            
           }
 
 
@@ -1955,7 +1960,7 @@ w3m.tool = {
     w3m.CLENGTH = 0;
   },
   puttyFrame: function(path, frame, compute_NB) {
-    console.log("puttyFrame:" + frame);
+    //console.log("puttyFrame:" + frame);
     // path : [ id, xyz, color, , , , b_factor(6) ] => frame : [ id, xyz, color, , , , r(6) ]
     var compute_NB = w3m_isset(compute_NB) ? compute_NB : true,
       n = w3m.config.smooth_segment % 2 ? w3m.config.smooth_segment + 1 : w3m.config.smooth_segment,
@@ -3357,6 +3362,7 @@ w3m.tool = {
           var atom = w3m.tool.getMainAtomById(w3m.global.mol, shell[i][k][0]);
           // w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].sse = 11;
           if (atom && atom.resid) {
+			  //console.log(atom.resid);
             w3m.mol[w3m.global.mol].residueData[atom.chainname][atom.resid].arrow.push(pos);
           }
 
@@ -4129,6 +4135,7 @@ w3m.tool = {
     }
   },
   fillMainAsCubeStripRibbonRailwayArrow: function(rep, mol_id, chain_id, start, stop) {
+	  //console.log("fillMainAsCubeStripRibbonRailwayArrow:");
     var mol = w3m.mol[mol_id];
     if (mol.chain[chain_id] != w3m.CHAIN_AA) {
       this.fillNucleicAcid(mol_id, chain_id, start, stop);
@@ -4222,6 +4229,7 @@ w3m.tool = {
     this.fillMainAsCubeStripRibbonRailwayArrow(w3m.ARROW, mol_id, chain_id, start, stop);
   },
   fillMainAsCartoon: function(mol_id, chain_id, start, stop) {
+	//console.log("fillMainAsCartoon:");
     var offset = PDB.GeoCenterOffset;
     var mol = w3m.mol[mol_id];
     if (mol.chain[chain_id] != w3m.CHAIN_AA) {
@@ -5585,7 +5593,7 @@ w3m.pdb = function(text, drugname) {
 
           }
           _t_ = _t_.substring(0, _t_.length - 1);
-          console.log(_t_);
+          //console.log(_t_);
           PDB.allMainToms[chain_id][residue_id].tempID = undefined;
           return _t_;
 
