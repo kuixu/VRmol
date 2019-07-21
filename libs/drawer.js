@@ -69,6 +69,7 @@ PDB.drawer = {
     var mesh = new THREE.Mesh(geometry, material);
     mesh.name = text;
     var dir = new THREE.Vector3(0, 0, 0);
+    // var dir = camera.position;
     camera.getWorldDirection(dir);
     mesh.userData = {
       type: type,
@@ -78,7 +79,7 @@ PDB.drawer = {
     PDB.GROUP[group].position.copy(pos);
     PDB.GROUP[group].lookAt(dir);
     PDB.GROUP[group].add(mesh);
-	PDB.GROUP[group].rotateY(Math.PI);
+	PDB.GROUP[group].rotation.copy(camera.rotation);
   },
   drawText: function(group, pos, text, type, color, rotation) {
     var geometry = new THREE.TextGeometry(text, {
