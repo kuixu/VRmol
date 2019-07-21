@@ -68,16 +68,17 @@ PDB.drawer = {
     });
     var mesh = new THREE.Mesh(geometry, material);
     mesh.name = text;
-    mesh.position.copy(pos);
-    // mesh.rotation.copy(rotation);
-    // mesh.rotation.y += 180;
-    mesh.lookAt(camera.position);
+    var dir = new THREE.Vector3(0, 0, 0);
+    camera.getWorldDirection(dir);
     mesh.userData = {
       type: type,
       name: text,
       group: group
     };
+    PDB.GROUP[group].position.copy(pos);
+    PDB.GROUP[group].lookAt(dir);
     PDB.GROUP[group].add(mesh);
+	PDB.GROUP[group].rotateY(Math.PI);
   },
   drawText: function(group, pos, text, type, color, rotation) {
     var geometry = new THREE.TextGeometry(text, {
