@@ -804,8 +804,15 @@ function onTriggerUp(event) {
         var ms = PDB.tool.getAngleMeasurement(anglePointPos, edgePoint1Pos, edgePoint2Pos);
         //var labelPos = new THREE.Vector3(ms.label_xyz[0],ms.label_xyz[1],ms.label_xyz[2]);
         var labelPos = locationStart.pos_curr;
-        PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, labelPos,
+		
+		if (PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR) {
+			PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, labelPos,
           ms.result, "", anglePoint.color, 180);
+		}else{
+			PDB.drawer.drawTextForDistanceByDesktop(PDB.GROUP_MAIN, labelPos,
+          ms.result, "", anglePoint.color, 180);
+		}
+        
         PDB.distanceArray = [];
       }
       break;
