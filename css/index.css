@@ -441,6 +441,7 @@ button:active {
   cursor: pointer;
   background: #999999;
   font-family: Montserrat, sans-serif;
+  font-size: 12px;
   color: white;
 }
 
@@ -528,6 +529,10 @@ button:active {
   border: 1px solid #FFFFFF
 }
 
+.test{
+  margin-top: -2px;
+
+}
 .input-file {
   display: inline-block;
   position: relative;
@@ -540,10 +545,10 @@ button:active {
   border: 0 none;
   /* padding: 14px 10px; */
   padding: 14px 0px 14px 0px;
-  margin-left: -8px;
+  margin-left: -4px;
   font-size: 12px;
   font-weight: normal;
-  /*line-height: 18px; */
+  /* line-height: 18px;  */
   color: #fff;
   text-decoration: none;
 }
