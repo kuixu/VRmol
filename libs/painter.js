@@ -3076,11 +3076,17 @@ PDB.painter = {
     var distance = locationStart.pos_curr.distanceTo(locationEnd.pos_curr);
     var message = Number(distance).toFixed(2) + "A";
     var color = new THREE.Color(0.5, 0.5, 0.5);
-    // console.log('-------------------'+locationStart.pos_curr.x+'|'+locationStart.pos_curr.y);
     PDB.drawer.drawLine(PDB.GROUP_MAIN, startPos,
       endPos, color);
-    PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
-      message, "", locationStart.color, 180);
+    if (PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR) {
+        PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
+            message, "", locationStart.color, 180);
+    }else{
+        PDB.drawer.drawTextForDistanceByDesktop(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
+            message, "", locationStart.color, 180);
+    }
+    // PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
+    //   message, "", locationStart.color, 180);
   },
   showSegmentByStartEnd: function(startId, endId, selectMode, selectedRadius) {
     var isShowNonTube = false;

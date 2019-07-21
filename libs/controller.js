@@ -137,7 +137,7 @@ PDB.controller = {
                       var edgePoint2Pos = [edgePoint2.pos_curr.x, edgePoint2.pos_curr.y, edgePoint2.pos_curr.z];
                       var ms = PDB.tool.getAngleMeasurement(anglePointPos, edgePoint1Pos, edgePoint2Pos);
                       var labelPos = locationStart.pos_curr;
-                      PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, labelPos,
+                      PDB.drawer.drawTextForDistanceByDesktop(PDB.GROUP_MAIN, labelPos,
                           ms.result, "", anglePoint.color, 180);
                       PDB.distanceArray = [];
                   }
