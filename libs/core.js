@@ -12,7 +12,8 @@ if(ServerType ===1){
     SERVERURL= "https://vrmol.net";
 }
 var API_URL = "https://vrmol.life.tsinghua.edu.cn";
-var API_URL_EMMAP = "https://vrmol.net/server/api_em.php?pdbid=";
+var API_URL_EMMAP = "server/api_em.php?pdbid=";
+var API_SPEECH = "server/speech/service.php"
 PDB = {
   DOCKING_POS_START: {x:0,
 		y:0,
