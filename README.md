@@ -4,10 +4,14 @@
 
 We leverage the most cutting-edge computational technologies to develop a virtual reality (VR) system - VRmol - that provides the visualization and analysis of macromolecule structures in an infinite virtual environment on the web. VRmol is natively built with WebVR technology, providing all structural analysis functions in a fully immersive, inspiring virtual environment. It is convenient to use, runs on internet and requires no software downloading and installation. And by connecting to a number of cloud-based genomic and drug databases, it provides an integrative platform to perform advanced structural and translational research. It can be freely accessed online by typing [https://VRmol.net](https://VRmol.net?from=github) in VR-supported browser. 
 
+## Demo
+
+<img src="imgs/entervr-320.gif" width=50%>
+
 ## News
  - 05/17/2019: VRmol is return to normal.
  - 05/16/2019: The service provider is sufferring of Network Rounte Issue, VRmol server is outage.
- - 04/27/2019: VRmol is being on show at Tsinghua's 108th anniversary.
+ - 04/27/2019: VRmol is being on show at Tsinghua's 108th anniversary. [News from Tsinghua](http://life.tsinghua.edu.cn/publish/smkx/11192/2019/20190429100026441636257/20190429100026441636257_.html)
  - 02/27/2019: VRmol is applied in teaching structural biology cource at Tsinghua University.
 
 ## Documentation
@@ -39,20 +43,17 @@ VRmol provides two modes:
 
  VR devices such as HTC Vive, Oculus Rift, and Microsoft Mix Reality are well-supported by VRmol. More details can be seen at [documentation](https://vrmol.net/docs/#header-n5342).
 
-## Demo
-
-<img src="models/entervr-320.gif" width=50%>
 
 ## Framework
 
 The framework of VRmol.
 
-<img src="models/framework.png" width=50%>
+<img src="imgs/framework.png" width=50%>
 
 ## Screenshot
 
 A screenshot of structure visualization with stereo view.
-<img src="models/screenshot.png" width=80%>
+<img src="imgs/screenshot.png" width=80%>
 
 
 
@@ -72,14 +73,14 @@ The options and their data types supported in VRmol are shown in the table below
 | Options    | Data Type |Value  |Comment|
 | :------ | :------ |:------ |:------ |
 | id | String|PDB code|4 charactors|
-|panelShow|Integer|Show:1,Hide:0|Show menu panel or not|
-|mainMode|Integer|LINE : 1, DOT : 2,BACKBONE : 3,  SPHERE: 4,STICK : 5, BALL_AND_ROD : 6,TUBE : 7,  RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11, RIBBON_RAILWAY:12, CARTOON_SSE:13,SURFACE:14|Main Structure Representation|
-|showSurface|Integer|Show:1,Hide:0|Show surface panel or not|
+|panelShow|Integer|Show:1, Hide:0|Show menu panel or not|
+|mainMode|Integer|LINE:1, DOT:2, BACKBONE:3, SPHERE:4, STICK:5, BALL_AND_ROD:6, TUBE:7, RIBBON_FLAT:8, RIBBON_ELLIPSE:9, RIBBON_RECTANGLE:10, RIBBON_STRIP:11, RIBBON_RAILWAY:12, CARTOON_SSE:13, SURFACE:14|Main Structure Representation|
+|showSurface|Integer|Show:1, Hide:0|Show surface panel or not|
 |surfaceOpc|Float|0~1|Transparency of surface|
 |surfaceType|Integer|Van der Waals surface:1, solvent excluded surface:2, solvent accessible surface:3, molecular surface:4|Surface type|
-|colorMode|Integer|Element:601, Residue:602, Secondary Structure:603, Chain:604, Representation:605, B-Factor:606", "Spectrum:607, Chain Spectrum:608, Hydrophobicity:609|Color schemes|
-|travel|Integer|Show:1,Hide:0|Enter travel mode or not|
-|vmode|String|desktop,vr|Visualization Mode|
+|colorMode|Integer|Element:601, Residue:602, Secondary Structure:603, Chain:604, Representation:605, B-Factor:606, Spectrum:607, Chain Spectrum:608, Hydrophobicity:609|Color schemes|
+|travel|Integer|Show:1, Hide:0|Enter travel mode or not|
+|vmode|String|desktop, vr|Visualization Mode|
 |fragment|String|['a', 7, 6]|Fragmentation, label the 7th residue with `Ball & Rod` style|
 
 
@@ -110,7 +111,7 @@ https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfa
 ## Deploy VRmol on your own server
 
   - Download the code into the apache server web directory
-  - Set `SERVERURL` as your URL (like https://example.com) at `libs/molecule/PDBFileCore.js`
+  - Set `SERVERURL` as your URL (like https://example.com) at `libs/core.js`
   - Start the Speech Recognition service by run:
     ```python
     python3 server/listen/sr.py
@@ -156,5 +157,7 @@ VRmol is developed based on [three.js](https://threejs.org) and [WebVR](https://
   - [GLmol.js](https://github.com/biochem-fan/GLmol) - for calculating surface 
   - [Chroma.js](https://github.com/gka/chroma.js) - for color handling
   - [gunzip.min.js](https://github.com/imaya/zlib.js) - for decompress EM map files
-  - [AutoDock vina](http://vina.scripts.edu)- for Docking Drugs in VR scene
+  - [AutoDock vina](http://vina.scripts.edu) - for Docking Drugs in VR scene
+  - [MGLTools](http://mgltools.scripps.edu/) - for preparing docking files
+  - [OpenBabel](http://openbabel.org/wiki/Main_Page) - for convert docking results
 

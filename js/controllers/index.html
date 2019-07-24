@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<style>
-			
+
 			body {
 
 				margin: 0;
@@ -17,7 +17,7 @@
 			header {
 
 				position: absolute;
-				top:  10px; 
+				top:  10px;
 				left: 10px;
 				background-color: rgba( 255, 255, 255, 0.9 );
 				padding: 20px;
@@ -63,7 +63,7 @@ WEBVR.checkAvailability().catch( function( message ){
 
 //  Regardless, let’s kick off the Three.js basics here:
 
-var camera, scene, renderer, controls, controller 
+var camera, scene, renderer, controls, controller
 
 
 //  We need a renderer.
@@ -236,12 +236,12 @@ if(controller===undefined) controller = event.detail
     function onTriggerDown( event ) {
 		console.log("onTriggerDown");
 		//onTriggerDown( event );
-		
+
 	}
 	function onTriggerUp( event ) {
 		console.log("onTriggerUp");
 		//onTriggerUp( event );
-		
+
 	}
 	//console.log(event.detail)
 	if(controller!=undefined){
@@ -254,22 +254,22 @@ if(controller===undefined) controller = event.detail
 	<!-- controller.addEventListener( 'thumbpaddown', onThumbpadDown ); -->
 	<!-- controller.addEventListener( 'axischanged', onAxisChanged ); -->
 	scene.add( controller )
-	
+
 	var loader = new THREE.OBJLoader();
-	loader.setPath( '../../models/obj/vive-controller/' );
+	loader.setPath( '../../js/models/vive-controller/' );
 	loader.load( 'vr_controller_vive_1_5.obj', function ( object ) {
 		var loader = new THREE.TextureLoader();
-		loader.setPath( '../../models/obj/vive-controller/' );
+		loader.setPath( '../../js/models/vive-controller/' );
 		var controller8 = object.children[ 0 ];
 		controller8.material.map = loader.load( 'onepointfive_texture.png' );
 		controller8.material.specularMap = loader.load( 'onepointfive_spec.png' );
 		controller.add( object.clone() );
 		//controller2.add( object.clone() );
 	} );
-	
-	
 
-	
+
+
+
 	// helpers
 	var geometry = new THREE.BufferGeometry();
 	geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( [ 0, 0, 0, 0, 0, - 1 ], 3 ) );

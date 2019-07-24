@@ -4,9 +4,11 @@
 <head>
   <title>VRmol - Virtual Reality for Molecule</title>
   <meta charset="utf-8">
-  <meta name="description" content="VRmol is an easy-to-use web-based tool capable of visualizing and integratively analyzing biomolecular structures in Virtual Reality environment. It connects to multiple resources, such as disease and drug-related databases, enabling it to serve as an integrative platform for structure-based translational researches and drug design.">
+  <meta name="description"
+    content="VRmol is an easy-to-use web-based tool capable of visualizing and integratively analyzing biomolecular structures in Virtual Reality environment. It connects to multiple resources, such as disease and drug-related databases, enabling it to serve as an integrative platform for structure-based translational researches and drug design.">
   <meta name="keywords" content="VRmol, vrmol.net, Molecular Structure Visualization, virtual reality, webvr, cloud-computing, cryo-em, density map, autodock-vina, genomic variation, drug docking">
   <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <link rel="shortcut icon" href="css/vrmol.ico">
   <link rel="stylesheet" href="css/index.css" type="text/css" />
   <script>
     var _hmt = _hmt || [];
@@ -17,7 +19,47 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--
+<script type="text/javascript" src="js/webvr-polyfill/webvr-polyfill.min.js"></script>
+<script type="text/javascript" src="js/webvr-ui/webvr-ui.min.js"></script>
+-->
+  <script type="text/javascript" src="js/libs/three.js"></script>
+  <script type="text/javascript" src="js/libs/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="js/libs/jquery.simple-color.js"></script>
+  <!-- Our Design-->
+
+  <!--<script type="text/javascript" src="libs/vrmol.min.js"></script>-->
+  <script type="text/javascript" src="libs/w3m.js"></script>
+  <script type="text/javascript" src="libs/extension.js"></script>
+  <script type="text/javascript" src="libs/static.js"></script>
+  <script type="text/javascript" src="libs/math.js"></script>
+  <script type="text/javascript" src="libs/core.js"></script>
+  <script type="text/javascript" src="libs/loader.js"></script>
+  <script type="text/javascript" src="libs/render.js"></script>
+  <script type="text/javascript" src="libs/tool.js"></script>
+  <script type="text/javascript" src="libs/drawer.js"></script>
+  <script type="text/javascript" src="libs/painter.js"></script>
+  <script type="text/javascript" src="libs/controller.js"></script>
+  <script type="text/javascript" src="libs/pdbparser.js"></script>
+  <script type="text/javascript" src="libs/emparser.js"></script>
+  <script type="text/javascript" src="libs/surface.js"></script>
+  <script type="text/javascript" src="server/speech/recorder.js"></script>
+  <!-- vr -->
+  <script type="text/javascript" src="js/controls/TrackballControls.js"></script>
+  <script type="text/javascript" src="js/controls/OrbitControls.js"></script>
+  <script type="text/javascript" src="js/controls/VRControls.js"></script>
+  <script type="text/javascript" src="js/controllers/VRController.js"></script>
+  <script type="text/javascript" src="js/vr/VREffect.js"></script>
+  <script type="text/javascript" src="js/vr/WebVR.js"></script>
+  <!-- <script type="text/javascript" src="js/vr/statsvr.min.js"></script> -->
+  <script type="text/javascript" src="js/vr/ViveController.js"></script>
+  <script type="text/javascript" src="js/libs/gunzip.min.js"></script>
+  <script type="text/javascript" src="js/libs/chroma.min.js"></script>
+  <script type="text/javascript" src="js/utils/OBJLoader.js"></script>
+  <script type="text/javascript" src="js/utils/OBJExporter.js"></script>
+  <script type="text/javascript" src="js/utils/SceneUtils.js"></script>
+  <!--<script type="text/javascript" src="js/CurveExtras.js"></script>-->
+  <!-- Global site tag (gtag.js) - Google Analytics
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135040781-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -29,69 +71,17 @@
 
     gtag('config', 'UA-135040781-1');
   </script>
-  <script type="text/javascript" src="js/three.js"></script>
-  <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-  <script type="text/javascript" src="js/jquery.simple-color.js"></script>
-  <!--
-<script type="text/javascript" src="js/webvr-polyfill/webvr-polyfill.min.js"></script>
-<script type="text/javascript" src="js/webvr-ui/webvr-ui.min.js"></script>
--->
-  <!-- w3m-->
-  <script type="text/javascript" src="libs/molecule/w3m.js"></script>
-  <script type="text/javascript" src="libs/molecule/extension.js"></script>
-  <script type="text/javascript" src="libs/molecule/static.js"></script>
-  <script type="text/javascript" src="libs/molecule/math.js"></script>
-  <!-- Our Design-->
-  <script type="text/javascript" src="libs/molecule/PDBFileCore.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileLoader.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileRender.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileTool.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileDrawer.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFilePainter.js"></script>
-  <script type="text/javascript" src="libs/molecule/PDBFileController.js"></script>
-  <!-- vr js -->
-  <script type="text/javascript" src="js/controls/TrackballControls.js"></script>
-  <script type="text/javascript" src="js/controls/OrbitControls.js"></script>
-  <script type="text/javascript" src="js/controls/VRControls.js"></script>
-  <script type="text/javascript" src="js/controllers/VRController.js"></script>
-  <!-- <script type="text/javascript" src="js/renderers/CSS2DRenderer.js"></script>-->
-  <script type="text/javascript" src="js/effects/VREffect.js"></script>
-  <script type="text/javascript" src="js/utils/SceneUtils.js"></script>
-  <script type="text/javascript" src="js/vr/WebVR.js"></script>
-  <script type="text/javascript" src="js/vr/statsvr.min.js"></script>
-  <script type="text/javascript" src="js/vr/ViveController.js"></script>
-  <script type="text/javascript" src="js/loaders/OBJLoader.js"></script>
-  <script type="text/javascript" src="js/CurveExtras.js"></script>
-  <!-- where curves formulas are defined -->
-  <!--<script type="text/javascript" src="js/libs/stats.min.js"></script>
-  <script type="text/javascript" src="js/libs/dat.gui.min.js"></script>-->
-  <!-- import by convex
-  <script type="text/javascript" src="js/QuickHull.js"></script>
-  <script type="text/javascript" src="js/geometries/ConvexGeometry.js"></script>
-  <script type="text/javascript" src="js/Detector.js"></script> -->
-  <!-- import from three for surface-->
-  <!-- <script type="text/javascript" src="js/MarchingCubes.js"></script>-->
-  <!--import EmMapParser-->
-  <script type="text/javascript" src="libs/emmap/gunzip.min.js"></script>
-  <script type="text/javascript" src="libs/emmap/chroma.min.js"></script>
-  <script type="text/javascript" src="libs/emmap/EmMapParser.js"></script>
-  <script type="text/javascript" src="libs/molecule/surface.js"></script>
-  <!--exporter-->
-  <script type="text/javascript" src="js/exporters/OBJExporter.js"></script>
-  <script type="text/javascript" src="libs/fileutils/debugout.js"></script>
-  <script type="text/javascript" src="server/listen/recorder.js"></script>
-  <!--<script type="text/javascript" src="https://vrmol.net/server/listen/sr.min.js"></script>-->
+  -->
 </head>
 
 <body>
   <div id="container"></div>
-  <div id="info" class="panel"><strong>VRmol</strong> by <a href="http://www.zhanglab.net" target="_blank">ZhangLab</a></div>
+  <div id="info" class="panel"><img src="imgs/logo.png" style="width: 100px;"></div>
   <div id="searchDiv" class="panel">
     <input type="text" name="search_text" class="search_text" id="search_text" placeholder="PDB ID" onkeydown="PDB.controller.onKeyDown(event)" />
-    <input type="button" class="search_button" id="search_button" value="Search">
+    <input type="button" class="top_btn" id="search_button" value="Search">
     <a class="input-file input-fileup">
-      + Upload<input size="100" type="file" name="file" id="upload_button">
-
+      Upload<input size="100" type="file" name="file" id="upload_button">
     </a>
     <a class="input-file input-fileup">
       <button class="test" onmousedown="startRecording()" onmouseup="endRecord()">Voice</button>
@@ -103,7 +93,7 @@
     <span class="submenu" id="structureMode">
       <button id="threeMode">NonVR</button><BR />
       <!--<button id="threeWithTravel">Desktop Travel</button><BR /> -->
-      <button id="vrMode2">VR</button><BR/>
+      <button id="vrMode2">VR</button><BR />
       <!-- <button id="vrWithTravel">VR Travel</button><BR /> -->
       <input id="isLow" name="" type="checkbox" title="isLow" checked />
       <label class="label" for="isLow"> Spherical View </label><BR />
@@ -216,7 +206,10 @@
     <LABEL onclick="switchMenu('getSegments')">Fragment</LABEL><BR />
     <span class="submenu" id="getSegments">
       <button name="" id="b_show_segmenpanel" value="">Region</button>
-      <br />
+    </span>
+    <BR />
+    <LABEL onclick="switchMenu('getEditing')">Editing</LABEL><BR />
+    <span class="submenu" id="getEditing">
       <button name="" id="b_show_editResidue" value="">Editing</button>
     </span>
     <BR />
@@ -228,7 +221,7 @@
       <button name="mutationExAC" id="mutationExAC" value="ExAC">ExAC</button><BR />
       <button name="dbSNP" id="dbSNP" value="dbSNP">dbSNP</button><BR />
       <!--<button name="hideTable" id="hideTable" value="dbSNP">dbSNP</button><BR/>-->
-      <input name="showMutationTable" id="showMutationTable" type="checkbox" title="Hide Mutation Table" />
+      <input name="showMutationTable" id="showMutationTable" type="checkbox" title="Hide Mutation Table" checked />
       <label class="label" for="showMutationTable">Show Mutation Table</label><BR />
     </span>
     <BR />
@@ -269,18 +262,19 @@
       <button name="b_load_conser" id="b_load_conser" value="Export">Load Conservation Score</button>
     </span>
     <BR/>-->
-    <LABEL onclick="switchMenu('drugDesign')">Drugs</LABEL><BR />
+    <LABEL onclick="switchMenu('drugDesign')">Drugs & Docking</LABEL><BR />
     <span class="submenu" id="drugDesign">
-      <button name="b_load_drug" id="hideDrugPanel" value="Export">Hide Drug Panel</button><br />
-      <button name="b_load_drug" id="b_load_drug" value="Export">Load Drug</button><br />
-      <input name="hideDrug" id="hideDrug" type="checkbox" value="Export" />
+
+      <button name="b_load_drug" id="b_load_drug" value="load drug">Load Drug</button><br />
+      <input name="hideDrug" id="hideDrug" type="checkbox" value="hideDrug" />
       <label class="label" for="hideDrug">Hide Drug</label><br />
-      <input name="drugSurface" id="drugSurface" type="checkbox" title="Drug Het Surface" />
+      <input name="drugSurface" id="drugSurface" type="checkbox" title="Drug drug Surface" />
       <label class="label" for="drugSurface">Drug Surface</label><br />
-      <input name="randomMigration" id="randomMigration" type="checkbox" title="Drug Random Migration" />
-      <label class="label" for="randomMigration">Drug Random Migration</label><br />
-      <input name="showBoxHelper" id="showBoxHelper" type="checkbox" title="hideBoxHelper" />
-      <label class="label" for="showBoxHelper">Show BoxHelper</label><br />
+      <!--<input name="randomMigration" id="randomMigration" type="checkbox" title="Drug Random Migration" />
+      <label class="label" for="randomMigration">Drug Random Migration</label><br /> -->
+      <input name="showBoxHelper" id="showBoxHelper" type="checkbox" title="Docking Region Box" />
+      <label class="label" for="showBoxHelper">Docking Region Box</label><br />
+      <button name="b_load_drug" id="hideDrugPanel" value="Hide Drug Panel">Hide Drug Panel</button><br />
     </span>
     <BR />
     <LABEL onclick="switchMenu('exportScene')">Export</LABEL><BR />
@@ -318,6 +312,8 @@
       <a href="https://github.com/barrykui/VRmol/issues" target="_blank">Issues</a>
       <br>
       <a href="mailto:xuk16@mails.tsinghua.edu.cn?Subject=VRmol">Email</a>
+      <br>
+      <a href="http://www.zhanglab.net" target="_blank">ZhangLab</a>
       <br>
     </span>
     <BR />
@@ -385,20 +381,20 @@
           <div class="segment_option">
             <span style="float:left;color:#333;line-height: 38px; margin-left: 30px;">Representation:</span>
             <select id="selectedMode">
-              <option value=3>BACKBONE</option>
-              <option value=1>LINE</option>
-              <option value=2>DOT</option>
-              <option value=6>BALL_AND_ROD</option>
-              <option value=5>STICKS</option>
-              <option value=4>SPHERE</option>
-              <option value=7>CARTOON_TUBE</option>
-              <option value=8>CARTOON_FLAT</option>
-              <option value=9>CARTOON_ELLIPSE</option>
-              <option value=10>CARTOON_RECTANGLE</option>
-              <option value=11>CARTOON_STRIP</option>
-              <option value=12>CARTOON_RAILWAY</option>
-              <option value=13>CARTOON_SSE</option>
-              <option value=14>SURFACE</option>
+              <option value=3>Backbone</option>
+              <option value=1>Line</option>
+              <option value=2>Dot</option>
+              <option value=6>Ball & Rod</option>
+              <option value=5>Stick</option>
+              <option value=4>Sphere</option>
+              <option value=7>Tube</option>
+              <option value=8>Ribbon-flat</option>
+              <option value=9>Ribbon-ellipse</option>
+              <option value=10>Ribbon-rectangle</option>
+              <option value=11>Ribbon-strip</option>
+              <option value=12>Ribbon-railway</option>
+              <option value=13>Ribbon-SS</option>
+              <option value=14>Surface</option>
             </select>
           </div>
         </li>
@@ -448,8 +444,8 @@
       </ul>
     </div>
   </div>
-  <button id="vrMode">VR Mode</button><BR />
-  <script type="text/javascript" src="libs/molecule/index.js"></script>
+  <button id="vrMode">VR Mode</button>
+  <script type="text/javascript" src="libs/index.js"></script>
 </body>
 
 </html>
