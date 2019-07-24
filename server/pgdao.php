@@ -27,39 +27,65 @@ function getInt($str){
 
 function getTCGA($unprotac){
     global $db;
-    $query = "select id, Variant_Classification as v_class, variant_type as v_type, Genome_Change as g_change,
-    Protein_Change as p_change, disease ,left(uniprot_aapos, length(uniprot_aapos)-2) as pos from mu_tcga_42
-    where swissprot_acc_id ='".$unprotac."' and Protein_Change!=''";
+    $query = "select id, 
+        Variant_Classification as v_class, 
+        variant_type as v_type, 
+        Genome_Change as g_change,
+        Protein_Change as p_change, 
+        disease, 
+        left(uniprot_aapos, length(uniprot_aapos)-2)::INTEGER as pos 
+        from mu_tcga_42
+        where swissprot_acc_id ='".$unprotac."' and Protein_Change!='' 
+        order by pos";
     $response = $db->get_rows($query);
     $db->close();
     return $response;
 }
 function getCCLE($unprotac){
-  	global $db;
-  	$query = "SELECT id, Variant_Classification as v_class, variant_type as v_type, Genome_Change as g_change,
-  			Protein_Change as p_change, system FROM mu_ccle_33 where SwissProt_acc_Id='".$unprotac."' and protein_change!=''";
-  	$response = $db->get_rows($query);
-  	for ($i=0;$i< count($response);$i=$i+1) {
-  		  $response[$i]['pos'] = getInt($response[$i]['p_change']);
-  	}
-  	$db->close();
+    global $db;
+    $query = "SELECT id, 
+        Variant_Classification as v_class, 
+        variant_type as v_type, 
+        Genome_Change as g_change,
+        Protein_Change as p_change, 
+        system 
+        FROM mu_ccle_33 
+        where SwissProt_acc_Id='".$unprotac."' and protein_change!=''
+        order by id DESC";
+    $response = $db->get_rows($query);
+    for ($i=0;$i< count($response);$i=$i+1) {
+    	  $response[$i]['pos'] = getInt($response[$i]['p_change']);
+    }
+    $db->close();
     return $response;
 }
 function getExAC($unprotac){
-  	global $db;
-  	$query = "SELECT id, Variant_Classification as v_class, variant_type as v_type, Genome_Change as g_change,
-  			Protein_Change as p_change FROM mu_exac_32 where swissprot_acc_id='".$unprotac."' and protein_change!=''";
-  	$response = $db->get_rows($query);
-  	for ($i=0;$i< count($response);$i=$i+1) {
-  		$response[$i]['pos'] = getInt($response[$i]['p_change']);
-  	}
-  	$db->close();
+    global $db;
+    $query = "SELECT id, 
+        Variant_Classification as v_class, 
+        variant_type as v_type, 
+        Genome_Change as g_change,
+        Protein_Change as p_change 
+        FROM mu_exac_32 
+        where swissprot_acc_id='".$unprotac."' and protein_change!='' 
+        order by id DESC";
+    $response = $db->get_rows($query);
+    for ($i=0;$i< count($response);$i=$i+1) {
+    	$response[$i]['pos'] = getInt($response[$i]['p_change']);
+    }
+    $db->close();
     return $response;
 }
 function getDBSNP($unprotac){
     global $db;
-    $query = "SELECT id, Variant_Classification as v_class, variant_type as v_type, Genome_Change as g_change,
-			Protein_Change as p_change FROM dbsnp where swissprot_acc_id='".$unprotac."' and protein_change!=''";
+    $query = "SELECT id, 
+        Variant_Classification as v_class, 
+        variant_type as v_type, 
+        Genome_Change as g_change,
+        Protein_Change as p_change 
+        FROM dbsnp 
+        where swissprot_acc_id='".$unprotac."' and protein_change!='' 
+        order by id DESC";
     $response = $db->get_rows($query);
     for ($i=0;$i< count($response);$i=$i+1) {
             $response[$i]['pos'] = getInt($response[$i]['p_change']);
@@ -75,12 +101,12 @@ function getEMDB($pdbid){
     foreach ($res as $obj) {
       array_push($emdbids,$obj['emdbid']);
     }
-	  if(is_array($res)){
-		    $msgArray = array('code'=>1, 'data'=>$emdbids, 'message'=>'success');
-		      //$msgArray = array('code'=>1, 'data'=>$res, 'message'=>'success' , 'debug'=>$query);
+    if(is_array($res)){
+        $msgArray = array('code'=>1, 'data'=>$emdbids, 'message'=>'success');
+	//$msgArray = array('code'=>1, 'data'=>$res, 'message'=>'success' , 'debug'=>$query);
     }else{
-		$msgArray = array('code'=>0, 'message'=>'no fitted PDB in current EMDB.');
-	  }
+	$msgArray = array('code'=>0, 'message'=>'no fitted PDB in current EMDB.');
+    }
     $db->close();
     return $msgArray;
 }
@@ -124,31 +150,31 @@ function getUniprotAC($pdbid){
 }
 
 function getMutByPDB($pdbid, $dataset){
-	$resArr= getUniprotAC($pdbid);
-	if(is_array($resArr)){
-  		$mutation=null;
-  		if($dataset =="tcga"){
-  			$mutation=getTCGA($resArr[1]);
-  		}elseif($dataset =="ccle"){
-  			$mutation=getCCLE($resArr[1]);
-  		}elseif($dataset =="exac"){
-  			$mutation=getExAC($resArr[1]);
-  		}elseif($dataset =="dbsnp"){
-  			$mutation=getDBSNP($resArr[1]);
-  		}
-
-  		if(is_array($mutation)){
-  			$chain=$resArr[0];
-  			$data =array('mutations'=>$mutation, 'chains'=>$chain, 'pdbid'=>$pdbid, 'dataset'=>$dataset);
-  			$msgArray = array('code'=>1, 'data'=>$data, 'message'=>'success');
-  		}else{
-  			$msgArray = array('code'=>0, 'message'=>'no mutation information in the current '.$dataset.' database.');
-  		}
-	}else{
-		$msgArray = array('code'=>0, 'message'=>'no corresponding Uniprot-AC of '.$pdbid);
-		//$db->close();
-	}
-	return $msgArray;
+    $resArr= getUniprotAC($pdbid);
+    if(is_array($resArr)){
+    	$mutation=null;
+    	if($dataset =="tcga"){
+    		$mutation=getTCGA($resArr[1]);
+    	}elseif($dataset =="ccle"){
+    		$mutation=getCCLE($resArr[1]);
+    	}elseif($dataset =="exac"){
+    		$mutation=getExAC($resArr[1]);
+    	}elseif($dataset =="dbsnp"){
+    		$mutation=getDBSNP($resArr[1]);
+    	}
+    
+    	if(is_array($mutation)){
+    		$chain=$resArr[0];
+    		$data =array('mutations'=>$mutation, 'chains'=>$chain, 'pdbid'=>$pdbid, 'dataset'=>$dataset);
+    		$msgArray = array('code'=>1, 'data'=>$data, 'message'=>'success');
+    	}else{
+    		$msgArray = array('code'=>0, 'message'=>'no mutation information in the current '.$dataset.' database.');
+    	}
+    }else{
+    	$msgArray = array('code'=>0, 'message'=>'no corresponding Uniprot-AC of '.$pdbid);
+    	//$db->close();
+    }
+    return $msgArray;
 }
 
 
