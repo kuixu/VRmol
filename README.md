@@ -114,7 +114,7 @@ https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfa
   - Set `SERVERURL` as your URL (like https://example.com) at `libs/core.js`
   - Start the Speech Recognition service by run:
     ```python
-    python3 server/listen/sr.py
+    python3 server/speech/sr.py
     ```
   - Installation of external tools
      - [AutoDock Vina](http://vina.scripps.edu/)
