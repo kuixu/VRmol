@@ -1294,7 +1294,7 @@ PDB.render = {
     //camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 50 );
     scene.add(camera);
     //stats
-    statsVR = new StatsVR(scene, camera);
+    //statsVR = new StatsVR(scene, camera);
     // Group
     for (var i = 0; i < PDB.GROUP_COUNT; i++) {
       PDB.GROUP[i] = new THREE.Group();
