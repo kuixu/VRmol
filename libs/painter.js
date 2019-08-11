@@ -729,6 +729,7 @@ PDB.painter = {
 
   showDot: function() {
     for (var i in w3m.mol) {
+	  if(w3m.mol[i].drug)	continue;
       var main_obj = w3m.mol[i].atom.main;
       for (var i_atom in main_obj) {
 
@@ -745,6 +746,7 @@ PDB.painter = {
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
     var color = new THREE.Color('#CCC');
     for (var i in w3m.mol) {
+		if(w3m.mol[i].drug)	continue;
       var main_obj = w3m.mol[i].atom.main;
       for (var j = resobj.faid; j <= resobj.laid; j++) {
         var i_atom = main_obj[j];
@@ -761,6 +763,7 @@ PDB.painter = {
   showDotByStartEnd: function(startId, endId, isSelected) {
     if (isSelected) {
       for (var i in w3m.mol) {
+		  if(w3m.mol[i].drug)	continue;
         var main_obj = w3m.mol[i].atom.main;
         for (var i_atom in main_obj) {
           if (i_atom < startId) continue;
@@ -772,6 +775,7 @@ PDB.painter = {
       }
     } else {
       for (var i in w3m.mol) {
+		  if(w3m.mol[i].drug)	continue;
         var main_obj = w3m.mol[i].atom.main;
         for (var i_atom in main_obj) {
           if (i_atom < startId) continue;
@@ -913,6 +917,7 @@ PDB.painter = {
     var addgroup;
     var w = PDB.CONFIG.sphere_width;
     for (var i in w3m.mol) {
+		if(w3m.mol[i].drug)	continue;
       var main_obj = w3m.mol[i].atom.main;
       for (var i_atom in main_obj) {
         var atom = PDB.tool.getMainAtom(i, i_atom);
@@ -930,6 +935,7 @@ PDB.painter = {
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
 
     for (var i in w3m.mol) {
+		if(w3m.mol[i].drug)	continue;
       var main_obj = w3m.mol[i].atom.main;
       for (var j = resobj.faid; j <= resobj.laid; j++) {
         // var i_atom = main_obj[j];
@@ -949,6 +955,7 @@ PDB.painter = {
     var w = PDB.CONFIG.sphere_width;
     if (isSelected) {
       for (var i in w3m.mol) {
+		  if(w3m.mol[i].drug)	continue;
         var main_obj = w3m.mol[i].atom.main;
         for (var i_atom in main_obj) {
           if (i_atom < startId) continue;
@@ -961,6 +968,7 @@ PDB.painter = {
       }
     } else {
       for (var i in w3m.mol) {
+		  if(w3m.mol[i].drug)	continue;
         var main_obj = w3m.mol[i].atom.main;
         for (var i_atom in main_obj) {
           if (i_atom < startId) continue;
