@@ -500,6 +500,7 @@ PDB.tool = {
         if (w3m_isset(PDB.remoteUrl[++url_index])) {
           this.get(id, callback);
         } else {
+			PDB.tool.showSegmentholder(false);
           url_index = 0;
         }
       }
@@ -508,7 +509,7 @@ PDB.tool = {
         url_index = 0;
       },
       io.ontimeout = function() {
-		PDB.tool.showSegmentholder(false);
+		
         if (w3m_isset(PDB.remoteUrl[++url_index])) {
           this.get(id, callback);
         } else {
@@ -518,6 +519,7 @@ PDB.tool = {
       },
       io.onerror = function() {
         url_index = 0;
+		console.log(url_index);
       },
       io.get = function(url, fn) {
         callback = fn;

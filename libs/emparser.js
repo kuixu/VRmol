@@ -82,9 +82,11 @@ EmMapParser = {
     };
 
     xhr.onerror = function(e) {
+		
       if (!PDB.pptShow) {
         PDB.tool.progressBar.value = e.loaded;
         PDB.tool.printProgress("Error: EMD-" + mapid);
+		PDB.tool.showSegmentholder(false);
       }
 
     };
