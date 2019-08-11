@@ -514,6 +514,7 @@ PDB.tool = {
           this.get(id, callback);
         } else {
           url_index = 0;
+		  PDB.tool.showSegmentholder(false);
         }
 
       },
