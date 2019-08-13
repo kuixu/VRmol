@@ -95,7 +95,10 @@ EmMapParser = {
     if (PDB.pptShow) {
       url = SERVERURL + '/' + url;
     }
-    console.log(url);
+    //console.log(url);
+	if(!url){
+		PDB.tool.showSegmentholder(false);
+	}
     xhr.open('GET', url);
     xhr.responseType = 'arraybuffer';
     xhr.send();

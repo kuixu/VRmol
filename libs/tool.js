@@ -1040,7 +1040,7 @@ PDB.tool = {
 		PDB.tool.showSegmentholder(true, true);
 		setTimeout(function() {
 			PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
-			if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
+			if (e.target.checked && PDB.EMMAP.DATA !== undefined && Object.keys(PDB.EMMAP.DATA).length > 0) {
 			  PDB.EMMAP.SHOW_SLICE = true;
 			  var value = Number(document.getElementById("sliceRange").value);
 			  var currSlice = document.getElementById("currSlice");
@@ -1104,7 +1104,7 @@ PDB.tool = {
 		PDB.tool.showSegmentholder(true, true);
 		setTimeout(function() {
 			var emmap = PDB.EMMAP.DATA;
-			if (emmap) {
+			if (emmap && emmap.header) {
 			  var value = Number(e.target.value);
 			  var perValue = PDB.tool.getValueByPercent(emmap.header.min, emmap.header.max, value);
 			  var currThresHold = document.getElementById("currThresHold");
