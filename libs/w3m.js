@@ -407,13 +407,19 @@ w3m.ajax = (function() {
       url_index = 0;
     },
     io.get = function(mol_id, fn) {
+		console.log("-------------id.get()-----------------");
+		console.log("mol_id:");
+		console.log(mol_id);
       if (mol_id.indexOf("http://") != -1) {
+		  debugger;
         url = mol_id;
       } else if (mol_id.indexOf("https://") != -1) {
         url = mol_id;
+		debugger;
       } else{
         url = PDB.remoteUrl[url_index] + mol_id + '.pdb';
       }
+	  console.log(url);
       id = mol_id;
       callback = fn;
       this.open('GET', url, true);
