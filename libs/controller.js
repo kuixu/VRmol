@@ -390,6 +390,7 @@ PDB.controller = {
 			PDB.tool.showSegmentholder(false);
           })
         } else {
+		  PDB.tool.showSegmentholder(false);
           PDB.tool.printProgress(jsonObj.message);
         }
 		
