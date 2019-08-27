@@ -378,7 +378,7 @@ w3m.ajax = (function() {
         this.get(id, callback);
       } else {
         url_index = 0;
-		 PDB.tool.showSegmentholder(false);
+		 PDB.tool.showSegmentholder(false,'pdb file not found!');
         PDB.tool.printProgress('pdb file not found!');
         // var info = document.getElementById('info');
         // console.log(info);
