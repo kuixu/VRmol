@@ -2045,7 +2045,7 @@ PDB.controller = {
   },
   drawGeometry: function(type) {
     PDB.tool.printProgress("");
-    PDB.tool.showSegmentholder(true, true);
+    PDB.tool.showSegmentholder(true);
     setTimeout(function(e) {
       if (w3m.mol[PDB.pdbId] == undefined) return;
       var scope = this;

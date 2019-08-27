@@ -672,7 +672,7 @@ PDB.tool = {
     aLink.id = id;
     aLink.addEventListener('click', function() {
 		//add holder
-		PDB.tool.showSegmentholder(true,true);
+		PDB.tool.showSegmentholder(true);
 		var modelSpan = document.getElementById("modelSpan");
 		if(modelSpan){
 			modelSpan.innerHTML = "";
@@ -954,7 +954,7 @@ PDB.tool = {
 
       var solidMap = document.getElementById("solidMap");
       solidMap.addEventListener('click', function(e) {
-		PDB.tool.showSegmentholder(true, true);
+		PDB.tool.showSegmentholder(true);
 		setTimeout(function() {
 			PDB.render.clearGroupIndex(PDB.GROUP_MAP);
 			PDB.EMMAP.TYPE = 0;
@@ -968,7 +968,7 @@ PDB.tool = {
       });
       var surfaceMap = document.getElementById("surfaceMap");
       surfaceMap.addEventListener('click', function(e) {
-		PDB.tool.showSegmentholder(true, true);
+		PDB.tool.showSegmentholder(true);
 		setTimeout(function() {
 			PDB.EMMAP.TYPE = 1;
 			if (PDB.map_surface_show === 0) {
@@ -993,7 +993,7 @@ PDB.tool = {
 
       var meshMap = document.getElementById("meshMap");
       meshMap.addEventListener('click', function(e) {
-		PDB.tool.showSegmentholder(true, true);
+		PDB.tool.showSegmentholder(true);
 		setTimeout(function() {
 			PDB.EMMAP.TYPE = 2;
 			if (PDB.map_surface_show === 0) {
@@ -1037,7 +1037,7 @@ PDB.tool = {
       //show or hide slice
       var showSlice = document.getElementById("showSlice");
       showSlice.addEventListener('click', function(e) {
-		PDB.tool.showSegmentholder(true, true);
+		PDB.tool.showSegmentholder(true);
 		setTimeout(function() {
 			PDB.render.clearGroupIndex(PDB.GROUP_SLICE);
 			if (e.target.checked && PDB.EMMAP.DATA !== undefined && Object.keys(PDB.EMMAP.DATA).length > 0) {
@@ -1058,7 +1058,7 @@ PDB.tool = {
       //show or hide slice
       var showMap = document.getElementById("showMap");
       showMap.addEventListener('click', function(e) {
-		PDB.tool.showSegmentholder(true, true);
+		PDB.tool.showSegmentholder(true);
 		setTimeout(function() {
 			if (e.target.checked && PDB.EMMAP.DATA !== undefined) {
 			  PDB.EMMAP.SHOW_MAP = true;
@@ -1086,7 +1086,7 @@ PDB.tool = {
       //bar slice
       var sliceRange = document.getElementById("sliceRange");
       sliceRange.addEventListener('change', function(e) {
-		PDB.tool.showSegmentholder(true, true);
+		PDB.tool.showSegmentholder(true);
 		setTimeout(function() {
 			var emmap = PDB.EMMAP.DATA;
 			var value = Number(e.target.value);
@@ -1101,7 +1101,7 @@ PDB.tool = {
       });
       var thresholdRange = document.getElementById("thresholdRange");
       thresholdRange.addEventListener('change', function(e) {
-		PDB.tool.showSegmentholder(true, true);
+		PDB.tool.showSegmentholder(true);
 		setTimeout(function() {
 			var emmap = PDB.EMMAP.DATA;
 			if (emmap && emmap.header) {
@@ -1129,7 +1129,7 @@ PDB.tool = {
 
       var dimension = document.getElementById("dimension");
       dimension.addEventListener('change', function(e) {
-		PDB.tool.showSegmentholder(true, true);
+		PDB.tool.showSegmentholder(true);
 		setTimeout(function() {
 			var v = e.target.value;
 			if (v) {
@@ -2116,12 +2116,15 @@ PDB.tool = {
 	  var segmentholder = document.getElementById("segmentholder");
 	  if(show){
 		segmentholder.style.display = "table";
+		if(titleMessage){
+			segmentholder.innerHTML = "<div class=\"holderClass\">"+titleMessage+"</div>";
+		  }else{
+			segmentholder.innerHTML = "<div class=\"holderClass\">Just a moment, please.</div>";
+		  }
 	  }else{
 		segmentholder.style.display = "none";
 	  }
-	  if(titleMessage){
-		segmentholder.innerHTML = "<div class=\"holderClass\">Just a moment, please.</div>";
-	  }
+	  
   },hideGroup: function (group) {
         if(PDB.GROUP[group] !== undefined && PDB.GROUP[group].length > 0){
             PDB.GROUP[group].visible = false;

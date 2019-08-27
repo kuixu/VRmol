@@ -378,8 +378,15 @@ w3m.ajax = (function() {
         this.get(id, callback);
       } else {
         url_index = 0;
-		 PDB.tool.showSegmentholder(false,'pdb file not found!');
+		 
         PDB.tool.printProgress('pdb file not found!');
+		PDB.tool.showSegmentholder(false);		
+		PDB.tool.showSegmentholder(true,'NOT FOUND : Fail to load PDF file !');		
+		setTimeout(function(e) {
+			PDB.tool.showSegmentholder(false);			
+		},5000)
+		
+		
         // var info = document.getElementById('info');
         // console.log(info);
         // info.style.display = 'block';
@@ -426,8 +433,8 @@ w3m.ajax = (function() {
         this.open('GET', url, true);
         this.send();
       }catch(e){
-        console.log(e);
-		PDB.tool.showSegmentholder(false);
+        //console.log(e);		
+		
       }
       
     };
