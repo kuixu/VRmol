@@ -674,67 +674,67 @@ PDB.controller = {
       }
     });
     b_line.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.LINE;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_dot.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.DOT;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_backbone.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.BACKBONE;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_a.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.SPHERE;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_b.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.STICK;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_ab.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.BALL_AND_ROD;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_tube.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.TUBE;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_flat.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.RIBBON_FLAT;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_ellipse.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.RIBBON_ELLIPSE;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_rectangle.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.RIBBON_RECTANGLE;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_strip.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.RIBBON_STRIP;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_railway.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.RIBBON_RAILWAY;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
     b_sse.addEventListener('click', function() {
-      PDB.render.clear(5);
+      //PDB.render.clear(5);
       PDB.config.mainMode = PDB.CARTOON_SSE;
       scope.refreshGeometryByMode(PDB.config.mainMode);
     });
