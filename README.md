@@ -130,8 +130,8 @@ Server Tools
   - Integretive tool for Windowns [WAMP](http://www.wampserver.com/en/)
 
 ## Release Versions
-  - [Releases](https://github.com/barrykui/VRmol/releases)
-  - [v0.1](https://github.com/barrykui/VRmol/tree/v0.1)
+  - [Releases](https://github.com/kuixu/VRmol/releases)
+  - [v0.1](https://github.com/kuixu/VRmol/tree/v0.1)
 
 ## Citation
 
