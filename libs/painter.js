@@ -228,7 +228,7 @@ PDB.painter = {
           ["Mutation", PDB.MENU_TYPE_MUTATION],
           ["Transition", PDB.MENU_TYPE_DIRECTION],
           ["Rotation", PDB.MENU_TYPE_ROTATION],
-          ["Bond", PDB.MENU_TYPE_HBOND],
+          // ["Bond", PDB.MENU_TYPE_HBOND],
           // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
           ["Density Map", PDB.MENU_TYPE_DENSITYMAP],
           ["Drugs & Docking", PDB.MENU_TYPE_DRUG],
@@ -494,17 +494,17 @@ PDB.painter = {
         // PDB.drawer.drawTextKB(PDB.GROUP_MENU_CONSERVATION, new THREE.Vector3(x, y-i*0.2, z),  conMenu[i][0], conMenu[i][1], color, 135);
         // }
         // break;
-      case PDB.MENU_TYPE_HBOND:
-        var bondMenu = [
-          ["Hide Bond", PDB.BOND_TYPE_NONE],
-          ["Show HBond", PDB.BOND_TYPE_HBOND],
-          ["Show SSBond", PDB.BOND_TYPE_SSBOND],
-          ["Show Covalent", PDB.BOND_TYPE_COVALENT]
-        ];
-        for (var i = 0; i < bondMenu.length; i++) {
-          PDB.drawer.drawTextKB(PDB.GROUP_MENU_HBOND, new THREE.Vector3(x, y - i * 0.2, z), bondMenu[i][0], bondMenu[i][1], color, 135);
-        }
-        break;
+      // case PDB.MENU_TYPE_HBOND:
+      //   var bondMenu = [
+      //     ["Hide Bond", PDB.BOND_TYPE_NONE],
+      //     ["Show HBond", PDB.BOND_TYPE_HBOND],
+      //     ["Show SSBond", PDB.BOND_TYPE_SSBOND],
+      //     ["Show Covalent", PDB.BOND_TYPE_COVALENT]
+      //   ];
+      //   for (var i = 0; i < bondMenu.length; i++) {
+      //     PDB.drawer.drawTextKB(PDB.GROUP_MENU_HBOND, new THREE.Vector3(x, y - i * 0.2, z), bondMenu[i][0], bondMenu[i][1], color, 135);
+      //   }
+      //   break;
       case PDB.MENU_TYPE_DIRECTION:
         var moveMenu = [
           ["Move along the X axis", 2],
