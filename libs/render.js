@@ -149,6 +149,32 @@ function dealwithMenu(object) {
         PDB.painter.showMenu(curr_reptype);
       }
       break;
+    case PDB.GROUP_MENU_VIS:
+      var type = object.userData.reptype;
+      switch (type) {
+          case 0:
+              document.getElementById("vrMode2").style.display = "none";
+              window.location.href = "index.html?vmode=desktop";
+              break;
+          case 1:
+              document.getElementById("vrMode2").style.display = "none";
+              window.location.href = "index.html?vmode=vr";
+              break;
+          case 2:
+              if (PDB.loadType === PDB.bigmodel) {
+                  PDB.loadType = PDB.smallmodel;
+              } else if (!this.checked) {
+                  PDB.loadType = PDB.bigmodel;
+              }
+              PDB.render.clear(2);
+              PDB.controller.refreshGeometryByMode(PDB.config.mainMode);
+              PDB.render.clear(5);
+              PDB.config.hetMode = PDB.config.hetMode;
+              PDB.controller.refreshGeometryByMode(PDB.config.hetMode);
+              break;
+      }
+      onMenuDown();
+      break;
     case PDB.GROUP_MENU_MAIN:
       if (curr_reptype !== PDB.HIDE) {
         PDB.render.clear(5);
@@ -988,7 +1014,7 @@ function getIntersections(controller) {
   var inters = [];
   // if(PDB.trigger === PDB.TRIGGER_EVENT_DRAG){
   if (PDB.isShowMenu) {
-    var gIndexies = [PDB.GROUP_MENU_MAIN, PDB.GROUP_MENU_HET, PDB.GROUP_MENU_COLOR, PDB.GROUP_MENU_MEASURE,
+    var gIndexies = [PDB.GROUP_MENU_VIS,PDB.GROUP_MENU_MAIN, PDB.GROUP_MENU_HET, PDB.GROUP_MENU_COLOR, PDB.GROUP_MENU_MEASURE,
       PDB.GROUP_MENU_DRAG, PDB.GROUP_MENU_FRAGMENT, PDB.GROUP_MENU, PDB.GROUP_MENU_LABEL, PDB.GROUP_MENU_EX_HET,
       PDB.GROUP_MENU_TRAVEL, PDB.GROUP_MENU_SURFACE, PDB.GROUP_MENU_MUTATION, PDB.GROUP_MENU_ROTATION,
       PDB.GROUP_MENU_DRUG, PDB.GROUP_MENU_HBOND, PDB.GROUP_MENU_CONSERVATION, PDB.GROUP_MENU_DENSITYMAP, PDB.GROUP_MENU_EDITING,
@@ -2033,6 +2059,7 @@ PDB.render = {
     PDB.SHOW_MUTATION_WHEN_SWITCH_VR_MENU = 1;
     PDB.render.clearGroupIndex(PDB.GROUP_MENU);
     PDB.render.clearGroupIndex(PDB.GROUP_KEYBOARD);
+    PDB.render.clearGroupIndex(PDB.GROUP_MENU_VIS);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_MAIN);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_LABEL);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_TRAVEL);
@@ -2060,6 +2087,7 @@ PDB.render = {
   },
   hideSubMenu: function() {
     PDB.SHOW_MUTATION_WHEN_SWITCH_VR_MENU = 1;
+    PDB.render.clearGroupIndex(PDB.GROUP_MENU_VIS);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_MAIN);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_HET);
     PDB.render.clearGroupIndex(PDB.GROUP_MENU_LABEL);
@@ -2090,6 +2118,7 @@ PDB.render = {
     scene.add(menu_panel);
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU]);
     menu_panel.add(PDB.GROUP[PDB.GROUP_KEYBOARD]);
+    menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_VIS]);
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_MAIN]);
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_LABEL]);
     menu_panel.add(PDB.GROUP[PDB.GROUP_MENU_EX_HET]);

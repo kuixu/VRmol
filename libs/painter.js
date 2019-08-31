@@ -215,6 +215,7 @@ PDB.painter = {
     switch (type) {
       case PDB.MENU_TYPE_FIRST:
         var mainMenu = [
+          ["Vis Mode", PDB.MENU_TYPE_VIS],
           ["Main Structure", PDB.MENU_TYPE_MAIN],
           ["Ligand", PDB.MENU_TYPE_LIGAND],
           ["Show Others", PDB.MENU_TYPE_EX_HET],
@@ -398,14 +399,16 @@ PDB.painter = {
           PDB.drawer.drawTextKB(PDB.GROUP_MENU_EDITING, new THREE.Vector3(x, y - i * 0.2, z), editMenu[i][0], editMenu[i][1], color, 135);
         }
         break;
-        // case PDB.MENU_TYPE_TRAVEL:
-        // var travelMenu =[
-        // ["Travel",               "Travel" ]
-        // ];
-        // for(var i = 0; i<travelMenu.length;i++){
-        // PDB.drawer.drawTextKB(PDB.GROUP_MENU_TRAVEL, new THREE.Vector3(x, y-i*0.2, z),  travelMenu[i][0], travelMenu[i][1], color, 135);
-        // }
-        // break;
+        case PDB.MENU_TYPE_VIS:
+          var visMenu =[
+          ["NonVR",               0 ],
+          ["VR",               1 ],
+          ["Spherical View",              2]
+          ];
+          for(var i = 0; i<visMenu.length;i++){
+            PDB.drawer.drawTextKB(PDB.GROUP_MENU_VIS, new THREE.Vector3(x, y-i*0.2, z),  visMenu[i][0], visMenu[i][1], color, 135);
+          }
+        break;
       case PDB.MENU_TYPE_SURFACE:
         var surfaceMenu = [
           ["Hide", 0],
