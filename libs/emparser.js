@@ -9,7 +9,6 @@
 var EmMapParser;
 EmMapParser = {
   getURLByType: function(mapid, type) {
-    // console.log("======"+mapid+"----"+type);
     switch (type) {
       case "X-Ray":
         return 'https://www.ebi.ac.uk/pdbe/coordinates/files/' + mapid.toLowerCase() + '.ccp4';
