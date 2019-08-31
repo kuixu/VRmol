@@ -235,7 +235,7 @@ PDB.painter = {
           ["Drugs & Docking", PDB.MENU_TYPE_DRUG],
           ["Export", PDB.MENU_TYPE_EXPORT],
           ["Speech", PDB.MENU_TYPE_SPEECH],
-          ["Spherical View", PDB.MENU_TYPE_OUTBALL]
+          //["Spherical View", PDB.MENU_TYPE_OUTBALL]
         ];
         for (var i = 0; i < mainMenu.length; i++) {
           PDB.drawer.drawTextKB(PDB.GROUP_MENU, new THREE.Vector3(x - 2, y - i * 0.22, z), mainMenu[i][0], mainMenu[i][1], titleColor, 135);
