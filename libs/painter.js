@@ -453,8 +453,9 @@ PDB.painter = {
         var drugMenu = [
           ["Hide Drug", 1],
           ["Load Drug", 2],
-          ["Drug Random Migration", 3],
-          ["Show/Hide Box Helper", 4],
+          ["Drug surface", 5],
+          // ["Drug Random Migration", 3],
+          ["Docking Region Box", 4],
         ];
         for (var i = 0; i < drugMenu.length; i++) {
           PDB.drawer.drawTextKB(PDB.GROUP_MENU_DRUG, new THREE.Vector3(x, y - i * 0.2, z), drugMenu[i][0], drugMenu[i][1], color, 135);

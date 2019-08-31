@@ -451,6 +451,15 @@ function dealwithMenu(object) {
             PDB.GROUP[PDB.GROUP_BOX_HELPER].visible = true;
           }
           break;
+        case 5:
+          if (PDB.GROUP[PDB.GROUP_SURFACE_HET] !== undefined
+              && PDB.GROUP[PDB.GROUP_SURFACE_HET].children != undefined
+              && PDB.GROUP[PDB.GROUP_SURFACE_HET].children.length > 0) {
+              PDB.render.clearGroupIndex(PDB.GROUP_SURFACE_HET);
+          } else {
+              PDB.painter.showDrugSurface(PDB.config.selectedDrug);
+          }
+          break;
       }
       onMenuDown();
       break;
