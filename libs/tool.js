@@ -2133,5 +2133,13 @@ PDB.tool = {
         if(PDB.GROUP[group] !== undefined && PDB.GROUP[group].length > 0){
             PDB.GROUP[group].visible = true;
         }
-    }
+    },
+	showInfoPanel: function (isShow,msg) {
+		var labelContent = document.getElementById("labelContent");
+		if(isShow){
+			labelContent.innerHTML = msg;
+		}else{
+			labelContent.innerHTML = "";
+		}
+	}
 }

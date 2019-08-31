@@ -1826,6 +1826,7 @@ PDB.render = {
             }
 
             //deal with mutation
+			//console.log(INTERSECTED.userData);
             if (INTERSECTED.userData.mutation != undefined) {
               var atom = INTERSECTED.userData.presentAtom;
               var mutation = INTERSECTED.userData.mutation;
@@ -1833,6 +1834,9 @@ PDB.render = {
               var pos = PDB.tool.getAtomInfoPosition(atom.pos_centered, camera.position);
               PDB.drawer.drawTextForDesktop(PDB.GROUP_INFO, pos,
                 message, "", atom.color, 180);
+				if(PDB.mode == PDB.MODE_THREE){
+				  PDB.tool.showInfoPanel(true,message);
+				}
               var selectedMutation = document.getElementById(PDB.SELECTED_MUTATION);
               if (selectedMutation) {
                 selectedMutation.style.background = "transparent";
@@ -1869,6 +1873,9 @@ PDB.render = {
               }
               PDB.drawer.drawTextForDesktop(PDB.GROUP_INFO, pos,
                 message, "", atom.color, 180);
+				if(PDB.mode == PDB.MODE_THREE){
+				  PDB.tool.showInfoPanel(true,message);
+				}
             }
             if (INTERSECTED.userData.mutation != undefined) {
               // PDB.painter.showAtomLabel(INTERSECTED.userData.presentAtom);
@@ -1884,6 +1891,9 @@ PDB.render = {
           }
           INTERSECTED = null;
           PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+		  if(PDB.mode == PDB.MODE_THREE){
+		    PDB.tool.showInfoPanel(false);
+		  }
         }
         renderer.render(scene, camera);
       }
