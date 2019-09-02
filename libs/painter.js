@@ -3094,9 +3094,12 @@ PDB.painter = {
         PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
             message, "", locationStart.color, 180);
     }else{
+		PDB.tool.showInfoMeaPanel(true,message);
         PDB.drawer.drawTextForDistanceByDesktop(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
             message, "", locationStart.color, 180);
     }
+	
+	
     // PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
     //   message, "", locationStart.color, 180);
   },

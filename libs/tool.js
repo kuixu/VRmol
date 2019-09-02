@@ -2141,5 +2141,20 @@ PDB.tool = {
 		}else{
 			labelContent.innerHTML = "";
 		}
+	},
+	showInfoMeaPanel: function (isShow,msg) {
+		var labelContent_measure = document.getElementById("labelContent_measure");
+		if(isShow){
+			labelContent_measure.innerHTML = msg;
+		}else{
+			labelContent_measure.innerHTML = "";
+		}
+	},
+	hideInfoMeaPanel: function (ishide) {
+		if(ishide == true){
+			labelContent_measure.style.display="none";
+		}else if(ishide == false){
+			labelContent_measure.style.display="block";
+		}
 	}
 }

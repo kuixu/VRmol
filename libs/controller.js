@@ -139,6 +139,7 @@ PDB.controller = {
                       var labelPos = locationStart.pos_curr;
                       PDB.drawer.drawTextForDistanceByDesktop(PDB.GROUP_MAIN, labelPos,
                           ms.result, "", anglePoint.color, 180);
+						  PDB.tool.showInfoMeaPanel(true,ms.result);
                       PDB.distanceArray = [];
                   }
               }
@@ -943,8 +944,10 @@ PDB.controller = {
     isHide.addEventListener('click', function(e) {
       if (e.target.checked) {
         PDB.GROUP[PDB.GROUP_MAIN].visible = false;
+		PDB.tool.hideInfoMeaPanel(true);
       } else {
         PDB.GROUP[PDB.GROUP_MAIN].visible = true;
+		PDB.tool.hideInfoMeaPanel(false);
       }
     });
     //switch color  add color checkBox Listener ByClassName
