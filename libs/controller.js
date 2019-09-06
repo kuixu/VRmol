@@ -317,8 +317,11 @@ PDB.controller = {
     drugSurface.addEventListener('click', function(e) {
 
       if (e.target.checked) {
-        PDB.painter.showDrugSurface(PDB.config.selectedDrug);
-        //
+		  PDB.tool.showSegmentholder(true);		
+		 setTimeout(function(e) {
+			 PDB.painter.showDrugSurface(PDB.config.selectedDrug);
+			PDB.tool.showSegmentholder(false, false);
+		  }, PDB.HOLDERTIME);
       } else {
         PDB.render.clearGroupIndex(PDB.GROUP_SURFACE_HET);
       }
@@ -1310,6 +1313,8 @@ PDB.controller = {
             drugbankid = document.getElementById("drugbankid").value;
             PDB.tool.generateDocklingLink(span, "link" + i, "Docking", drugbankid, "drugbank");
             span.appendChild(document.createElement("br"));
+			
+			
           });
           //
         } else {
@@ -1339,7 +1344,11 @@ PDB.controller = {
 
             //====add the random migration path and scope
             PDB.tool.generateDrugMigrationPath();
-            PDB.GROUP[PDB.GROUP_DRUG].visible = true;
+            PDB.GROUP[PDB.GROUP_DRUG].visible = true;			
+			 PDB.render.clearGroupIndex(PDB.GROUP_SURFACE_HET);
+			 var drugSurface = document.getElementById("drugSurface");
+			 drugSurface.checked = false;
+			 
           });
         });
         PDB.tool.generateALink(span, "link" + i, "Detail", PDB.DRUG_MODE_CONFIG.Detail_URL[dbname] + drugids[i], "");
