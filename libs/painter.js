@@ -3544,6 +3544,10 @@ PDB.painter = {
       //     //var color = new THREE.Color(w3m.rgb[i][0],w3m.rgb[i][1],w3m.rgb[i][2]);
       //     array.push(color);
       // }
+      var inner_offset = emmap.header.offset;
+      // inner_offset.x = inner_offset.x * newScale.x;
+      // inner_offset.y = inner_offset.y * newScale.y;
+      // inner_offset.z = inner_offset.z * newScale.z;
 
       var di = emmap.header.max - emmap.header.min;
       for (var i = 0; i < emmap.header.NZ; i = i + PDB.map_step) {
@@ -3557,7 +3561,8 @@ PDB.painter = {
             var per = Math.floor(((v - emmap.header.min) / (1.0 * di)) * 99);
             //color = array[per];
             var xyz = new THREE.Vector3(i, j, k) ;
-            xyz = xyz.add(emmap.header.offset);
+            xyz = xyz.add(inner_offset);
+            //xyz = xyz.add(PDB.GeoCenterOffset);
             // var vec = new THREE.Vector3(emmap.center.x + i, emmap.center.y + j, emmap.center.z + k);
             // var xyz = vec;
             //var color = array[per];
@@ -3623,17 +3628,18 @@ PDB.painter = {
       // mesh.scale.set(newScale.x, newScale.y, newScale.z);
       // mesh.rotation.y =  -Math.PI/2;
       var cur_matrix4d = new THREE.Matrix4().makeScale(newScale.x, newScale.y, newScale.z);
-      //var cur_matrix4d = emmap.header.matrix;
+      // var cur_matrix4d = new THREE.Matrix4().makeScale(1,1,1);
+      // //var cur_matrix4d = emmap.header.matrix;
+      // // console.log(cur_matrix4d);
+      // cur_matrix4d = cur_matrix4d.multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+      // // console.log(cur_matrix4d);
+      // cur_matrix4d = cur_matrix4d.multiply(new THREE.Matrix4().makeRotationY(Math.PI / 2));
+      // // console.log(cur_matrix4d);
+      // cur_matrix4d = cur_matrix4d.multiply(new THREE.Matrix4().makeRotationZ(Math.PI / 2));
       // console.log(cur_matrix4d);
-      cur_matrix4d = cur_matrix4d.multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
-      console.log(cur_matrix4d);
-      cur_matrix4d = cur_matrix4d.multiply(new THREE.Matrix4().makeRotationY(Math.PI / 2));
-      console.log(cur_matrix4d);
-      cur_matrix4d = cur_matrix4d.multiply(new THREE.Matrix4().makeRotationZ(Math.PI / 2));
-      console.log(cur_matrix4d);
-      // cur_matrix4d = cur_matrix4d.multiply(emmap.header.matrix);
+      // // cur_matrix4d = cur_matrix4d.multiply(emmap.header.matrix);
       cur_matrix4d = cur_matrix4d.multiply(new THREE.Matrix4().makeTranslation(PDB.GeoCenterOffset.x, PDB.GeoCenterOffset.y, PDB.GeoCenterOffset.z));
-      console.log(cur_matrix4d);
+      // console.log(cur_matrix4d);
       // makeRotationX(Math.PI / 4).makeRotationY(Math.PI / 4).makeRotationZ(Math.PI / 4).makeTranslation(PDB.GeoCenterOffset.x, PDB.GeoCenterOffset.y, PDB.GeoCenterOffset.z);
       mesh.applyMatrix(cur_matrix4d);
       PDB.GROUP[PDB.GROUP_MAP].add(mesh);

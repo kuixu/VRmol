@@ -1261,5 +1261,6 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
     
     PDB.GROUP[group].add(plane);
     PDB.GROUP[group].scale.set(newScale.x, newScale.y, newScale.z);
+
   }
 };
