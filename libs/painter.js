@@ -3751,7 +3751,7 @@ PDB.painter = {
     PDB.GROUP[PDB.GROUP_MAP].add(mesh);
     PDB.GROUP[PDB.GROUP_MAP].visible = true;
   },
-  showMapSlices: function(emmap, threshold, slice, dimensionType) {
+  showMapSlices0: function(emmap, threshold, slice, dimensionType) {
     var start = new Date();
     var scale = chroma.scale(['green', 'red']);
     switch (dimensionType) {
@@ -3766,6 +3766,26 @@ PDB.painter = {
       case PDB.DIMENSION_Z:
         var val = slice;
         PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NZ, emmap.header.NY, "", PDB.DIMENSION_Z, val, emmap);
+        break;
+    }
+
+    console.log("time(ms):" + (new Date() - start));
+  },
+  showMapSlices: function(emmap, threshold, slice, dimensionType) {
+    var start = new Date();
+    var scale = chroma.scale(['green', 'red']);
+    switch (dimensionType) {
+      case PDB.DIMENSION_X:
+        var val = slice;
+        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NY, emmap.header.NZ, "", PDB.DIMENSION_X, val, emmap);
+        break;
+      case PDB.DIMENSION_Y:
+        var val = slice;
+        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NZ, emmap.header.NX, "", PDB.DIMENSION_Y, val, emmap);
+        break;
+      case PDB.DIMENSION_Z:
+        var val = slice;
+        PDB.drawer.drawPlane(PDB.GROUP_SLICE, emmap.header.NX, emmap.header.NY, "", PDB.DIMENSION_Z, val, emmap);
         break;
     }
 
