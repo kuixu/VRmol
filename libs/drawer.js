@@ -1186,7 +1186,7 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
     var plane = new THREE.Mesh(geometry, PDB.MATERIALLIST);
     var newScale = emmap.header.voxelsize;
     switch (dimension) {
-      case PDB.DIMENSION_X:
+      case PDB.DIMENSION_Z:
         plane.rotation.x = -Math.PI / 2;
         plane.rotation.y = -Math.PI / 2;
         var i = val;
@@ -1199,7 +1199,7 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
               var posObj = {
                 x: j,
                 y: k,
-                width: emmap.header.NX,
+                width: emmap.header.NZ,
                 colorIndex: per
               };
               PDB.tool.setFaceColor(geometry, posObj)
@@ -1231,14 +1231,14 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
         val = val + emmap.header.offset.y;
         plane.position.copy(new THREE.Vector3(0, val, 0));
         break;
-      case PDB.DIMENSION_Z:
+      case PDB.DIMENSION_X:
         var k = val;
         if (PDB.mode != PDB.MODE_VR) {
           for (var i = 0; i < emmap.header.NZ; i++) {
             for (var j = 0; j < emmap.header.NY; j++) {
               var v = emmap.data[i][j][k];
               var per = Math.floor(100 * ((v - emmap.header.min) / (1.0 * (emmap.header.max - emmap.header.min))));
-              // console.log(pre);
+              console.log("x");
               var posObj = {
                 x: i,
                 y: j,
