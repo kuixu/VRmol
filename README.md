@@ -20,7 +20,7 @@ Tutorials of VRmol can be accessed at [here](https://vrmol.net/docs).
 
 VRmol provides two modes:
 - [**VR Mode**](https://vrmol.net/docs/#header-n5340) will guide you to experience VRmol in Virtual Reality environment.
-- [**Desktop Mode**](https://vrmol.net/docs/#header-n5609) will guide you to experience VRmol on the desktop.
+- [**nonVR Mode**](https://vrmol.net/docs/#header-n5609) will guide you to experience VRmol on the desktop.
 
 ### Video Tutorials
 
@@ -30,12 +30,12 @@ VRmol provides two modes:
 - [**Drag Structure elements**](https://vrmol.net/docs/#header-n237) 
 - [**Structure Editing**](https://vrmol.net/docs/#header-n251) 
 - [**Genome Variations**](https://vrmol.net/docs/#header-n259) 
-- [**Interactive Docking**](https://vrmol.net/docs/#header-n267) 
+- [**Interactive Docking**](https://vrmol.net/docs/#header-n267) [[YouTube]](https://www.youtube.com/watch?v=iblEtcxJTos)
 - [**Entering VR Scene**](https://vrmol.net/docs/#header-n59) 
-- [**Fragmentation  in Desktop mode**](https://vrmol.net/docs/#header-n459)
-- [**Structure Editing  in Desktop mode**](https://vrmol.net/docs/#header-n468)
-- [**Genome Variations  in Desktop mode**](https://vrmol.net/docs/#header-n476)
-- [**Interactive Docking in Desktop mode**](https://vrmol.net/docs/#header-n489)
+- [**Fragmentation  in nonVR mode**](https://vrmol.net/docs/#header-n459)
+- [**Structure Editing  in nonVR mode**](https://vrmol.net/docs/#header-n468)
+- [**Genome Variations  in nonVR mode**](https://vrmol.net/docs/#header-n476)
+- [**Interactive Docking in nonVR mode**](https://vrmol.net/docs/#header-n489)
 
 
 
@@ -135,6 +135,7 @@ Server Tools
 
 ## Citation
 
+Paper: [Biorxiv](https://www.biorxiv.org/content/early/2019/03/27/589366.1)
 ```
 @article {Xu589366,
 	author = {Xu, Kui and Liu, Nan and Xu, Jingle and Guo, Chunlong and Zhao, Lingyun and Wang, Hong-wei and Zhang, Qiangfeng Cliff},
