@@ -4260,10 +4260,21 @@ PDB.painter = {
       opacity: PDB.SURFACE_OPACITY,
       transparent: true,
     }));
+	var po ;
+	if(PDB.GROUP[PDB.GROUP_DRUG].visible  == true){
+		po = PDB.GROUP[PDB.GROUP_DRUG].position;	
+		
+	}else{
+		po = PDB.GROUP[PDB.GROUP_DOCKING].position;
+		
+	}
 
     PDB.GROUP[PDB.GROUP_SURFACE_HET].add(mesh);
-    var po = PDB.GROUP[PDB.GROUP_DRUG].position;
-    PDB.GROUP[PDB.GROUP_SURFACE_HET].position.copy(po);
+    if(po){
+		
+		PDB.GROUP[PDB.GROUP_SURFACE_HET].position.copy(po);
+	}
+    
     PDB.GROUP[PDB.GROUP_SURFACE_HET].visible = true;
   },
   //before sphere visualization 2018-08-16
