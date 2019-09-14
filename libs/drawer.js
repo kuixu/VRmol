@@ -196,6 +196,29 @@ PDB.drawer = {
     // PDB.GROUP[group].add(arrowHelper);
     // PDB.GROUP[group].add(arrowHelper1);
   },
+  drawTextForAngle: function(group, pos, text, type, color, rotation) {
+    var geometry = new THREE.TextGeometry(text, {
+      font: font,
+      size: 0.38,
+      height: 0.05,
+      curveSegments: 5
+    });
+    geometry.computeBoundingBox();
+    var material = new THREE.MeshPhongMaterial({
+      color: Math.random() * 0xffffff
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = text;
+    mesh.userData = {
+      type: type,
+      name: text,
+      group: group
+    };
+    mesh.position.copy(pos);
+    mesh.lookAt(camera.position);
+	mesh.rotation.copy(camera.rotation);
+    PDB.GROUP[group].add(mesh);
+  },  
 drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) {
     var geometry = new THREE.TextGeometry(text, {
       font: font,
