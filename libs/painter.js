@@ -303,8 +303,7 @@ PDB.painter = {
           ["By Models", PDB.SELECTION_MODEL],
           ["By Chain", PDB.SELECTION_CHAIN],
           ["By Residue", PDB.SELECTION_RESIDUE],
-          ["By Atom", PDB.SELECTION_ATOM],
-          ["By Drug List", PDB.SELECTION_DRUG_LIST]
+          ["By Atom", PDB.SELECTION_ATOM]
         ];
 
         for (var i = 0; i < label.length; i++) {

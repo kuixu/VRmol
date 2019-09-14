@@ -752,6 +752,8 @@ function onTriggerDown(event) {
           } else if ("menuOff" === repList[0]) {
             PDB.GROUP[PDB.GROUP_VR_MENU_DRUG].visible = false;
             PDB.GROUP[PDB.GROUP_VR_MENU_DOCKING].visible = false;
+          }else if ("DockingResultLink" === repList[0]) {
+			  window.location.href=repList[1];
           }
         }
         break;

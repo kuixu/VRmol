@@ -2192,6 +2192,8 @@ PDB.tool = {
 		    posStart = new THREE.Vector3(posStart.x, posStart.y - 0.2, posStart.z);
 			reptype = "dockingMenu,"+jsonObj.model_list[i]+","+jsonObj.outdir;
 			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, posStart, jsonObj.model_list[i]+"   "+jsonObj.scores[i], reptype, color, 135);
+			reptype = "DockingResultLink,"+jsonObj.outdir + "/" + jsonObj.model_list[i];
+			PDB.drawer.drawTextKB(PDB.GROUP_VR_MENU_DOCKING, pos, "Link", reptype, color, 135);
           }
         }
       });
