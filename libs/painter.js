@@ -3096,15 +3096,17 @@ PDB.painter = {
     var color = new THREE.Color(0.5, 0.5, 0.5);
     PDB.drawer.drawLine(PDB.GROUP_MAIN, startPos,
       endPos, color);
-    if (PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR) {
-        PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
-            message, "", locationStart.color, 180);
-    }else{
-		PDB.tool.showInfoMeaPanel(true,message);
-        PDB.drawer.drawTextForDistanceByDesktop(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
-            message, "", locationStart.color, 180);
-    }
-	
+	if(PDB.trigger === PDB.TRIGGER_EVENT_DISTANCE){
+		 if (PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR) {
+			PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
+				message, "", locationStart.color, 180);
+		}else{
+			PDB.tool.showInfoMeaPanel(true,message);
+			PDB.drawer.drawTextForDistanceByDesktop(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
+				message, "", locationStart.color, 180);
+		}
+	}  
+   
 	
     // PDB.drawer.drawTextForDistance(PDB.GROUP_MAIN, PDB.tool.midPoint(startPos, endPos),
     //   message, "", locationStart.color, 180);
