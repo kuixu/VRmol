@@ -846,15 +846,18 @@ function onTriggerUp(event) {
         var edgePoint2Pos = [edgePoint2.pos_curr.x, edgePoint2.pos_curr.y, edgePoint2.pos_curr.z];
         var ms = PDB.tool.getAngleMeasurement(anglePointPos, edgePoint1Pos, edgePoint2Pos);
 		
-		var anglePos = new THREE.Vector3(anglePoint.pos_curr.x, anglePoint.pos_curr.y, anglePoint.pos_curr.z)
-        var labelPos = anglePos.applyMatrix4(PDB.GROUP[PDB.GROUP_MAIN].matrix);
-		var pos = PDB.tool.getAtomInfoPosition(anglePos,camera.position);
-		// var limit = w3m.global.limit;
-        // var x = limit.x[1] + PDB.GeoCenterOffset.x;
-		// var z = limit.z[1] + PDB.GeoCenterOffset.z;
-		// var pos = new THREE.Vector3(x * 0.02, 3.0, z * 0.02);
-		PDB.render.clearGroupIndex(PDB.GROUP_INFO);
-        PDB.drawer.drawTextForAngle(PDB.GROUP_INFO, pos,ms.result, "", anglePoint.color, 180);
+		// var anglePos = new THREE.Vector3(anglePoint.pos_curr.x, anglePoint.pos_curr.y, anglePoint.pos_curr.z)
+        // var labelPos = anglePos.applyMatrix4(PDB.GROUP[PDB.GROUP_MAIN].matrix);
+		// var pos = PDB.tool.getAtomInfoPosition(anglePos,camera.position);
+		var limit = w3m.global.limit;
+        var x = limit.x[1] + PDB.GeoCenterOffset.x;
+		var z = limit.z[1] + PDB.GeoCenterOffset.z;
+		var pos = new THREE.Vector3(x * 0.02, 3.0, z * 0.02);
+		
+		var labelPos = locationStart.pos_curr;
+		var pos = PDB.tool.getAtomInfoPosition(labelPos,camera.position);
+        // PDB.drawer.drawTextForAngle(PDB.GROUP_MAIN, pos,ms.result, "", anglePoint.color, 180);
+        PDB.drawer.drawTextForAngle(PDB.GROUP_MAIN, pos,ms.result, "", anglePoint.color, 180);
         
         PDB.distanceArray = [];
       }
