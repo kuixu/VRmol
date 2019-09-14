@@ -541,6 +541,12 @@ PDB.painter = {
     PDB.drawer.drawText(PDB.GROUP_INFO, pos,
       message, "", showAtom.color, 180);
   },
+  showMutationInfo: function(showAtom,mutation,pos_curr) {
+    var message = mutation.pos + " " + mutation.p_change + " " + mutation.v_class + " " + mutation.v_type;
+    var pos = PDB.tool.getAtomInfoPosition(pos_curr, camera.position);
+    PDB.drawer.drawText(PDB.GROUP_INFO, pos,
+      message, "", showAtom.color, 180);
+  },
   showAtomInfoPos: function(showAtom, position) {
     var pos = new THREE.Vector3();
     pos.x = position.x + 0.5;

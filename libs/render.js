@@ -680,7 +680,12 @@ function onTriggerDown(event) {
           //PDB.painter.showResidueInfoPos(object.userData.presentAtom, pos);
           atom = object.userData.presentAtom;
           atom["pos_curr"] = pos;
-          PDB.painter.showAtomInfo(atom);
+		  if(object.userData !== undefined && object.userData.reptype === 'mutation'){
+			 PDB.painter.showMutationInfo(atom,object.userData.mutation,pos);
+		  }else{
+			 PDB.painter.showAtomInfo(atom); 
+		  }
+          
           if (PDB.trigger === PDB.TRIGGER_EVENT_FRAGMENT) {
             // console.log(object);
             PDB.fragmentArray.push(object);
@@ -1037,7 +1042,7 @@ function getIntersections(controller) {
       }
     }
   } else {
-
+	  
     switch (PDB.selection_mode) {
       case PDB.SELECTION_MODEL:
         for (var i in PDB.GROUP_STRUCTURE_INDEX) {
@@ -1078,11 +1083,10 @@ function getIntersections(controller) {
           if (tmp_inters.length <= 0) continue;
           object = tmp_inters[0].object;
           if (object.name != undefined && object.name != "" && object.userData.presentAtom !== undefined) {
-            // console.log(object.point);
             inters.push({
-              "object": PDB.GROUP[groupindex],
-              "pos": tmp_inters[0].point
-            });
+			  "object": PDB.GROUP[groupindex],
+			  "pos": tmp_inters[0].point
+			});
           }
         }
         break;
@@ -1116,26 +1120,31 @@ function getIntersections(controller) {
               }
               var atomObjects = PDB.GROUP[gIndexies[i]].getChildrenByName(object.userData.presentAtom.id);
               for (var a = 0; a < atomObjects.length; a++) {
-                //atomObjects[a].position.copy(point);
-                //object.userData.presentAtom["pos_curr"] =point;
                 inters.push({
                   "object": atomObjects[a],
                   "pos": point
                 });
               }
             } else {
-              var resAtoms = PDB.tool.getMainResAtomsByAtom(object.userData.presentAtom);
-              for (var k = 0; k < resAtoms.length; k++) {
-                var atomObjects = PDB.GROUP[gIndexies[i]].getChildrenByName(resAtoms[k].id);
-                for (var a = 0; a < atomObjects.length; a++) {
-                  //atomObjects[a].position.copy(point);
-                  //object.userData.presentAtom["pos_curr"] =point;
-                  inters.push({
-                    "object": atomObjects[a],
-                    "pos": point
-                  });
-                }
-              }
+			 
+			  if(object.userData !== undefined && object.userData.reptype === 'mutation'){
+				  inters.push({
+						"object": object,
+						"pos": point
+				  });
+			  }else{
+				  var resAtoms = PDB.tool.getMainResAtomsByAtom(object.userData.presentAtom);
+				  for (var k = 0; k < resAtoms.length; k++) {
+					var atomObjects = PDB.GROUP[gIndexies[i]].getChildrenByName(resAtoms[k].id);
+					for (var a = 0; a < atomObjects.length; a++) {
+					  inters.push({
+						"object": atomObjects[a],
+						"pos": point
+					  });
+					}
+				  }
+			  }
+
             }
           }
         }

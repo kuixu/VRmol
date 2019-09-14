@@ -505,7 +505,8 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
     mesh.userData = {
       group: group,
       mutation: mutation,
-	  presentAtom:presentAtom
+	  presentAtom:presentAtom,
+	  reptype: 'mutation'
     };
     if (addGroup) {
       PDB.GROUP[group].add(mesh);
