@@ -156,8 +156,10 @@ PDB.loader = {
     var scope = this;
     w3m.ajax.getDrug(drugname, dbname, function(text) {
       w3m.tool.clear();
+	  
       w3m.pdb(text, drugname);
       w3m.mol[drugname].drug = true;
+	  scope.getDrugCenterOffset();
       callBack();
     });
   },
@@ -204,6 +206,14 @@ PDB.loader = {
     w3m.mol = {};
     PDB.GeoCenterOffset = "";
     PDB.fragmentList = {};
+  },
+  getDrugCenterOffset: function(){
+	var limit = w3m.global.drugLimit;
+	x = -(limit.x[0] + limit.x[1]) / 2;
+	y = -(limit.y[0] + limit.y[1]) / 2;
+	z = -(limit.z[0] + limit.z[1]) / 2; //copy from w3m.limit
+	PDB.DrugCenterOffset = new THREE.Vector3(x, y, z);
+	return offset;
   },
   getCenterOffset: function() {
     limit = w3m.global.limit;

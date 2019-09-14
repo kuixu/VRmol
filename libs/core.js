@@ -15,12 +15,7 @@ var API_URL = "https://vrmol.life.tsinghua.edu.cn";
 var API_URL_EMMAP = "server/api_em.php?pdbid=";
 var API_SPEECH = "server/speech/service.php"
 PDB = {
-	
-  LENDTH_DRUG_HALF:{//docking drug regeion
-	x:5,
-	y:5,
-	z:5
-  },
+
   DOCKING_POS_START: {x:0,
 		y:0,
 		z:0,

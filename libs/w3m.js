@@ -484,6 +484,11 @@ w3m.global = {
     b_factor: [0.0, 0.0],
     b_factor_backbone: [0.0, 0.0]
   },
+  drugLimit:{
+	x: [],
+    y: [],
+    z: []  
+  },
   average: {
     b_factor: [0, 0],
     b_factor_backbone: [0, 0]
@@ -5326,12 +5331,21 @@ w3m.pdb = function(text, drugname) {
     getAtomEx: function(id) {
       return o.atom.main[id] || (o.atom.het[id] || null);
     }
+	
   };
   if (drugname && w3m.mol[drugname] !== undefined && w3m.mol[drugname].res) {
     o.id = drugname;
   }
 
   var parse = function(text) {
+	
+	//init drug limit
+	w3m.global.drugLimit = {
+		x:[],
+		y:[],
+		z:[]
+	}
+	  
     text = text.split('\n');
     // var preResidueID,nextResidueID;
     if (PDB.exportPdb) {
@@ -5372,6 +5386,7 @@ w3m.pdb = function(text, drugname) {
       PDB.exportPdb = false;
       return;
     } else {
+		
       for (var i = 0, l = text.length; i < l; i++) {
         var s = text[i].toLowerCase();
 
@@ -5750,10 +5765,7 @@ w3m.pdb = function(text, drugname) {
     }
 
   };
-  /**
-   * 解析非标准基团原�?
-   * @param s
-   */
+
   var doeEitHet = function(s) {
     //console.log(s);
     var atom_id = parseInt(w3m_sub(s, 7, 11)),
@@ -5786,6 +5798,11 @@ w3m.pdb = function(text, drugname) {
     math.limit(xyz[0], w3m.global.limit.x);
     math.limit(xyz[1], w3m.global.limit.y);
     math.limit(xyz[2], w3m.global.limit.z);
+	
+	math.limit(xyz[0], w3m.global.drugLimit.x);
+    math.limit(xyz[1], w3m.global.drugLimit.y);
+    math.limit(xyz[2], w3m.global.drugLimit.z);
+	
     if (b_factor) {
       math.average(b_factor, w3m.global.average.b_factor);
       math.limit(b_factor, w3m.global.limit.b_factor);
