@@ -1474,6 +1474,16 @@ PDB.tool = {
     var pathScopex = limit.x[1] - limit.x[0];
     var pathScopey = limit.y[1] - limit.y[0];
     var pathScopez = limit.z[1] - limit.z[0];
+	
+	if(pathScopex > PDB.LENDTH_DRUG_HALF.x){		
+		pathScopex = pathScopex - PDB.LENDTH_DRUG_HALF.x;
+	}
+	if(pathScopey > PDB.LENDTH_DRUG_HALF.y){		
+		pathScopey = pathScopey - PDB.LENDTH_DRUG_HALF.y;
+	}
+	if(pathScopez > PDB.LENDTH_DRUG_HALF.z){		
+		pathScopez = pathScopez - PDB.LENDTH_DRUG_HALF.z;
+	}
     var rotateScope = Math.PI;
     PDB.DRUGMigrationPaths = [];
     PDB.DRUGMigrationRotates = [];
