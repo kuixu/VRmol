@@ -663,6 +663,9 @@ PDB.controller = {
         }
         PDB.GROUP[PDB.GROUP_HET].visible = false;
         PDB.render.hideStructure();
+        if(PDB.GROUP[PDB.GROUP_MAP].children.length > 0){
+            PDB.GROUP[PDB.GROUP_MAP].visible = true;
+        }
         e.target.innerText = 'Show';
       } else if (e.target.innerText == 'Show') {
         var residueData = w3m.mol[PDB.pdbId].residueData;
