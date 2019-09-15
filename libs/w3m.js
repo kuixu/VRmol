@@ -5878,13 +5878,24 @@ w3m.pdb = function(text, drugname) {
     // SSBond
     for (var i = 0, l = o.ssbond.length; i < l; i++) {
       var bond = o.ssbond[i],
-        atom_id_1 = o.atom.main[o.tree.main[bond[0]][bond[1]].sg][1],
-        atom_id_2 = o.atom.main[o.tree.main[bond[2]][bond[3]].sg][1];
-      if (w3m_isset(o.connect[atom_id_1])) {
+        atom_id_1 ,
+        atom_id_2 ;
+		
+		
+		if(o.tree.main[bond[0]]){
+			atom_id_1 = o.atom.main[o.tree.main[bond[0]][bond[1]].sg][1];
+		}
+		if(o.tree.main[bond[2]]){
+			atom_id_2 = o.atom.main[o.tree.main[bond[2]][bond[3]].sg][1];
+		}
+		
+		
+		
+      if (atom_id_1 && w3m_isset(o.connect[atom_id_1])) {
         var index = o.connect[atom_id_1].indexOf(atom_id_2);
         index >= 0 ? o.connect[atom_id_1].splice(index, 1) : void(0);
       }
-      if (w3m_isset(o.connect[atom_id_2])) {
+      if (atom_id_1 && w3m_isset(o.connect[atom_id_2])) {
         var index = o.connect[atom_id_2].indexOf(atom_id_1);
         index >= 0 ? o.connect[atom_id_2].splice(index, 1) : void(0);
       }
