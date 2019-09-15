@@ -473,9 +473,10 @@ function to_cont(data) {
         }
 
       }
-      if(i>0 && sense !==0){
+      var sheet_hbond = model.pdbx_struct_sheet_hbond;
+      if(i>0 && sense !==0 && sheet_hbond!==undefined){
         sense     = "%2d".$(sense);
-        var sheet_hbond = model.pdbx_struct_sheet_hbond;
+        
         curAtom   = "%-4s".$(sheet_hbond.range_2_label_atom_id[i-1]);
         curResName= "%-3s".$(sheet_hbond.range_2_label_comp_id[i-1]);
         curChainId= "%s".$(sheet_hbond.range_2_label_asym_id[i-1]);
