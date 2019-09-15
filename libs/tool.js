@@ -1110,7 +1110,7 @@ PDB.tool = {
 			  var currThresHold = document.getElementById("currThresHold");
 			  currThresHold.innerHTML = perValue.toFixed(3);
 			  if (PDB.EMMAP.SHOW_MAP) {
-				PDB.render.clearGroupIndex(PDB.GROUP_MAIN);
+				PDB.render.clearGroupIndex(PDB.GROUP_MAP);
 				switch (PDB.EMMAP.TYPE) {
 				  case 0:
 					PDB.painter.showMapSolid(emmap, perValue);
