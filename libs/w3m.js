@@ -367,6 +367,7 @@ w3m.ajax = (function() {
     url_index = 0,
     callback = null;
   drug = false;
+  var last = ".pdb";
   io.onprogress = function() {
 
   };
@@ -424,18 +425,20 @@ w3m.ajax = (function() {
         url = mol_id;
 		//debugger;
       } else{
-        url = PDB.remoteUrl[url_index] + mol_id + '.pdb';
+		//var last = '.pdb';
+		  if(url_index > 0 && last == '.pdb'){
+			  url_index = 0;
+			  last = '.cif';
+		  }else{
+			  last = '.pdb';
+		  }
+        url = PDB.remoteUrl[url_index] + mol_id + last;
       }
-	  // console.log(url);
+	  //console.log(url);
       id = mol_id;
       callback = fn;
-	  try{
-        this.open('GET', url, true);
-        this.send();
-      }catch(e){
-        //console.log(e);		
-		
-      }
+	  this.open('GET', url, true);
+      this.send();
       
     };
   io.getResidue = function(resName, fn) {
