@@ -231,7 +231,7 @@ PDB.painter = {
           ["Rotation", PDB.MENU_TYPE_ROTATION],
           // ["Bond", PDB.MENU_TYPE_HBOND],
           // ["Conservation",              PDB.MENU_TYPE_CONSERVATION],
-          ["Density Map", PDB.MENU_TYPE_DENSITYMAP],
+          //["Density Map", PDB.MENU_TYPE_DENSITYMAP],
           ["Drugs & Docking", PDB.MENU_TYPE_DRUG],
           ["Export", PDB.MENU_TYPE_EXPORT],
           ["Speech", PDB.MENU_TYPE_SPEECH],
