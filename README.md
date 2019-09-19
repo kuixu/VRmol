@@ -108,7 +108,7 @@ The options and their data types supported in VRmol are shown in the table below
 https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfaceOpc=1&surfaceType=1&colorMode=609&vmode=vr
 ```
 
-## Deploy VRmol on your own server
+## Deploy VRmol on your own server Using VRmol API Services
 
   - Download the code into the apache server web directory
   - Set `SERVERURL` as your URL (like https://example.com) at `libs/core.js`
@@ -116,13 +116,18 @@ https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfa
     ```python
     python3 server/speech/sr.py
     ```
+> If you deploy VRmol in your local server with a prefix URL `http://localhost` or you do not have a setting of `https`, you should delete the `.htaccess` file. While without setting `https`, you would not access the Speech Recognition function.
+
+
+## Setup VRmol API Services on your own server
+
   - Installation of external tools
      - [AutoDock Vina](http://vina.scripps.edu/)
      - [MGLTools](http://mgltools.scripps.edu/)
      - [OpenBabel](http://openbabel.org/wiki/Main_Page)
-  - Data files in the Database
+  - Data files used to build the Database
+     - [Google Drive](https://drive.google.com/open?id=1HhRsWi7R1oI5pGtVvOYc4TuUFlePCbbh)
 
-> If you deploy VRmol in your local server with a prefix URL `http://localhost` or you do not have a setting of `https`, you should delete the `.htaccess` file. While without setting `https`, you would not access the Speech Recognition function.
 
 Server Tools
   - Linux/Windows/macOS [Apache](https://httpd.apache.org/)
