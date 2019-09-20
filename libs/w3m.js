@@ -373,7 +373,11 @@ w3m.ajax = (function() {
   };
   io.onload = function() {
     if (this.status == 200) {
-      callback(io.responseText);
+		var responseText = io.responseText;
+		if(last == '.cif'){
+			responseText = loadCIF(responseText, 1);
+		}
+      callback(responseText);
     } else {
       if (w3m_isset(PDB.remoteUrl[++url_index])) {
         this.get(id, callback);
@@ -434,7 +438,7 @@ w3m.ajax = (function() {
 		  }
         url = PDB.remoteUrl[url_index] + mol_id + last;
       }
-	  //console.log(url);
+	  console.log(url);
       id = mol_id;
       callback = fn;
 	  this.open('GET', url, true);
