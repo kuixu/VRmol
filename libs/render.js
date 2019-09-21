@@ -186,6 +186,24 @@ function dealwithMenu(object) {
       }
       onMenuDown();
       break;
+	case PDB.GROUP_MENU_SPEECH:
+      switch (curr_reptype) {
+		  case 0:
+		      console.log("----------------startRecording")
+              startRecording();
+              break;
+          case 1:
+              endRecording();
+			  onMenuDown();
+              break;
+          case 2:
+              voiceControl.language = "Chinese";
+              break;
+          case 3:
+              voiceControl.language = "English";
+              break;
+      }
+      break;  
     case PDB.GROUP_MENU_HET:
       if (curr_reptype !== PDB.HIDE) {
         PDB.render.clear(5);

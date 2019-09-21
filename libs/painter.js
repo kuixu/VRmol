@@ -481,7 +481,8 @@ PDB.painter = {
         break;
       case PDB.MENU_TYPE_SPEECH:
         var vocieMenu = [
-          ["Voice", 1],
+          ["Start voice", 0],
+          ["End voice", 1],
           ["Chiness Voice", 2],
           ["English Voice", 3]
         ];

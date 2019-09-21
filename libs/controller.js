@@ -59,7 +59,7 @@ PDB.controller = {
     threeMode.addEventListener('click', function(e) {
       vrMode.style.display = "none";
       //PDB.render.changeToThreeMode(PDB.MODE_THREE,false);
-      window.location.href = "index.html?vmode=desktop";
+      window.location.href = "index.html?vmode=nonvr";
     });
 
     // threeWithTravel.addEventListener('click', function(e) {

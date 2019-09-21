@@ -136,6 +136,9 @@ if (location.search) {
     case "desktop":
       PDB.mode = PDB.MODE_THREE;
       break;
+	case "nonvr":
+      PDB.mode = PDB.MODE_THREE;
+      break;  
     case "vr":
       var vrModelBtn = document.getElementById("vrMode");
       vrModelBtn.style.display = "none";
@@ -198,7 +201,7 @@ function endRecord() {
 function voiceOperation(code) {
   switch (parseInt(code)) {
     case 11:
-      window.location.href = "index.html?vmode=desktop";
+      window.location.href = "index.html?vmode=nonvr";
       break;
     case 12:
       window.location.href = "index.html?vmode=vr";
