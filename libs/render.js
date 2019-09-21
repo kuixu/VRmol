@@ -193,7 +193,7 @@ function dealwithMenu(object) {
               startRecording();
               break;
           case 1:
-              endRecording();
+              endRecord();
 			  onMenuDown();
               break;
           case 2:
