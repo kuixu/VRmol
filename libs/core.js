@@ -78,6 +78,7 @@ PDB = {
   ROTATION_DIRECTION:1, //0 left 1 right
   ROTATION_AXIS:1, //1 x, 2 y, 3 z
   ROTATION_TASK_ID:0,//taskID
+  ROTATION_STEP:0.01,
   MOVE_DIRECTION:2, //1 +  2 -
   MOVE_AXIS:3, //1 y,  2 x, 3 z
   MOVE_TASK_ID:0,
