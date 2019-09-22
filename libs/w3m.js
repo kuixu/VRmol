@@ -368,8 +368,9 @@ w3m.ajax = (function() {
     callback = null;
   drug = false;
   var last = ".pdb";
-  io.onprogress = function() {
-
+  io.timeout = 180000; // timeout ms
+  io.onprogress = function(e) {
+	
   };
   io.onload = function() {
     if (this.status == 200) {

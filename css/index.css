@@ -443,6 +443,7 @@ button:active {
   font-family: Montserrat, sans-serif;
   font-size: 12px;
   color: white;
+  border-radius: 0px;
 }
 
 .submenu {
