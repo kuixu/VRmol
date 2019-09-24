@@ -370,7 +370,15 @@ w3m.ajax = (function() {
   var last = ".pdb";
   io.timeout = 180000; // timeout ms
   io.onprogress = function(e) {
-	
+	// PDB.tool.showSegmentholder(true,'NOT FOUND : Fail to load PDF file !');	
+	// if (e.lengthComputable) {
+  // PDB.tool.setProgressBar(e.loaded, e.total);
+  
+  var loaded = PDB.tool.toHumanByte(e.loaded);
+  PDB.tool.showSegmentholder(true,"Loading file " + loaded );
+  // PDB.tool.printProgress(type + " map: " + mapid + " loaded, size(" + loaded + "/" + total + ") " + ratio);
+  // console.log(e.loaded);
+// }
   };
   io.onload = function() {
     if (this.status == 200) {
