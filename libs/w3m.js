@@ -368,7 +368,7 @@ w3m.ajax = (function() {
     callback = null;
   drug = false;
   var last = ".pdb";
-  io.timeout = 180000; // timeout ms
+  //io.timeout = 180000; // timeout ms
   io.onprogress = function(e) {
 	// PDB.tool.showSegmentholder(true,'NOT FOUND : Fail to load PDF file !');	
 	// if (e.lengthComputable) {
