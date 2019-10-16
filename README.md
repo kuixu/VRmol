@@ -1,4 +1,7 @@
+<p align="center"> <img src="imgs/logo.png" width=200px></p>
+
 # VRmol: Virtual Reality for Molecular Structures 
+
 
 ## Introduction
 
