@@ -1313,10 +1313,14 @@ PDB.controller = {
           // var drug_id =  input =
           PDB.tool.generateTextBox(span, "drugbankid", "DB04464", 'textbox');
           PDB.tool.generateButton(span, "Load", "Load", "rightLabelPDB").addEventListener('click', function() {
+			  
             drugbankid = document.getElementById("drugbankid").value;
-            PDB.tool.generateDocklingLink(span, "link" + i, "Docking", drugbankid, "drugbank");
-            span.appendChild(document.createElement("br"));
 			
+			var link_e = document.getElementById("link")
+			if(!link_e){
+				PDB.tool.generateDocklingLink(span, "link" , "Docking", drugbankid, "drugbank");
+				span.appendChild(document.createElement("br"));
+			}
 			
           });
           //
