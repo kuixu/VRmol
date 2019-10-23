@@ -375,7 +375,10 @@ w3m.ajax = (function() {
   // PDB.tool.setProgressBar(e.loaded, e.total);
   
   var loaded = PDB.tool.toHumanByte(e.loaded);
-  PDB.tool.showSegmentholder(true,"Loading file " + loaded );
+  if(drug == false){
+	PDB.tool.showSegmentholder(true,"Loading file " + loaded );		
+	}
+  
   // PDB.tool.printProgress(type + " map: " + mapid + " loaded, size(" + loaded + "/" + total + ") " + ratio);
   // console.log(e.loaded);
 // }
@@ -386,6 +389,7 @@ w3m.ajax = (function() {
 		if(last == '.cif'){
 			responseText = loadCIF(responseText, 1);
 		}
+		
       callback(responseText);
     } else {
       if (w3m_isset(PDB.remoteUrl[++url_index])) {
@@ -431,7 +435,8 @@ w3m.ajax = (function() {
 		// console.log("-------------id.get()-----------------");
 		// console.log("mol_id:");
 		// console.log(mol_id);
-      if (mol_id.indexOf("http://") != -1) {
+      drug = false;
+	  if (mol_id.indexOf("http://") != -1) {
 		  //debugger;
         url = mol_id;
       } else if (mol_id.indexOf("https://") != -1) {
