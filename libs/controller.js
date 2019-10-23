@@ -1316,10 +1316,28 @@ PDB.controller = {
 			  
             drugbankid = document.getElementById("drugbankid").value;
 			
-			var link_e = document.getElementById("link")
+			var link_e = document.getElementById("link");
 			if(!link_e){
 				PDB.tool.generateDocklingLink(span, "link" , "Docking", drugbankid, "drugbank");
-				span.appendChild(document.createElement("br"));
+				span.appendChild(document.createElement("br"));			
+				
+				var drugId = drugbankid;
+			  PDB.config.selectedDrug = drugId;
+			  PDB.loader.loadDrug(drugId, 'drugbank', function() {
+				w3m.mol[drugId].drug = true;
+				PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+				PDB.painter.showHet(drugId);
+
+				//====add the random migration path and scope
+				PDB.tool.generateDrugMigrationPath();
+				PDB.GROUP[PDB.GROUP_DRUG].visible = true;			
+				 PDB.render.clearGroupIndex(PDB.GROUP_SURFACE_HET);
+				 var drugSurface = document.getElementById("drugSurface");
+				 drugSurface.checked = false;
+				 
+			  });
+					
+				
 			}
 			
           });
