@@ -239,7 +239,7 @@ PDB.loader = {
         PDB.structureSizeLevel = 1;
       } else if (mainAtomCount < 7000) {
         PDB.structureSizeLevel = 2;
-      } else if (mainAtomCount < 30000) {
+      } else if (mainAtomCount < 20000) {
         PDB.structureSizeLevel = 3;
       } else {
         PDB.structureSizeLevel = 4;

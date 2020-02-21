@@ -9,16 +9,17 @@
 
 We leverage the most cutting-edge computational technologies to develop a virtual reality (VR) system - VRmol - that provides the visualization and analysis of macromolecule structures in an infinite virtual environment on the web. VRmol is natively built with WebVR technology, providing all structural analysis functions in a fully immersive, inspiring virtual environment. It is convenient to use, runs on internet and requires no software downloading and installation. And by connecting to a number of cloud-based genomic and drug databases, it provides an integrative platform to perform advanced structural and translational research. It can be freely accessed online by typing [https://VRmol.net](https://VRmol.net?from=github) in VR-supported browser. 
 
-## Demo
-
-<img src="imgs/entervr-320.gif" width=50%>
-
 ## News
- - 02/21/2020: `Special Vis` for COVID-19 from [Tsinghua](https://mp.weixin.qq.com/s/J6j7Ya6Z7zOiLWufy_HApQ): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019-nCoV-RBD-ACE2-sse.pdb) and [NMDC](http://nmdc.cn/?from=groupmessage#/resource/detail?no=NMDCS0000001): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019nCoV-S_RBD_ACE2-sse.pdb).
+ - 02/21/2020: `Special Vis` for COVID-19 from [Tsinghua Univ.](https://mp.weixin.qq.com/s/J6j7Ya6Z7zOiLWufy_HApQ): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019-nCoV-RBD-ACE2-sse.pdb), [NMDC](http://nmdc.cn/?from=groupmessage#/resource/detail?no=NMDCS0000001): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019nCoV-S_RBD_ACE2-sse.pdb) and [West Lake Univ.](https://mp.weixin.qq.com/s/84jx6ggh-7VmFNK5it7O0g): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/RBD-ACE2-B0AT1-sse.pdb), [[Open Conformation]](https://vrmol.net/?id=https://vrmol.net/data/ACE2_B0AT1_open_conformation-sse.pdb), [[Closed Conformation]](https://vrmol.net/?id=https://vrmol.net/data/ACE2_B0AT1_closed_conformation-sse.pdb)
  - 05/17/2019: VRmol is return to normal.
  - 05/16/2019: The service provider is sufferring of Network Rounte Issue, VRmol server is outage.
  - 04/27/2019: VRmol is being on show at Tsinghua's 108th anniversary. [News](http://life.tsinghua.edu.cn/publish/smkx/11192/2019/20190429100026441636257/20190429100026441636257_.html)
  - 02/27/2019: VRmol is applied in teaching structural biology cource at Tsinghua University.
+
+## Demo
+
+<img src="imgs/entervr-320.gif" width=50%>
+
 
 ## Documentation
 
