@@ -14,9 +14,10 @@ We leverage the most cutting-edge computational technologies to develop a virtua
 <img src="imgs/entervr-320.gif" width=50%>
 
 ## News
+ - 02/21/2020: `Special Vis` for COVID-19 from [Tsinghua](https://mp.weixin.qq.com/s/J6j7Ya6Z7zOiLWufy_HApQ): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019-nCoV-RBD-ACE2-sse.pdb) and [NMDC](http://nmdc.cn/?from=groupmessage#/resource/detail?no=NMDCS0000001): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019nCoV-S_RBD_ACE2-sse.pdb).
  - 05/17/2019: VRmol is return to normal.
  - 05/16/2019: The service provider is sufferring of Network Rounte Issue, VRmol server is outage.
- - 04/27/2019: VRmol is being on show at Tsinghua's 108th anniversary. [News from Tsinghua](http://life.tsinghua.edu.cn/publish/smkx/11192/2019/20190429100026441636257/20190429100026441636257_.html)
+ - 04/27/2019: VRmol is being on show at Tsinghua's 108th anniversary. [News](http://life.tsinghua.edu.cn/publish/smkx/11192/2019/20190429100026441636257/20190429100026441636257_.html)
  - 02/27/2019: VRmol is applied in teaching structural biology cource at Tsinghua University.
 
 ## Documentation
