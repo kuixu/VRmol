@@ -426,10 +426,9 @@ w3m.ajax = (function() {
         url_index = 0;
       }
     },
-    io.onerror = function() {
-
-
-      url_index = 0;
+    io.onerror = function(e) {
+      url_index++;
+      this.get(id, callback);
     },
     io.get = function(mol_id, fn) {
 		// console.log("-------------id.get()-----------------");
@@ -443,11 +442,13 @@ w3m.ajax = (function() {
         url = mol_id;
 		//debugger;
       } else{
-		//var last = '.pdb';
 		  if(url_index > 0 && last == '.pdb'){
-			  url_index = 0;
+			  url_index--;
 			  last = '.cif';
 		  }else{
+        if (url_index > 0 && last != '.cif') {
+          url_index--;
+        }
 			  last = '.pdb';
 		  }
         url = PDB.remoteUrl[url_index] + mol_id + last;
@@ -5454,6 +5455,9 @@ w3m.pdb = function(text, drugname) {
           case 'cryst1':
             doCryst(s);
             break;
+          case 'link':
+            doLink(s);
+            break;
         }
       }
     }
@@ -5481,6 +5485,35 @@ w3m.pdb = function(text, drugname) {
     w3m.tool.pipelineInit();
   };
 
+  //ranx add 20200222
+  var doLink = function(s){    
+    if (!o.linkData) {
+      o.linkData = {};
+    }
+    var randomAtom = {};
+    randomAtom.atom_name    = w3m_sub(s, 13, 16);
+    randomAtom.residue_name = w3m_sub(s, 18, 20) || 'xxx';    
+    randomAtom.chain_id     = w3m_sub(s, 22) || 'x';
+    randomAtom.residue_id   = parseInt(w3m_sub(s, 23, 26)) || 0;
+    var normalAtom = {};
+    normalAtom.atom_name    = w3m_sub(s, 43, 46);
+    normalAtom.residue_name = w3m_sub(s, 48, 50) || 'xxx';    
+    normalAtom.chain_id     = w3m_sub(s, 52) || 'x';
+    normalAtom.residue_id   = parseInt(w3m_sub(s, 53, 56)) || 0;
+    var linkData = {
+      randomAtom:randomAtom,
+      normalAtom:normalAtom
+    }
+    var rid = normalAtom.residue_id;
+    if(!o.linkData[normalAtom.chain_id]){
+      
+      o.linkData[normalAtom.chain_id] = {};
+      o.linkData[normalAtom.chain_id][rid] = linkData;
+    }else{
+      o.linkData[normalAtom.chain_id][rid] = linkData;
+    }
+    
+  }
   var doHeader = function(s) {
     o.id = w3m_sub(s, 63, 66);
     o.info.id = w3m_sub(s, 63, 66).toUpperCase();

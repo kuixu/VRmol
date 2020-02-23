@@ -1014,6 +1014,61 @@ PDB.painter = {
       PDB.drawer.drawStick(groupindex, midp, atom.pos_centered, atom.color, radius, atom);
     }
   },
+
+  showLinksByResdue: function(chainId, resid, sel, showLow, isshow) {
+    showLow = (showLow == undefined ? false : showLow);
+    isshow = (isshow == undefined ? true : isshow);
+    var addgroup;
+    var w = PDB.CONFIG.stick_sphere_w;
+    var color = new THREE.Color('#CCC');
+    var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
+    var lines = resobj.lines;
+
+    // if(w3m.mol[PDB.pdbId].residueData[chainId][resid-1]!=undefined){
+    // var prelines = w3m.mol[PDB.pdbId].residueData[chainId][resid-1].lines;
+    // lines = [prelines[prelines.length-1]].concat(lines);
+    // }
+    var radius = 0.2;
+    var history = {};
+    for (var i in lines) {
+      var ids = lines[i];
+      var startAtom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
+      var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[1]);
+      startAtom.caid = resobj.caid;
+      atom.caid = resobj.caid;
+      var groupindex = "chain_" + atom.chainname + (showLow ? '_low' : '');
+      if (history[startAtom.id] === undefined) {
+        if(startAtom.name != 'n' && startAtom.name != 'o' && startAtom.name != 'c'){
+          PDB.drawer.drawSphere(groupindex, startAtom.pos_centered, sel ? startAtom.color : color, radius, startAtom, addgroup, w);
+          PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
+          history[startAtom.id] = 1;
+        }
+        
+      }
+      if (history[atom.id] === undefined) {
+        if(atom.name != 'n' && atom.name != 'o' && atom.name != 'c'){
+          PDB.drawer.drawSphere(groupindex, atom.pos_centered, sel ? atom.color : color, radius, atom, addgroup, w);
+          PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
+          history[atom.id] = 1;
+        }
+        
+      }
+
+      var midp = PDB.tool.midPoint(startAtom.pos_centered, atom.pos_centered);
+      //group, start, end, color, radius, atom, addGroup
+      if(startAtom.name != 'n' && startAtom.name != 'o' && startAtom.name != 'c' && atom.name != 'n' && atom.name != 'o' && atom.name != 'c'){
+        PDB.drawer.drawStick(groupindex, startAtom.pos_centered, midp, sel ? startAtom.color : color, radius, startAtom);
+        PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
+      }
+      if(atom.name != 'n' && atom.name != 'o' && atom.name != 'c' && startAtom.name != 'n' && startAtom.name != 'o' && startAtom.name != 'c'){
+        PDB.drawer.drawStick(groupindex, midp, atom.pos_centered, sel ? atom.color : color, radius, atom);
+        PDB.GROUP[groupindex].children[PDB.GROUP[groupindex].children.length - 1].visible = isshow;
+      }
+      
+    }
+  },
+
+
   showSticksByResdue: function(chainId, resid, sel, showLow, isshow) {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
@@ -1236,6 +1291,12 @@ PDB.painter = {
     var w = PDB.CONFIG.stick_sphere_w;
     var radius = PDB.CONFIG.tube_radius;
     var residueData = w3m.mol[PDB.pdbId].residueData;
+
+    //link
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
     var resobj = residueData[chainId][resid];
     var path = resobj.path;
     var atom = PDB.tool.getMainAtom(PDB.pdbId, resobj.caid);
@@ -1273,6 +1334,11 @@ PDB.painter = {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
+    //link
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
 	if(resobj.path.length==0) return;
     var path = resobj.path.slice(0, resobj.path.length / 2 + 1); ///
     var color = new THREE.Color('#CCC');
@@ -1295,7 +1361,12 @@ PDB.painter = {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
-	if(resobj.path.length==0) return;
+    //link
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
+	  if(resobj.path.length==0) return;
     var path = resobj.path.slice((resobj.path.length / 2) - 1, resobj.path.length); ///
     var color = new THREE.Color('#CCC');
 
@@ -1383,6 +1454,10 @@ PDB.painter = {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
     var cubedataObj = {};
     cubedataObj.tangents = resobj.tangents;
     cubedataObj.normals = resobj.normals;
@@ -1481,8 +1556,16 @@ PDB.painter = {
   showRibbon_EllipseByResdue: function(chainId, resid, sel, showLow, isshow) {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
-	
+    //link
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
     var cubedataObj = {};
     cubedataObj.tangents = resobj.tangents;
     cubedataObj.normals = resobj.normals;
@@ -1535,6 +1618,11 @@ PDB.painter = {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
+    //link
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
 	if(resobj.path.length==0) return;
     var path = resobj.path.slice(0, resobj.path.length / 2); ///
     var cubedataObj = {};
@@ -1586,6 +1674,11 @@ PDB.painter = {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
+    //link
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
 	if(resobj.path.length==0) return;
     var path = resobj.path.slice((resobj.path.length / 2) - 1, resobj.path.length); ///
     var cubedataObj = {};
@@ -1683,7 +1776,11 @@ PDB.painter = {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
-	if(resobj.path.length==0) return;
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
+	  if(resobj.path.length==0) return;
     var cubedataObj = {};
     cubedataObj.tangents = resobj.tangents;
     cubedataObj.normals = resobj.normals;
@@ -1784,6 +1881,10 @@ PDB.painter = {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
 	if(resobj.path.length==0) return;
     var cubedataObj = {};
     cubedataObj.tangents = resobj.tangents;
@@ -1897,7 +1998,10 @@ PDB.painter = {
   showRibbon_RailwayByResdue: function(chainId, resid, sel, showLow, isshow) {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
-
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
 	if(resobj.path.length==0) return;
     var cubedataObj = {};
@@ -2384,6 +2488,10 @@ PDB.painter = {
     showLow = (showLow == undefined ? false : showLow);
     isshow = (isshow == undefined ? true : isshow);
     var resobj = w3m.mol[PDB.pdbId].residueData[chainId][resid];
+    var linkData = w3m.mol[PDB.pdbId].linkData;
+    if (linkData && linkData[chainId] && linkData[chainId][resid]) {
+      PDB.painter.showLinksByResdue(chainId, resid, sel, showLow, isshow);
+    }
     var arrow = resobj.arrow;
     if (arrow.length == 0) return;
     var color = new THREE.Color('#CCC');
