@@ -1839,14 +1839,41 @@ PDB.render = {
       } else {
         raycasterFor3.setFromCamera(mouse, camera);
         var allObjs = [];
-        var groupMain = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MAIN]];
+        
         var groupHet = PDB.GROUP[PDB.GROUP_HET];
         var groupMutation = PDB.GROUP[PDB.GROUP_MUTATION];
-        if (groupMain != undefined && groupMain.children != undefined && groupMain.children.length > 0) {
-          for (var i = 0; i < groupMain.children.length; i++) {
-            allObjs.push(groupMain.children[i]);
+
+        // ranx edit on 20200226 for lable show on all chain 
+        if (w3m.mol[PDB.pdbId] && w3m.mol[PDB.pdbId].chain) {
+          var chains = w3m.mol[PDB.pdbId].chain;
+          if(chains && Object.keys(chains).length > 0 ){
+            var chainsID= Object.keys(chains);
+            for(var i in chainsID){
+              var groupMain_h = PDB.GROUP["chain_"+chainsID[i]];
+              if (groupMain_h) {
+                for (var k = 0; k < groupMain_h.children.length; k++) {
+                  allObjs.push(groupMain_h.children[k]);
+                }
+              }            
+              var groupMain_l = PDB.GROUP["chain_"+chainsID[i]+"_low"];
+              if (groupMain_l) {
+                for (var j = 0; j < groupMain_l.children.length; j++) {
+                  allObjs.push(groupMain_l.children[j]);
+                }
+              }
+              
+            }
           }
         }
+        
+        // for(var i in chains){
+        //   var groupMain = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MAIN]];
+        //   if (groupMain != undefined && groupMain.children != undefined && groupMain.children.length > 0) {
+        //     for (var i = 0; i < groupMain.children.length; i++) {
+        //       allObjs.push(groupMain.children[i]);
+        //     }
+        //   }
+        // }
         if (groupHet != undefined && groupHet.children != undefined && groupHet.children.length > 0) {
           for (var i = 0; i < groupHet.children.length; i++) {
             allObjs.push(groupHet.children[i]);
