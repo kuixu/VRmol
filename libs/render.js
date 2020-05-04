@@ -1355,7 +1355,7 @@ PDB.render = {
       container.appendChild(stats.dom);
       controls = new THREE.OrbitControls(camera);
       controls.target.set(0, 0, 0);
-      controls.update();
+      //controls.update();
     } else {
       controls = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -1751,7 +1751,7 @@ PDB.render = {
     if (PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR) {
       //if(controller1!=undefined){controller1.update();}
       //controller2.update();
-      THREE.VRController.update();
+      //THREE.VRController.update();
       //vrControls.update();
       // statsVR.msStart();
       // statsVR.update();
@@ -1765,7 +1765,7 @@ PDB.render = {
       cleanIntersected();
       if (controller1 != undefined) {
         intersectObjects(controller1);
-        controller1.update();
+       // controller1.update();
       }
       //intersectObjects( THREE.VRController.prototype );
 

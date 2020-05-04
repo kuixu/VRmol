@@ -5700,6 +5700,20 @@
 			return this.getObjectByProperty( 'name', name );
 
 		},
+		getChildrenByName : function (name) {
+		    var result  = new Array();
+		    if(this.children !== undefined && this.children.length === 0){
+			                    return result;
+			                }
+		    for ( var i = 0, l = this.children.length; i < l; i ++ ) {
+			                    var child = this.children[ i ];
+			                    var object = child.getObjectByProperty( 'name', name );
+			                    if ( object !== undefined ) {
+						                        result.push(object);
+						                    }
+			                }
+		    return result;
+		},
 
 		getObjectByProperty: function ( name, value ) {
 
