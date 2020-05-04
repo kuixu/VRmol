@@ -431,9 +431,9 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
   },
   drawMapPoints: function(group, positions, colors, alphas) {
     var geometry = new THREE.BufferGeometry();
-    geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.addAttribute('customColor', new THREE.BufferAttribute(colors, 3));
-    geometry.addAttribute('opacity', new THREE.BufferAttribute(alphas, 1));
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('opacity', new THREE.BufferAttribute(alphas, 1));
     geometry.computeBoundingSphere();
     var uniforms = {
       delta: {
