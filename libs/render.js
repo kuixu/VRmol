@@ -10,7 +10,7 @@ var binormal = new THREE.Vector3();
 var normal = new THREE.Vector3();
 var scale = 4;
 var controls, controller1, controller2, vrEffect, vrControls;
-
+var hasChanged = 1;
 var raycasterFor3;
 var mouse = new THREE.Vector2(),
   INTERSECTED;
@@ -1334,8 +1334,8 @@ PDB.render = {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
+    // renderer.gammaInput = true;
+    // renderer.gammaOutput = true;
     container.appendChild(renderer.domElement);
     //renderer.vr.enabled = true;
     //renderer.vr.standing = true;
@@ -1393,13 +1393,15 @@ PDB.render = {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
+    // renderer.gammaInput = true;
+    // renderer.gammaOutput = true;
     container.appendChild(renderer.domElement);
-    renderer.vr.enabled = true;
+    // renderer.vr.enabled = true;
+    renderer.xr.enabled = true;
     //renderer.vr.standing = true;
     //vr
-    document.body.appendChild(WEBVR.createButton(renderer));
+	  document.body.appendChild(VRButton.createButton( renderer ) );
+    //document.body.appendChild(WEBVR.createButton(renderer));
     // controllers
     // Microsoft
 
@@ -1417,65 +1419,21 @@ PDB.render = {
     //menu
     //trigger
     //grip
-    window.addEventListener('vr controller connected', function(event) {
-      controller1 = event.detail;
-      console.log("style:" + controller1.style + " " + controller1.gamepad.hand);
-      console.log(controller1);
-      //controller1 = new THREE.VRController( 0 );
-      controller1.standingMatrix = renderer.vr.getStandingMatrix();
-      controller1.addEventListener('thumbstick touch began', function(event) {
-        // console.log("-----------------------thumbstick touch began");
-        //onThumbpadDown(event);
-      })
-      controller1.addEventListener('thumbstick touch ended', function(event) {
-        // console.log("-----------------------thumbstick touch end");
-        //onThumbpadUp(event);
-      })
-      controller1.addEventListener('thumbpad touch began', function(event) {
-        // console.log("-----------------------thumbpad touch began");
-        //onThumbpadDown(event);
-      })
-      controller1.addEventListener('thumbpad touch ended', function(event) {
-        // console.log("-----------------------thumbpad touch end");
-        //onThumbpadUp(event);
-      })
-      controller1.addEventListener('thumbpad press began', function(event) {
-        // console.log("-----------------------thumbpad press began");
-        onThumbpadDown(event);
-      })
-      controller1.addEventListener('thumbpad press ended', function(event) {
-        // console.log("-----------------------thumbpad press end");
-        onThumbpadUp(event);
-      })
-      // Trigger (vive and microsoft ok)
-      controller1.addEventListener('primary press began', function(event) {
-        onTriggerDown(event);
-      })
-      // Trigger (vive and microsoft ok)
-      controller1.addEventListener('primary press ended', function(event) {
-        onTriggerUp(event);
-      })
-      // menu (vive and microsoft ok)
-      controller1.addEventListener('menu press began', function(event) {
-        onMenuDown(event);
-      })
-      // menu (vive and microsoft ok)
-      controller1.addEventListener('menu press ended', function(event) {
-        onMenuUp(event);
-      })
-      controller1.addEventListener('thumbstick axes changed', function(event) {
-        //console.log("thumbstick axes end");
-        onAxisChanged(event);
-        //onThumbpadDown(event)
-      })
-      controller1.addEventListener('thumbpad axes changed', function(event) {
-        onAxisChanged(event);
-      })
-      controller1.addEventListener('primary axes changed', function(event) {
-        onAxisChanged(event);
-      })
-
+    
+    if(hasChanged == 1){
+      
+      controller1 = renderer.xr.getController( 0 );
+      // controller1.addEventListener( 'selectstart', onSelectStart );
+      // controller1.addEventListener( 'selectend', onSelectEnd );
       scene.add(controller1);
+
+      var controllerModelFactory = new THREE.XRControllerModelFactory();
+
+      var controllerGrip1 = renderer.xr.getControllerGrip( 0 );
+      controllerGrip1.add( controllerModelFactory.createControllerModel( controllerGrip1 ) );
+      scene.add( controllerGrip1 );
+
+
       var objname = 'vr_controller_vive_1_5.obj';
       var path = 'js/models/vive-controller/';
       if (controller1.style === "microsoft") {
@@ -1512,8 +1470,106 @@ PDB.render = {
       line.name = 'line';
       line.scale.z = 5;
       controller1.add(line.clone());
-      //controller2.add( line.clone() );
-    });
+    }else{
+      window.addEventListener('vr controller connected', function(event) {
+        controller1 = event.detail;
+        console.log("style:" + controller1.style + " " + controller1.gamepad.hand);
+        console.log(controller1);
+        //controller1 = new THREE.VRController( 0 );
+        controller1.standingMatrix = renderer.vr.getStandingMatrix();
+        controller1.addEventListener('thumbstick touch began', function(event) {
+          // console.log("-----------------------thumbstick touch began");
+          //onThumbpadDown(event);
+        })
+        controller1.addEventListener('thumbstick touch ended', function(event) {
+          // console.log("-----------------------thumbstick touch end");
+          //onThumbpadUp(event);
+        })
+        controller1.addEventListener('thumbpad touch began', function(event) {
+          // console.log("-----------------------thumbpad touch began");
+          //onThumbpadDown(event);
+        })
+        controller1.addEventListener('thumbpad touch ended', function(event) {
+          // console.log("-----------------------thumbpad touch end");
+          //onThumbpadUp(event);
+        })
+        controller1.addEventListener('thumbpad press began', function(event) {
+          // console.log("-----------------------thumbpad press began");
+          onThumbpadDown(event);
+        })
+        controller1.addEventListener('thumbpad press ended', function(event) {
+          // console.log("-----------------------thumbpad press end");
+          onThumbpadUp(event);
+        })
+        // Trigger (vive and microsoft ok)
+        controller1.addEventListener('primary press began', function(event) {
+          onTriggerDown(event);
+        })
+        // Trigger (vive and microsoft ok)
+        controller1.addEventListener('primary press ended', function(event) {
+          onTriggerUp(event);
+        })
+        // menu (vive and microsoft ok)
+        controller1.addEventListener('menu press began', function(event) {
+          onMenuDown(event);
+        })
+        // menu (vive and microsoft ok)
+        controller1.addEventListener('menu press ended', function(event) {
+          onMenuUp(event);
+        })
+        controller1.addEventListener('thumbstick axes changed', function(event) {
+          //console.log("thumbstick axes end");
+          onAxisChanged(event);
+          //onThumbpadDown(event)
+        })
+        controller1.addEventListener('thumbpad axes changed', function(event) {
+          onAxisChanged(event);
+        })
+        controller1.addEventListener('primary axes changed', function(event) {
+          onAxisChanged(event);
+        })
+  
+        scene.add(controller1);
+        var objname = 'vr_controller_vive_1_5.obj';
+        var path = 'js/models/vive-controller/';
+        if (controller1.style === "microsoft") {
+          objname = controller1.gamepad.hand + '.obj';
+          path = 'js/models/microsoft-controller/';
+        }
+        var loader = new THREE.OBJLoader();
+        loader.setPath(path);
+  
+        loader.load(objname, function(object) {
+          var loader = new THREE.TextureLoader();
+          loader.setPath(path);
+          var controller = object.children[0];
+          if (controller1.style === "microsoft") {
+            console.log("onepointfive_texture png")
+          } else {
+            controller.material.map = loader.load('onepointfive_texture.png');
+            controller.material.specularMap = loader.load('onepointfive_spec.png');
+          }
+          controller1.add(object.clone());
+          //controller2.add( object.clone() );
+        });
+  
+        // helpers
+        var geometry = new THREE.BufferGeometry();
+        geometry.addAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, -1], 3));
+        geometry.addAttribute('color', new THREE.Float32BufferAttribute([0.5, 0.5, 0.5, 0, 0, 0], 3));
+        var material = new THREE.LineBasicMaterial({
+          vertexColors: true,
+          linewidth: 2,
+          blending: THREE.AdditiveBlending
+        });
+        var line = new THREE.Line(geometry, material);
+        line.name = 'line';
+        line.scale.z = 5;
+        controller1.add(line.clone());
+        //controller2.add( line.clone() );
+      });
+    }
+    
 
     raycaster = new THREE.Raycaster();
     window.addEventListener('resize', onWindowResize, false);
@@ -2351,8 +2407,8 @@ PDB.render = {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
+    // renderer.gammaInput = true;
+    // renderer.gammaOutput = true;
     container.appendChild(renderer.domElement);
     renderer.vr.enabled = true;
     renderer.vr.standing = true;
