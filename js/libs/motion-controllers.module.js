@@ -394,4 +394,4 @@ class MotionController {
   }
 }
 
-export { Constants, MotionController, fetchProfile, fetchProfilesList };
+//export { Constants, MotionController, fetchProfile, fetchProfilesList };

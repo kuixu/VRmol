@@ -1158,9 +1158,9 @@ function getIntersections(controller) {
           point = tmp_inters[0].point;
           if (object.name != undefined && object.name != "" && object.userData.presentAtom !== undefined) {
             if (object.userData.reptype === "tube") {
-              if (object.userData.realtype !== undefined && object.userData.realtype === "arrow") {
-                console.log(object.userData);
-              }
+              //if (object.userData.realtype !== undefined && object.userData.realtype === "arrow") {
+                //console.log(object.userData);
+              //}
               var atomObjects = PDB.GROUP[gIndexies[i]].getChildrenByName(object.userData.presentAtom.id);
               for (var a = 0; a < atomObjects.length; a++) {
                 inters.push({
@@ -1434,28 +1434,28 @@ PDB.render = {
       scene.add( controllerGrip1 );
 
 
-      var objname = 'vr_controller_vive_1_5.obj';
-      var path = 'js/models/vive-controller/';
-      if (controller1.style === "microsoft") {
-        objname = controller1.gamepad.hand + '.obj';
-        path = 'js/models/microsoft-controller/';
-      }
-      var loader = new THREE.OBJLoader();
-      loader.setPath(path);
+      //var objname = 'vr_controller_vive_1_5.obj';
+      //var path = 'js/models/vive-controller/';
+      //if (controller1.style === "microsoft") {
+      //  objname = controller1.gamepad.hand + '.obj';
+      //  path = 'js/models/microsoft-controller/';
+      //}
+      //var loader = new THREE.OBJLoader();
+      //loader.setPath(path);
 
-      loader.load(objname, function(object) {
-        var loader = new THREE.TextureLoader();
-        loader.setPath(path);
-        var controller = object.children[0];
-        if (controller1.style === "microsoft") {
-          console.log("onepointfive_texture png")
-        } else {
-          controller.material.map = loader.load('onepointfive_texture.png');
-          controller.material.specularMap = loader.load('onepointfive_spec.png');
-        }
-        controller1.add(object.clone());
-        //controller2.add( object.clone() );
-      });
+      //loader.load(objname, function(object) {
+      //  var loader = new THREE.TextureLoader();
+      //  loader.setPath(path);
+      //  var controller = object.children[0];
+      //  if (controller1.style === "microsoft") {
+      //    console.log("onepointfive_texture png")
+      //  } else {
+      //    controller.material.map = loader.load('onepointfive_texture.png');
+      //    controller.material.specularMap = loader.load('onepointfive_spec.png');
+      //  }
+      //  //controller1.add(object.clone());
+      //  //controller2.add( object.clone() );
+      //});
 
       // helpers
       var geometry = new THREE.BufferGeometry();

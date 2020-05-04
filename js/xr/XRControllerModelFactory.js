@@ -18,7 +18,7 @@
 // 	fetchProfile,
 // 	MotionController
 // } from './motion-controllers.module.js';
-
+//THREE.MotionController = MotionController;
 const DEFAULT_PROFILES_PATH = 'https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles';
 const DEFAULT_PROFILE = 'generic-trigger';
 
@@ -28,17 +28,17 @@ THREE.XRControllerModel = function(){
 	this.motionController = null;
 	this.envMap = null;
 }
-// function XRControllerModel( ) {
+function XRControllerModel( ) {
 
-// 	Object3D.call( this );
+ 	THREE.Object3D.call( this );
 
-// 	this.motionController = null;
-// 	this.envMap = null;
+ 	this.motionController = null;
+ 	this.envMap = null;
 
-// }
+ }
 THREE.XRControllerModel.prototype = Object.assign( Object.create( THREE.Object3D.prototype ), {
 
-	//constructor: XRControllerModel,
+	constructor: XRControllerModel,
 
 	setEnvironmentMap: function ( envMap ) {
 
@@ -90,13 +90,15 @@ THREE.XRControllerModel.prototype = Object.assign( Object.create( THREE.Object3D
 				if ( ! valueNode ) return;
 
 				// Calculate the new properties based on the weight supplied
-				if ( valueNodeProperty === MotionControllerConstants.VisualResponseProperty.VISIBILITY ) {
+				//if ( valueNodeProperty === MotionControllerConstants.VisualResponseProperty.VISIBILITY ) {
+				if ( valueNodeProperty === Constants.VisualResponseProperty.VISIBILITY ) {
 
 					valueNode.visible = value;
 
-				} else if ( valueNodeProperty === MotionControllerConstants.VisualResponseProperty.TRANSFORM ) {
+				//} else if ( valueNodeProperty === MotionControllerConstants.VisualResponseProperty.TRANSFORM ) {
+				} else if ( valueNodeProperty === Constants.VisualResponseProperty.TRANSFORM ) {
 
-					Quaternion.slerp(
+					THREE.Quaternion.slerp(
 						minNode.quaternion,
 						maxNode.quaternion,
 						valueNode.quaternion,
@@ -131,7 +133,8 @@ function findNodes( motionController, scene ) {
 
 		const { type, touchPointNodeName, visualResponses } = component;
 
-		if ( type === MotionControllerConstants.ComponentType.TOUCHPAD ) {
+		//if ( type === MotionControllerConstants.ComponentType.TOUCHPAD ) {
+		if ( type === Constants.ComponentType.TOUCHPAD ) {
 
 			component.touchPointNode = scene.getObjectByName( touchPointNodeName );
 			if ( component.touchPointNode ) {
@@ -156,7 +159,8 @@ function findNodes( motionController, scene ) {
 			const { valueNodeName, minNodeName, maxNodeName, valueNodeProperty } = visualResponse;
 
 			// If animating a transform, find the two nodes to be interpolated between.
-			if ( valueNodeProperty === MotionControllerConstants.VisualResponseProperty.TRANSFORM ) {
+			//if ( valueNodeProperty === MotionControllerConstants.VisualResponseProperty.TRANSFORM ) {
+			if ( valueNodeProperty === Constants.VisualResponseProperty.TRANSFORM ) {
 
 				visualResponse.minNode = scene.getObjectByName( minNodeName );
 				visualResponse.maxNode = scene.getObjectByName( maxNodeName );
@@ -252,7 +256,8 @@ THREE.XRControllerModelFactory = ( function () {
 
 				fetchProfile( xrInputSource, this.path, DEFAULT_PROFILE ).then( ( { profile, assetPath } ) => {
 
-					controllerModel.motionController = new THREE.MotionController(
+					// controllerModel.motionController = new THREE.MotionController(
+					controllerModel.motionController = new MotionController(
 						xrInputSource,
 						profile,
 						assetPath
