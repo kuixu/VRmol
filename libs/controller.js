@@ -70,7 +70,11 @@ PDB.controller = {
 
     // });
       document.addEventListener("mouseup", (event) => {
-          raycasterFor3.setFromCamera(mouse, camera);
+	  if ( raycasterFor3 !==undefined && 'setFromCamer' in raycasterFor3 ){
+              raycasterFor3.setFromCamera(mouse, camera);
+	  } else{
+	      return ;
+	  }
           var allObjs = [];
           var groupMain = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MAIN]];
           var groupHet = PDB.GROUP[PDB.GROUP_HET];
