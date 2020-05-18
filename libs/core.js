@@ -52,7 +52,7 @@ PDB = {
 	panelShow:1,
 	isShowSurface:0,
   VRMode:false,
-  mode:0, //0 three mode; 1 vr mode; 2 travel mode
+  mode:1, //0: three mode; 1: vr mode; 2: travel mode
   isShowMenu:false,
   distanceArray:[],
   fragmentList:{},
