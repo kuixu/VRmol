@@ -69,9 +69,9 @@
   </script>
   -->
 
-  <!-- <script type="text/javascript" src="js/vr/statsvr.min.js"></script> -->
+  <!-- <script type="text/javascript" src="js/vr/statsvr.min.js"></script> 
   <script type="text/javascript" src="js/vr/ViveController.js"></script>
-  <script type="text/javascript" src="js/libs/gunzip.min.js"></script>
+  <script type="text/javascript" src="js/libs/gunzip.min.js"></script>-->
   <script type="text/javascript" src="js/libs/chroma.min.js"></script>
   <script type="text/javascript" src="js/utils/OBJLoader.js"></script>
   <script type="text/javascript" src="js/utils/OBJExporter.js"></script>
@@ -94,7 +94,14 @@
 
 <body>
   <div id="container"></div>
-  <div id="info" class="panel"><img src="imgs/logo.png" style="width: 100px;"></div>
+  <div id="info" class="panel">
+    <img src="imgs/logo.png" style="width: 100px;">
+    <div id="small_menu" class="small_menu">
+      <svg class="mdi-icon icon-inline" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path>
+      </svg>
+    </div>
+  </div>
   <div id="searchDiv" class="panel">
     <input type="text" name="search_text" class="search_text" id="search_text" placeholder="PDB ID" onkeydown="PDB.controller.onKeyDown(event)" />
     <input type="button" class="top_btn" id="search_button" value="Search">
@@ -107,13 +114,17 @@
     <a class="messages"></a>
   </div>
   <div id="topmenu" class="panel">
+    <!--
     <div >
-      
     <a href="https://vrmol.net/?id=https://vrmol.net/data/2019-nCoV-RBD-ACE2-sse.pdb" style="padding: 0px;">* 2019-nCoV-RBD-ACE2<BR />(by Tsinghua U.)</a><BR/>
     <a href="https://vrmol.net/?id=https://vrmol.net/data/2019nCoV-S_RBD_ACE2-sse.pdb" style="padding: 0px;">* 2019-nCoV-RBD-ACE2<BR />(by NMDC)</a><BR/>
     <a href="https://vrmol.net/?id=https://vrmol.net/data/RBD-ACE2-B0AT1-sse.pdb" style="padding: 0px;">*
       RBD-ACE2-B0AT1<BR />(by WestLake U.)</a><BR /><BR/>
     </div>
+    -->
+
+
+
     <LABEL onclick="switchMenu('structureMode')">Vis Mode</LABEL><BR />
     <span class="submenu" id="structureMode">
       <button id="threeMode">Non-VR</button><BR />

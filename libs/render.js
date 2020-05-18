@@ -1460,17 +1460,22 @@ PDB.render = {
     window.addEventListener('resize', this.onWindowResize, false);
   },
   initVR: function() {
+    container = document.createElement('div');
+    document.body.appendChild(container);
     // Scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x808080);
     scene.add(new THREE.HemisphereLight(0x808080, 0x606060));
     // Camera
     camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 50000);
-    camera.position.copy(new THREE.Vector3(0, 0, 0));
+    // camera.position.copy(new THREE.Vector3(0, 0, 0));
+    camera.position.set( 0, 1.6, 300 );
     //camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 50 );
     scene.add(camera);
-    //stats
-    //statsVR = new StatsVR(scene, camera);
+    //controls
+    controls = new THREE.OrbitControls( camera, container );
+    controls.target.set( 0, 1.6, 0 );
+    controls.update();
     // Group
     for (var i = 0; i < PDB.GROUP_COUNT; i++) {
       PDB.GROUP[i] = new THREE.Group();
@@ -1480,8 +1485,7 @@ PDB.render = {
 
     this.addLightsByType(lightType);
 
-    container = document.createElement('div');
-    document.body.appendChild(container);
+    
 
     renderer = new THREE.WebGLRenderer({
       antialias: true
