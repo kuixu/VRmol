@@ -31,7 +31,28 @@ a {
   width: 70px;
 }
 
+@media only screen and (max-width: 960px) {
+
+  .panel #searchDiv{
+    display: none;
+  }
+  .small_menu{
+    right: 10%;
+    position: absolute;
+    top: 30px;
+    display: block;
+  }
+
+  .small_menu svg{
+    width: 1.42857em;
+    height: 1.42857em;
+    fill: white;
+  }
+}
+
+
 #info {
+  
   position: absolute;
   top: 0px;
   width: 100%;
@@ -378,7 +399,7 @@ button:active {
   position: absolute;
   top: 20px;
   left: 20px;
-  width: 444px;
+  /* width: 444px; */
   text-align: left;
   padding: 0;
   margin: 0;

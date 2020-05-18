@@ -431,9 +431,9 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
   },
   drawMapPoints: function(group, positions, colors, alphas) {
     var geometry = new THREE.BufferGeometry();
-    geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.addAttribute('customColor', new THREE.BufferAttribute(colors, 3));
-    geometry.addAttribute('opacity', new THREE.BufferAttribute(alphas, 1));
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('opacity', new THREE.BufferAttribute(alphas, 1));
     geometry.computeBoundingSphere();
     var uniforms = {
       delta: {
@@ -564,9 +564,9 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
     // Make the geometry (of "distance" length)
     var geometry = new THREE.CylinderGeometry(radius, radius, distance, 50, 1, false);
     // shift it so one end rests on the origin
-    geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, distance / 2, 0));
+    geometry.applyMatrix4(new THREE.Matrix4().makeTranslation(0, distance / 2, 0));
     // rotate it the right way for lookAt to work
-    geometry.applyMatrix(new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(90)));
+    geometry.applyMatrix4(new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(90)));
     // Make a mesh with the geometry
     var mesh = new THREE.Mesh(geometry, material);
     // Position it where we want
@@ -594,9 +594,9 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
     // Make the geometry (of "distance" length)
     var geometry = new THREE.CylinderGeometry(radius, radius, distance, PDB.CONFIG.stick_radius, 1, false);
     // shift it so one end rests on the origin
-    geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, distance / 2, 0));
+    geometry.applyMatrix4(new THREE.Matrix4().makeTranslation(0, distance / 2, 0));
     // rotate it the right way for lookAt to work
-    geometry.applyMatrix(new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(90)));
+    geometry.applyMatrix4(new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(90)));
     // Make a mesh with the geometry
     var mesh = new THREE.Mesh(geometry, material);
     mesh.name = atom.caid;
@@ -864,7 +864,7 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
       wireframe: false
     });
     material.side = THREE.FrontSide;
-    material.overdraw = true;
+    // material.overdraw = true;
     var mesh = new THREE.Mesh(geometry, material);
     var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
     mesh.name = atom.id;
@@ -915,7 +915,7 @@ drawTextForDistanceByDesktop: function(group, pos, text, type, color, rotation) 
       color: color,
       wireframe: false
     });
-    material.overdraw = true;
+    // material.overdraw = true;
     var mesh = new THREE.Mesh(geometry, material);
     var atom = PDB.tool.getMainAtom(PDB.pdbId, ids[0]);
     mesh.name = atom.id;

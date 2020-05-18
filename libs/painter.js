@@ -3757,7 +3757,7 @@ PDB.painter = {
       cur_matrix4d = cur_matrix4d.multiply(new THREE.Matrix4().makeTranslation(PDB.GeoCenterOffset.x, PDB.GeoCenterOffset.y, PDB.GeoCenterOffset.z));
       // console.log(cur_matrix4d);
       // makeRotationX(Math.PI / 4).makeRotationY(Math.PI / 4).makeRotationZ(Math.PI / 4).makeTranslation(PDB.GeoCenterOffset.x, PDB.GeoCenterOffset.y, PDB.GeoCenterOffset.z);
-      mesh.applyMatrix(cur_matrix4d);
+      mesh.applyMatrix4(cur_matrix4d);
       PDB.GROUP[PDB.GROUP_MAP].add(mesh);
       // console.log(emmap.header.matrix);
       // PDB.GROUP[PDB.GROUP_MAP].applyMatrix(cur_matrix4d);
