@@ -70,6 +70,12 @@ function show_panel(panelShow){
     
   }
 }
+
+var vrModelBtn = document.getElementById("vrMode");
+vrModelBtn.style.display = "block";
+if (PDB.mode === PDB.MODE_VR){
+  vrModelBtn.style.display = "none";
+}
 var btn_small_menu = document.getElementById("small_menu");
 
 btn_small_menu.addEventListener('click', function() {
@@ -166,11 +172,8 @@ if (location.search) {
     })
   }
 
-  var vrModelBtn = document.getElementById("vrMode");
-  vrModelBtn.style.display = "block";
-  if (PDB.panelShow == PDB.config.panelClose) {
-      vrModelBtn.style.display = "none";
-  }
+  
+ 
   switch (vmode) {
     case "desktop":
       PDB.mode = PDB.MODE_THREE;
