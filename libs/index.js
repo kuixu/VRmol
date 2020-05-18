@@ -45,6 +45,50 @@ function switchMenu(obj) {
 
 // })()
 
+function show_panel(panelShow){
+
+  if (panelShow == PDB.config.panelOpen) {
+    var panels = document.getElementsByClassName("panel");
+    panels.searchDiv.style.display = 'block';
+    panels.topmenu.style.display = 'block';
+    // panels.info.style.display = 'block';
+    var small_menu = document.getElementsByClassName("small_menu");
+    if (screen.width < 960 ) {
+      small_menu.small_menu.style.display = 'block';
+    }
+    else{
+      small_menu.small_menu.style.display = 'none';
+    }
+    
+  } else if (panelShow == PDB.config.panelClose) {
+    var panels = document.getElementsByClassName("panel");
+    panels.searchDiv.style.display = 'none';
+    panels.topmenu.style.display = 'none';
+    // panels.info.style.display = 'none';
+    var small_menu = document.getElementsByClassName("small_menu");
+    small_menu.small_menu.style.display = 'block';
+    
+  }
+}
+var btn_small_menu = document.getElementById("small_menu");
+
+btn_small_menu.addEventListener('click', function() {
+  if (PDB.panelShow == PDB.config.panelOpen) {
+    PDB.panelShow = PDB.config.panelClose;
+    show_panel(PDB.panelShow);
+  }else{
+    PDB.panelShow = PDB.config.panelOpen;
+    show_panel(PDB.panelShow);
+  }
+
+  
+});
+
+if (screen.width < 960) {
+  PDB.panelShow = PDB.config.panelClose;
+}
+
+show_panel(PDB.panelShow);
 
 // =====================
 // parse api parameter
@@ -84,49 +128,12 @@ if (location.search) {
 	  //console.log(fragment); 
   }
 
-  var btn_small_menu = document.getElementById("small_menu");
-
-  btn_small_menu.addEventListener('click', function() {
-    if (PDB.panelShow == PDB.config.panelOpen) {
-      PDB.panelShow = PDB.config.panelClose;
-      show_panel(PDB.panelShow);
-    }else{
-      PDB.panelShow = PDB.config.panelOpen;
-      show_panel(PDB.panelShow);
-    }
-
-    
-  });
-
+  
   if (screen.width < 960) {
     PDB.panelShow = PDB.config.panelClose;
   }
 
-  function show_panel(panelShow){
   
-    if (panelShow == PDB.config.panelOpen) {
-      var panels = document.getElementsByClassName("panel");
-      panels.searchDiv.style.display = 'block';
-      panels.topmenu.style.display = 'block';
-      // panels.info.style.display = 'block';
-      var small_menu = document.getElementsByClassName("small_menu");
-      if (screen.width < 960 ) {
-        small_menu.small_menu.style.display = 'block';
-      }
-      else{
-        small_menu.small_menu.style.display = 'none';
-      }
-      
-    } else if (panelShow == PDB.config.panelClose) {
-      var panels = document.getElementsByClassName("panel");
-      panels.searchDiv.style.display = 'none';
-      panels.topmenu.style.display = 'none';
-      // panels.info.style.display = 'none';
-      var small_menu = document.getElementsByClassName("small_menu");
-      small_menu.small_menu.style.display = 'block';
-      
-    }
-  }
   show_panel(PDB.panelShow);
 
   if (surfaceOpc && !isNaN(surfaceOpc)) {
