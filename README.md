@@ -10,6 +10,7 @@
 We leverage the most cutting-edge computational technologies to develop a virtual reality (VR) system - VRmol - that provides the visualization and analysis of macromolecule structures in an infinite virtual environment on the web. VRmol is natively built with WebVR technology, providing all structural analysis functions in a fully immersive, inspiring virtual environment. It is convenient to use, runs on internet and requires no software downloading and installation. And by connecting to a number of cloud-based genomic and drug databases, it provides an integrative platform to perform advanced structural and translational research. It can be freely accessed online by typing [https://VRmol.net](https://VRmol.net?from=github) in VR-supported browser. 
 
 ## News
+ - 05/18/2020: Upgrade based on the WebXR core API, which supports Chrome(>=81), Microsoft Edge (>=81). 
  - 02/21/2020: `Special Vis` for COVID-19 from [Tsinghua Univ.](https://mp.weixin.qq.com/s/J6j7Ya6Z7zOiLWufy_HApQ): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019-nCoV-RBD-ACE2-sse.pdb), [NMDC](http://nmdc.cn/?from=groupmessage#/resource/detail?no=NMDCS0000001): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019nCoV-S_RBD_ACE2-sse.pdb) and [West Lake Univ.](https://mp.weixin.qq.com/s/84jx6ggh-7VmFNK5it7O0g): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/RBD-ACE2-B0AT1-sse.pdb), [[Open Conformation]](https://vrmol.net/?id=https://vrmol.net/data/ACE2_B0AT1_open_conformation-sse.pdb), [[Closed Conformation]](https://vrmol.net/?id=https://vrmol.net/data/ACE2_B0AT1_closed_conformation-sse.pdb)
  - 05/17/2019: VRmol is return to normal.
  - 05/16/2019: The service provider is sufferring of Network Rounte Issue, VRmol server is outage.
@@ -45,10 +46,26 @@ VRmol provides two modes:
 - [**Interactive Docking in nonVR mode**](https://vrmol.net/docs/#header-n489)
 
 
+## Practice VRmol
 
-## VR Device requirements
+You could practice VRmol with VR device on [WebXR supported browsers](https://caniuse.com/#search=webxr) below:
+  - Google Chrome(>=81)
+  - Microsoft Edge (>=81)
+  - Firefox Reality Android standalones and PC in (Q1 2020)
 
- VR devices such as HTC Vive, Oculus Rift, and Microsoft Mix Reality are well-supported by VRmol. More details can be seen at [documentation](https://vrmol.net/docs/#header-n5342).
+Supported VR devices:
+  - Windows Mixed Reality*
+  - HTC Vive*
+  - Oculus Rift
+
+> *: indicates well tested devices.
+
+Also you could practice VRmol without VR device by using [WebXR API Emulator extension](https://blog.mozvr.com/webxr-emulator-extension/), download the WebXR API Emulator for your supported browser below:
+  - [Google Chrome](https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje)
+  - [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/webxr-api-emulator/)
+
+The [source code](https://github.com/MozillaReality/WebXR-emulator-extension) for the extension is also available.
+
 
 
 ## Framework
@@ -123,8 +140,6 @@ https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfa
     ```python
     python3 server/speech/sr.py
     ```
-> If you deploy VRmol in your local server with a prefix URL `http://localhost` or you do not have a setting of `https`, you should delete the `.htaccess` file. While without setting `https`, you would not access the Speech Recognition function.
-
 
 ## Setup VRmol API Services on your own server
 
@@ -141,8 +156,12 @@ Server Tools
   - Integretive tool for Linux [LAMP](https://github.com/teddysun/lamp)
   - Integretive tool for Windowns [WAMP](http://www.wampserver.com/en/)
 
+
+
 ## Release Versions
   - [Releases](https://github.com/kuixu/VRmol/releases)
+  - [v1.0](https://github.com/kuixu/VRmol/tree/v1.0)
+  - [v0.2](https://github.com/kuixu/VRmol/tree/v0.1)
   - [v0.1](https://github.com/kuixu/VRmol/tree/v0.1)
 
 ## Citation
@@ -165,7 +184,9 @@ Paper: [Biorxiv](https://www.biorxiv.org/content/early/2019/03/27/589366.1)
 
 ## Acknowledgments
 
-VRmol is developed based on [three.js](https://threejs.org) and [WebVR](https://webvr.rocks/), and we would like to express our special thanks to those open-source projects below.
+VRmol is developed based on [three.js](https://threejs.org) and [WebXR](https://www.w3.org/TR/webxr/), and we would like to express our special thanks to those open-source projects below.
+  - [https://immersiveweb.dev/#supporttable](https://immersiveweb.dev/#supporttable)
+  - [https://www.w3.org/TR/webxr/](https://github.com/MozillaReality/WebXR-emulator-extension)
   - [Web3DMol](https://web3dmol.net) - for PDB file loading and parsing
   - [GLmol.js](https://github.com/biochem-fan/GLmol) - for calculating surface 
   - [Chroma.js](https://github.com/gka/chroma.js) - for color handling
