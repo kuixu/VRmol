@@ -5,11 +5,11 @@
 
 // vr avaliable
 PDB.controller = {
-  webvr: function() {
-    WEBVR.checkAvailability().catch(function(message) {
-      document.body.appendChild(WEBVR.getMessageContainer(message));
-    });
-  },
+  //webvr: function() {
+  //  WEBVR.checkAvailability().catch(function(message) {
+  //    document.body.appendChild(WEBVR.getMessageContainer(message));
+  //  });
+  //},
   init: function() {
     // this.webvr();
     this.createMenu();
@@ -70,7 +70,23 @@ PDB.controller = {
 
     // });
       document.addEventListener("mouseup", (event) => {
-          raycasterFor3.setFromCamera(mouse, camera);
+// <<<<<<< HEAD
+	  if ( raycasterFor3 !==undefined && 'setFromCamer' in raycasterFor3 ){
+              raycasterFor3.setFromCamera(mouse, camera);
+	  } else{
+	      return ;
+	  }
+// =======
+// 	  if (raycasterFor3===undefined){
+// 	      return ;
+// 	  }
+// 	  if('setFromCamera' in raycasterFor3){
+// 	      var aaa= '';
+// 	  }else{
+// 	      return ;
+// 	  }
+//           raycasterFor3.setFromCamera(mouse, camera);
+// >>>>>>> 021096b14333ad374cf48e554e88c266a509806e
           var allObjs = [];
           var groupMain = PDB.GROUP[PDB.GROUP_STRUCTURE_INDEX[PDB.GROUP_MAIN]];
           var groupHet = PDB.GROUP[PDB.GROUP_HET];

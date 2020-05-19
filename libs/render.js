@@ -9,8 +9,9 @@ var cameraEye, menu_panel;
 var binormal = new THREE.Vector3();
 var normal = new THREE.Vector3();
 var scale = 4;
-var controls, controller1, controller2, vrEffect, vrControls;
+var controls, controller1, controllerGrip1, vrEffect, vrControls;
 
+var XR_VERSION = 1;
 var raycasterFor3;
 var mouse = new THREE.Vector2(),
   INTERSECTED;
@@ -44,6 +45,98 @@ var tmpTime = 0;
 var ThumbpadAxes = [];
 var id = 0;
 
+
+//=======webxr=====
+
+let isImmersive = false;
+
+var DOING = 0;
+var STATE = {};
+
+function process_button(type, component) {
+  if (component.values.state === Constants.ComponentState.PRESSED && DOING === 0){
+    switch (type) {
+        case Constants.ComponentType.TRIGGER:
+          break;
+        case Constants.ComponentType.SQUEEZE:
+          onMenuDown(event);
+          DOING = 1;
+          STATE[type] = 1;
+          break;
+        case Constants.ComponentType.TOUCHPAD:
+          ThumbpadAxes = [component.values.xAxis, component.values.yAxis]
+          onThumbpadDown(event);
+          DOING = 1;
+          STATE[type] = 1;
+          break;
+        case Constants.ComponentType.THUMBSTICK:
+          ThumbpadAxes = [component.values.xAxis, component.values.yAxis]
+          onThumbpadDown(event);
+          DOING = 1;
+          STATE[type] = 1;
+          break;
+        case Constants.ComponentType.BUTTON:
+          onMenuDown(event)
+          DOING = 1;
+          STATE[type] = 1;
+          break;
+        default:
+          throw new Error(`Unexpected ComponentType ${type}`);
+    }
+    
+  }else if (component.values.state === Constants.ComponentState.TOUCHED && DOING === 0){
+    switch (type) {
+        case Constants.ComponentType.THUMBSTICK:
+          ThumbpadAxes = [component.values.xAxis, component.values.yAxis]
+          onThumbpadDown(event);
+          DOING = 1;
+          STATE[type] = 1;
+          break;
+    }
+    console.log(ThumbpadAxes);
+  }else if (component.values.state === Constants.ComponentState.DEFAULT && DOING === 1){
+    
+    switch (type) {
+        case Constants.ComponentType.TRIGGER:
+          break;
+        case Constants.ComponentType.SQUEEZE:
+          if (STATE[type] === 1){
+            DOING = 0;
+            STATE[type] = 0;
+          }
+          break;
+        case Constants.ComponentType.TOUCHPAD:
+          if (STATE[type] === 1){
+            onThumbpadUp(event);
+            DOING = 0;
+            STATE[type] = 0;
+          }
+          break;
+        case Constants.ComponentType.THUMBSTICK:
+          if (STATE[type] === 1){
+            onThumbpadUp(event);
+            DOING = 0;
+            STATE[type] = 0;
+          }
+          break;
+        case Constants.ComponentType.BUTTON:
+          break;
+        default:
+          throw new Error(`Unexpected ComponentType ${type}`);
+    }
+  }
+}
+
+function listen_button(){
+  if ( controllerGrip1 !== null && controllerGrip1.children.length>0 &&  controllerGrip1.children[0].motionController !== null) {
+    components = controllerGrip1.children[0].motionController.components;
+    Object.keys(components).forEach((componentId) => {
+      type = components[componentId].type;
+      process_button(type, components[componentId]);
+    });
+  }
+}
+
 function onAxisChanged(event) {
   var controller = event.target;
   ThumbpadAxes = event.axes;
@@ -73,25 +166,28 @@ function onMenuDown(event) {
 var action = 0;
 
 function onThumbpadUp(event) {
-  //console.log('onThumbpadUp');
-  var pad = event.target;
   window.clearInterval(id);
   PDB.ROTATION_START_FLAG = false;
-
 }
 
 function onThumbpadDown(event) {
-  //console.log('onThumbpadDown');
-  var controller = event.target;
   x = ThumbpadAxes[0];
   y = ThumbpadAxes[1];
-  if ((y <= -0.5 && x >= -0.5 && x <= 0) || (y <= -0.5 && x <= 0.5 && x >= 0)) {
+  // if ((y <= -0.5 && x >= -0.5 && x <= 0) || (y <= -0.5 && x <= 0.5 && x >= 0)) {
+  // if (y > 0.7) {
+  if (y > 0.1) {
     action = 1;
-  } else if ((y >= 0.5 && x >= -0.5 && x <= 0) || (y >= 0.5 && x <= 0.5 && x >= 0)) {
+  // } else if ((y >= 0.5 && x >= -0.5 && x <= 0) || (y >= 0.5 && x <= 0.5 && x >= 0)) {
+  // } else if (y <-0.7) {
+  } else if (y <-0.1) {
     action = 2;
-  } else if ((x <= -0.5 && y >= -0.5 && y <= 0) || (x <= -0.5 && y <= 0.5 && y >= 0)) {
+  // } else if ((x <= -0.5 && y >= -0.5 && y <= 0) || (x <= -0.5 && y <= 0.5 && y >= 0)) {
+  // } else if (x < -0.7) {
+  } else if (x < -0.1) {
     action = 3;
-  } else if ((x >= 0.5 && y >= -0.5 && y <= 0) || (x >= 0.5 && y <= 0.5 && y >= 0)) {
+  // } else if ((x >= 0.5 && y >= -0.5 && y <= 0) || (x >= 0.5 && y <= 0.5 && y >= 0)) {
+  // } else if (x > 0.7 ) {
+  } else if (x > 0.1 ) {
     action = 4;
   }
 
@@ -114,6 +210,7 @@ function onThumbpadDown(event) {
       id = self.setInterval("PDB.painter.rotate()", 20);
       break;
   }
+  
 }
 
 function dealwithMenu(object) {
@@ -530,7 +627,6 @@ function dealwithMenu(object) {
         }
         onMenuDown();
       } else {
-        // var url ="http://vr.zhanglab.net/server/api.php?taskid=13&pdbid="+PDB.pdbId.toUpperCase();
         var url = API_URL_EMMAP + PDB.pdbId.toUpperCase();
         PDB.tool.ajax.get(url, function(text) {
           //PDB.render.clear(2);
@@ -667,7 +763,7 @@ function onTriggerDown(event) {
   // console.log(intersection);
   var object = intersection.object;
   var pos = intersection.pos;
-  console.log("----------------" + object.name);
+  // console.log("----------------" + object.name);
   // ================================ Deal with Menu ===
   if (PDB.isShowMenu) {
     dealwithMenu(object);
@@ -787,145 +883,145 @@ function onTriggerDown(event) {
 }
 
 function onTriggerUp(event) {
-  //console.log("onTriggerUp");
-  switch (PDB.selection_mode) {
-    case PDB.SELECTION_MODEL:
-      break;
-    case PDB.SELECTION_MAIN:
-      break;
-    case PDB.SELECTION_HET:
-      break;
-    case PDB.SELECTION_CHAIN:
-      PDB.render.clearGroupIndex(PDB.GROUP_INFO);
-      break;
-    case PDB.SELECTION_DRUG:
-      PDB.render.clearGroupIndex(PDB.GROUP_INFO);
-      break;
-    case PDB.SELECTION_RESIDUE:
-      PDB.render.clearGroupIndex(PDB.GROUP_INFO);
-      break;
-    case PDB.SELECTION_ATOM:
-      PDB.render.clearGroupIndex(PDB.GROUP_INFO);
-      break;
-    case PDB.SELECTION_OBJECT:
-      break;
+    //console.log("onTriggerUp");
+    switch (PDB.selection_mode) {
+      case PDB.SELECTION_MODEL:
+        break;
+      case PDB.SELECTION_MAIN:
+        break;
+      case PDB.SELECTION_HET:
+        break;
+      case PDB.SELECTION_CHAIN:
+        PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+        break;
+      case PDB.SELECTION_DRUG:
+        PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+        break;
+      case PDB.SELECTION_RESIDUE:
+        PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+        break;
+      case PDB.SELECTION_ATOM:
+        PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+        break;
+      case PDB.SELECTION_OBJECT:
+        break;
 
-  }
+    }
 
-  var controller = event.target;
-  if (controller.userData !== undefined && controller.userData.selected !== undefined) {
-    var intersections = controller.userData.selected;
-    var object = intersections;
-    //var aaa = getIntersections( controller );
-    //console.log(aaa[0].pos);
-    // var pos = undefined;
-    // if ( intersections.length > 0 ) {
-    // var intersection = intersections[ 0 ];
-    // var pos = intersection.pos;
-    // }
-    objectDeTrans(controller, object);
-    controller.userData.selected = undefined;
-  }
+    var controller = event.target;
+    if (controller.userData !== undefined && controller.userData.selected !== undefined) {
+      var intersections = controller.userData.selected;
+      var object = intersections;
+      //var aaa = getIntersections( controller );
+      //console.log(aaa[0].pos);
+      // var pos = undefined;
+      // if ( intersections.length > 0 ) {
+      // var intersection = intersections[ 0 ];
+      // var pos = intersection.pos;
+      // }
+      objectDeTrans(controller, object);
+      controller.userData.selected = undefined;
+    }
 
 
-  switch (PDB.trigger) {
-    case PDB.GROUP_MENU_DRAG:
-      break;
-    case PDB.TRIGGER_EVENT_DISTANCE:
-      if (PDB.distanceArray.length === 2) {
-        var locationStart = PDB.distanceArray[0];
-        var locationEnd = PDB.distanceArray[1];
-        // PDB.render.clearGroupIndex(PDB.GROUP_INFO);
-        // PDB.GROUP[PDB.GROUP_INFO].position.copy(new THREE.Vector3(0,0,0));
-        // PDB.GROUP[PDB.GROUP_INFO].rotation.set(0,0,0);
-        PDB.painter.showDistance(locationStart, locationEnd);
-        PDB.distanceArray = [];
-      }
-      break;
-    case PDB.TRIGGER_EVENT_ANGLE:
-
-      if (PDB.distanceArray.length === 1) {
-        // PDB.render.clearGroupIndex(PDB.GROUP_INFO);
-        // PDB.GROUP[PDB.GROUP_INFO].position.copy(new THREE.Vector3(0,0,0));
-        // PDB.GROUP[PDB.GROUP_INFO].rotation.set(0,0,0);
-      } else if (PDB.distanceArray.length === 2) {
-        var locationStart = PDB.distanceArray[0];
-        var locationEnd = PDB.distanceArray[1];
-        PDB.painter.showDistance(locationStart, locationEnd);
-      } else if (PDB.distanceArray.length === 3) {
-        var locationStart = PDB.distanceArray[1];
-        var locationEnd = PDB.distanceArray[2];
-        PDB.painter.showDistance(locationStart, locationEnd);
-        var anglePoint = locationStart;
-        var edgePoint1 = PDB.distanceArray[0];
-        var edgePoint2 = locationEnd;
-        var anglePointPos = [anglePoint.pos_curr.x, anglePoint.pos_curr.y, anglePoint.pos_curr.z];
-        var edgePoint1Pos = [edgePoint1.pos_curr.x, edgePoint1.pos_curr.y, edgePoint1.pos_curr.z];
-        var edgePoint2Pos = [edgePoint2.pos_curr.x, edgePoint2.pos_curr.y, edgePoint2.pos_curr.z];
-        var ms = PDB.tool.getAngleMeasurement(anglePointPos, edgePoint1Pos, edgePoint2Pos);
-		
-		// var anglePos = new THREE.Vector3(anglePoint.pos_curr.x, anglePoint.pos_curr.y, anglePoint.pos_curr.z)
-        // var labelPos = anglePos.applyMatrix4(PDB.GROUP[PDB.GROUP_MAIN].matrix);
-		// var pos = PDB.tool.getAtomInfoPosition(anglePos,camera.position);
-		var limit = w3m.global.limit;
-        var x = limit.x[1] + PDB.GeoCenterOffset.x;
-		var z = limit.z[1] + PDB.GeoCenterOffset.z;
-		var pos = new THREE.Vector3(x * 0.02, 3.0, z * 0.02);
-		
-		var labelPos = locationStart.pos_curr;
-		var pos = PDB.tool.getAtomInfoPosition(labelPos,camera.position);
-        // PDB.drawer.drawTextForAngle(PDB.GROUP_MAIN, pos,ms.result, "", anglePoint.color, 180);
-        PDB.drawer.drawTextForAngle(PDB.GROUP_MAIN, pos,ms.result, "", anglePoint.color, 180);
-        
-        PDB.distanceArray = [];
-      }
-      break;
-    case PDB.TRIGGER_EVENT_ATOM:
-      var controller = event.target;
-      if (controller.userData.selected !== undefined) {
-        var object = controller.userData.selected;
-        PDB.tool.colorIntersectObjectBlue(object, 0);
-        //PDB.GROUP[PDB.GROUP_MAIN].add( object );
-        controller.userData.selected = undefined;
-      }
-      break;
-    case PDB.TRIGGER_EVENT_FRAGMENT:
-      var controller = event.target;
-      if (controller.userData.selected !== undefined) {
-        var object = controller.userData.selected;
-        PDB.tool.colorIntersectObjectBlue(object, 0);
-        PDB.GROUP[PDB.GROUP_MAIN].add(object);
-        controller.userData.selected = undefined;
-      }
-      if (PDB.fragmentArray.length === 2) {
-        var startAtom = PDB.fragmentArray[0];
-        var endAtom = PDB.fragmentArray[1];
-        if (startAtom.name <= endAtom.name) {
-          PDB.controller.fragmentPainter(startAtom.name, endAtom.name, PDB.fragmentMode);
-        } else {
-          PDB.controller.fragmentPainter(endAtom.name, startAtom.name, PDB.fragmentMode);
+    switch (PDB.trigger) {
+      case PDB.GROUP_MENU_DRAG:
+        break;
+      case PDB.TRIGGER_EVENT_DISTANCE:
+        if (PDB.distanceArray.length === 2) {
+          var locationStart = PDB.distanceArray[0];
+          var locationEnd = PDB.distanceArray[1];
+          // PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+          // PDB.GROUP[PDB.GROUP_INFO].position.copy(new THREE.Vector3(0,0,0));
+          // PDB.GROUP[PDB.GROUP_INFO].rotation.set(0,0,0);
+          PDB.painter.showDistance(locationStart, locationEnd);
+          PDB.distanceArray = [];
         }
-        PDB.fragmentArray = [];
-      }
-      break;
-    case PDB.TRIGGER_EVENT_EDITING:
-      var controller = event.target;
-      if (controller.userData.selected !== undefined) {
-        var object = controller.userData.selected;
-        PDB.tool.colorIntersectObjectBlue(object, 0);
-        PDB.GROUP[PDB.GROUP_MAIN].add(object);
-        controller.userData.selected = undefined;
-      }
-      if (PDB.editingArray.length === 1) {
-        var atom = PDB.editingArray[0].userData.presentAtom;
-        var residueId = PDB.tool.getResidueId(atom);
-        PDB.tool.editingReplace("a", residueId, atom.pos_curr, PDB.fragmentMode);
-        PDB.editingArray = [];
-      }
-      break;
-    case PDB.TRIGGER_EVENT_LABEL:
-      break;
-  }
+        break;
+      case PDB.TRIGGER_EVENT_ANGLE:
+
+        if (PDB.distanceArray.length === 1) {
+          // PDB.render.clearGroupIndex(PDB.GROUP_INFO);
+          // PDB.GROUP[PDB.GROUP_INFO].position.copy(new THREE.Vector3(0,0,0));
+          // PDB.GROUP[PDB.GROUP_INFO].rotation.set(0,0,0);
+        } else if (PDB.distanceArray.length === 2) {
+          var locationStart = PDB.distanceArray[0];
+          var locationEnd = PDB.distanceArray[1];
+          PDB.painter.showDistance(locationStart, locationEnd);
+        } else if (PDB.distanceArray.length === 3) {
+          var locationStart = PDB.distanceArray[1];
+          var locationEnd = PDB.distanceArray[2];
+          PDB.painter.showDistance(locationStart, locationEnd);
+          var anglePoint = locationStart;
+          var edgePoint1 = PDB.distanceArray[0];
+          var edgePoint2 = locationEnd;
+          var anglePointPos = [anglePoint.pos_curr.x, anglePoint.pos_curr.y, anglePoint.pos_curr.z];
+          var edgePoint1Pos = [edgePoint1.pos_curr.x, edgePoint1.pos_curr.y, edgePoint1.pos_curr.z];
+          var edgePoint2Pos = [edgePoint2.pos_curr.x, edgePoint2.pos_curr.y, edgePoint2.pos_curr.z];
+          var ms = PDB.tool.getAngleMeasurement(anglePointPos, edgePoint1Pos, edgePoint2Pos);
+      
+      // var anglePos = new THREE.Vector3(anglePoint.pos_curr.x, anglePoint.pos_curr.y, anglePoint.pos_curr.z)
+          // var labelPos = anglePos.applyMatrix4(PDB.GROUP[PDB.GROUP_MAIN].matrix);
+      // var pos = PDB.tool.getAtomInfoPosition(anglePos,camera.position);
+      var limit = w3m.global.limit;
+          var x = limit.x[1] + PDB.GeoCenterOffset.x;
+      var z = limit.z[1] + PDB.GeoCenterOffset.z;
+      var pos = new THREE.Vector3(x * 0.02, 3.0, z * 0.02);
+      
+      var labelPos = locationStart.pos_curr;
+      var pos = PDB.tool.getAtomInfoPosition(labelPos,camera.position);
+          // PDB.drawer.drawTextForAngle(PDB.GROUP_MAIN, pos,ms.result, "", anglePoint.color, 180);
+          PDB.drawer.drawTextForAngle(PDB.GROUP_MAIN, pos,ms.result, "", anglePoint.color, 180);
+          
+          PDB.distanceArray = [];
+        }
+        break;
+      case PDB.TRIGGER_EVENT_ATOM:
+        var controller = event.target;
+        if (controller.userData.selected !== undefined) {
+          var object = controller.userData.selected;
+          PDB.tool.colorIntersectObjectBlue(object, 0);
+          //PDB.GROUP[PDB.GROUP_MAIN].add( object );
+          controller.userData.selected = undefined;
+        }
+        break;
+      case PDB.TRIGGER_EVENT_FRAGMENT:
+        var controller = event.target;
+        if (controller.userData.selected !== undefined) {
+          var object = controller.userData.selected;
+          PDB.tool.colorIntersectObjectBlue(object, 0);
+          PDB.GROUP[PDB.GROUP_MAIN].add(object);
+          controller.userData.selected = undefined;
+        }
+        if (PDB.fragmentArray.length === 2) {
+          var startAtom = PDB.fragmentArray[0];
+          var endAtom = PDB.fragmentArray[1];
+          if (startAtom.name <= endAtom.name) {
+            PDB.controller.fragmentPainter(startAtom.name, endAtom.name, PDB.fragmentMode);
+          } else {
+            PDB.controller.fragmentPainter(endAtom.name, startAtom.name, PDB.fragmentMode);
+          }
+          PDB.fragmentArray = [];
+        }
+        break;
+      case PDB.TRIGGER_EVENT_EDITING:
+        var controller = event.target;
+        if (controller.userData.selected !== undefined) {
+          var object = controller.userData.selected;
+          PDB.tool.colorIntersectObjectBlue(object, 0);
+          PDB.GROUP[PDB.GROUP_MAIN].add(object);
+          controller.userData.selected = undefined;
+        }
+        if (PDB.editingArray.length === 1) {
+          var atom = PDB.editingArray[0].userData.presentAtom;
+          var residueId = PDB.tool.getResidueId(atom);
+          PDB.tool.editingReplace("a", residueId, atom.pos_curr, PDB.fragmentMode);
+          PDB.editingArray = [];
+        }
+        break;
+      case PDB.TRIGGER_EVENT_LABEL:
+        break;
+    }
 }
 
 function objectTrans(controller, object) {
@@ -1158,9 +1254,9 @@ function getIntersections(controller) {
           point = tmp_inters[0].point;
           if (object.name != undefined && object.name != "" && object.userData.presentAtom !== undefined) {
             if (object.userData.reptype === "tube") {
-              if (object.userData.realtype !== undefined && object.userData.realtype === "arrow") {
-                console.log(object.userData);
-              }
+              //if (object.userData.realtype !== undefined && object.userData.realtype === "arrow") {
+                //console.log(object.userData);
+              //}
               var atomObjects = PDB.GROUP[gIndexies[i]].getChildrenByName(object.userData.presentAtom.id);
               for (var a = 0; a < atomObjects.length; a++) {
                 inters.push({
@@ -1334,8 +1430,8 @@ PDB.render = {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
+    // renderer.gammaInput = true;
+    // renderer.gammaOutput = true;
     container.appendChild(renderer.domElement);
     //renderer.vr.enabled = true;
     //renderer.vr.standing = true;
@@ -1355,7 +1451,7 @@ PDB.render = {
       container.appendChild(stats.dom);
       controls = new THREE.OrbitControls(camera);
       controls.target.set(0, 0, 0);
-      controls.update();
+      //controls.update();
     } else {
       controls = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -1364,17 +1460,22 @@ PDB.render = {
     window.addEventListener('resize', this.onWindowResize, false);
   },
   initVR: function() {
+    container = document.createElement('div');
+    document.body.appendChild(container);
     // Scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x808080);
     scene.add(new THREE.HemisphereLight(0x808080, 0x606060));
     // Camera
     camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 50000);
-    camera.position.copy(new THREE.Vector3(0, 0, 0));
+    // camera.position.copy(new THREE.Vector3(0, 0, 0));
+    camera.position.set( 0, 1.6, 300 );
     //camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 50 );
     scene.add(camera);
-    //stats
-    //statsVR = new StatsVR(scene, camera);
+    //controls
+    controls = new THREE.OrbitControls( camera, container );
+    controls.target.set( 0, 1.6, 0 );
+    controls.update();
     // Group
     for (var i = 0; i < PDB.GROUP_COUNT; i++) {
       PDB.GROUP[i] = new THREE.Group();
@@ -1384,8 +1485,7 @@ PDB.render = {
 
     this.addLightsByType(lightType);
 
-    container = document.createElement('div');
-    document.body.appendChild(container);
+    
 
     renderer = new THREE.WebGLRenderer({
       antialias: true
@@ -1393,116 +1493,36 @@ PDB.render = {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
+    // renderer.gammaInput = true;
+    // renderer.gammaOutput = true;
     container.appendChild(renderer.domElement);
-    renderer.vr.enabled = true;
+    // renderer.vr.enabled = true;
+    renderer.xr.enabled = true;
+
     //renderer.vr.standing = true;
     //vr
-    document.body.appendChild(WEBVR.createButton(renderer));
-    // controllers
-    // Microsoft
-
-    //controller1 = renderer.vr.getController( 0 );
-    //controller1.addEventListener( 'selectstart', onSelectStart );
-    //controller1.addEventListener( 'selectend', onSelectEnd );
-    //vrControls = new THREE.VRControls( camera );
-    //vrEffect = new THREE.VREffect( renderer );
-
-    //vive
-    //controller1 = new THREE.ViveController( 0 );
-    // general
-    //thumbstick
-    //thumbpad
-    //menu
-    //trigger
-    //grip
-    window.addEventListener('vr controller connected', function(event) {
-      controller1 = event.detail;
-      console.log("style:" + controller1.style + " " + controller1.gamepad.hand);
-      console.log(controller1);
-      //controller1 = new THREE.VRController( 0 );
-      controller1.standingMatrix = renderer.vr.getStandingMatrix();
-      controller1.addEventListener('thumbstick touch began', function(event) {
-        // console.log("-----------------------thumbstick touch began");
-        //onThumbpadDown(event);
-      })
-      controller1.addEventListener('thumbstick touch ended', function(event) {
-        // console.log("-----------------------thumbstick touch end");
-        //onThumbpadUp(event);
-      })
-      controller1.addEventListener('thumbpad touch began', function(event) {
-        // console.log("-----------------------thumbpad touch began");
-        //onThumbpadDown(event);
-      })
-      controller1.addEventListener('thumbpad touch ended', function(event) {
-        // console.log("-----------------------thumbpad touch end");
-        //onThumbpadUp(event);
-      })
-      controller1.addEventListener('thumbpad press began', function(event) {
-        // console.log("-----------------------thumbpad press began");
-        onThumbpadDown(event);
-      })
-      controller1.addEventListener('thumbpad press ended', function(event) {
-        // console.log("-----------------------thumbpad press end");
-        onThumbpadUp(event);
-      })
-      // Trigger (vive and microsoft ok)
-      controller1.addEventListener('primary press began', function(event) {
-        onTriggerDown(event);
-      })
-      // Trigger (vive and microsoft ok)
-      controller1.addEventListener('primary press ended', function(event) {
-        onTriggerUp(event);
-      })
-      // menu (vive and microsoft ok)
-      controller1.addEventListener('menu press began', function(event) {
-        onMenuDown(event);
-      })
-      // menu (vive and microsoft ok)
-      controller1.addEventListener('menu press ended', function(event) {
-        onMenuUp(event);
-      })
-      controller1.addEventListener('thumbstick axes changed', function(event) {
-        //console.log("thumbstick axes end");
-        onAxisChanged(event);
-        //onThumbpadDown(event)
-      })
-      controller1.addEventListener('thumbpad axes changed', function(event) {
-        onAxisChanged(event);
-      })
-      controller1.addEventListener('primary axes changed', function(event) {
-        onAxisChanged(event);
-      })
-
+    document.body.appendChild(VRButton.createButton( renderer ) );
+    renderer.xr.addEventListener('sessionstart', () => {  isImmersive = true; });
+    renderer.xr.addEventListener('sessionend', () => { isImmersive = false; });
+    
+    
+    if(XR_VERSION == 1){
+      
+      controller1 = renderer.xr.getController( 0 );
+      controller1.addEventListener( 'selectstart', onTriggerDown );
+      controller1.addEventListener( 'selectend',   onTriggerUp );
+      
       scene.add(controller1);
-      var objname = 'vr_controller_vive_1_5.obj';
-      var path = 'js/models/vive-controller/';
-      if (controller1.style === "microsoft") {
-        objname = controller1.gamepad.hand + '.obj';
-        path = 'js/models/microsoft-controller/';
-      }
-      var loader = new THREE.OBJLoader();
-      loader.setPath(path);
 
-      loader.load(objname, function(object) {
-        var loader = new THREE.TextureLoader();
-        loader.setPath(path);
-        var controller = object.children[0];
-        if (controller1.style === "microsoft") {
-          console.log("onepointfive_texture png")
-        } else {
-          controller.material.map = loader.load('onepointfive_texture.png');
-          controller.material.specularMap = loader.load('onepointfive_spec.png');
-        }
-        controller1.add(object.clone());
-        //controller2.add( object.clone() );
-      });
+      var controllerModelFactory = new THREE.XRControllerModelFactory();
+      controllerGrip1 = renderer.xr.getControllerGrip( 0 );
+      controllerGrip1.add( controllerModelFactory.createControllerModel( controllerGrip1 ) );
+      scene.add( controllerGrip1 );
 
       // helpers
       var geometry = new THREE.BufferGeometry();
-      geometry.addAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, -1], 3));
-      geometry.addAttribute('color', new THREE.Float32BufferAttribute([0.5, 0.5, 0.5, 0, 0, 0], 3));
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, -1], 3));
+      geometry.setAttribute('color', new THREE.Float32BufferAttribute([0.5, 0.5, 0.5, 0, 0, 0], 3));
       var material = new THREE.LineBasicMaterial({
         vertexColors: true,
         linewidth: 2,
@@ -1512,8 +1532,106 @@ PDB.render = {
       line.name = 'line';
       line.scale.z = 5;
       controller1.add(line.clone());
-      //controller2.add( line.clone() );
-    });
+    }else{
+      window.addEventListener('vr controller connected', function(event) {
+        controller1 = event.detail;
+        console.log("style:" + controller1.style + " " + controller1.gamepad.hand);
+        console.log(controller1);
+        //controller1 = new THREE.VRController( 0 );
+        controller1.standingMatrix = renderer.vr.getStandingMatrix();
+        controller1.addEventListener('thumbstick touch began', function(event) {
+          // console.log("-----------------------thumbstick touch began");
+          //onThumbpadDown(event);
+        })
+        controller1.addEventListener('thumbstick touch ended', function(event) {
+          // console.log("-----------------------thumbstick touch end");
+          //onThumbpadUp(event);
+        })
+        controller1.addEventListener('thumbpad touch began', function(event) {
+          // console.log("-----------------------thumbpad touch began");
+          //onThumbpadDown(event);
+        })
+        controller1.addEventListener('thumbpad touch ended', function(event) {
+          // console.log("-----------------------thumbpad touch end");
+          //onThumbpadUp(event);
+        })
+        controller1.addEventListener('thumbpad press began', function(event) {
+          // console.log("-----------------------thumbpad press began");
+          onThumbpadDown(event);
+        })
+        controller1.addEventListener('thumbpad press ended', function(event) {
+          // console.log("-----------------------thumbpad press end");
+          onThumbpadUp(event);
+        })
+        // Trigger (vive and microsoft ok)
+        controller1.addEventListener('primary press began', function(event) {
+          onTriggerDown(event);
+        })
+        // Trigger (vive and microsoft ok)
+        controller1.addEventListener('primary press ended', function(event) {
+          onTriggerUp(event);
+        })
+        // menu (vive and microsoft ok)
+        controller1.addEventListener('menu press began', function(event) {
+          onMenuDown(event);
+        })
+        // menu (vive and microsoft ok)
+        controller1.addEventListener('menu press ended', function(event) {
+          onMenuUp(event);
+        })
+        controller1.addEventListener('thumbstick axes changed', function(event) {
+          //console.log("thumbstick axes end");
+          onAxisChanged(event);
+          //onThumbpadDown(event)
+        })
+        controller1.addEventListener('thumbpad axes changed', function(event) {
+          onAxisChanged(event);
+        })
+        controller1.addEventListener('primary axes changed', function(event) {
+          onAxisChanged(event);
+        })
+  
+        scene.add(controller1);
+        var objname = 'vr_controller_vive_1_5.obj';
+        var path = 'js/models/vive-controller/';
+        if (controller1.style === "microsoft") {
+          objname = controller1.gamepad.hand + '.obj';
+          path = 'js/models/microsoft-controller/';
+        }
+        var loader = new THREE.OBJLoader();
+        loader.setPath(path);
+  
+        loader.load(objname, function(object) {
+          var loader = new THREE.TextureLoader();
+          loader.setPath(path);
+          var controller = object.children[0];
+          if (controller1.style === "microsoft") {
+            console.log("onepointfive_texture png")
+          } else {
+            controller.material.map = loader.load('onepointfive_texture.png');
+            controller.material.specularMap = loader.load('onepointfive_spec.png');
+          }
+          controller1.add(object.clone());
+          //controller2.add( object.clone() );
+        });
+  
+        // helpers
+        var geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, -1], 3));
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute([0.5, 0.5, 0.5, 0, 0, 0], 3));
+        var material = new THREE.LineBasicMaterial({
+          vertexColors: true,
+          linewidth: 2,
+          blending: THREE.AdditiveBlending
+        });
+        var line = new THREE.Line(geometry, material);
+        line.name = 'line';
+        line.scale.z = 5;
+        controller1.add(line.clone());
+        //controller2.add( line.clone() );
+      });
+    }
+    
 
     raycaster = new THREE.Raycaster();
     window.addEventListener('resize', onWindowResize, false);
@@ -1695,13 +1813,14 @@ PDB.render = {
     if (PDB.mode === PDB.MODE_VR || PDB.mode === PDB.MODE_TRAVEL_VR) {
       //if(controller1!=undefined){controller1.update();}
       //controller2.update();
-      THREE.VRController.update();
+      //THREE.VRController.update();
       //vrControls.update();
       // statsVR.msStart();
       // statsVR.update();
       // statsVR.setCustom1("x:" + camera.position.x.toFixed(2));
       // statsVR.setCustom2("y:" + camera.position.y.toFixed(2));
       // statsVR.setCustom3("z:" + camera.position.z.toFixed(2));
+      
       if (menu_panel != undefined) {
         menu_panel.lookAt(camera.position);
       }
@@ -1709,7 +1828,7 @@ PDB.render = {
       cleanIntersected();
       if (controller1 != undefined) {
         intersectObjects(controller1);
-        controller1.update();
+        // controller1.update();
       }
       //intersectObjects( THREE.VRController.prototype );
 
@@ -1787,6 +1906,7 @@ PDB.render = {
           PDB.drugMoveTime = new Date();
         }
       }
+      listen_button();
       renderer.render(scene, camera);
       //statsVR.msEnd();
 
@@ -2351,8 +2471,8 @@ PDB.render = {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
+    // renderer.gammaInput = true;
+    // renderer.gammaOutput = true;
     container.appendChild(renderer.domElement);
     renderer.vr.enabled = true;
     renderer.vr.standing = true;

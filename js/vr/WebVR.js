@@ -128,7 +128,7 @@ var WEBVR = {
 
 		}
 
-		if ( 'xr' in navigator ) {
+		if ( 'xr' in navigator && 'requestDevice' in navigator.xr ) {
 
 			var button = document.createElement( 'button' );
 			button.style.display = 'none';
@@ -196,8 +196,9 @@ var WEBVR = {
 		} else {
 
 			var message = document.createElement( 'a' );
-			message.href = 'https://webvr.info';
-			message.innerHTML = 'WEBVR NOT SUPPORTED';
+			// message.href = 'https://webvr.info';
+			//message.href = '';
+			message.innerHTML = 'VR NOT SUPPORTED';
 
 			message.style.left = 'calc(50% - 90px)';
 			message.style.width = '180px';

@@ -671,12 +671,12 @@ PDB.tool = {
     aLink.appendChild(node);
     aLink.id = id;
     aLink.addEventListener('click', function() {
-		//add holder
-		PDB.tool.showSegmentholder(true);
-		var modelSpan = document.getElementById("modelSpan");
-		if(modelSpan){
-			modelSpan.innerHTML = "";
-		}
+      //add holder
+      PDB.tool.showSegmentholder(true);
+      var modelSpan = document.getElementById("modelSpan");
+      if(modelSpan){
+        modelSpan.innerHTML = "";
+      }
       //docking move
       PDB.DRUGMOVE = true;
       PDB.drugMoveTime = new Date();
@@ -703,9 +703,8 @@ PDB.tool = {
         url = SERVERURL + "/data/autodock.json";
       }
       PDB.tool.ajax.get(url, function(text) {
-		  //clear
 
-		  PDB.tool.showSegmentholder(false);
+        PDB.tool.showSegmentholder(false);
         var jsonObj = JSON.parse(text);
         if (jsonObj.model_list != undefined && jsonObj.model_list.length > 0) {
           var menuSpan = document.getElementById("menuSpan");
@@ -739,8 +738,6 @@ PDB.tool = {
                 PDB.painter.showHet(drugId, docking);
               });
 
-
-
             });
             PDB.tool.generateLabel_nobr(modelSpan, jsonObj.scores[i], "docking_score");
             PDB.tool.generateALink(modelSpan, "link" + i, "Link", jsonObj.outdir + "/" + jsonObj.model_list[i], "");
@@ -749,8 +746,8 @@ PDB.tool = {
             modelSpan.appendChild(document.createElement("br"));
           }
         }
-		//clear
-		PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
+      //clear
+      PDB.render.clearGroupIndex(PDB.GROUP_DRUG);
 
       });
     });
@@ -2054,7 +2051,9 @@ PDB.tool = {
 		  //console.log(PDB.fragmentList[ii]);
 	  }
 
-  },showDrugMenuForVr: function(url){
+  },
+  
+  showDrugMenuForVr: function(url){
 	  PDB.tool.ajax.get(url, function(text) {
         var jsonObj = JSON.parse(text);
         if (jsonObj.code === 1 && jsonObj.data !== undefined) {
@@ -2124,7 +2123,9 @@ PDB.tool = {
         }
 
       });
-  },addDrugMenuForVr: function(parentGroup,posStart,dbname, dbjson,color,reptype){
+  },
+  
+  addDrugMenuForVr: function(parentGroup,posStart,dbname, dbjson,color,reptype){
 	  if (dbjson !== undefined && dbjson !== "" && dbjson !== "null") {
 		  var drugids = dbjson.split(';');
 		  for (var i in drugids) {
@@ -2140,7 +2141,10 @@ PDB.tool = {
 		  }
 	  }
 	  return posStart;
-  },showDockingMenuForVr: function(drugId){
+  },
+  
+  
+  showDockingMenuForVr: function(drugId){
 	  PDB.DRUGMOVE = true;
       PDB.drugMoveTime = new Date();
       var x_c = w3m.global.limit.x[0] + (w3m.global.limit.x[1] - w3m.global.limit.x[0]) / 2;

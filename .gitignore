@@ -3,8 +3,9 @@
 .classpath
 .project
 .class
-.war
-.zip
+*.war
+*.wav
+*.zip
 .rar
 .idea
 *.iml
