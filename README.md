@@ -161,7 +161,7 @@ Server Tools
 ## Release Versions
   - [Releases](https://github.com/kuixu/VRmol/releases)
   - [v1.0](https://github.com/kuixu/VRmol/tree/v1.0)
-  - [v0.2](https://github.com/kuixu/VRmol/tree/v0.1)
+  - [v0.2](https://github.com/kuixu/VRmol/tree/v0.2)
   - [v0.1](https://github.com/kuixu/VRmol/tree/v0.1)
 
 ## Citation
@@ -184,7 +184,7 @@ Paper: [Biorxiv](https://www.biorxiv.org/content/early/2019/03/27/589366.1)
 
 ## Acknowledgments
 
-VRmol is developed based on [three.js](https://threejs.org) and [WebXR](https://www.w3.org/TR/webxr/), and we would like to express our special thanks to those open-source projects below.
+VRmol is developed based on [three.js](https://threejs.org) and [WebXR](https://www.w3.org/TR/webxr/) with the help of Dawei Zhang and Xun Ran, and we would like to express our special thanks to those open-source projects below.
   - [https://immersiveweb.dev/#supporttable](https://immersiveweb.dev/#supporttable)
   - [https://www.w3.org/TR/webxr/](https://github.com/MozillaReality/WebXR-emulator-extension)
   - [Web3DMol](https://web3dmol.net) - for PDB file loading and parsing
