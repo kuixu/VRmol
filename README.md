@@ -50,7 +50,7 @@ VRmol provides two modes:
 
 You could practice VRmol with VR device on [WebXR supported browsers](https://caniuse.com/#search=webxr) below:
   - Google Chrome(>=81)
-  - Microsoft Edge (>=81)
+  - Microsoft Edge (>=81) [Download](https://www.microsoft.com/en-us/edge)
   - Firefox Reality Android standalones and PC in (Q1 2020)
 
 Supported VR devices:
