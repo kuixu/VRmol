@@ -60,6 +60,9 @@ Supported VR devices:
 
 > *: indicates well tested devices.
 
+Operation System:
+  - Windows 10 (build verion: 1903+)
+
 Also you could practice VRmol without VR device by using [WebXR API Emulator extension](https://blog.mozvr.com/webxr-emulator-extension/), download the WebXR API Emulator for your supported browser below:
   - [Google Chrome](https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje)
   - [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/webxr-api-emulator/)
