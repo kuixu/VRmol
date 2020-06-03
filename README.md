@@ -1,4 +1,4 @@
-<p align="center"> <img src="imgs/logo.png" width=200px></p>
+<p align="center"> <img src="https://github.com/kuixu/VRmol/wiki/figs/misc/logo.png" width=200px></p>
 
 --------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ We leverage the most cutting-edge computational technologies to develop a virtua
 
 ## Demo
 
-<img src="imgs/entervr-320.gif" width=50%>
+<img src="https://github.com/kuixu/VRmol/wiki/figs/misc/entervr-320.gif" width=50%>
 
 
 ## Documentation
@@ -75,12 +75,12 @@ The [source code](https://github.com/MozillaReality/WebXR-emulator-extension) fo
 
 The framework of VRmol.
 
-<img src="imgs/framework.png" width=50%>
+<img src="https://github.com/kuixu/VRmol/wiki/figs/misc/framework.png" width=50%>
 
 ## Screenshot
 
 A screenshot of structure visualization with stereo view.
-<img src="imgs/screenshot.png" width=80%>
+<img src="https://github.com/kuixu/VRmol/wiki/figs/misc/screenshot.png" width=80%>
 
 
 
