@@ -10,6 +10,8 @@
 We leverage the most cutting-edge computational technologies to develop a virtual reality (VR) system - VRmol - that provides the visualization and analysis of macromolecule structures in an infinite virtual environment on the web. VRmol is natively built with WebVR technology, providing all structural analysis functions in a fully immersive, inspiring virtual environment. It is convenient to use, runs on internet and requires no software downloading and installation. And by connecting to a number of cloud-based genomic and drug databases, it provides an integrative platform to perform advanced structural and translational research. It can be freely accessed online by typing [https://VRmol.net](https://VRmol.net?from=github) in VR-supported browser. 
 
 ## News
+ - 08/16/2020: Cloud Server migration. Most features are functioning normally except drug docking.
+ - 07/25/2020: VRmol accepted to Bioinformatics.
  - 06/03/2020: [Wiki](https://github.com/kuixu/VRmol/wiki) is online.
  - 05/18/2020: Upgrade based on the WebXR core API, which supports Chrome(>=81), Microsoft Edge (>=81). 
  - 02/21/2020: `Special Vis` for COVID-19 from [Tsinghua Univ.](https://mp.weixin.qq.com/s/J6j7Ya6Z7zOiLWufy_HApQ): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019-nCoV-RBD-ACE2-sse.pdb), [NMDC](http://nmdc.cn/?from=groupmessage#/resource/detail?no=NMDCS0000001): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/2019nCoV-S_RBD_ACE2-sse.pdb) and [West Lake Univ.](https://mp.weixin.qq.com/s/84jx6ggh-7VmFNK5it7O0g): [[Click to Vis]](https://vrmol.net/?id=https://vrmol.net/data/RBD-ACE2-B0AT1-sse.pdb), [[Open Conformation]](https://vrmol.net/?id=https://vrmol.net/data/ACE2_B0AT1_open_conformation-sse.pdb), [[Closed Conformation]](https://vrmol.net/?id=https://vrmol.net/data/ACE2_B0AT1_closed_conformation-sse.pdb)
@@ -92,7 +94,7 @@ A screenshot of structure visualization with stereo view.
 You can save a specific structural representation scene by saving operation options setting in VRmol as a URL, like `https://vrmol.net/index.html?id=1dfb`. And then you can load and share the scene by opening this previously-saved URL in the web browser or embedding it into your own website by using `iframe`, such as
 
 ```html
-<iframe src="https://vrmol.net/index.html?id=1dfb" />
+<iframe src="https://vrmol.net/?id=1dfb" />
 ```
 
 
@@ -108,7 +110,7 @@ The options and their data types supported in VRmol are shown in the table below
 |surfaceType|Integer|Van der Waals surface:1, solvent excluded surface:2, solvent accessible surface:3, molecular surface:4|Surface type|
 |colorMode|Integer|Element:601, Residue:602, Secondary Structure:603, Chain:604, Representation:605, B-Factor:606, Spectrum:607, Chain Spectrum:608, Hydrophobicity:609|Color schemes|
 |travel|Integer|Show:1, Hide:0|Enter travel mode or not|
-|vmode|String|desktop, vr|Visualization Mode|
+|vmode|String|nonvr, vr|Visualization Mode|
 |fragment|String|['a', 7, 6]|Fragmentation, label the 7th residue with `Ball & Rod` style|
 
 
@@ -170,8 +172,23 @@ Server Tools
 
 ## Citation
 
-Paper: [Biorxiv](https://www.biorxiv.org/content/early/2019/03/27/589366.1)
+Paper: [Bioinformatics](https://doi.org/10.1093/bioinformatics/btaa696) [Biorxiv](https://www.biorxiv.org/content/early/2019/03/27/589366.1)
 ```
+@article{10.1093/bioinformatics/btaa696,
+    author = {Xu, Kui and Liu, Nan and Xu, Jingle and Guo, Chunlong and Zhao, Lingyun and Wang, Hong-Wei and Zhang, Qiangfeng Cliff},
+    title = "{VRmol: an Integrative Web-Based Virtual Reality System to Explore Macromolecular Structure}",
+    journal = {Bioinformatics},
+    year = {2020},
+    month = {08},
+    issn = {1367-4803},
+    doi = {10.1093/bioinformatics/btaa696},
+    url = {https://doi.org/10.1093/bioinformatics/btaa696},
+    note = {btaa696},
+    eprint = {https://academic.oup.com/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btaa696/33560033/btaa696.pdf},
+}
+
+
+
 @article {Xu589366,
 	author = {Xu, Kui and Liu, Nan and Xu, Jingle and Guo, Chunlong and Zhao, Lingyun and Wang, Hong-wei and Zhang, Qiangfeng Cliff},
 	title = {VRmol: an Integrative Cloud-Based Virtual Reality System to Explore Macromolecular Structure},
