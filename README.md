@@ -73,6 +73,10 @@ Also you could practice VRmol without VR device by using [WebXR API Emulator ext
 
 The [source code](https://github.com/MozillaReality/WebXR-emulator-extension) for the extension is also available.
 
+> For Firefox: Solving the problem of `CORS request did not succeed` when accessing web services (genomic variation, drug docking) by setting below in firefox.
+```
+about:config: security.ssl.enable_ocsp_stapling --> False
+```
 
 
 ## Framework
