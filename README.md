@@ -138,7 +138,7 @@ The options and their data types supported in VRmol are shown in the table below
 <iframe src="https://vrmol.net/?id=1f5x&fragment=['a',7,6]&vmode=vr"  />
 ```
 
-  4. Present structure (PDB code:`2HYY`) with surface in VR. [Try it](https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfaceOpc=1&surfaceType=1&colorMode=609&vmode=vr)
+  4. Present structure (PDB code:`2HYY`) with surface in VR. [Try it](https://vrmol.net/index.html?id=https://vrmol.net/data/2hyy.pdb&panelShow=1&mainMode=13&showSurface=1&surfaceOpc=1&surfaceType=1&colorMode=609&vmode=vr)
 ```
 https://vrmol.net/index.html?id=2hyy&panelShow=1&mainMode=13&showSurface=1&surfaceOpc=1&surfaceType=1&colorMode=609&vmode=vr
 ```
